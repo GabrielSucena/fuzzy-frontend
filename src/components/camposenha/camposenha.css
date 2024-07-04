@@ -1,0 +1,24 @@
+.campo-senha{
+    margin: 24px 0;
+    font-size: 14px;
+}
+
+.campo-senha label{
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.campo-senha input{
+    background-color: #ECECEC;
+    box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.0);
+    width: 100%;
+    /*Se tem porcentagem, o que define o tamanho dele é aonde ele está, o conteiner-pai*/
+    border: none;
+    padding: 24px;
+    box-sizing: border-box; /*Define que é 100% com tudo incluso, borda etc*/
+    border-radius: .5rem;
+    margin-bottom: 3rem;
+    color: #838383;
+
+}

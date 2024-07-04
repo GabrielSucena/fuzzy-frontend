@@ -1,0 +1,24 @@
+footer{
+  background: linear-gradient(135deg, #2E2E2E, #161616);
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* Y */
+  justify-content: center;  /* X */
+  width: 100%;
+  color: #FFFFFF;
+  bottom: 0rem;
+  position: relative;
+  padding: 1rem 0rem 0.8rem 0rem;
+  font-size: 1.3rem;
+  gap: rem;
+}
+
+.footer-logo{
+  max-width: 100%;
+  height: auto;
+}
+
+h6{
+  margin: 0rem;
+  text-align: center;
+}

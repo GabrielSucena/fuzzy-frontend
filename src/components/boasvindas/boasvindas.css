@@ -1,0 +1,15 @@
+.p-boas-vindas{
+    font-size: 3rem;
+    color: #141414;
+    margin: 0;
+    padding: 3rem 0rem 0rem 0rem;
+    text-align: center;
+}
+
+.desc-boas-vindas{
+    color: #707070;
+    font-size: 1.5rem;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}

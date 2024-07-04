@@ -1,0 +1,13 @@
+.esqueciasenha {
+    display: flex;
+    flex-direction: column; /* Define a direção dos itens como coluna */
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
+  }
+  
+.campos {
+    max-width: 30rem;
+    width: 90%;
+    min-width: 6rem;
+}
+

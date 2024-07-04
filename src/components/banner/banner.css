@@ -1,0 +1,14 @@
+.header-index{
+    background: linear-gradient(to right, #161616, #212121);
+    text-align: center;
+    padding: 2.5rem;
+    margin-bottom: 8rem;
+
+    max-width: 100%;
+}
+
+.header-index img{
+    max-width: 70%;
+    
+
+}
