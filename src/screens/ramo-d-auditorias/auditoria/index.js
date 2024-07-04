@@ -2,18 +2,18 @@ import "./auditoria.css"
 import Bannerhome from '../../../components/bannerhome'
 import Rodape from '../../../components/rodape'
 import TituloPagina from "../../../components/titulopagina";
-import Card from "../../../components/card";
 
 function Auditoria(){
 
     return(
         <>
         <Bannerhome />
-        <TituloPagina titulopagina="Auditorias" descricaotitulo="Visualiação por colaborador e por curso" tembotao={false} botao="Ver"/>
-        <div className='home-content'>
-            <Card tipo="Por treinamento" descricao="Auditorias de treinamentos"/>
-            <Card tipo="Por colaborador" descricao="Auditorias de colaboradores"/>
-      </div>
+        <TituloPagina titulopagina="Auditorias" descricaotitulo="Visualiação por colaborador e por curso" tembotao={true} botao="Filtrar"/>
+            <div className="colaboradores">
+                <div className="colaboradores-card">
+                    <i className="fa fa-spinner fa-pulse fa-5x"></i>
+                </div>
+            </div>
         <Rodape />
         </>
 
