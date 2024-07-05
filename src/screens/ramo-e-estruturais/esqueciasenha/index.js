@@ -4,6 +4,7 @@ import Banner from '../../../components/banner'
 import CampoSenha from '../../../components/camposenha'
 import { Link } from 'react-router-dom'
 import Botao from '../../../components/botao'
+import Rodape from '../../../components/rodape';
 
 export function Esqueciasenha() {
 
@@ -33,6 +34,7 @@ export function Esqueciasenha() {
         </div>
         <Link to='/'><Botao>TROCAR</Botao></Link>
       </section>
+      <Rodape />
     </>
 
   );

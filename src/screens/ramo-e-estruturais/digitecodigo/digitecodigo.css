@@ -4,6 +4,7 @@
     justify-content: center; /* Centraliza o conteúdo verticalmente */
     align-items: center; /* Centraliza o conteúdo horizontalmente */
     text-align: center;
+    padding-bottom: 20rem;
   }
 
 .p-digite-o-codigo{

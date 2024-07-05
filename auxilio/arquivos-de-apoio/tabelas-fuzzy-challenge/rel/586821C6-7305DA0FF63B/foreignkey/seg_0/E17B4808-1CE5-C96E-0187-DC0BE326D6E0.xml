@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="E17B4808-1CE5-C96E-0187-DC0BE326D6E0" containerWithKeyObject="E2B009D3-1D3A-C48F-DA24-9DCCA47F592A" localFKIndex="BF5264BF-B66F-3176-0412-878755E46353" name="EMPLOYEES_MANAGERS_FK">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>57960D1D-B791-4F70-B103-63D34DD78289</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<referredTableLongName>MANAGERS</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>CD8E1D75-3EA0-F1D3-8846-1E06DD045A71</referredTableID>
+<keyObject>467F34E6-51D8-3007-7E94-9FEBDA100D62</keyObject>
+<referredKeyID>467F34E6-51D8-3007-7E94-9FEBDA100D62</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>id_manager,email,full_name</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

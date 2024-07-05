@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<LogicalDesign class="oracle.dbtools.crest.model.design.logical.LogicalDesign" name="Logical" id="717B4B72-785D-F309-16BA-B9940069A54D" mainViewID="5666B887-ED8A-583D-7510-464A7BB51042">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:43:38 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</LogicalDesign>

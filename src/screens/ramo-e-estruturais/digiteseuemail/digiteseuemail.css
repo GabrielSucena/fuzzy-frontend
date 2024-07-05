@@ -3,6 +3,7 @@
     flex-direction: column; /* Define a direção dos itens como coluna */
     justify-content: center; /* Centraliza o conteúdo verticalmente */
     align-items: center; /* Centraliza o conteúdo horizontalmente */
+    padding-bottom: 25rem;
   }
   
 .campos-email {

@@ -1,0 +1,219 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="E5042F23-A4F4-B309-8D17-B9C4E1CB3492" name="EMPLOYEES">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:46:02 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_employee" id="4D554A02-E8CA-783F-2C14-955180528F12">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:46:07 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="email" id="084F9457-358B-836A-9786-F218C405581D">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:46:14 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<constraintName>UNIQUE</constraintName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="password" id="EDD5729D-16ED-7181-0582-441DC39E0B75">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:46:19 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="full_name" id="4944FB14-0C72-493D-1DDA-6CA9892F6705">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:46:23 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="admission_date" id="6A3C3D1B-FEF4-ECBA-3D87-F898892F3AED">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:46:29 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="phone_number" id="BA6644B9-712D-A6DA-99DD-A963F10185AE">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:46:35 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="photo" id="FB8B24D5-D61C-CF50-D6A9-C4B2B17C412A">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:46:42 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_manager" id="F0DEB333-E622-0B61-D633-EAF1F57E9F62">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:09:47 UTC</createdTime>
+<generatorID>57960D1D-B791-4F70-B103-63D34DD78289</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>7ACF6B37-BE94-A2AB-C372-E32663A575C7</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="id_location" id="CDA13921-BD28-C462-C33D-D6D4E56E8608">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:25:10 UTC</createdTime>
+<generatorID>78A4F6D6-E563-00F5-2DA4-61B3794C2967</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>B8BB0D5E-E451-51CF-157B-A691A19D4D1E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="email1" id="9249ED7D-48A1-48DE-56EF-6DC46382DE36">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:39:47 UTC</createdTime>
+<generatorID>57960D1D-B791-4F70-B103-63D34DD78289</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>02C96FA4-0C95-7DA2-96BE-985263D7FCEC</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="full_name1" id="7B39765A-1B3B-30BF-A99A-E2EEBDAAF8DE">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:40:16 UTC</createdTime>
+<generatorID>57960D1D-B791-4F70-B103-63D34DD78289</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<referedAttribute>148C2A97-9F82-C71D-4ACC-7B44E706DFDD</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="1419F628-44AF-5C4F-71DB-E538F679751C" name="EMPLOYEES PK">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:46:14 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>4D554A02-E8CA-783F-2C14-955180528F12</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="7A00C07B-8341-74F2-0276-2FCFD8E94994" name="Key_2">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:07:10 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="false"/>
+</engineerTo>
+<newElementsIDs>084F9457-358B-836A-9786-F218C405581D</newElementsIDs>
+<usedAttributes>
+<attributeRef>084F9457-358B-836A-9786-F218C405581D</attributeRef>
+</usedAttributes>
+</identifier>
+<identifier id="6F7C6B36-C83E-58FC-EFF7-714B1D2670F8" name="Key_3">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:08:03 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="false"/>
+</engineerTo>
+<newElementsIDs>BA6644B9-712D-A6DA-99DD-A963F10185AE</newElementsIDs>
+<usedAttributes>
+<attributeRef>BA6644B9-712D-A6DA-99DD-A963F10185AE</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

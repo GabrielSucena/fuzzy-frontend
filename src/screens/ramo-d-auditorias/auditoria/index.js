@@ -8,7 +8,7 @@ function Auditoria(){
     return(
         <>
         <Bannerhome />
-        <TituloPagina titulopagina="Auditorias" descricaotitulo="Visualiação por colaborador e por curso" tembotao={true} botao="Filtrar"/>
+        <TituloPagina titulopagina="Auditorias" descricaotitulo="Visualização por colaborador e por curso" tembotao={true} botao="Filtrar"/>
             <div className="colaboradores">
                 <div className="colaboradores-card">
                     <i className="fa fa-spinner fa-pulse fa-5x"></i>

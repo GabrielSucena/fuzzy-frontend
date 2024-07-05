@@ -5,6 +5,7 @@ import CampoTexto from '../../../components/campotexto'
 import Botao from '../../../components/botao'
 import './digiteseuemail.css'
 import { Link } from 'react-router-dom'
+import Rodape from '../../../components/rodape';
 
 export function DigiteSeuEmail() {
 
@@ -29,6 +30,7 @@ export function DigiteSeuEmail() {
                 </div>
 
             </section>
+            <Rodape />
         </>
 
     );

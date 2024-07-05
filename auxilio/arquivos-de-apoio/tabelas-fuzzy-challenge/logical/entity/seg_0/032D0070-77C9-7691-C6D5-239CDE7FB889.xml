@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="032D0070-77C9-7691-C6D5-239CDE7FB889" name="LOCATIONS">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:47:09 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id_location" id="B8BB0D5E-E451-51CF-157B-A691A19D4D1E">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:47:13 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="location" id="D8D0B45C-32BE-82C4-5EBD-1D87336E5F84">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:47:17 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="35AAB183-A9AA-EE9A-E6C7-0D91413A002F" name="LOCATIONS PK">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:47:16 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="false"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>B8BB0D5E-E451-51CF-157B-A691A19D4D1E</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

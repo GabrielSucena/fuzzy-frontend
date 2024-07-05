@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<OSDM_Design class="oracle.dbtools.crest.model.design.Design" name="tabelas-fuzzy-challenge" id="0E44FE49-97BB-9B8F-DCB9-7C2E0D8B7779" version="3.5">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:43:38 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<capitalNames>false</capitalNames>
+<designId>0E44FE49-97BB-9B8F-DCB9-7C2E0D8B7779</designId>
+<usedDesignStorageDescriptors>
+<designDescr class="oracle.dbtools.crest.model.design.Design$DesignStorageDesc" id="5129DEEE-C3E3-0244-DDF3-F4759C31D094">
+<designStoragePath>C:\logicmodel</designStoragePath>
+</designDescr>
+</usedDesignStorageDescriptors>
+</OSDM_Design>

@@ -4,6 +4,7 @@ import Banner from '../../../components/banner';
 import Botao from '../../../components/botao';
 import { Link } from 'react-router-dom'
 import InputCode from "../../../components/verificationcode";
+import Rodape from '../../../components/rodape';
 
 export function DigiteCodigo() {
   const [loading, setLoading] = useState(false);
@@ -27,6 +28,7 @@ export function DigiteCodigo() {
 
         </div>
       </section>
+      <Rodape />
     </>
   );
 }
