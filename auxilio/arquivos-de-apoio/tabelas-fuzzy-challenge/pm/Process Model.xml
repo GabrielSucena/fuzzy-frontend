@@ -1,0 +1,7 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<ProcessModel class="oracle.dbtools.crest.model.design.process.ProcessModel" name="Process Model" id="395DDE16-767E-15AC-D452-E550319752D5">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 05:43:38 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<shouldBeOpen>false</shouldBeOpen>
+</ProcessModel>

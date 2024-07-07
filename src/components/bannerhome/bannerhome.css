@@ -1,0 +1,125 @@
+.header-home {
+    box-sizing: border-box;                     
+    /* A área do cabeçalho depende do seu conteúdo */
+    
+    display: flex;                              
+    /* Deixa seus elementos internos livres */
+    
+    justify-content: space-between;             
+    background: linear-gradient(240deg, #2E2E2E, #161616); 
+    
+    padding: 1rem 0rem 1rem 0rem;
+
+    align-items: center;
+}
+
+.header-logo{
+    padding-left: 10%;
+    width: auto;
+    height: auto;
+
+}
+
+/* Estilo do botão celular sem tela pequena*/
+.header-home .botao-celular {
+    visibility: hidden;                         
+    /* Esconde-se pois não precisa se a tela estiver grande) */
+}
+
+
+/* Tópicos do menu independente da tela */
+nav a {
+    color: #EBEBEB;                            
+    text-decoration: none; 
+    margin: 1.75rem;
+    font-weight: 500;              
+}
+
+
+/* Tópicos do menu quando passar o mouse */
+nav a:hover {
+    color: #D4A5FF;                             
+}
+
+
+/* Programação quando a tela estiver na metade */
+@media only screen and (max-width: 1065px) {
+
+    /* Botão celular */
+    .header-home .botao-celular {
+        font-size: 2rem;                          
+        /* Tamanho da fonte */
+
+        visibility: visible;                    
+        /* Deisa clicável */
+
+        opacity: 1;
+
+        color: #D4A5FF;                            
+        /* Define a cor do ícone */
+
+        background: transparent;
+
+        border-color: transparent;
+        margin-right: 5%;
+        
+    }
+
+    /* Menu que desce */
+    .header-home nav {
+        position: fixed;                        
+        /* Fixa na tela o menu que não desce*/
+        /* [IMPORTANTE] */
+        
+        top: -92vh;                            
+        /* Posição de baixo para cima quando aba descer */
+        
+        height: 40%;                           
+        /* Altura da aba que desce */
+        
+        width: 100%;                            
+        /* Largura da aba que desce */
+        
+        opacity: 1;
+
+        display: flex;                          
+        /* Tópicos do menu flexível quando aba descer */
+        
+        flex-direction: column;                 
+        /* Tópicos viram colunas */
+        
+        align-items: center;                    
+        /* Tópicos centralizados horizontalmente */
+        
+        justify-content: center;                
+        /* Tópicos centralizados verticalmente */
+        
+        background-color: #6000B6;             
+        /* Cor da aba que desce */
+        
+        transition: 0.5s;                         
+        /* Tempo pra aba descer */
+
+    
+    }
+
+
+    /* Mostrando a aba que desce */
+    .header-home .responsivo {
+        transform: translateY(100vh);           
+    }
+
+
+    /* Ícone que fecha aba que desce */
+    nav .botao-fechar {
+        position: absolute;                     /* Define a posição absoluta para o botão de fechar a navegação responsiva */
+        top: 2rem;                              /* Define a distância de 2 rem do topo da tela para o botão de fechar */
+        right: 2rem;                            /* Define a distância de 2 rem da direita da tela para o botão de fechar */
+    }
+
+    /* Tamanho dos tópicos dentro da aba que desce */
+    nav a {
+        font-size: 1.5rem;                  /* Define o tamanho da fonte dos links dentro da navegação responsiva como 1.5 rem */
+    }
+}
+

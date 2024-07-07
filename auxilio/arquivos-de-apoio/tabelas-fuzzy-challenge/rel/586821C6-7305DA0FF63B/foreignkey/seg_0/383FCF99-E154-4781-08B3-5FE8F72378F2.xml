@@ -1,0 +1,17 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" directorySegmentName="seg_0" id="383FCF99-E154-4781-08B3-5FE8F72378F2" containerWithKeyObject="CD8E1D75-3EA0-F1D3-8846-1E06DD045A71" localFKIndex="C89C6310-B2BA-3B9E-7769-8C6C96D6A726" name="MANAGERS_LOCATIONS_FK">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>28D2D6DF-F29B-75D3-58B1-0F7075EF7D61</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<referredTableLongName>LOCATIONS</referredTableLongName>
+<deleteRule>NO ACTION</deleteRule>
+<referredTableID>B08EC83C-A5C7-DC3F-27A5-6A5BC8425C9D</referredTableID>
+<keyObject>83477147-54BC-C1A7-C845-BC84C4A2CDDE</keyObject>
+<referredKeyID>83477147-54BC-C1A7-C845-BC84C4A2CDDE</referredKeyID>
+<mandatory>false</mandatory>
+<refColNames>id_location</refColNames>
+<transferable>true</transferable>
+<rely>false</rely>
+<columnDependencyConstraintGenerateInDDL>true</columnDependencyConstraintGenerateInDDL>
+</FKIndexAssociation>

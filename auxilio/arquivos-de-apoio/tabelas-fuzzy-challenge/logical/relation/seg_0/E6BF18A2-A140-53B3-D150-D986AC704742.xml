@@ -1,0 +1,20 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Relation_6" directorySegmentName="seg_0" id="E6BF18A2-A140-53B3-D150-D986AC704742">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:19:41 UTC</createdTime>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<engineerTo>
+<item key="89654DA6-B405-9028-D146-16E0E595AB5F" value="true"/>
+<item key="586821C6-9FFF-3B5D-B4B4-7305DA0FF63B" value="true"/>
+</engineerTo>
+<targetPk>1419F628-44AF-5C4F-71DB-E538F679751C</targetPk>
+<identifying>false</identifying>
+<optionalSource>true</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>B952AF7F-F073-D7BE-A6AA-AA7E99431722</sourceEntity>
+<targetCardinalityString>1</targetCardinalityString>
+<targetEntity>E5042F23-A4F4-B309-8D17-B9C4E1CB3492</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

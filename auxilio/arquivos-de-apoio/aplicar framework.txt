@@ -1,0 +1,22 @@
+Aplicar Material UI
+
+(A) No console:
+1: npm install @mui/material @emotion/react @emotion/styled
+2: yarn add @mui/material @emotion/react @emotion/styled
+
+(B) No topo do JS:
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+
+(C) No código:
+      <form>
+        <CampoTexto label="E-mail" placeholder="Digite seu e-mail aqui" />
+        <CampoSenha label="Senha" placeholder="Digite sua senha aqui" />
+      </form>
+      <div className='entrar-esqueci'>
+        <Typography variant="body2">Esqueci minha senha</Typography>
+        <Button variant="contained" color="primary">ENTRAR</Button>
+      </div>
+
+
+

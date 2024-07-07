@@ -1,0 +1,48 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="B08EC83C-A5C7-DC3F-27A5-6A5BC8425C9D" name="LOCATIONS">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>032D0070-77C9-7691-C6D5-239CDE7FB889</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_location" id="A85D4695-71A6-886D-8705-E8341E333C82">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>B8BB0D5E-E451-51CF-157B-A691A19D4D1E</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="location" id="5DECCCF9-2E6F-AB22-9FB6-6864209EF8F1">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>D8D0B45C-32BE-82C4-5EBD-1D87336E5F84</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="83477147-54BC-C1A7-C845-BC84C4A2CDDE" name="LOCATIONS_PK">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>35AAB183-A9AA-EE9A-E6C7-0D91413A002F</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="A85D4695-71A6-886D-8705-E8341E333C82"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

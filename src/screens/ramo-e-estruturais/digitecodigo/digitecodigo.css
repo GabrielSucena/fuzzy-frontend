@@ -1,0 +1,26 @@
+.digite-codigo {
+    display: flex;
+    flex-direction: column; /* Define a direção dos itens como coluna */
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
+    text-align: center;
+    padding-bottom: 20rem;
+  }
+
+.p-digite-o-codigo{
+    padding-bottom: 1rem;
+}
+  
+.campos-digite-codigo {
+    max-width: 30rem;
+    width: 77%;
+    min-width: 6rem;
+    text-align: center;
+    display: block;
+  }
+
+  .botoes-digite-codigo{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }

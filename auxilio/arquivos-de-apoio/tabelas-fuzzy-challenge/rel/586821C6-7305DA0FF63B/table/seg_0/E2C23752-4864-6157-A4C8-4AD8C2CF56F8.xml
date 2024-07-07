@@ -1,0 +1,119 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E2C23752-4864-6157-A4C8-4AD8C2CF56F8" name="COURSES">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>94FCCC87-657E-A111-8032-DC0F7D1A1005</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id_course" id="23292609-4417-9503-E0CF-3977B3098D4C">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>6D0CD303-A4D0-6039-7F59-03DF8E08AD76</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="name" id="A76E48D6-877F-1E02-52C9-8A101F808598">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>D5CE440A-C15E-1A37-F5EC-3BEE8732FF09</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="description" id="E7002312-823A-9C81-C522-2BA751938A4A">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>583D9862-DA38-88CE-8036-C6F41C665479</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="pontuation" id="B88D4632-A1DE-D16C-28AD-54E460E7D23E">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>429A95F4-E51F-3FB3-F03B-8505C3276B98</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="difficulty" id="FF238CA1-326E-BCA3-CE53-A1AEA71D83F3">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>67566FCB-C217-44E1-7B9F-DE2F3C712D0C</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="duration" id="755293D6-63B3-F724-D847-129FA4B44572">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>9BBCC286-DA69-14E2-79DC-31644DD228CF</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT027</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="COACHES_id_coach" id="2DD62D43-1F4C-E2FB-CA91-07F9BD2D1A84">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>0B15F719-29FF-E231-3696-BDFFCCC25B97</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="FD3AAB68-2B88-833B-297C-FA898CC66B51" referredColumn="52DBF26A-62AA-C081-919C-CB09DDE9E70E"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F00846D6-C9E7-554E-F9EE-84DAA5D6F2B4" name="COURSES_PK">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>BCA2935B-C817-0D31-1439-71B2D05F323C</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="23292609-4417-9503-E0CF-3977B3098D4C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="44DEB7F3-1152-B294-10F3-9A604FA31830" name="COURSES_COACHES_FK">
+<createdBy>vinii</createdBy>
+<createdTime>2024-05-09 06:41:20 UTC</createdTime>
+<generatorID>34F029CF-E525-BA9C-F6A7-19A9816BF586</generatorID>
+<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="2DD62D43-1F4C-E2FB-CA91-07F9BD2D1A84"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

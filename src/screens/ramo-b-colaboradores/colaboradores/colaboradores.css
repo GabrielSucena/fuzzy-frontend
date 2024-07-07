@@ -1,0 +1,20 @@
+
+/* Centraliza o card dentro da div .colaboradores */
+.colaboradores {
+    justify-content: center;
+    align-items: center;
+    border-radius: 2.5%;
+    display: flex;
+}
+
+/* Estilo para o card */
+.colaboradores-card {
+    border: 1px solid #ABABAB;
+    width: 80%;  /* Define um tamanho adequado */
+    height: 30rem; /* Define um tamanho adequado */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;  /* Ajuste conforme necessário */
+    margin-bottom: 10rem;
+}

@@ -1,0 +1,5 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.StorageDesignSqlServerv2k12>
+   <object objectType="Role" objectID="DB_NULLELEMENT_PUBLIC" name="PUBLIC" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.RoleSqlServerv2k12" propertyParentId="980FCE9E-C9FB2DCAED45"/>
+   <object objectType="User" objectID="DB_NULLELEMENT_dbo" name="dbo" seqName="seg_0" propertyClassName="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.UserSqlServerv2k12" propertyParentId="980FCE9E-C9FB2DCAED45"/>
+</oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.StorageDesignSqlServerv2k12>

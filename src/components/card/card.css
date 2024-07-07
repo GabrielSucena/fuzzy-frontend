@@ -1,0 +1,36 @@
+/* card.css */
+
+.card {
+    position: relative; /* Importante para o posicionamento do botão */
+    border: 1px solid rgba(185, 185, 185, 0.5);
+    text-align: center;
+    margin-bottom: 10rem;
+    padding: 3rem 2rem;
+    border-radius: 1.5rem;
+    width: 28rem;
+    height: 30rem;
+    padding-bottom: 1rem 1rem 3rem 1rem;
+    background-color: FFFFFF;
+}
+
+.botao-home-card {
+    position: absolute;
+    bottom: 3rem; /* Distância de 2 rem do final */
+    left: 50%; /* Centralizar horizontalmente */
+    transform: translateX(-50%); /* Ajuste para centralizar horizontalmente */
+}
+
+.card-title {
+    margin: 0;
+    padding: 0;
+    font-size: 1.75rem;
+    color: #141414;
+    font-weight: 700; /* Alterado para 700 para um negrito padrão */
+}
+
+.card-description {
+    margin: 0;
+    padding: 1rem 0rem 2rem 0rem;
+    font-size: 1.5rem;
+    color: #707070;
+}
