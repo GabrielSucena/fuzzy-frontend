@@ -1,13 +1,36 @@
-import './botao.css'
+import React from 'react';
+import './botao.css';
 
-const Botao = (props) => {
+const Botao = ({ color, children, destino }) => {
     return (
-        <button className='botao-principal'>
-            {props.children}
-        </button>
-    )
+        <>
+            {color === 'roxo' ? (
+                destino !== '' ? (
+                    <a href={destino} className='link-botao'>
+                        <button className='botao-roxo'>
+                            {children}
+                        </button>
+                    </a>
+                ) : (
+                    <button className='botao-roxo'>
+                        {children}
+                    </button>
+                )
+            ) : (
+                destino !== '' ? (
+                    <a href={destino} className='link-botao'>
+                        <button className='botao-branco'>
+                            {children}
+                        </button>
+                    </a>
+                ) : (
+                    <button className='botao-branco'>
+                        {children}
+                    </button>
+                )
+            )}
+        </>
+    );
 }
 
-export default Botao
-
-// {props.children} receeb tudo que vem entre a tag <Botao> dentro do 'index.js' do 'Formulario'
+export default Botao;

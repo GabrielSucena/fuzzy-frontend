@@ -47,9 +47,10 @@ const Formulario = (props) => {
                 />
                 <div className='entrar-esqueci'>
                     <Link to='/digite-o-email'><p>Esqueci minha senha</p></Link>
-                    <Link to={nome !== '' && senha !== '' ? '/home' : '/'}> {/* Verifica se ambos os campos estão preenchidos */}
-                        <Botao type="submit">
-                            ENTRAR
+                    {/*<Link to={nome !== '' && senha !== '' ? '/home' : '/'}>  Verifica se ambos os campos estão preenchidos */}
+                    <Link to='/home'>
+                        <Botao type="submit" color="roxo">
+                            Entrar
                         </Botao>
                     </Link>
                 </div>
