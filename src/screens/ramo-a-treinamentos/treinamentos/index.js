@@ -1,18 +1,22 @@
-import "./treinamentos.css"
-import Bannerhome from '../../../components/bannerhome'
-import Rodape from '../../../components/rodape'
+import "./treinamentos.css";
+import Bannerhome from "../../../components/bannerhome";
+import Rodape from "../../../components/rodape";
+import TituloPagina from "../../../components/titulopagina";
 
-function Treinamentos(){
+function Treinamentos() {
+  return (
+    <>
+      <Bannerhome />
+      <TituloPagina
+        titulopagina="Treinamentos"
+        botao1="Adicionar"
+        destino1="/adicionar-treinamentos"
+        color1="roxo"
+      />
 
-    return(
-        <>
-            <Bannerhome />
-            <div className="treinamentos">
-                Treinamentos
-            </div>
-            <Rodape />
-        </>
-    )
+      <Rodape />
+    </>
+  );
 }
 
 export default Treinamentos;
