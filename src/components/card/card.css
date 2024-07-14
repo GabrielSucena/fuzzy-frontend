@@ -11,6 +11,8 @@
     height: 30rem;
     padding-bottom: 1rem 1rem 3rem 1rem;
     background-color: FFFFFF;
+    text-decoration: none;
+    
 }
 
 .botao-home-card {
@@ -18,6 +20,7 @@
     bottom: 3rem; /* Distância de 2 rem do final */
     left: 50%; /* Centralizar horizontalmente */
     transform: translateX(-50%); /* Ajuste para centralizar horizontalmente */
+    text-decoration: none;
 }
 
 .card-title {
@@ -26,6 +29,7 @@
     font-size: 1.75rem;
     color: #141414;
     font-weight: 700; /* Alterado para 700 para um negrito padrão */
+    text-decoration: none;
 }
 
 .card-description {
@@ -33,4 +37,28 @@
     padding: 1rem 0rem 2rem 0rem;
     font-size: 1.5rem;
     color: #707070;
+    text-decoration: none;
+}
+
+/* Estilo para os links */
+.botao-enfeite {
+    text-decoration: none;
+    background-color: var(--roxo);
+    color: var(--branco);
+    padding: 1rem 3rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    border: none;
+}
+
+.botao-enfeite:hover {
+    font-weight: bold;
+    font-size: 1.25rem;
+    cursor: cell;
+    cursor: pointer;
+}
+
+.botao-enfeite:active {
+    background-color: var(--preto);
+
 }

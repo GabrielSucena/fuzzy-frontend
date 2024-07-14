@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import './digitecodigo.css';
-import Banner from '../../../components/banner';
 import Botao from '../../../components/botao';
 import { Link } from 'react-router-dom'
 import InputCode from "../../../components/verificationcode";
-import Rodape from '../../../components/rodape';
 
 export function DigiteCodigo() {
   const [loading, setLoading] = useState(false);
@@ -12,7 +10,6 @@ export function DigiteCodigo() {
 
   return (
     <>
-      <Banner />
       <section className="digite-codigo">
         <div className='campos-digite-codigo'>
           <p className='p-digite-o-codigo'>Insira o código de 4 números que foi enviado para o seu email</p>
@@ -28,7 +25,6 @@ export function DigiteCodigo() {
 
         </div>
       </section>
-      <Rodape />
     </>
   );
 }

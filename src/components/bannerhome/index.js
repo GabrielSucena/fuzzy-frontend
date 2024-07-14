@@ -16,7 +16,7 @@ function Bannerhome(props) {
 
     return (
         <header className="header-home">  
-            <Link to = "/home" className="header-logo"> <img className="header-logo-image" src={`${process.env.PUBLIC_URL}/imagens/logohome.svg`} alt="Logo da Fuzzy"/> </Link>
+            <Link to = "/" className="header-logo"> <img className="header-logo-image" src={`${process.env.PUBLIC_URL}/imagens/logohome.svg`} alt="Logo da Fuzzy"/> </Link>
             {/*<img className="header-logo" src={`${process.env.PUBLIC_URL}/imagens/logohome.svg`} alt="Logo da Fuzzy"/>*/}
             <nav className='topicos' ref={navRef}> {/* Amarra os tópicos ao elemento "navRef" */}
                 <a href="/auditoria"><FontAwesomeIcon icon={faPaintBrush} /> Auditoria</a>       

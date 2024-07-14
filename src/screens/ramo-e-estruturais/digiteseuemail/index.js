@@ -1,11 +1,10 @@
 
-import Banner from '../../../components/banner';
+
 import React, { useState } from 'react';
 import CampoTexto from '../../../components/campotexto'
 import Botao from '../../../components/botao'
 import './digiteseuemail.css'
 import { Link } from 'react-router-dom'
-import Rodape from '../../../components/rodape';
 
 export function DigiteSeuEmail() {
 
@@ -13,7 +12,6 @@ export function DigiteSeuEmail() {
 
     return (
         <>
-            <Banner/>
             <section className='digiteseuemail'>
                 <div className='campos-email'>
                     <CampoTexto
@@ -30,7 +28,6 @@ export function DigiteSeuEmail() {
                 </div>
 
             </section>
-            <Rodape />
         </>
 
     );

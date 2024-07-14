@@ -1,40 +1,36 @@
-import React from "react";
-import { SimpleGrid, Box as ChakraBox } from "@chakra-ui/react";
-import Bannerhome from '../../../components/bannerhome';
-import Rodape from '../../../components/rodape';
+import  {React , useHistory } from "react";
+//import { SimpleGrid } from "@chakra-ui/react";
 import TituloPagina from "../../../components/titulopagina";
-import "./adiciona-colaborador.css"; // Importe seu arquivo de estilos CSS aqui
-import { TextField } from '@mui/material';
+//import { FormControl, TextField, InputLabel, MenuItem, Select } from '@mui/material';
+//import Botao from "../../../components/botao";
+import "./adiciona-colaborador.css";
+import FormularioColaborador from "../../../components/formularioColaborador";
+import { useNavigate } from "react-router-dom";
 
 function CadastroColaborador() {
-    function PostColaborador(e){
-        e.preventDefault();
-        console.log("Ativei!");
-    }
+
+    const navigate = useNavigate()
+
+    function createPost(colaborador){
+        
+        fetch('http://localhost:5000/colaboradores', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+            },
+            body: JSON.stringify(colaborador),
+        })
+            .then((resp) => resp.json()
+            .then((data) => {
+                console.log(data)
+            })
+        .catch((err) => console.log(err)))
+        }
 
     return (
         <>
-            <Bannerhome />
             <TituloPagina titulopagina="Adicionar colaborador" />
-            <div className="conteiner-cadastro">
-                <ChakraBox className="quadrado-cadastro" maxW="30rem" mx="auto">
-                    <SimpleGrid columns={2} spacingX='1rem' spacingY='20px'>
-                        <TextField
-                                required
-                                id="outlined-required"
-                                label="Required"
-                                defaultValue="Hello World"
-                        />
-                        <TextField
-                                required
-                                id="outlined-requireds"
-                                label="Required"
-                                defaultValue="Hello World"
-                        />
-                    </SimpleGrid>
-                </ChakraBox>
-            </div>
-            <Rodape />
+            <FormularioColaborador handleSubmit={createPost} textoBotao="Adicionar" textoBotao2="Cancelar" />
         </>
     );
 }

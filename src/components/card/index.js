@@ -1,7 +1,6 @@
 import "./card.css";
 //import { Button } from "react-native-web";
 import Botao from '../../components/botao';
-import { Link } from 'react-router-dom'
 
 function Card(props){
 
@@ -16,7 +15,7 @@ function Card(props){
                 <i className="fa fa-spinner fa-pulse fa-5x"></i>
             </div>
             <div className="botao-home-card">
-                <Link to='/a'><Botao> Acessar </Botao></Link>
+                <button className="botao-enfeite"> Acessar </button>
             </div>
             
         </div>

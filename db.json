@@ -1,0 +1,190 @@
+{
+  "colaboradores": [
+    {
+      "id": 1,
+      "fullName": "João Silva",
+      "collaboratorRecord": 12345,
+      "collaboratorPosition": "Desenvolvedor",
+      "collaboratorDepartment": "TI"
+    },
+    {
+      "id": 2,
+      "fullName": "Maria Souza",
+      "collaboratorRecord": 67890,
+      "collaboratorPosition": "Designer",
+      "collaboratorDepartment": "Design"
+    },
+    {
+      "id": 3,
+      "fullName": "José Oliveira",
+      "collaboratorRecord": 13579,
+      "collaboratorPosition": "Analista de Negócios",
+      "collaboratorDepartment": "Finanças"
+    },
+    {
+      "id": "b4d9"
+    },
+    {
+      "id": "0017"
+    },
+    {
+      "id": "edf2"
+    },
+    {
+      "id": "d65a"
+    },
+    {
+      "id": "44dc"
+    },
+    {
+      "id": "7602"
+    },
+    {
+      "id": "f60b"
+    },
+    {
+      "id": "ba4c"
+    },
+    {
+      "id": "5de7"
+    },
+    {
+      "id": "de6a"
+    },
+    {
+      "id": "9212"
+    },
+    {
+      "id": "e5c4"
+    },
+    {
+      "id": "bef1"
+    },
+    {
+      "id": "f46d"
+    },
+    {
+      "id": "c9b9"
+    },
+    {
+      "id": "474a"
+    },
+    {
+      "id": "01ba"
+    },
+    {
+      "id": "0441"
+    },
+    {
+      "id": "7a3c"
+    },
+    {
+      "id": "7ad6"
+    },
+    {
+      "id": "eb93",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "1ef3",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "17c2",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "55a7",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "387a",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "0cb8",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "d0fc",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "b42b",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "ef72",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "b3fd",
+      "": "123456",
+      "undefined": 1
+    },
+    {
+      "id": "b138"
+    },
+    {
+      "id": "6313"
+    },
+    {
+      "id": "f302"
+    },
+    {
+      "id": "83eb"
+    },
+    {
+      "id": "b82c"
+    },
+    {
+      "id": "b269"
+    },
+    {
+      "id": "5bc1"
+    },
+    {
+      "id": "24b8"
+    },
+    {
+      "id": "f6a3"
+    }
+  ],
+  "departamentos": [
+    {
+      "id": 1,
+      "name": "Saúde"
+    },
+    {
+      "id": 2,
+      "name": "Recursos Humanos"
+    },
+    {
+      "id": 3,
+      "name": "Financeiro"
+    }
+  ],
+  "cargos": [
+    {
+      "id": 1,
+      "name": "Analista I"
+    },
+    {
+      "id": 2,
+      "name": "Analista II"
+    },
+    {
+      "id": 3,
+      "name": "Analista III"
+    }
+  ]
+}

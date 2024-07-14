@@ -1,7 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<MultidimensionalDesign class="oracle.dbtools.crest.model.design.multidimensional.MultidimensionalDesign" name="Multidimensional_1" id="E560FECD-93EA-B5CD-1782-088B89D5982E" mainViewID="3AE0C04C-1C3A-E1B8-DCF9-5ED8E3B30B60" boundModel="717B4B72-785D-F309-16BA-B9940069A54D">
-<createdBy>vinii</createdBy>
-<createdTime>2024-05-09 06:36:49 UTC</createdTime>
-<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
-<shouldBeOpen>false</shouldBeOpen>
-</MultidimensionalDesign>

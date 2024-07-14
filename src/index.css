@@ -1,11 +1,26 @@
 
-body {
-    margin: 0px;
+* {
+    margin: 0rem;
     font-family: 'Nunito Sans', sans-serif;
-    background-color: #FBFBFB;
+    padding: 0rem;
   }
   
-  code {
-font-family: 'Nunito Sans', sans-serif;
-  }
-  
+  :root {
+    --roxo: #6000B6; 
+    --preto: #202224; 
+    --preto-escuro: #111111;
+    --cinza: #ABABAB;
+    --branco-escuro: #FBFBFB; 
+    --branco: #FCFDFD;
+
+    --vermelho-escuro: #C53838;
+    --vermelho: #FF5B5B;
+    --salmao: #FFC6C6;
+    --laranja: #FF9900;
+    --amarelo: #FFC700;
+    --verde: #30B72E;
+    --cinza-escuro: #969696;
+
+    --azul: #42A4EC;
+    --rosa: #F18DF3;
+}

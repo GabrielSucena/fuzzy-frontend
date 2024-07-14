@@ -15,15 +15,18 @@ function TituloPagina({
     return (
         <>
             <div className="topo-telas">
-                {divisor1 && (<hr className="divisor" />)}
+                {divisor1 && (<hr className="divisorcima" />)}
                 <p className="titulo-pagina">{titulopagina}</p>
                 {descricaotitulo !== '' && (<p className="descricao-titulo">{descricaotitulo}</p>)}
-                {(botao1 !== '' || botao2 !== '' || botao3 !== '') && (<div className="botoes-titulo-pagina">
+                {(botao1 !== '' || botao2 !== '' || botao3 !== '') && (
+                    <div className="botoes-titulo-pagina">
                         {botao1 !== '' && (<Botao destino={destino1} color={color1}>{botao1}</Botao>)}
                         {botao2 !== '' && (<Botao destino={destino2} color={color2}>{botao2}</Botao>)}
-                        {botao3 !== '' && (<Botao destino={destino3} color={color3}>{botao3}</Botao>)}</div>)}
+                        {botao3 !== '' && (<Botao destino={destino3} color={color3}>{botao3}</Botao>)}
+                    </div>
+                )}
             </div>
-            {divisor2 && (<hr className="divisor" />)}
+            {divisor2 && (<hr className="divisorbaixo" />)}
         </>
     );
 }
