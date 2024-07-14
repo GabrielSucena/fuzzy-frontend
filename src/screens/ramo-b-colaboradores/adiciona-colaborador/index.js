@@ -1,31 +1,30 @@
-import  {React , useHistory } from "react";
-//import { SimpleGrid } from "@chakra-ui/react";
+import { React } from "react";
 import TituloPagina from "../../../components/titulopagina";
-//import { FormControl, TextField, InputLabel, MenuItem, Select } from '@mui/material';
-//import Botao from "../../../components/botao";
 import "./adiciona-colaborador.css";
 import FormularioColaborador from "../../../components/formularioColaborador";
 import { useNavigate } from "react-router-dom";
 
 function CadastroColaborador() {
+    const navigate = useNavigate();
 
-    const navigate = useNavigate()
+    function createPost(collaborator) {
+        if (!collaborator.collaboratorDepartment) {
+            collaborator.collaboratorDepartment = [];
+        }
 
-    function createPost(colaborador){
-        
-        fetch('http://localhost:5000/colaboradores', {
+        fetch('http://localhost:5000/collaborators', {
             method: 'POST',
             headers: {
                 'Content-type': 'application/json',
             },
-            body: JSON.stringify(colaborador),
+            body: JSON.stringify(collaborator),
         })
-            .then((resp) => resp.json()
-            .then((data) => {
-                console.log(data)
+            .then((resp) => resp.json())
+            .then(() => {
+                navigate('/colaboradores', { state: { message: "Colaborador adicionado com sucesso!" } });
             })
-        .catch((err) => console.log(err)))
-        }
+            .catch((err) => console.log(err));
+    }
 
     return (
         <>

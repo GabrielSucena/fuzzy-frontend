@@ -4,23 +4,12 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/mater
 import Botao from '../botao';
 import { useEffect, useState } from 'react';
 
-function FormularioColaborador({ textoBotao, textoBotao2, handleSubmit, collaboratorData }) {
-    const [fullName, setFullName] = useState('');
-
-    const [collaborator, setCollaborator] = useState(collaboratorData || {})
-
-    const [job, setJob] = useState([]); // Inicializa como array vazio
-    const [departamentos, setDepartamentos] = useState([]); // Inicializa como array vazio
-
-    const [selectedJob, setSelectedJob] = useState(''); // Estado para o cargo selecionado
-    const [selectedDepartment, setSelectedDepartment] = useState(''); // Estado para o departamento selecionado
-
-    const [record, setRecord] = useState('');
-    const [email, setEmail] = useState('');
-    const [emailError, setEmailError] = useState('');
+function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, textoBotao2 }) {
+    const [departments, setDepartments] = useState([]);
+    const [collaborator, setCollaborator] = useState(collaboratorData || {});
 
     useEffect(() => {
-        fetch('http://localhost:5000/departamentos', {
+        fetch('http://localhost:5000/departments', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,117 +17,82 @@ function FormularioColaborador({ textoBotao, textoBotao2, handleSubmit, collabor
         })
             .then((resp) => resp.json())
             .then((data) => {
-                setDepartamentos(data);
-            })
-            .catch((err) => console.log(err));
-
-        fetch('http://localhost:5000/cargos', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then((resp) => resp.json())
-            .then((data) => {
-                setJob(data);
+                setDepartments(data);
             })
             .catch((err) => console.log(err));
     }, []);
 
-    const handleChangeFullName = (event) => {
-        setFullName(event.target.value);
-    };
-
-    const handleChangeDepartment = (event) => {
-        setSelectedDepartment(event.target.value);
-    };
-
-    const handleChangeRecord = (event) => {
-        setRecord(event.target.value);
-    };
-
-    const handleChangeJob = (event) => {
-        setSelectedJob(event.target.value);
-    };
-
-    const handleChangeEmail = (event) => {
-        const value = event.target.value;
-        setEmail(value);
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(value)) {
-            setEmailError('Email inválido');
-        } else {
-            setEmailError('');
-        }
-    };
-
-    const envioColaborador = (e) => {
+    const submit = (e) => {
         e.preventDefault();
-        if (emailError) {
-            console.log("Corrija os erros antes de enviar.");
-            return;
-        }
-        
-        const jsonOutput = {
-            fullName: fullName,
-            email: email,
-            collaboratorPosition: selectedJob,
-            collaboratorDepartment: selectedDepartment,
-            collaboratorRecord: record
-        };
-
-        console.log(jsonOutput);
-
-
+        handleSubmit(collaborator);
     };
+
+    function handleChange(e) {
+        setCollaborator({ ...collaborator, [e.target.name]: e.target.value });
+        
+    }
+
+    function handleSelectDepartment(e) {
+        const selectedDepartmentId = e.target.value;
+        const selectedDepartment = departments.find(department => department.id === selectedDepartmentId);
+        setCollaborator({
+            ...collaborator,
+            collaboratorDepartment: {
+                id: selectedDepartmentId,
+                name: selectedDepartment ? selectedDepartment.name : '',
+                /*Função handleSelectDepartment:
+                    Agora, handleSelectDepartment busca o departamento selecionado da lista departments usando o id selecionado.
+                    Em seguida, atualiza o estado collaborator com o id e o name do departamento selecionado.*/
+            },
+        });
+        //console.log(collaborator);
+    }
 
     return (
-        <form className="conteiner-cadastro" onSubmit={envioColaborador}>
+        <form className="conteiner-cadastro" onSubmit={submit}>
             <SimpleGrid columns={2} spacingX="3rem" spacingY="4rem" autoComplete="on">
                 <TextField 
+                    required
                     className="campo" 
-                    required 
-                    id="fullName" 
+                    type='text'
+                    name='fullName'
                     label="Nome completo" 
-                    value={fullName} 
-                    onChange={handleChangeFullName} 
+                    id='fullName'
+                    placeholder='Digite o nome aqui'
+                    onChange={handleChange}
+                    value={collaborator.fullName ? collaborator.fullName : ''}
                 />
+                
                 <FormControl fullWidth className="campo">
                     <InputLabel id="collaboratorDepartment">Departamento</InputLabel>
                     <Select 
-                        required 
-                        labelId="collaboratorDepartment" 
-                        value={selectedDepartment} 
+                        required
+                        onChange={handleSelectDepartment}
+                        value={collaborator.collaboratorDepartment ? collaborator.collaboratorDepartment.id : ''}
+                        labelId="collaboratorDepartment"
+                        name="collaboratorDepartment" 
                         label="Departamento" 
-                        onChange={handleChangeDepartment}>
-                        {departamentos.map((value) => (
-                            <MenuItem value={value.id} key={value.id}>{value.name}</MenuItem>
-                        ))}
+                    >
+                        {departments.map((department) => (
+                            <MenuItem value={department.id} key={department.id}>{department.name}</MenuItem>
+                        ))}   
                     </Select>
                 </FormControl>
+                {/*}
                 <TextField 
                     className="campo" 
                     required 
                     id="email" 
                     label="Email" 
-                    value={email} 
-                    onChange={handleChangeEmail} 
-                    error={!!emailError} 
-                    helperText={emailError}
                 />
                 <FormControl fullWidth className="campo">
                     <InputLabel id="collaboratorPosition">Cargo</InputLabel>
                     <Select 
                         required 
                         labelId="collaboratorPosition" 
-                        value={selectedJob} 
                         label="Cargo" 
-                        onChange={handleChangeJob}
                     >
-                        {job.map((value) => (
-                            <MenuItem value={value.id} key={value.id}>{value.name}</MenuItem>
-                        ))}
+
                     </Select>
                 </FormControl>
                 <TextField 
@@ -146,13 +100,11 @@ function FormularioColaborador({ textoBotao, textoBotao2, handleSubmit, collabor
                     required 
                     id="collaboratorRecord" 
                     label="Registro" 
-                    value={record} 
-                    onChange={handleChangeRecord} 
-                />
+                />*/}
             </SimpleGrid>
             <div className="botoes">
-                <Botao type='submit' color='roxo' destino='/ver-colaborador' text={textoBotao} />
-                <Botao type='reset' color='branco' destino='/' text={textoBotao2} />
+                <Botao type='submit' color='roxo' text={textoBotao} />
+                <Botao type='reset' color='branco' text={textoBotao2} />
             </div>
         </form>
     );
