@@ -46,7 +46,7 @@
     text-align: center;
 }
 
-.botoesmodal, .botoespopup {
+.botoesmodal{
     display: flex;
     justify-content: center;
     width: 100%;

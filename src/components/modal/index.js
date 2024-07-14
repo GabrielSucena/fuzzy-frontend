@@ -3,7 +3,7 @@ import './modal.css';
 import Botao from "../botao";
 
 function Modal({
-    justificativa = 'Aer',
+    justificativa = '',
     titulomodal = 'Título do modal',
     descricaomodal = 'Descrição modal',
     destinoconfirmar = '/confirmar',      destinocancelar = '/cancelar',
