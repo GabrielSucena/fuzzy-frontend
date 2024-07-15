@@ -1,5 +1,14 @@
 {
-  "collaborators": [],
+  "collaborators": [
+    {
+      "id": "d03b",
+      "fullName": "Vinicius Domingues",
+      "collaboratorDepartment": {
+        "id": "1",
+        "name": "Saúde"
+      }
+    }
+  ],
   "departments": [
     {
       "id": "1",
