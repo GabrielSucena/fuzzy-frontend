@@ -1,46 +1,48 @@
-.formulario {
-    display: flex;
-    flex-direction: column; /* Define a direção dos itens como coluna */
-    justify-content: center; /* Centraliza o conteúdo verticalmente */
-    align-items: center; /* Centraliza o conteúdo horizontalmente */
-  }
-  
-  form {
-    max-width: 30rem;
-    width: 90%;
-    min-width: 6rem;
-  }
-  
-  .entrar-esqueci {
-    display: flex; /* Os elementos podem se mexer */
-    justify-content: space-between; /* Se posiciona mais distante um do outro encostando na extremidade */
-    width: 100%; /* Ocupa 100% da tela do elemento pai (form) */
-    flex-wrap: wrap; /* Se espremer cai pra baixo o elemento */
-  }
-
-  .entrar-esqueci p{
-    color: #7A00E6;
-    text-decoration: underline;
-    font-weight: bold;
-  }
-
-  /*
-Erro da posição dos botões:
+.formulario-container {
+  display: flex;
+  justify-content: center; /* Centraliza o conteúdo horizontalmente */
+  align-items: center; /* Centraliza o conteúdo verticalmente */
+  gap: 2rem; /* Espaço entre a imagem e o formulário */
+  padding: 0rem; /* Adiciona algum padding ao redor do contêiner */
+  flex-wrap: wrap;
+  margin-top: 5%;
+}
 
 .formulario {
-    display: block;
-    width: 100%;
+  display: flex;
+  flex-direction: column; /* Define a direção dos itens como coluna */
+  justify-content: center; /* Centraliza o conteúdo verticalmente */
+  align-items: center; /* Centraliza o conteúdo horizontalmente */
 }
 
-form {
-    max-width: 75%;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+.formulario-login {
+  max-width: 30rem;
+  width: 70%;
+  min-width: 6rem;
+  padding: 1rem 3rem 3rem 3rem;
+  border: 1px solid #f1f1f1;
+  border-radius: 1rem;
+  box-shadow: var(--preto);
+  background-color: #FFFFFF;
 }
 
-.entrar-esqueci{
-    text-align: center;
+.entrar-esqueci {
+  display: flex; /* Os elementos podem se mexer */
+  justify-content: space-between; /* Se posiciona mais distante um do outro encostando na extremidade */
+  width: 100%; /* Ocupa 100% da tela do elemento pai (form) */
+  flex-wrap: wrap; /* Se espremer cai pra baixo o elemento */
+  align-items: center;
 }
 
-  */
+.entrar-esqueci p {
+  color: #7A00E6;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.imgLogin {
+  max-width: 40%;
+  min-width: 15rem;
+  height: auto; /* Mantém a proporção da imagem */
+}
+

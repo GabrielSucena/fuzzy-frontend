@@ -1,3 +1,9 @@
 .login{
     padding-bottom: 14rem;
 }
+
+@media (max-width: 768px) {
+    .login {
+      padding-bottom: 0; /* Remove o padding se a imagem for pequena */
+    }
+  }

@@ -1,30 +1,55 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./ver-colaborador.css";
 import TituloPagina from "../../../components/titulopagina";
+import { useParams } from 'react-router-dom'
 
 function VerColaborador() {
+    const { id } = useParams();
+    const [collaborator, setCollaborator] = useState(null);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/collaborators/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            },
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            setCollaborator(data);
+            console.log(data);
+        })
+        .catch(err => console.log(err));
+    }, [id]);
+
+    // Conditional rendering until collaborator data is fetched
+    if (!collaborator) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <>
             <TituloPagina
-                titulopagina="{{nome}}"
-                descricaotitulo="Registro: {{id}}"
+                titulopagina={collaborator.fullName || "Nome do Colaborador"}
+                descricaotitulo={`Registro: ${collaborator.id || ""}`}
                 divisor2={true}
                 botao1="Editar"
                 color1="roxo"
-                destino1="/editar-colaborador"
+                destino1={`/editar-colaborador/${id}`}
                 botao2="Excluir"
                 color2="branco"
                 destino2="/colaboradores"
                 botao3="Auditar"
                 color3="branco"
-                destino3="/auditar-colaborador"/>
+                destino3="/auditar-colaborador"
+            />
 
             <div className="metricas">
                 <div className="bloco1">
                     <div className="bloco1-1">
-                        <p>Cargo: ~~cargo</p>
-                        <p>Email: ~~email</p>
-                        <p>Setor: ~~setor</p>
+                        <p>Cargo: {collaborator.position || ""}</p>
+                        <p>Email: {collaborator.email || ""}</p>
+                        <p>Setor: {collaborator.collaboratorDepartment?.name || ""}</p>
                     </div>
                 </div>
                 <div className="bloco2">
@@ -57,7 +82,6 @@ function VerColaborador() {
                         <p>Legenda 1</p>
                         <p>Legenda 2</p>
                     </div>
-                    
                 </div>
             </div>
 

@@ -47,8 +47,8 @@ function App() {
               {/* Ramo B */}
               <Route path='/colaboradores'            element={<Colaboradores/>} />
               <Route path='/adiciona-colaborador'     element={<CadastroColaborador/>} />
-              <Route path='/ver-colaborador'          element={<VerColaborador/>} />   
-              <Route path='/auditar-colaborador'      element={<AuditarColaborador/>} />         
+              <Route path='/ver-colaborador/:id'          element={<VerColaborador/>} />   
+              <Route path='/auditar-colaborador/:id'      element={<AuditarColaborador/>} />         
 
               {/* Ramo C */}
               <Route path='/perfil'                   element={<Perfil/>} />

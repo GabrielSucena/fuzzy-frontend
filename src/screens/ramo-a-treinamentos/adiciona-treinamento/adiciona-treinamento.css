@@ -1,4 +1,4 @@
-.conteiner-cadastro{
+.conteiner-cadastro-treinamento{
     color: red;
     display: flex;
     justify-content: center;
@@ -6,7 +6,7 @@
     
 }
 
-.quadrado-cadastro{
+.quadrado-cadastro-treinamento{
     width: 75%;
     gap: 1rem; 
     height: 20rem;

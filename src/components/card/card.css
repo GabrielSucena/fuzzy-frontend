@@ -1,23 +1,36 @@
-/* card.css */
+/* Estilo do contêiner pai */
+.home-content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+    gap: 5rem;
+    padding: 2rem; /* Adiciona espaço ao redor do conteúdo */
+    box-sizing: border-box; /* Inclui padding e borda no tamanho total do elemento */
+    max-width: 100vw; /* Garante que não ultrapasse a largura da viewport */
+    overflow-x: auto; /* Permite rolagem horizontal se necessário */
+    overflow-y: auto; /* Permite rolagem vertical se necessário */
+}
 
+/* Estilo do card */
 .card {
     position: relative; /* Importante para o posicionamento do botão */
     border: 1px solid rgba(185, 185, 185, 0.5);
     text-align: center;
-    margin-bottom: 10rem;
+    margin-bottom: 0rem;
     padding: 3rem 2rem;
     border-radius: 1.5rem;
-    width: 28rem;
+    width: 24rem;
     height: 30rem;
-    padding-bottom: 1rem 1rem 3rem 1rem;
-    background-color: FFFFFF;
+    background-color: #FFFFFF;
     text-decoration: none;
-    
+    box-sizing: border-box; /* Inclui padding e borda no tamanho total do elemento */
 }
 
 .botao-home-card {
     position: absolute;
-    bottom: 3rem; /* Distância de 2 rem do final */
+    bottom: 3rem; /* Distância de 3rem do final */
     left: 50%; /* Centralizar horizontalmente */
     transform: translateX(-50%); /* Ajuste para centralizar horizontalmente */
     text-decoration: none;
@@ -35,7 +48,7 @@
 .card-description {
     margin: 0;
     padding: 1rem 0rem 2rem 0rem;
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     color: #707070;
     text-decoration: none;
 }
@@ -60,5 +73,4 @@
 
 .botao-enfeite:active {
     background-color: var(--preto);
-
 }

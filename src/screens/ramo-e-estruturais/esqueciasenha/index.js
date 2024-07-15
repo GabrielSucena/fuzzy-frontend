@@ -29,7 +29,7 @@ export function Esqueciasenha() {
                         aoAlterado={valor=>setConfirmaSenha(valor)}
                     />
         </div>
-        <Link to='/'><Botao>TROCAR</Botao></Link>
+        <Botao color="roxo" destino="/">TROCAR</Botao>
       </section>
     </>
 

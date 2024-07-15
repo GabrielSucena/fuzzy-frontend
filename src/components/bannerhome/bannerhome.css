@@ -101,6 +101,7 @@ nav a:hover {
         transition: 0.5s;                         
         /* Tempo pra aba descer */
 
+        z-index: 2;
     
     }
 

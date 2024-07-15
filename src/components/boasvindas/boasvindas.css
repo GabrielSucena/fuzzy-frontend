@@ -13,3 +13,15 @@
     padding: 0;
     text-align: center;
 }
+
+/* Estilo para telas menores */
+@media (max-width: 768px) {
+    .p-boas-vindas {
+        font-size: 2.5rem; /* Ajuste conforme necessário */
+        padding: 2.5rem 0rem 0rem 0rem;
+    }
+
+    .desc-boas-vindas {
+        font-size: 1.25rem; /* Ajuste conforme necessário */
+    }
+}

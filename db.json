@@ -1,38 +1,5 @@
 {
-  "collaborators": [
-    {
-      "id": "3ba8",
-      "fullName": "Vinicius Domingues",
-      "collaboratorDepartment": {
-        "id": 1,
-        "name": "Saúde"
-      }
-    },
-    {
-      "id": "0a8b",
-      "collaboratorDepartment": {
-        "id": "1",
-        "name": "Saúde"
-      },
-      "fullName": "Vinicius Domingues"
-    },
-    {
-      "id": "88e9",
-      "fullName": "Vinicius Domingues",
-      "collaboratorDepartment": {
-        "id": "1",
-        "name": "Saúde"
-      }
-    },
-    {
-      "id": "914c",
-      "fullName": "cvb",
-      "collaboratorDepartment": {
-        "id": "3",
-        "name": "Financeiro"
-      }
-    }
-  ],
+  "collaborators": [],
   "departments": [
     {
       "id": "1",

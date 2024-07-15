@@ -5,9 +5,12 @@ import BoasVindas from '../../../components/boasvindas';
 import { Link } from 'react-router-dom';
 
 export function Home() {
+
+  const nome = "Fernanda"
+
   return (
     <>
-      <BoasVindas nome="Vinicius" />
+      <BoasVindas nome={nome} />
       <div className='home-content'>
         <Link to='/treinamentos' className='link-card'>
           <div>

@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom'
 
 export function DigiteSeuEmail() {
 
-    const [email, setEmail] = useState('')
-
+    const [email, setEmail] = useState('teste@sanofi.com.br')
+    
     return (
         <>
             <section className='digiteseuemail'>
@@ -22,7 +22,7 @@ export function DigiteSeuEmail() {
                                     aoAlterado={valor=>setEmail(valor)}
                                 />
                     <div className='botao-email-centralizar'>
-                        <Link to='/digite-o-codigo'><Botao>ENVIAR</Botao></Link>
+                        <Botao color="roxo" destino="/digite-o-codigo">ENVIAR</Botao>
                     </div>
 
                 </div>

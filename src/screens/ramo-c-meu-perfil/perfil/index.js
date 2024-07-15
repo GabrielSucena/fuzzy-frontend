@@ -6,12 +6,12 @@ import { useState } from "react";
 import Botao from "../../../components/botao";
 
 function Perfil() {
-    const [fullName, setFullName] = useState('');
+    const [fullName, setFullName] = useState('Fernanda Povreslo');
     const [job, setJob] = useState('1');
-    const [department, setDepartment] = useState('');
+    const [department, setDepartment] = useState('1');
     const [email, setEmail] = useState('teste@sanofi.com.br');
     const [emailError, setEmailError] = useState('');
-    const [password, setPassword] = useState('');
+    const [password, setPassword] = useState('123456');
 
     const handleChangeFullName = (event) => {
         setFullName(event.target.value);
@@ -83,7 +83,7 @@ function Perfil() {
                             label="Departamento" 
                             onChange={handleChangeDepartment}
                         >
-                            <MenuItem value={1}>Departamento 1</MenuItem>
+                            <MenuItem value={1}>Administração</MenuItem>
                             <MenuItem value={2}>Departamento 2</MenuItem>
                             <MenuItem value={3}>Departamento 3</MenuItem>
                         </Select>
@@ -98,7 +98,7 @@ function Perfil() {
                             label="Cargo" 
                             onChange={handleChangeJob}
                         >
-                            <MenuItem value={1}>Cargo 1</MenuItem>
+                            <MenuItem value={1}>Gerente</MenuItem>
                             <MenuItem value={2}>Cargo 2</MenuItem>
                             <MenuItem value={3}>Cargo 3</MenuItem>
                         </Select>

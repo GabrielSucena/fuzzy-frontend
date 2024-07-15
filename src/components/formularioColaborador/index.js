@@ -40,17 +40,13 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
             collaboratorDepartment: {
                 id: selectedDepartmentId,
                 name: selectedDepartment ? selectedDepartment.name : '',
-                /*Função handleSelectDepartment:
-                    Agora, handleSelectDepartment busca o departamento selecionado da lista departments usando o id selecionado.
-                    Em seguida, atualiza o estado collaborator com o id e o name do departamento selecionado.*/
             },
         });
-        //console.log(collaborator);
     }
 
     return (
         <form className="conteiner-cadastro" onSubmit={submit}>
-            <SimpleGrid columns={2} spacingX="3rem" spacingY="4rem" autoComplete="on">
+            <SimpleGrid className="grid-container" spacingX="3rem" spacingY="4rem" autoComplete="on">
                 <TextField 
                     required
                     className="campo" 
@@ -78,7 +74,7 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
                         ))}   
                     </Select>
                 </FormControl>
-                {/*}
+                {/* 
                 <TextField 
                     className="campo" 
                     required 
@@ -100,11 +96,12 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
                     required 
                     id="collaboratorRecord" 
                     label="Registro" 
-                />*/}
+                />
+                */}
             </SimpleGrid>
             <div className="botoes">
-                <Botao type='submit' color='roxo' text={textoBotao} />
-                <Botao type='reset' color='branco' text={textoBotao2} />
+                <Botao type='submit' color='roxo'>Adicionar</Botao>
+                <Botao type='reset' color='branco'>Cancelar</Botao>
             </div>
         </form>
     );
