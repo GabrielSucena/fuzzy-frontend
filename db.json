@@ -1,0 +1,64 @@
+{
+  "collaborators": [
+    {
+      "id": "3ba8",
+      "fullName": "Vinicius Domingues",
+      "collaboratorDepartment": {
+        "id": 1,
+        "name": "Saúde"
+      }
+    },
+    {
+      "id": "0a8b",
+      "collaboratorDepartment": {
+        "id": "1",
+        "name": "Saúde"
+      },
+      "fullName": "Vinicius Domingues"
+    },
+    {
+      "id": "88e9",
+      "fullName": "Vinicius Domingues",
+      "collaboratorDepartment": {
+        "id": "1",
+        "name": "Saúde"
+      }
+    },
+    {
+      "id": "914c",
+      "fullName": "cvb",
+      "collaboratorDepartment": {
+        "id": "3",
+        "name": "Financeiro"
+      }
+    }
+  ],
+  "departments": [
+    {
+      "id": "1",
+      "name": "Saúde"
+    },
+    {
+      "id": "2",
+      "name": "Recursos Humanos"
+    },
+    {
+      "id": "3",
+      "name": "Financeiro"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "1",
+      "name": "Analista I"
+    },
+    {
+      "id": "2",
+      "name": "Analista II"
+    },
+    {
+      "id": "3",
+      "name": "Analista III"
+    }
+  ]
+}

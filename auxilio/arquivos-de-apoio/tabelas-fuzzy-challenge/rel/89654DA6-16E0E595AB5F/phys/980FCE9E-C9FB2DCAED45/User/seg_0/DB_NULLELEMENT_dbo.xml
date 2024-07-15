@@ -1,9 +1,0 @@
-<?xml version = '1.0' encoding = 'UTF-8'?>
-<UserSqlServerv2k12 class="oracle.dbtools.crest.model.design.storage.sqlserver.v2k12.UserSqlServerv2k12" directorySegmentName="seg_0" id="DB_NULLELEMENT_dbo" name="dbo">
-<createdBy>vinii</createdBy>
-<createdTime>2024-05-09 06:54:09 UTC</createdTime>
-<ownerDesignName>tabelas-fuzzy-challenge</ownerDesignName>
-<nullInstance>true</nullInstance>
-<storableNullInstance>true</storableNullInstance>
-<database>DB_NULLELEMENT</database>
-</UserSqlServerv2k12>

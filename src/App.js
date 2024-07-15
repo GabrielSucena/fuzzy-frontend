@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// Rotas
+import { BrowserRouter , Routes, Route } from 'react-router-dom'
+import Container from './components/container'
 
 // Ramo A
 import Treinamentos from "./screens/ramo-a-treinamentos/treinamentos";
@@ -25,46 +27,55 @@ import Modal from "./components/modal";
 import AdicionaTreinamento from "./screens/ramo-a-treinamentos/adiciona-treinamento";
 // Ajustado para não repetir o nome do componente duplicado: Dentro da pasta de cada componente cada js é chamado de index.
 
+import Teste from './screens/ramo-e-estruturais/teste'
+import Bannerhome from './components/bannerhome'
+import Rodape from './components/rodape'
+
 // Pode-se passar por parâmetro pois im cpmponente no fundo é uma função, que a função anonima recebera (label)
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          {/* Ramo A */}
-          <Route path="/treinamentos" element={<Treinamentos />} />
-          <Route
-            path="/adicionar-treinamentos"
-            element={<AdicionaTreinamento />}
-          />
 
-          {/* Ramo B */}
-          <Route path="/colaboradores" element={<Colaboradores />} />
-          <Route
-            path="/adiciona-colaborador"
-            element={<CadastroColaborador />}
-          />
-          <Route path="/ver-colaborador" element={<VerColaborador />} />
-          <Route path="/auditar-colaborador" element={<AuditarColaborador />} />
+    <BrowserRouter>
+      <Bannerhome />
+          <Container customClass='container'>
+            <Routes>
 
-          {/* Ramo C */}
-          <Route path="/perfil" element={<Perfil />} />
+              {/* Ramo A */}
+              <Route path='/treinamentos'             element={<Treinamentos/>} />
 
-          {/* Ramo D */}
-          <Route path="/auditoria" element={<Auditoria />} />
+              {/* Ramo B */}
+              <Route path='/colaboradores'            element={<Colaboradores/>} />
+              <Route path='/adiciona-colaborador'     element={<CadastroColaborador/>} />
+              <Route path='/ver-colaborador'          element={<VerColaborador/>} />   
+              <Route path='/auditar-colaborador'      element={<AuditarColaborador/>} />         
 
-          {/* Ramo E */}
-          <Route path="*" element={<h1>404. Página não encontrada</h1>} />
-          <Route path="/digite-o-email" element={<DigiteSeuEmail />} />
-          <Route path="/esqueci-a-senha" element={<Esqueciasenha />} />
-          <Route path="/digite-o-codigo" element={<DigiteCodigo />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
+              {/* Ramo C */}
+              <Route path='/perfil'                   element={<Perfil/>} />
 
-          {/* Testes */}
-          <Route path="/modal" element={<Modal />} />
-        </Routes>
+              {/* Ramo D */}
+              <Route path='/auditoria'                element={<Auditoria/>} />
+
+              {/* Ramo E */}
+              <Route path='*'                         element={<h1>404. Página não encontrada</h1>} />
+              <Route path='/digite-o-email'           element={<DigiteSeuEmail/>}/>
+              <Route path='/esqueci-a-senha'          element={<Esqueciasenha/>}/>
+              <Route path='/digite-o-codigo'          element={<DigiteCodigo/>}/>
+              <Route path='/login'                    element={<Login/>} />
+              <Route path='/'                         element={<Home/>} />
+
+              {/* Modais */}
+              <Route path='/modal'                    element={<Modal/>} />
+
+              {/* Testes */}
+              <Route path='/teste'                    element={<Teste/>} />
+            </Routes>
+          </Container>
+        
+        <Rodape />
       </BrowserRouter>
+
+
     </div>
   );
 }

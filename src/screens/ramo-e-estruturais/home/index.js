@@ -1,22 +1,25 @@
 import React from 'react';
-import './home.css'
-//import { Link } from 'react-router-dom';
-import Card from '../../../components/card'
-
-import Bannerhome from '../../../components/bannerhome'
-import Rodape from '../../../components/rodape'
-import BoasVindas from '../../../components/boasvindas'
+import './home.css';
+import Card from '../../../components/card';
+import BoasVindas from '../../../components/boasvindas';
+import { Link } from 'react-router-dom';
 
 export function Home() {
   return (
     <>
-      <Bannerhome />
       <BoasVindas nome="Vinicius" />
       <div className='home-content'>
-        <Card tipo="Matriz de treinamentos" descricao="Verifique também as vigências e classificações"/>
-        <Card tipo="Lista de colaboradores" descricao="Veja os nomes e os cargos"/>
+        <Link to='/treinamentos' className='link-card'>
+          <div>
+            <Card tipo="Matriz de treinamentos" descricao="Verifique também as vigências e classificações" />
+          </div>
+        </Link>
+        <Link to='/colaboradores' className='link-card'>
+          <div>
+            <Card tipo="Lista de colaboradores" descricao="Veja os nomes e os cargos" />
+          </div>
+        </Link>
       </div>
-      <Rodape />
     </>
   );
 }

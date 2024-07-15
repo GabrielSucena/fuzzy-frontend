@@ -8,8 +8,8 @@
     justify-content: space-between;             
     background: linear-gradient(240deg, #2E2E2E, #161616); 
     
-    padding: 1rem 0rem 1rem 0rem;
-
+    padding: 1rem 0rem 0.5rem 0rem;
+    margin: 0rem;
     align-items: center;
 }
 
@@ -17,13 +17,14 @@
     padding-left: 10%;
     width: auto;
     height: auto;
-
+    
 }
 
 /* Estilo do botão celular sem tela pequena*/
 .header-home .botao-celular {
     visibility: hidden;                         
     /* Esconde-se pois não precisa se a tela estiver grande) */
+    
 }
 
 
@@ -107,6 +108,8 @@ nav a:hover {
     /* Mostrando a aba que desce */
     .header-home .responsivo {
         transform: translateY(100vh);           
+
+
     }
 
 
