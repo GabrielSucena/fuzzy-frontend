@@ -1,53 +1,108 @@
+/* Contêiner principal */
 .topo-telas {
     padding: 2rem 10%;
+    display: flex;
+    flex-direction: column; /* Coloca os elementos em coluna */
+    align-items: flex-start; /* Alinha os itens ao início */
 }
 
+/* Contêiner flexível para título e descrição */
+.titulo-e-descricao {
+    display: flex;
+    align-items: center;
+    width: 100%; /* Garante que ocupe a largura completa */
+    gap: 1rem;
+}
+
+/* Estilos de título */
 .titulo-pagina {
-    color: #2D2D2D;
+    color: var(--branco-escuro);
     font-weight: bold;
     font-size: 2rem;
     margin: 0;
-    padding-top: 0.5rem;
-    padding-bottom: 1rem;
-    position: relative;
-    left: 0px;
+    background: linear-gradient(90deg, rgba(96,0,182,1) 0%, rgba(39,0,73,1) 100%, rgba(0,212,255,1) 270049%);
+    padding: 1.25rem 3.25rem;
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--roxo);
 }
 
 .descricao-titulo {
-    color: #ABABAB;
-    font-weight: 500;
-    font-size: 1rem;
+    color: var(--cinza-escuro);
+    font-weight: bold;
+    font-size: 2rem;
     margin: 0;
-    padding-top: 0.5rem;
-    padding-bottom: 1rem;
+    background-color: var(--branco);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    padding: 1.9rem;
+    border: 1px solid var(--cinza-escuro);
 }
 
+/* Ajustes específicos para descrição-titulo */
+.descricao-titulo {
+    font-size: 1rem;
+}
+
+/* Contêiner de botões */
+.conteiner-botao {
+    width: 100%; /* Garante que ocupe a largura completa */
+    margin-top: 1rem; /* Espaço entre descrição e botões */
+}
+
+/* Estilos de botões */
 .botoes-titulo-pagina {
     display: flex;
     gap: 1.5rem;
-    padding-right: 2rem;
     flex-wrap: nowrap;
 }
 
+/* Ajustes de mídia para responsividade */
 @media (max-width: 768px) {
-    .topo-telas {
-        padding: 2rem 5%;
+    .titulo-e-descricao {
+        flex-direction: column; /* Alinha os elementos em coluna em telas pequenas */
+        align-items: flex-start;
     }
 }
 
-@media (max-width: 480px) {
+/* Ajustes de mídia para responsividade */
+@media (max-width: 768px) {
+    .roxo, .branco {
+        padding: 1rem 1.65rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .titulo-e-descricao {
+        flex-direction: row; /* Alinha os elementos em linha em telas pequenas */
+        justify-content: space-between;
+    }
+    .titulo-pagina {
+        font-size: 1.5rem; /* Reduz o tamanho da fonte para melhor ajuste */
+        padding: 2rem 1rem;
+        text-align: center;
+    }
+    .descricao-titulo {
+        font-size: 1rem; /* Reduz o tamanho da fonte para melhor ajuste */
+        padding: 2.55rem 1rem;
+        text-align: center;
+    }
     .botoes-titulo-pagina {
         flex-direction: row;
-        gap: 0.75rem;
+        justify-content: space-between;
+        max-width: 1rem;
+    }
+    .conteiner-botao {
+        text-align: center; /* Centraliza os botões em telas pequenas */
     }
 }
 
-.divisorbaixo{
-    width: 80%;
-    margin-bottom: 2rem;
-}
-
-.divisorcima{
+/* Estilos de divisores */
+.divisorbaixo, .divisorcima {
     margin-top: 2rem;
     margin-bottom: 1rem;
+    color: var(--cinza);
+    width: 100%;
 }

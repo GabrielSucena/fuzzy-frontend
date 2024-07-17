@@ -1,4 +1,4 @@
-import styles from "./carregando.css"
+import "./carregando.css"
 import logo from "../../carregador.svg"
 
 function Carregando(){

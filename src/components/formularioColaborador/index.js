@@ -100,7 +100,7 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
                 */}
             </SimpleGrid>
             <div className="botoes">
-                <Botao type='submit' color='roxo'>Adicionar</Botao>
+                <Botao type='submit' color='roxo'>{textoBotao}</Botao>
                 <Botao type='reset' color='branco'>Cancelar</Botao>
             </div>
         </form>
