@@ -9,46 +9,39 @@ footer {
   color: #FFFFFF;
   padding: 1rem 0 0.8rem;
   font-size: 1.3rem;
-  position: fixed; /* Fixa o rodapé na parte inferior */
+  position: static; /* Remove a fixação do rodapé para telas pequenas */
   bottom: 0;
+  margin-top: 5rem;
 }
 
-.footer-logo{
+/* Estilo da logo do rodapé */
+.footer-logo {
   max-width: 100%;
   height: auto;
 }
 
-h6{
-  margin: 0rem;
+/* Estilo do título no rodapé */
+h6 {
+  margin: 0;
   text-align: center;
 }
 
-@media (max-width: 480px) {
-  .botoes-titulo-pagina {
-    footer{
-      background: linear-gradient(135deg, #2E2E2E, #161616);
-      display: flex;
-      flex-direction: column;
-      align-items: center;      /* Y */
-      justify-content: center;  /* X */
-      width: 100%;
-      color: #FFFFFF;
-      margin-top: 4rem;
-      bottom: 0rem;
-      position: relative;
-      padding: 1rem 0rem 0.8rem 0rem;
-      font-size: 1.3rem;
-      gap: rem;
-    }
-    
-    .footer-logo{
-      max-width: 100%;
-      height: auto;
-    }
-    
-    h6{
-      margin: 0rem;
-      text-align: center;
-    }
+/* Media Query para telas pequenas */
+@media (max-width: 780px) {
+  footer {
+    position: static; /* Remove a fixação do rodapé para telas pequenas */
+    margin-top: 4rem; /* Adiciona margem superior para separação do conteúdo */
+    padding: 1rem 0; /* Ajusta o padding para telas pequenas */
+    font-size: 1.3rem;
+  }
+
+  .footer-logo {
+    max-width: 100%;
+    height: auto;
+  }
+
+  h6 {
+    margin: 0;
+    text-align: center;
   }
 }

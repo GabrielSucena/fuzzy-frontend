@@ -1,12 +1,22 @@
 {
   "collaborators": [
     {
-      "id": "e356",
-      "fullName": "Vinicius Domingues",
+      "id": "3b37",
+      "fullName": "Vinicius Dominguess",
       "collaboratorDepartment": {
         "id": "1",
         "name": "Saúde"
       }
+    }
+  ],
+  "collaboratorInfo": [
+    {
+      "green": 1,
+      "yellow": 2,
+      "orange": 3,
+      "red": 4,
+      "code1": 5,
+      "id": "5d38"
     }
   ],
   "departments": [

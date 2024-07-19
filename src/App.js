@@ -10,6 +10,7 @@ import Colaboradores from "./screens/ramo-b-colaboradores/colaboradores";
 import CadastroColaborador from "./screens/ramo-b-colaboradores/adiciona-colaborador";
 import VerColaborador from "./screens/ramo-b-colaboradores/ver-colaborador";
 import AuditarColaborador from "./screens/ramo-b-colaboradores/auditar-colaborador";
+import EditarColaborador from "./screens/ramo-b-colaboradores/editar-colaborador";
 
 // Ramo C
 import Perfil from "./screens/ramo-c-meu-perfil/perfil";
@@ -30,6 +31,7 @@ import AdicionaTreinamento from "./screens/ramo-a-treinamentos/adiciona-treiname
 import Teste from './screens/ramo-e-estruturais/teste'
 import Bannerhome from './components/bannerhome'
 import Rodape from './components/rodape'
+import Teste2 from './screens/ramo-e-estruturais/teste2';
 
 // Pode-se passar por parâmetro pois im cpmponente no fundo é uma função, que a função anonima recebera (label)
 function App() {
@@ -42,13 +44,14 @@ function App() {
             <Routes>
 
               {/* Ramo A */}
-              <Route path='/treinamentos'             element={<Treinamentos/>} />
+              <Route path='/treinamentos'                 element={<Treinamentos/>} />
 
               {/* Ramo B */}
-              <Route path='/colaboradores'            element={<Colaboradores/>} />
-              <Route path='/adiciona-colaborador'     element={<CadastroColaborador/>} />
+              <Route path='/colaboradores'                element={<Colaboradores/>} />
+              <Route path='/adiciona-colaborador'         element={<CadastroColaborador/>} />
               <Route path='/ver-colaborador/:id'          element={<VerColaborador/>} />   
-              <Route path='/auditar-colaborador/:id'      element={<AuditarColaborador/>} />         
+              <Route path='/auditar-colaborador/:id'      element={<AuditarColaborador/>} />     
+              <Route path='/editar-colaborador/:id'       element={<EditarColaborador/>} />       
 
               {/* Ramo C */}
               <Route path='/perfil'                   element={<Perfil/>} />
@@ -69,10 +72,11 @@ function App() {
 
               {/* Testes */}
               <Route path='/teste'                    element={<Teste/>} />
+              <Route path='/teste2'                    element={<Teste2/>} />
             </Routes>
           </Container>
         
-        <Rodape />
+        <Rodape className="rodape-principal" />
       </BrowserRouter>
 
 

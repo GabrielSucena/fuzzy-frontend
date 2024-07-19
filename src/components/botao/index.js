@@ -10,7 +10,7 @@ const Botao = ({ color, children, destino, aoClicar }) => {
   return (
     <>
       <a href={destino} className="link-botao">
-        <button onClick={teste} className={color}>
+        <button onClick={aoClicar} className={color}>
           {children}
         </button>
       </a>

@@ -45,7 +45,12 @@ nav a:hover {
 
 /* Programação quando a tela estiver na metade */
 @media only screen and (max-width: 1065px) {
-
+    .header-home{
+        position: sticky;
+        top: 0;
+        width: 100%;
+        z-index: 1;
+    }
     /* Botão celular */
     .header-home .botao-celular {
         font-size: 2rem;                          
@@ -102,6 +107,8 @@ nav a:hover {
         /* Tempo pra aba descer */
 
         z-index: 2;
+
+        
     
     }
 

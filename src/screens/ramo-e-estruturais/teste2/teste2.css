@@ -1,0 +1,12 @@
+.grafico-conteiner{
+ display: 'flex';
+ flex-direction: 'column';
+ align-items: 'center' ;
+} 
+
+.grafico-conteiner{
+    width: '80%';
+    max-width: '250px';
+    margin: 'auto';
+   } 
+

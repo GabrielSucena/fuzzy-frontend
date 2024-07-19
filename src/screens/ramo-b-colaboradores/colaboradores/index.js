@@ -34,24 +34,6 @@ function Colaboradores() {
         .catch((err) => console.log(err));
     }, [location.state]);
 
-    function removeCollaborator(id) {
-        fetch(`http://localhost:5000/collaborators/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-type': 'application/json'
-            },
-        }).then(resp => resp.json())
-        .then(data => {
-            setCollaborators(collaborators.filter((collaborator) => collaborator.id !== id));
-            setCollaboratorMessage('Colaborador removido')
-        })
-        .catch(err => console.log(err));
-    }
-
-    const handleRemove = (id) => {
-        removeCollaborator(id);
-    };
-
     return (
         <>
             <TituloPagina titulopagina="Colaboradores" botao1='Adicionar' color1='roxo' destino1='/adiciona-colaborador' />
@@ -61,19 +43,21 @@ function Colaboradores() {
                 <div className="colaboradores-card">
                     <div className="grid-container">
                         {collaborators.length > 0 && collaborators.map((collaborator) => (
-                            <div className='div-card' key={collaborator.id}>
-                                <div className="colaborador-item">
-                                    <div className="topo">
-                                        <p className="nome-card">{collaborator.fullName}</p>
-                                        <p className="registro-card"><b>RG: </b>{collaborator.register}</p>
+                            <Link className='retirar-estilo' to={`/ver-colaborador/${collaborator.id}`}>
+                                <div className='div-card' key={collaborator.id}>
+                                    <div className="colaborador-item">
+                                        <div className="topo">
+                                            <p className="nome-card">{collaborator.fullName}</p>
+                                            <p className="registro-card"><b>RG: </b>{collaborator.register}</p>
+                                        </div>
+                                        <div className="fundo">
+                                            <p className="setor-card">Cargo: {collaborator.position} - Departamento: {collaborator.collaboratorDepartment.name}</p>
+                                        </div>
+                                        
                                     </div>
-                                    <div className="fundo">
-                                        <p className="setor-card">Cargo: {collaborator.position} - Departamento: {collaborator.collaboratorDepartment.name}</p>
-                                    </div>
-                                    <Link to={`/ver-colaborador/${collaborator.id}`}> Editar </Link>
-                                    <div onClick={() => handleRemove(collaborator.id)}> Remover </div>
+                                    
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                     {!removeLoading && <Carregando className="div-carregar" />}
@@ -85,7 +69,6 @@ function Colaboradores() {
                     )}
                 </div>
             </div>
-            <Rodape />
         </>
     );
 }

@@ -1,5 +1,5 @@
 /* Contêiner principal */
-.topo-telas {
+.topo-telass {
     padding: 2rem 10%;
     display: flex;
     flex-direction: column; /* Coloca os elementos em coluna */
@@ -7,7 +7,7 @@
 }
 
 /* Contêiner flexível para título e descrição */
-.titulo-e-descricao {
+.titulo-e-descricaoo {
     display: flex;
     align-items: center;
     width: 100%; /* Garante que ocupe a largura completa */
@@ -15,45 +15,41 @@
 }
 
 /* Estilos de título */
-.titulo-pagina {
-    color: var(--branco-escuro);
+.titulo-paginaa {
+    color: var(--preto);
     font-weight: bold;
     font-size: 2rem;
     margin: 0;
-    background: linear-gradient(90deg, rgba(96,0,182,1) 0%, rgba(39,0,73,1) 100%, rgba(0,212,255,1) 270049%);
-    padding: 1.25rem 3.25rem;
+    padding-top: 1.25rem;
     border-radius: 1rem;
     display: flex;
     align-items: center;
-    border: 1px solid var(--roxo);
 }
 
-.descricao-titulo {
+.descricao-tituloo {
     color: var(--cinza-escuro);
     font-weight: bold;
     font-size: 2rem;
     margin: 0;
-    background-color: var(--branco);
     border-radius: 1rem;
     display: flex;
     align-items: center;
     padding: 1.9rem;
-    border: 1px solid var(--cinza-escuro);
 }
 
 /* Ajustes específicos para descrição-titulo */
-.descricao-titulo {
+.descricao-tituloo {
     font-size: 1rem;
 }
 
 /* Contêiner de botões */
-.conteiner-botao {
+.conteiner-botaoo {
     width: 100%; /* Garante que ocupe a largura completa */
     margin-top: 1rem; /* Espaço entre descrição e botões */
 }
 
 /* Estilos de botões */
-.botoes-titulo-pagina {
+.botoes-titulo-paginaa {
     display: flex;
     gap: 1.5rem;
     flex-wrap: nowrap;
@@ -61,7 +57,7 @@
 
 /* Ajustes de mídia para responsividade */
 @media (max-width: 768px) {
-    .titulo-e-descricao {
+    .titulo-e-descricaoo {
         flex-direction: column; /* Alinha os elementos em coluna em telas pequenas */
         align-items: flex-start;
     }
@@ -69,38 +65,38 @@
 
 /* Ajustes de mídia para responsividade */
 @media (max-width: 768px) {
-    .roxo, .branco {
+    .roxoo, .brancoo {
         padding: 1rem 1.65rem;
     }
 }
 
 @media (max-width: 768px) {
-    .titulo-e-descricao {
+    .titulo-e-descricaoo {
         flex-direction: row; /* Alinha os elementos em linha em telas pequenas */
         justify-content: space-between;
     }
-    .titulo-pagina {
+    .titulo-paginaa {
         font-size: 1.5rem; /* Reduz o tamanho da fonte para melhor ajuste */
-        padding: 2rem 1rem;
+        padding: 0rem;
         text-align: center;
     }
-    .descricao-titulo {
+    .descricao-tituloo {
         font-size: 1rem; /* Reduz o tamanho da fonte para melhor ajuste */
         padding: 2.55rem 1rem;
         text-align: center;
     }
-    .botoes-titulo-pagina {
+    .botoes-titulo-paginaa {
         flex-direction: row;
         justify-content: space-between;
         max-width: 1rem;
     }
-    .conteiner-botao {
+    .conteiner-botaoo {
         text-align: center; /* Centraliza os botões em telas pequenas */
     }
 }
 
 /* Estilos de divisores */
-.divisorbaixo, .divisorcima {
+.divisorbaixoo, .divisorcimaa {
     margin-top: 2rem;
     margin-bottom: 1rem;
     color: var(--cinza);
