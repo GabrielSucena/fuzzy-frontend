@@ -1,12 +1,50 @@
 {
   "collaborators": [
     {
-      "id": "3b37",
+      "id": "bb2a",
       "fullName": "Vinicius Dominguess",
+      "collaboratorDepartment": {
+        "id": "2",
+        "name": "Recursos Humanos"
+      }
+    },
+    {
+      "id": "8b7a",
+      "fullName": "hjgjghj",
+      "collaboratorDepartment": {
+        "id": "2",
+        "name": "Recursos Humanos"
+      }
+    },
+    {
+      "id": "fc75",
+      "fullName": "dfdfs",
       "collaboratorDepartment": {
         "id": "1",
         "name": "Saúde"
       }
+    }
+  ],
+  "trainings": [
+    {
+      "id_course": "001",
+      "completed_date": "2024-03-01",
+      "name_course": "Curso 1",
+      "course_type": "Tipo 1",
+      "shortened_name_criticality": "MA",
+      "status": "green",
+      "realization_status": "Realizado",
+      "version": "2"
+    },
+    {
+      "id_course": "002",
+      "completed_date": "2024-03-01",
+      "name_course": "Curso 2",
+      "course_type": "Tipo 2",
+      "shortened_name_criticality": "ME",
+      "status": "red",
+      "realization_status": "À realizar",
+      "version": "1"
     }
   ],
   "collaboratorInfo": [

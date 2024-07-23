@@ -1,0 +1,23 @@
+.conteiner-auditoria{
+    border: 2px solid blue;
+    margin: 0 auto;
+    width: 80%;
+    border-radius: 1.5rem;
+}
+
+
+.titulo-auditoria{
+    border: 2px solid red;
+    padding: 2rem 0rem 2rem 3rem;
+    border-radius: 1.5rem;
+    color: var(--cinza-escuro);
+    font-weight: bold;
+}
+
+.auditorias{
+    padding: 2rem 0rem 2rem 3rem;
+    border: 2px solid green;
+    border-radius: 1.5rem;
+    color: var(--preto);
+    font-weight: bold;
+}

@@ -38,7 +38,7 @@ function App() {
   return (
     <div className="App">
 
-    <BrowserRouter>
+    <BrowserRouter className='container'>
       <Bannerhome />
           <Container customClass='container'>
             <Routes>

@@ -5,64 +5,72 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import Carregando from "../../../components/carregando";
 import Botao from "../../../components/botao";
 import Teste2 from '../../ramo-e-estruturais/teste2';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleExclamation, faCodeCompare, faCheckToSlot } from '@fortawesome/free-solid-svg-icons';
 
 function VerColaborador() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [collaborator, setCollaborator] = useState(null);
+    const [trainings, setTrainings] = useState([]);
     const [collaboratorMessage, setCollaboratorMessage] = useState('');
     const [collaboratorInfo, setCollaboratorInfo] = useState(null);
-    const [green, setGreen] = useState(null);
-    const [yellow, setYellow] = useState(null);
-    const [orange, setOrange] = useState(null);
-    const [red, setRed] = useState(null);
-    const [code1, setCode1] = useState(null);
-    const [code2, setCode2] = useState(null);
-    const [andamento, setAndamento] = useState(null);
-    const [total, setTotal] = useState(null);
+    const [green, setGreen] = useState(0);
+    const [yellow, setYellow] = useState(0);
+    const [orange, setOrange] = useState(0);
+    const [red, setRed] = useState(0);
+    const [code1, setCode1] = useState(0);
+    const [code2, setCode2] = useState(0);
+    const [andamento, setAndamento] = useState(0);
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
         fetch(`http://localhost:5000/collaborators/${id}`, {
             method: 'GET',
             headers: {
-                'Content-type': 'application/json'
+                'Content-Type': 'application/json'
             },
         })
         .then(resp => resp.json())
-        .then(data => {
-            setCollaborator(data);
-        })
+        .then(data => setCollaborator(data))
         .catch(err => console.log(err));
     }, [id]);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/trainings`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+        .then(resp => resp.json())
+        .then(data => setTrainings(data))
+        .catch(err => console.log(err));
+    }, []);
 
     useEffect(() => {
         fetch('http://localhost:5000/collaboratorInfo/', {
             method: 'GET',
             headers: {
-                'Content-type': 'application/json'
+                'Content-Type': 'application/json'
             },
         })
         .then(resp => resp.json())
         .then(info => {
-            const infoData = info[0]; // Assume que a informação vem como um array e pegamos o primeiro item
-            
-            setGreen(infoData.green);
-            setYellow(infoData.yellow);
-            setOrange(infoData.orange);
-            setRed(infoData.red);
-            setCode1(infoData.code1);
-            
-            const andamento = infoData.orange + infoData.yellow;
-            const total = andamento + infoData.green + infoData.red;
-            const code2 = total - infoData.code1;
-            
+            const infoData = info[0];
+            setGreen(infoData.green || 0);
+            setYellow(infoData.yellow || 0);
+            setOrange(infoData.orange || 0);
+            setRed(infoData.red || 0);
+            setCode1(infoData.code1 || 0);
+
+            const andamento = (infoData.orange || 0) + (infoData.yellow || 0);
+            const total = andamento + (infoData.green || 0) + (infoData.red || 0);
+            const code2 = total - (infoData.code1 || 0);
+
             setAndamento(andamento);
             setTotal(total);
             setCode2(code2);
-
-            console.log(andamento);
-            console.log(total);
-            console.log(infoData.code1, code2);
         })
         .catch(err => console.log(err));
     }, []);
@@ -75,7 +83,7 @@ function VerColaborador() {
         fetch(`http://localhost:5000/collaborators/${id}`, {
             method: 'DELETE',
             headers: {
-                'Content-type': 'application/json'
+                'Content-Type': 'application/json'
             },
         })
         .then(resp => {
@@ -93,12 +101,6 @@ function VerColaborador() {
         });
     }
 
-    const trainings = [
-        {"treinamento": "olá"},
-        {"treinamento": "bem-vindo"},
-        {"treinamento": "até logo"}
-    ];
-    
     return (
         <>
             {collaboratorMessage && <div className="message">{collaboratorMessage}</div>}
@@ -116,29 +118,34 @@ function VerColaborador() {
                 </div>
                 <hr className="divisorbaixo" />
             </div>
-            <div className="dado">{collaborator.collaboratorDepartment?.name}</div>
             <div className="metricas">
                 <div className="bloco bloco1">
                     <div className="bloco1-1">
-                        <p>Cargo: ~~cargo</p>
-                        <p>Email: ~~email</p>
-                        <p>Setor: ~~setor</p>
+                        <p><b>Cargo:</b> ~~cargo</p>
+                        <p><b>Email:</b> ~~email</p>
+                        <p><b>Setor:</b> {collaborator.collaboratorDepartment?.name}</p>
                     </div>
                 </div>
                 <div className="bloco bloco2">
                     <div className="bloco2-1">
-                        <p className="topico">Treinamentos realizados</p>
-                        <p className="valor-topico">{green}</p>
+                        <div className="info-bloco-2">
+                            <p className="topico">Treinamentos realizados</p>
+                            <p className="valor-topico">{green}</p>   
+                        </div>
                         <img src="/icones/done.svg" alt="ícone realizados" />
                     </div>
                     <div className="bloco2-2">
-                        <p className="topico">Treinamentos em andamento</p>
-                        <p className="valor-topico">{andamento}</p>
+                        <div className="info-bloco-2">
+                            <p className="topico">Treinamentos andamento</p>
+                            <p className="valor-topico">{andamento}</p>
+                        </div>
                         <img src="/icones/doing.svg" alt="ícone em andamento" />
                     </div>
                     <div className="bloco2-3">
-                        <p className="topico">Treinamentos pendentes</p>
-                        <p className="valor-topico">{red}</p>
+                        <div className="info-bloco-2">
+                            <p className="topico">Treinamentos pendentes</p>
+                            <p className="valor-topico">{red}</p>
+                        </div>
                         <img src="/icones/do.svg" alt="ícone a fazer" />
                     </div>
                 </div>
@@ -155,24 +162,40 @@ function VerColaborador() {
                         <p>Legenda 1</p>
                         <p>Legenda 2</p>
                     </div>
-
                 </div>
             </div>
-            
-            <TituloPagina titulopagina="Treinamentos atrelados" divisor1={true} botao1="Notificar" color1="branco"/>
+            <TituloPagina titulopagina="Treinamentos atrelados" divisor1={true} botao1="Notificar" color1="roxo"/>
             <div className="treinamentos">
                 <div className="treinamentos-card">
+                    <div className="busca-filtros">
+                        <input type="text" className="campo-busca" placeholder="Pesquise aqui o treinamento" />
+                        <select className="filtro">
+                            <option value="">Classificação</option>
+                            <option value="opcao1">Tipo 1</option>
+                            <option value="opcao2">Tipo 2</option>
+                        </select>
+                        <select className="filtro">
+                            <option value="">Status</option>
+                            <option value="opcao1">Realizado</option>
+                            <option value="opcao2">À realizar</option>
+                        </select>
+                    </div>
                     <div className="grid-container">
                         {trainings.length > 0 && trainings.map((training) => (
-                            <Link className='retirar-estilo' to={`/ver-treinamento/${training.id}`} key={training.id}>
+                            <Link className='retirar-estilo' to={`/ver-treinamento/${training.id_course}`} key={training.id_course}>
                                 <div className='div-card'>
                                     <div className="treinamento-item">
-                                        <div className="topo">
-                                            <p className="nome-card">{training.treinamento}</p>
-                                            <p className="registro-card"><b>RG: </b>{training.register}</p>
+                                        <div className="cima-info">
+                                            <p className="nome-card">{training.name_course}</p>
+                                            <p className="course_type">{training.course_type}</p>                   
                                         </div>
-                                        <div className="fundo">
-                                            <p className="setor-card">Cargo: {training.position} - Departamento: {training.trainingDepartment?.name}</p>
+                                        <div className="meio-info">
+                                            <p className="meio"><FontAwesomeIcon icon={faCircleExclamation}/>{training.shortened_name_criticality}</p>
+                                            <p className="meio"><FontAwesomeIcon icon={faCodeCompare} />{training.version}</p>
+                                            <p className="meio"><FontAwesomeIcon icon={faCheckToSlot} />{training.completed_date}</p>
+                                        </div>
+                                        <div className="baixo-info">
+                                            <p className="carga">{training.realization_status}</p>
                                         </div>
                                     </div>
                                 </div>

@@ -4,14 +4,18 @@
     font-family: 'Nunito Sans', sans-serif;
     padding: 0rem;
   }
+
+.App{
+    background-color: var(--branco-escuro);
+  }
   
   :root {
     --roxo: #6000B6; 
     --preto: #202224; 
     --preto-escuro: #111111;
     --cinza: #e6e6e63d;
-    --branco-escuro: #FBFBFB; 
-    --branco: #FCFDFD;
+    --branco-escuro: #F5F5F5; 
+    --branco: #FFFFFF;
 
     --vermelho-escuro: #C53838;
     --vermelho: #FF5B5B;

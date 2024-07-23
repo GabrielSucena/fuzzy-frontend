@@ -1,0 +1,131 @@
+[33mcommit 1847e1645be68e0bce6440b1ea5c54b48f174263[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mviniciusDev[m[33m, [m[1;31morigin/viniciusDev[m[33m)[m
+Author: Vinicius Domingues <vinii.domingues@gmail.com>
+Date:   Fri Jul 19 01:09:23 2024 -0300
+
+    Adiciona teste gráfico, treinamentos atrelados, mudança de rodapé e cabeçalho
+
+[33mcommit 791e52d03244008a38ae152ecb17e03eb793ff81[m
+Author: Vinicius Domingues <vinii.domingues@gmail.com>
+Date:   Tue Jul 16 22:51:00 2024 -0300
+
+    Adiciona tela de edição
+
+[33mcommit 58f9d024d8aac3e289d4f6b5fc810955b01a02d0[m
+Author: Vinicius Domingues <vinii.domingues@gmail.com>
+Date:   Mon Jul 15 02:45:31 2024 -0300
+
+    Adiciona correções
+
+[33mcommit 4f68d26382d1cdb03965af6ec09bc6ba151807dc[m[33m ([m[1;31morigin/test[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mtest[m[33m, [m[1;32mmain[m[33m)[m
+Author: Vinicius Domingues <vinii.domingues@gmail.com>
+Date:   Mon Jul 15 02:41:39 2024 -0300
+
+    Adiciona imanges vazias e edição de colaborador
+
+[33mcommit 006588092b6aba822b5c83c11a472f39fa66ee3e[m[33m ([m[1;31morigin/rodrigoDev[m[33m)[m
+Merge: d350776 723f1ac
+Author: Vinicius Domingues <vinii.domingues@gmail.com>
+Date:   Sun Jul 14 21:10:46 2024 -0300
+
+    Merge branch 'viniciusDev' into test
+
+[33mcommit 723f1ac8f056df942dfb0ce09bb3f4f008ca5107[m
+Author: Vinicius Domingues <vinii.domingues@gmail.com>
+Date:   Sun Jul 14 20:52:29 2024 -0300
+
+    Adiciona ícone e carregamento
+
+[33mcommit d350776b9043f97af40ab3d042e4f182810f1dc4[m
+Merge: 8521476 d5d6da9
+Author: rodrix-go <rodrigo-l-c@hotmail.com>
+Date:   Sun Jul 14 20:49:50 2024 -0300
+
+    Merge remote-tracking branch 'origin/test' into rodrigoDev
+
+[33mcommit 8521476b2f884a3a746e900ae581b7059eab01ea[m
+Author: rodrix-go <rodrigo-l-c@hotmail.com>
+Date:   Sun Jul 14 20:48:27 2024 -0300
+
+    add: Treinamentos
+
+[33mcommit 7bd456341b03afe0bc26eaf1237d54ba676fd4ff[m
+Author: Vinicius Domingues <vinii.domingues@gmail.com>
+Date:   Sat Jul 13 23:16:03 2024 -0300
+
+    Adiciona simulador de backend
+
+[33mcommit d122b0532a6289c52e398854c6db1172efc75416[m
+Author: rodrix-go <rodrigo-l-c@hotmail.com>
+Date:   Wed Jul 10 14:06:36 2024 -0300
+
+    add: Tela A2 e Mudançãs botão
+
+[33mcommit d5d6da96431d1aac435340f7b00b8e014195278b[m
+Merge: 6e4e0f3 b890f4e
+Author: Vinny <134722839+vinicius-domingues@users.noreply.github.com>
+Date:   Sun Jul 7 20:22:44 2024 -0300
+
+    Merge pull request #2 from GabrielSucena/viniciusDev
+    
+    Adiciona formulário
+
+[33mcommit b890f4e026b9794e1a300949064bcb03c84bcf73[m
+Author: ViniciusDominguesEasy <134722839+ViniciusDominguesEasy@users.noreply.github.com>
+Date:   Sun Jul 7 20:21:00 2024 -0300
+
+    Adiciona biblioteca do campo e do formulário
+
+[33mcommit 6e4e0f3d2c9a73cec63bbfd6692cbc99c268c53d[m
+Merge: 13d7ee3 a298043
+Author: ViniciusDominguesEasy <134722839+ViniciusDominguesEasy@users.noreply.github.com>
+Date:   Sun Jul 7 18:21:16 2024 -0300
+
+    Adiciona componentes novos e branch Vinicius na Test
+
+[33mcommit 13d7ee3bea66072e37475f5374fda90bcb674acf[m
+Author: ViniciusDominguesEasy <134722839+ViniciusDominguesEasy@users.noreply.github.com>
+Date:   Sun Jul 7 18:19:06 2024 -0300
+
+    Adiciona alterações
+
+[33mcommit a29804353a5e057ed72e86b16cccb736450ccf37[m
+Author: ViniciusDominguesEasy <134722839+ViniciusDominguesEasy@users.noreply.github.com>
+Date:   Sun Jul 7 18:07:59 2024 -0300
+
+    Adiciona versão Vinicius com Modal, Botao e TituloPagina atualizados
+
+[33mcommit 20eddd7a6e342e3fd7545e330c336c4743ebe042[m
+Author: ViniciusDominguesEasy <134722839+ViniciusDominguesEasy@users.noreply.github.com>
+Date:   Thu Jul 4 21:22:03 2024 -0300
+
+    Adiciona pastas das telas
+
+[33mcommit 1269aec3aae5a0eabdeeb4334a736f7cbef0a6ae[m
+Author: ViniciusDominguesEasy <134722839+ViniciusDominguesEasy@users.noreply.github.com>
+Date:   Thu Jul 4 02:56:37 2024 -0300
+
+    Finaliza tela de auditoria
+
+[33mcommit 44d89febcb84a4db97e5e8cfc3bffec2359b8d59[m
+Author: ViniciusDominguesEasy <134722839+ViniciusDominguesEasy@users.noreply.github.com>
+Date:   Thu Jul 4 02:51:46 2024 -0300
+
+    Finaliza tela de audiorias
+
+[33mcommit 84b5ad2959af73781f6a46ec1389045a5edbe303[m
+Author: ViniciusDominguesEasy <134722839+ViniciusDominguesEasy@users.noreply.github.com>
+Date:   Thu Jul 4 02:38:20 2024 -0300
+
+    Adiciona frontend iniciado
+    
+    Adiciona telas realizadas
+    Adiciona componentes realizados
+    Adiciona estrutura configurada
+    Adiciona bibliotecas utilizadas
+    Adiciona imagens usadas
+
+[33mcommit 69a153a10fd49270e81c6adf3d1002cdda78f089[m
+Author: Gabriel Sucena <115437364+GabrielSucena@users.noreply.github.com>
+Date:   Tue Jul 2 19:13:34 2024 -0300
+
+    Initial commit
