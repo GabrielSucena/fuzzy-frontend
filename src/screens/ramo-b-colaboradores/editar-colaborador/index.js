@@ -57,7 +57,6 @@ function EditarColaborador() {
             
             <TituloPagina
                 titulopagina="Editar Colaborador"
-                divisor2={true}
             />
             <FormularioColaborador
                 handleSubmit={editPost}

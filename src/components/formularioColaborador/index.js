@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 
 function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, textoBotao2 }) {
     const [departments, setDepartments] = useState([]);
+    const [positions, setPositions] = useState([]);
     const [collaborator, setCollaborator] = useState(collaboratorData || {});
 
     useEffect(() => {
@@ -22,6 +23,20 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
             .catch((err) => console.log(err));
     }, []);
 
+    useEffect(() => {
+        fetch('http://localhost:5000/positions', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+            .then((resp) => resp.json())
+            .then((data) => {
+                setPositions(data);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
     const submit = (e) => {
         e.preventDefault();
         handleSubmit(collaborator);
@@ -29,7 +44,6 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
 
     function handleChange(e) {
         setCollaborator({ ...collaborator, [e.target.name]: e.target.value });
-        
     }
 
     function handleSelectDepartment(e) {
@@ -44,9 +58,21 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
         });
     }
 
+    function handleSelectPosition(e) {
+        const selectedPositionId = e.target.value;
+        const selectedPosition = positions.find(position => position.id === selectedPositionId);
+        setCollaborator({
+            ...collaborator,
+            collaboratorPosition: {
+                id: selectedPositionId,
+                name: selectedPosition ? selectedPosition.name : '',
+            },
+        });
+    }
+
     return (
         <form className="conteiner-cadastro" onSubmit={submit}>
-            <SimpleGrid className="grid-container" spacingX="3rem" spacingY="4rem" autoComplete="on">
+            <SimpleGrid className="grid-container-colaborador" spacingX="4rem" spacingY="3rem" autoComplete="on">
                 <TextField 
                     required
                     className="campo" 
@@ -73,31 +99,47 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
                             <MenuItem value={department.id} key={department.id}>{department.name}</MenuItem>
                         ))}   
                     </Select>
-                </FormControl>
-                {/* 
-                <TextField 
-                    className="campo" 
-                    required 
-                    id="email" 
-                    label="Email" 
-                />
+                </FormControl> 
                 <FormControl fullWidth className="campo">
                     <InputLabel id="collaboratorPosition">Cargo</InputLabel>
                     <Select 
-                        required 
-                        labelId="collaboratorPosition" 
+                        required
+                        onChange={handleSelectPosition}
+                        value={collaborator.collaboratorPosition ? collaborator.collaboratorPosition.id : ''}
+                        labelId="collaboratorPosition"
+                        name="collaboratorPosition" 
                         label="Cargo" 
                     >
-
+                        {positions.map((position) => (
+                            <MenuItem value={position.id} key={position.id}>{position.name}</MenuItem>
+                        ))}   
                     </Select>
                 </FormControl>
+                <TextField 
+                    required
+                    className="campo" 
+                    type='text'
+                    name='email'
+                    id="email" 
+                    label="Email" 
+                    placeholder='Digite o email aqui'
+                    onChange={handleChange}
+                    value={collaborator.email ? collaborator.email : ''}
+                />
+
+
                 <TextField 
                     className="campo" 
                     required 
                     id="collaboratorRecord" 
-                    label="Registro" 
+                    label="ID de Registro Sanofi" 
+                    type='text'
+                    name='collaboratorRecord'
+                    placeholder='Digite o ID da empresa aqui'
+                    onChange={handleChange}
+                    value={collaborator.collaboratorRecord ? collaborator.collaboratorRecord : ''}
                 />
-                */}
+                
             </SimpleGrid>
             <div className="botoes">
                 <Botao type='submit' color='roxo'>{textoBotao}</Botao>

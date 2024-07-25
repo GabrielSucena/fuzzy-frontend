@@ -4,17 +4,25 @@ import TituloPagina from "../../../components/titulopagina";
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import Carregando from "../../../components/carregando";
 import Botao from "../../../components/botao";
-import Teste2 from '../../ramo-e-estruturais/teste2';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation, faCodeCompare, faCheckToSlot } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation, faCodeCompare, faCheckToSlot, faSquareFull, faSquare } from '@fortawesome/free-solid-svg-icons';
+import ReactApexChart from "react-apexcharts";
+import { PieChart } from '@mui/x-charts/PieChart';
+
 
 function VerColaborador() {
     const { id } = useParams();
     const navigate = useNavigate();
+    
     const [collaborator, setCollaborator] = useState(null);
     const [trainings, setTrainings] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredTrainings, setFilteredTrainings] = useState([]);
     const [collaboratorMessage, setCollaboratorMessage] = useState('');
     const [collaboratorInfo, setCollaboratorInfo] = useState(null);
+    const [selectedCriticality, setSelectedCriticality] = useState('');
+    const [selectedStatus, setSelectedStatus] = useState('');
+
     const [green, setGreen] = useState(0);
     const [yellow, setYellow] = useState(0);
     const [orange, setOrange] = useState(0);
@@ -23,6 +31,14 @@ function VerColaborador() {
     const [code2, setCode2] = useState(0);
     const [andamento, setAndamento] = useState(0);
     const [total, setTotal] = useState(0);
+
+    const verde = getComputedStyle(document.documentElement).getPropertyValue('--verde').trim();
+    const vermelho = getComputedStyle(document.documentElement).getPropertyValue('--vermelho').trim();
+    const laranja = getComputedStyle(document.documentElement).getPropertyValue('--laranja').trim();
+    const vermelhoEscuro = getComputedStyle(document.documentElement).getPropertyValue('--vermelho-escuro').trim();
+    const rosa = getComputedStyle(document.documentElement).getPropertyValue('--rosa').trim();
+    const azul = getComputedStyle(document.documentElement).getPropertyValue('--azul').trim();
+
 
     useEffect(() => {
         fetch(`http://localhost:5000/collaborators/${id}`, {
@@ -44,7 +60,10 @@ function VerColaborador() {
             },
         })
         .then(resp => resp.json())
-        .then(data => setTrainings(data))
+        .then(data => {
+            setTrainings(data);
+            setFilteredTrainings(data);
+        })
         .catch(err => console.log(err));
     }, []);
 
@@ -75,6 +94,20 @@ function VerColaborador() {
         .catch(err => console.log(err));
     }, []);
 
+    useEffect(() => {
+        const filtered = trainings
+            .filter(training =>
+                training.name_course.toLowerCase().includes(searchTerm.toLowerCase())
+            )
+            .filter(training => 
+                selectedCriticality ? training.shortened_name_criticality === selectedCriticality : true
+            )
+            .filter(training => 
+                selectedStatus ? training.realization_status === selectedStatus : true
+            );
+        setFilteredTrainings(filtered);
+    }, [searchTerm, selectedCriticality, selectedStatus, trainings]);
+
     if (!collaborator) {
         return <Carregando />;
     }
@@ -101,13 +134,52 @@ function VerColaborador() {
         });
     }
 
+    const statusGrafico = {
+        chart: { type: 'donut' },
+        plotOptions: { pie: { donut: { size: '75%' } } },
+        series: [green, yellow, orange, red],
+        labels: ['Feito', '16 até 30 dias', '0 até 15 dias', 'Mais de 30 dias'],
+        legend: {
+            position: 'bottom',
+            horizontalAlign: 'center',
+            itemMargin: { horizontal: 0, vertical: 10 },
+        },
+        colors:
+            [
+                verde, 
+                vermelho, 
+                laranja, 
+                vermelhoEscuro, 
+            ],
+    };
+
+    const codificacoesGrafico = {
+        chart: { type: 'donut' },
+        plotOptions: { pie: { donut: { size: '75%' } } },
+        series: [code1, code2],
+        labels: ['CAD-QU-SOP', 'CAD-QU-GOP'],
+        legend: {
+            position: 'bottom',
+            horizontalAlign: 'center',
+            itemMargin: { horizontal: 0, vertical: 10 },
+        },
+        colors:
+            [
+                azul, 
+                rosa, 
+
+            ],
+    };
+
+    
+
     return (
         <>
             {collaboratorMessage && <div className="message">{collaboratorMessage}</div>}
             <div className="topo-telas">
                 <div className="titulo-e-descricao">
                     <p className="titulo-pagina">{collaborator.fullName || "Nome do Colaborador"}</p>
-                    <p className="descricao-titulo">{`Registro: ${collaborator.id || ""}`}</p>
+                    <p className="descricao-titulo">Sanofi<span> </span>ID: {`${collaborator.collaboratorRecord || ""}`}</p>
                 </div>
                 <div className="conteiner-botao">
                     <div className="botoes-titulo-pagina">
@@ -121,8 +193,8 @@ function VerColaborador() {
             <div className="metricas">
                 <div className="bloco bloco1">
                     <div className="bloco1-1">
-                        <p><b>Cargo:</b> ~~cargo</p>
-                        <p><b>Email:</b> ~~email</p>
+                        <p ><b>Cargo:</b> {collaborator.collaboratorPosition?.name}</p>
+                        <p><b>Email:</b> {collaborator.email}</p>
                         <p><b>Setor:</b> {collaborator.collaboratorDepartment?.name}</p>
                     </div>
                 </div>
@@ -136,7 +208,7 @@ function VerColaborador() {
                     </div>
                     <div className="bloco2-2">
                         <div className="info-bloco-2">
-                            <p className="topico">Treinamentos andamento</p>
+                            <p className="topico">Treinamentos em andamento</p>
                             <p className="valor-topico">{andamento}</p>
                         </div>
                         <img src="/icones/doing.svg" alt="ícone em andamento" />
@@ -150,17 +222,47 @@ function VerColaborador() {
                     </div>
                 </div>
                 <div className="bloco bloco3">
-                    <div className="grafico1">
-                        <p>Gráfico 1</p>
-                        <p>Legenda 1</p>
-                        <p>Legenda 2</p>
-                        <p>Legenda 3</p>
-                        <p>Legenda 4</p>
+                <div className="grafico1">
+                        <ReactApexChart
+                            options={statusGrafico}
+                            series={statusGrafico.series}
+                            type="donut"
+                            height={200}
+                        />
+                        <div className="legendas-conteiner">
+                            <div className="legendas">
+                            <p className="legenda" style={{ color: verde }}>
+                                <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={verde} /> {`Curso realizado`.toUpperCase()}
+                            </p>
+                            <p className="legenda" style={{ color: vermelho }}>
+                                <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={vermelho} /> {`em andamento (Quizena 1)`.toUpperCase()}
+                            </p>
+                            <p className="legenda" style={{ color: laranja }}>
+                                <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={laranja} /> {`em andamento (Quizena 2)`.toUpperCase()}
+                            </p>
+                            <p className="legenda" style={{ color: vermelhoEscuro }}>
+                                <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={vermelhoEscuro} /> {`Curso não realizado`.toUpperCase()}
+                            </p>
+                            </div>
+                        </div>
                     </div>
                     <div className="grafico2">
-                        <p>Gráfico 2</p>
-                        <p>Legenda 1</p>
-                        <p>Legenda 2</p>
+                    <ReactApexChart
+                            options={codificacoesGrafico}
+                            series={codificacoesGrafico.series}
+                            type="donut"
+                            height={200}
+                        />
+                        <div className="legendas-conteiner">
+                            <div className="legendas">
+                            <p className="legenda" style={{ color: azul }}>
+                                <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={azul} /> {`Codificação SOP`.toUpperCase()}
+                            </p>
+                            <p className="legenda" style={{ color: rosa }}>
+                                <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={rosa} /> {`Codificação GOP`.toUpperCase()}
+                            </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,20 +270,36 @@ function VerColaborador() {
             <div className="treinamentos">
                 <div className="treinamentos-card">
                     <div className="busca-filtros">
-                        <input type="text" className="campo-busca" placeholder="Pesquise aqui o treinamento" />
-                        <select className="filtro">
+                        <input 
+                            type="text" 
+                            className="campo-busca" 
+                            placeholder="Pesquise aqui o treinamento" 
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                        />
+                        <select 
+                            className="filtro"
+                            onChange={e => setSelectedCriticality(e.target.value)}
+                            value={selectedCriticality}
+                        >
                             <option value="">Classificação</option>
-                            <option value="opcao1">Tipo 1</option>
-                            <option value="opcao2">Tipo 2</option>
+                            <option value="ME">ME</option>
+                            <option value="MA">MA</option>
+                            <option value="C">C</option>
+                            <option value="N/A">N/A</option>
                         </select>
-                        <select className="filtro">
+                        <select 
+                            className="filtro"
+                            onChange={e => setSelectedStatus(e.target.value)}
+                            value={selectedStatus}
+                        >
                             <option value="">Status</option>
-                            <option value="opcao1">Realizado</option>
-                            <option value="opcao2">À realizar</option>
+                            <option value="Realizado">Realizado</option>
+                            <option value="À realizar">À realizar</option>
                         </select>
                     </div>
                     <div className="grid-container">
-                        {trainings.length > 0 && trainings.map((training) => (
+                        {filteredTrainings.length > 0 && filteredTrainings.map((training) => (
                             <Link className='retirar-estilo' to={`/ver-treinamento/${training.id_course}`} key={training.id_course}>
                                 <div className='div-card'>
                                     <div className="treinamento-item">

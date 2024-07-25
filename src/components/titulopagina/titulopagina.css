@@ -9,9 +9,10 @@
 /* Contêiner flexível para título e descrição */
 .titulo-e-descricaoo {
     display: flex;
-    align-items: center;
+    flex-direction: column; /* Alinha os elementos em coluna */
+    align-items: flex-start; /* Alinha os itens ao início */
     width: 100%; /* Garante que ocupe a largura completa */
-    gap: 1rem;
+    gap: 0.5rem; /* Espaço entre o título e a descrição */
 }
 
 /* Estilos de título */
@@ -26,20 +27,16 @@
     align-items: center;
 }
 
+/* Estilos de descrição */
 .descricao-tituloo {
     color: var(--cinza-escuro);
     font-weight: bold;
-    font-size: 2rem;
+    font-size: 1.25rem;
     margin: 0;
     border-radius: 1rem;
     display: flex;
     align-items: center;
-    padding: 1.9rem;
-}
-
-/* Ajustes específicos para descrição-titulo */
-.descricao-tituloo {
-    font-size: 1rem;
+    padding-top: 1rem;
 }
 
 /* Contêiner de botões */
@@ -55,41 +52,30 @@
     flex-wrap: nowrap;
 }
 
-/* Ajustes de mídia para responsividade */
+/* Ajustes específicos para responsividade */
 @media (max-width: 768px) {
     .titulo-e-descricaoo {
-        flex-direction: column; /* Alinha os elementos em coluna em telas pequenas */
-        align-items: flex-start;
+        align-items: flex-start; /* Alinha os itens ao início */
     }
-}
 
-/* Ajustes de mídia para responsividade */
-@media (max-width: 768px) {
-    .roxoo, .brancoo {
-        padding: 1rem 1.65rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .titulo-e-descricaoo {
-        flex-direction: row; /* Alinha os elementos em linha em telas pequenas */
-        justify-content: space-between;
-    }
     .titulo-paginaa {
         font-size: 1.5rem; /* Reduz o tamanho da fonte para melhor ajuste */
-        padding: 0rem;
+        padding: 0;
         text-align: center;
     }
+
     .descricao-tituloo {
         font-size: 1rem; /* Reduz o tamanho da fonte para melhor ajuste */
-        padding: 2.55rem 1rem;
+        padding: 0;
         text-align: center;
     }
+
     .botoes-titulo-paginaa {
         flex-direction: row;
         justify-content: space-between;
-        max-width: 1rem;
+        max-width: 100%;
     }
+
     .conteiner-botaoo {
         text-align: center; /* Centraliza os botões em telas pequenas */
     }

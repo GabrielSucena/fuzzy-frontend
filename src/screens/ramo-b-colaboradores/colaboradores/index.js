@@ -48,10 +48,10 @@ function Colaboradores() {
                                     <div className="colaborador-item">
                                         <div className="topo">
                                             <p className="nome-card">{collaborator.fullName}</p>
-                                            <p className="registro-card"><b>RG: </b>{collaborator.register}</p>
+                                            <p className="registro-card"><b>RG: </b>{collaborator.collaboratorRecord}</p>
                                         </div>
                                         <div className="fundo">
-                                            <p className="setor-card">Cargo: {collaborator.position} - Departamento: {collaborator.collaboratorDepartment.name}</p>
+                                            <p className="setor-card">Cargo: {collaborator.position} - Departamento: {collaborator.department}</p>
                                         </div>
                                         
                                     </div>

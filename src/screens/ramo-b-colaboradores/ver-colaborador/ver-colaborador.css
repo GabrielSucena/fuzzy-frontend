@@ -1,8 +1,8 @@
-/* Estilo para o contêiner das métricas */
+
 .metricas {
     display: flex;
-    justify-content: space-between; /* Espaçamento horizontal entre os blocos */
-    align-items: stretch; /* Faz com que os itens estiquem para a mesma altura */
+    justify-content: space-between;
+    align-items: stretch; 
     width: 80%;
     margin: auto;
     text-align: center;
@@ -12,71 +12,96 @@
 
 }
 
-/* Estilo para os blocos dentro da métrica */
+
 .bloco {
-    flex: 1; /* Cada bloco ocupa a mesma quantidade de espaço disponível */
+    flex: 1; 
     margin: 0.25rem;
     border-radius: 1rem;
-    min-width: calc(33% - 0.5rem); /* Garante que cada bloco ocupe 1/3 da largura do contêiner */
-    box-sizing: border-box; /* Garante que a borda não aumente o tamanho total */
+    min-width: calc(33% - 0.5rem); 
+    box-sizing: border-box; 
     
 }
 
-/* Estilo específico para cada bloco */
 .bloco1 {
     background-color: var(--branco);
-    border: 1px solid var(--cinza);;
+}
+
+.bloco2 {
+    display: grid;
+    background-color: none;
+    justify-self: center;
+    gap: 0.5rem;
 }
 
 .bloco3 {
-    display: inline-block;
+    justify-content: space-around; 
+    align-items: flex-start; 
     background-color: var(--branco);
+    padding: 3rem 0rem;
 }
 
-.grafico1 {
-    border: 1px solid red;
+
+/* Estilo para os gráficos dentro de bloco3 */
+.grafico1, .grafico2 {
+    display: inline-block; 
+    flex-direction: column;
+    align-items: center; 
+    width: 45%; 
+    }
+
+
+.legendas-conteiner {
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    text-align: left; 
 }
 
-.grafico2 {
-    border: 1px solid red;
+.legendas {
+    display: flex; 
+    flex-direction: column; 
+    margin-top: 1.25rem;
+}
+
+.legenda {
+    display: flex; 
+    align-items: center; 
+    margin-bottom: 0.75rem; 
 }
 
 /* Estilo para os itens dentro dos blocos */
-.bloco1-1, .bloco2-1, .bloco2-2, .bloco2-3, .grafico1, .grafico2 {
+.bloco1-1, .bloco2-1, .bloco2-2, .bloco2-3 {
     border-radius: 0.25rem;
-    margin-bottom: 0.25rem;
-    border: 1px solid var(--cinza);
 }
 
 .bloco1-1 {
     display: flex;
-    flex-direction: column; /* Ajuste para row se desejar horizontal */
-    justify-content: space-around; /* Distribui espaço ao redor dos itens */
-    height: 100%; /* Certifique-se de que o bloco1-1 tenha uma altura definida */
-    align-items: flex-start; /* Alinha os itens à esquerda */
-    padding-left: 4rem; /* Adiciona algum padding ao redor do conteúdo */
+    flex-direction: column; 
+    justify-content: space-around; 
+    height: 100%; 
+    align-items: flex-start; 
+    padding-left: 4rem; 
     color: #565656;
 }
 
-/* Estilo específico para seções dentro do bloco 2 */
 .bloco2-1, .bloco2-2, .bloco2-3 {
     border: 1px solid var(--cinza);
     display: flex;
-    align-items: center; /* Alinha verticalmente os itens */
-    margin-bottom: 0.5rem; /* Ajuste a margem inferior conforme necessário */
-    padding: 0.5rem; /* Adiciona algum padding ao redor do conteúdo */
+    align-items: center; 
+    padding: 0.5rem; 
     background-color: var(--branco);
     border-radius: 1rem;
 }
 
 .bloco2-1 img, .bloco2-2 img, .bloco2-3 img {
-    margin: 1rem; /* Espaçamento entre o texto e o ícone */
-    width: 3rem; /* Ajuste o tamanho do ícone conforme necessário */
-    height: auto; /* Mantém a proporção do ícone */
+    margin-right: 1rem; /* Espaçamento entre o texto e o ícone */
+    margin-left: 0.5rem; 
+    width: 4.5rem; 
+    height: 100%;
 }
 
 .bloco2-1 p, .bloco2-2 p, .bloco2-3 p {
-    margin: 0; /* Remove margens padrão dos parágrafos */
+    margin: 0; 
 }
 
 /* Contêiner principal */
@@ -117,33 +142,37 @@
     margin: 0;
     background-color: var(--branco);
     border-radius: 1rem;
-    display: flex;
+    display: block;
     align-items: center;
     padding: 1.9rem;
     border: 1px solid var(--cinza-escuro);
 }
 
-/* Contêiner de botões */
+
 .conteiner-botao {
     width: 100%;
     margin-top: 1rem;
 }
 
-/* Estilos de botões */
+
 .botoes-titulo-pagina {
     display: flex;
     gap: 1.5rem;
     flex-wrap: nowrap;
 }
 
-/* Estilos responsivos */
 @media (max-width: 800px) {
-    .titulo-pagina, .descricao-titulo {
-        font-size: 1.5rem;
+    .titulo-pagina { 
+        font-size: 1.032rem;
         padding: 1rem;
         text-align: center;
     }
 
+    .descricao-titulo {
+        font-size: 1.032rem;
+        padding: 1rem;
+        text-align: center;
+    }
     .conteiner-botao {
         text-align: center;
     }
@@ -152,9 +181,16 @@
         width: 100%;
         flex-direction: column;
     }
+
+     .bloco1{
+            padding: 1.5rem 0rem;
+    }
+    
+    .bloco1-1{
+        gap: 1rem;
+    }
 }
 
-/* Estilos para tópicos e valores */
 .topico {
     font-size: 1rem;
     font-weight: bold;
@@ -183,7 +219,7 @@
     align-items: center;
 }
 
-/* Estilo para o contêiner de treinamentos */
+
 .treinamentos {
     justify-content: center;
     align-items: center;
@@ -192,7 +228,7 @@
     text-decoration: none;
 }
 
-/* Estilo para o card de treinamentos */
+
 .treinamentos-card {
     border: 1px solid #EBEBEB;
     width: 78.75%;
@@ -205,18 +241,20 @@
     color: inherit;
     text-decoration: none;
     background-color: var(--branco);
+    min-height: 12rem;
 }
 
-/* Grid para os itens */
+
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     gap: 1rem;
     width: 100%;
     text-decoration: none;
+    
 }
 
-/* Estilo para os links */
+
 .link-card,
 .link-card:hover,
 .link-card:visited,
@@ -225,7 +263,7 @@
     color: inherit;
 }
 
-/* Estilo para os itens de colaborador */
+
 .treinamento-item {
     border: 0.25rem solid var(--preto);
     padding: 1rem;
@@ -237,20 +275,20 @@
     text-decoration: none;
 }
 
-/* Topo do item */
+
 .topo {
     display: flex;
     flex-direction: column;
 }
 
-/* Fundo do item */
+
 .fundo {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
 }
 
-/* Estilos específicos para as classes dentro do item */
+
 .nome-card, .registro-card {
     margin: 0;
     padding-bottom: 0.5rem;
@@ -265,7 +303,7 @@
     border-radius: 0.75rem;
 }
 
-/* Remove o sublinhado e mantém a cor ao clicar */
+
 .link-card:hover,
 .link-card:visited,
 .link-card:active {
@@ -274,12 +312,12 @@
 }
 
 .imagem-vazio {
-    max-width: 100%; /* Garante que a imagem não ultrapasse o container */
-    max-height: 100%; /* Garante que a imagem não ultrapasse o container */
-    margin: auto; /* Centraliza a imagem dentro do container */
-    top: 50%; /* Move a imagem para o centro verticalmente */
-    left: 50%; /* Move a imagem para o centro horizontalmente */
-    box-sizing: border-box; /* Inclui padding e border no tamanho da imagem */
+    max-width: 100%; 
+    max-height: 100%;
+    margin: auto;
+    top: 50%; 
+    left: 50%; 
+    box-sizing: border-box; 
     padding: 1rem 0;
 }
 
@@ -296,33 +334,33 @@
     padding: 0.1rem 0.75rem;
 }
 
-/* Estilo para o contêiner de busca e filtros */
+
 .busca-filtros {
     display: flex;
-    align-items: center; /* Alinha verticalmente os itens no centro */
+    align-items: center; 
     width: 100%;
     margin-bottom: 1rem;
-    gap: 0.5rem; /* Espaçamento entre os itens */
+    gap: 0.5rem; 
     flex-wrap: wrap-reverse;
+    top: 0rem;
 }
 
-/* Estilo para o campo de busca */
 .campo-busca {
     flex: 1;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 10rem;
-    box-sizing: border-box; /* Garante que padding e border não aumentem o tamanho total */
+    box-sizing: border-box; 
 }
 
-/* Estilo para o filtro */
 .filtro {
     padding: 0.35rem;
     border: 3px solid var(--roxo);
     color: var(--roxo);
     font-weight: bold;
     border-radius: 10rem;
-    box-sizing: border-box; /* Garante que padding e border não aumentem o tamanho total */
+    box-sizing: border-box; 
+    min-width: 8rem;
 }
 
 .course_type, .realization_status {
@@ -347,38 +385,21 @@
     align-items: center;
 }
 
-/* Estilos para status */
-.status-green {
-    color: var(--verde);
-}
-
-.status-yellow {
-    color: var(--amarelo);
-}
-
-.status-orange {
-    color: var(--laranja);
-}
-
-.status-red {
-    color: var(--vermelho-escuro);
-}
-
 .bloco3 {
-    border: 1px solid yellow;
-    display: inline-block; /* Garante que bloco3 se comporte como um bloco inline */
+    display: inline-block; 
 }
 
-/* Estilo para os gráficos dentro de bloco3 */
-.grafico1, .grafico2 {
-    border: 1px solid red;
-    display: inline-block; /* Faz com que os gráficos se comportem como blocos inline */
-    vertical-align: top; /* Alinha os gráficos ao topo */
-    margin-right: 0.25rem; /* Espaçamento entre os gráficos */
+.apexcharts-legend {
+    display: none !important
+    
 }
 
-/* Estilo para os itens dentro dos blocos */
-.bloco1-1, .grafico1, .grafico2 {
-    border-radius: 0.25rem;
-    margin-bottom: 0.25rem;
+.quadrado-legenda{
+    margin-right: 0.5rem;
+}
+
+.apexcharts-datalabel, .apexcharts-datalabel-label, .apexcharts-datalabel-value, .apexcharts-datalabels, .apexcharts-pie-label {
+    fill: white;
+    stroke: black;
+    font-size: 1rem;
 }
