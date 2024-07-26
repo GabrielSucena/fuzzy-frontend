@@ -27,6 +27,7 @@ import { Stack, fontStyle, margin, textAlign } from "@mui/system";
 import { Flex } from "@chakra-ui/layout";
 import { PieChart } from "@mui/x-charts";
 import { CurtainsClosed } from "@mui/icons-material"
+import DataGridDemo from "../../../components/tabela/tabela";
 
 const CustomSelect = styled(Select)(({ theme }) => ({
   "& .MuiSelect-outlined": {
@@ -91,6 +92,10 @@ function TreinamentoInfo() {
   const { procedimento, cod, nome, duration, dataInicio, dataFinal, versao } =
     location.state || {};
 
+  const modalidade = "Online"
+  const instrutor = "Isabela Carvalho"
+  const status = "Em andamento"
+  const participantes = 6
   return (
     <>
       <TituloPagina
@@ -111,12 +116,12 @@ function TreinamentoInfo() {
         <Grid item xs={10}>
           <Grid container spacing={1}>
             {/* Esquerda - info  */}
-            <Grid item xs={6}>
+            <Grid item xs={12} lg={6}>
               <Grid container spacing={1}>
                 <Grid item xs={12} md={12} lg={12}>
                   <DemoPaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
-                      <Grid item xs={6}>
+                      <Grid item xs={12} lg={6}>
                         <Stack
                           spacing={{ xs: 2 }}
                           useFlexGap
@@ -139,13 +144,13 @@ function TreinamentoInfo() {
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Instrutor(a):
                             <Typography sx={{ ...typographyStyle.text, }}>
-                              Isabela Carvalho
+                              {instrutor}
                             </Typography>
                           </Typography>
                         </Stack>
                       </Grid>
 
-                      <Grid item xs={6}>
+                      <Grid item xs={12} lg={6}>
                         <Stack
                           spacing={{ xs: 1, sm: 2 }}
                           direction="row"
@@ -169,7 +174,7 @@ function TreinamentoInfo() {
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Tipo de treinamento:
                             <Typography sx={{ ...typographyStyle.text }}>
-                              Online
+                              {modalidade}
                             </Typography>
                           </Typography>
                         </Stack>
@@ -206,7 +211,7 @@ function TreinamentoInfo() {
                           Status Treinamento:
                         </Typography>
                         <Typography sx={{ ...typographyStyle.text }}>
-                          Em andamento
+                          {status}
                         </Typography>
                       </Grid>
 
@@ -230,7 +235,7 @@ function TreinamentoInfo() {
                           Participantes:
                         </Typography>
                         <Typography sx={{ ...typographyStyle.text }}>
-                          6
+                          {participantes}
                         </Typography>
                       </Grid>
 
@@ -249,10 +254,8 @@ function TreinamentoInfo() {
             </Grid>
 
             {/* Direita - Grafico  */}
-            <Grid item xs={6}>
+            <Grid item xs={12} lg={6}>
               <DemoPaper elevation={5} square={false} variant="elevation">
-
-
                 <PieChart
                   series={[
                     {
@@ -297,14 +300,80 @@ function TreinamentoInfo() {
                   ]}
                   width={500}
                   height={150}
-
                 />
-
-
               </DemoPaper>
             </Grid>
           </Grid>
+
+          <TituloPagina
+            titulopagina={"Colaboradores Envolvidos"}
+            botao1="Adicionar"
+            botao2="Editar"
+            botao3="Notificar"
+            destino1="/adicionar-treinamentos"
+            color1="roxo"
+            color2="branco"
+            color3="branco"
+          />
+
+          <DemoPaper elevation={2} square={false} variant="elevation">
+            <Grid container spacing={1}>
+              <Grid item xs={12} md={6} lg={6}>
+                <TextField
+                  fullWidth
+                  id="pesquisa"
+                  label="Pesquise aqui o treinamento"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item xs={6} md={3} lg={3}>
+                <FormControl fullWidth color="primary" variant="outlined">
+                  <InputLabel id="demo-simple-select-label">
+                    Departamento
+                  </InputLabel>
+                  <CustomSelect
+                    variant="outlined"
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={departamentos}
+                    label="Departamentos"
+                    onChange={(e) => setDepartamentos(e.target.value)}
+                  >
+                    <MenuItem value={10}>Vendas</MenuItem>
+                    <MenuItem value={20}>Técnico</MenuItem>
+                    <MenuItem value={30}>Consulta</MenuItem>
+                  </CustomSelect>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={6} md={3} lg={3}>
+                <FormControl fullWidth>
+                  <InputLabel id="demo-simple-select-label">Cargo</InputLabel>
+                  <CustomSelect
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={cargos}
+                    label="Cargo"
+                    onChange={(e) => setCargos(e.target.value)}
+                  >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                  </CustomSelect>
+                </FormControl>
+              </Grid>
+
+
+
+              <Grid item xs={12} md={12} lg={12}>
+                <DataGridDemo />
+              </Grid>
+
+            </Grid>
+
+          </DemoPaper>
         </Grid>
+
 
         {/* Vazio Esquerda */}
         <Grid item xs />
