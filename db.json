@@ -1,20 +1,5 @@
 {
-  "collaborators": [
-    {
-      "id": "a850",
-      "fullName": "Vinicius Dominguess",
-      "collaboratorDepartment": {
-        "id": "1",
-        "name": "Desenvolvimento Analítico"
-      },
-      "collaboratorPosition": {
-        "id": "12",
-        "name": "Analista de Desenvolvimento de Produtos Pleno"
-      },
-      "email": "dfgdfg",
-      "collaboratorRecord": "dfgdfg"
-    }
-  ],
+  "collaborators": [],
   "trainings": [
     {
       "id_course": "001",
