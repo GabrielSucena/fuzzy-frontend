@@ -8,9 +8,9 @@ function TituloPagina({
     descricaotitulo = '',
     divisor1 = false,
     divisor2 = false,
-    botao1 = '', color1 = 'roxo', destino1 = '/',
-    botao2 = '', color2 = 'roxo', destino2 = '/',
-    botao3 = '', color3 = 'roxo', destino3 = '/'
+    botao1 = '', color1 = 'roxo', destino1 = '', onClick1 = null,
+    botao2 = '', color2 = 'roxo', destino2 = '', onClick2 = null,
+    botao3 = '', color3 = 'roxo', destino3 = '', onClick3 = null
 }) {
     return (
         <>
@@ -20,9 +20,9 @@ function TituloPagina({
                 {descricaotitulo !== '' && (<p className="descricao-titulo">{descricaotitulo}</p>)}
                 {(botao1 !== '' || botao2 !== '' || botao3 !== '') && (
                     <div className="botoes-titulo-pagina">
-                        {botao1 !== '' && (<Botao destino={destino1} color={color1}>{botao1}</Botao>)}
-                        {botao2 !== '' && (<Botao destino={destino2} color={color2}>{botao2}</Botao>)}
-                        {botao3 !== '' && (<Botao destino={destino3} color={color3}>{botao3}</Botao>)}
+                        {botao1 !== '' && (<Botao destino={destino1} color={color1} onClick={onClick1}>{botao1}</Botao>)}
+                        {botao2 !== '' && (<Botao destino={destino2} color={color2} onClick={onClick2}>{botao2}</Botao>)}
+                        {botao3 !== '' && (<Botao destino={destino3} color={color3} onClick={onClick3}>{botao3}</Botao>)}
                     </div>
                 )}
             </div>

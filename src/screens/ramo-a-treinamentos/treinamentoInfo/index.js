@@ -1,8 +1,8 @@
 // Preciso:
 
 // - Consumir da api e coletar as infomrações dos cursos
-// - Criar componentes específicos para cada modelo 
-
+// - Estilizar e criar os modais Notificar, Obsoletar
+// - Enviar para a tela de edição
 
 
 import TituloPagina from "../../../components/titulopagina";
@@ -10,16 +10,18 @@ import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import {
   Box,
+  Button,
   Divider,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
+  Modal,
   Select,
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { ThemeProvider } from "@emotion/react";
 import BasicCard from "../../../components/cardTreinamento";
 import { useLocation } from "react-router";
@@ -28,6 +30,12 @@ import { Flex } from "@chakra-ui/layout";
 import { PieChart } from "@mui/x-charts";
 import { CurtainsClosed } from "@mui/icons-material"
 import DataGridDemo from "../../../components/tabela/tabela";
+import DefaultPaper from "../../../components/defaultPaper";
+import PurplePaper from "../../../components/purplePaper";
+import Grafico from "../../../components/grafico";
+import ModalObsoletarTreinamento from "../../../components/modalObsoletarTreinamento";
+import ModalEditarTreinamento from "../../../components/modalEditarTreinamento";
+import ModalAuditarTreinamento from "../../../components/modalAuditoriaTreinamento";
 
 const CustomSelect = styled(Select)(({ theme }) => ({
   "& .MuiSelect-outlined": {
@@ -70,19 +78,7 @@ Codificação:
 </Typography>
 </Typography> */
 }
-
 function TreinamentoInfo() {
-  const DemoPaper = styled(Paper)(({ theme }) => ({
-    padding: "20px",
-    borderRadius: "20px",
-  }));
-
-  const PaperPurple = styled(Paper)(({ theme }) => ({
-    padding: "20px",
-    borderRadius: "20px",
-    background: "linear-gradient(91deg, #AD00FF 20%, #3B0071 100%)",
-  }));
-
   const [cargos, setCargos] = React.useState("");
   const [departamentos, setDepartamentos] = React.useState("");
 
@@ -93,9 +89,16 @@ function TreinamentoInfo() {
     location.state || {};
 
   const modalidade = "Online"
-  const instrutor = "Isabela Carvalho"
+  const instrutor = "Isabela Carvatlho"
   const status = "Em andamento"
   const participantes = 6
+
+  
+  //Modal
+  const [openModal, setOpenModal] = useState(null);
+  const handleOpen = (modalType) => () => setOpenModal(modalType);
+  const handleClose = () => setOpenModal(null);
+
   return (
     <>
       <TituloPagina
@@ -104,22 +107,37 @@ function TreinamentoInfo() {
         botao1="Editar"
         botao2="Obsoletar"
         botao3="Auditoria"
-        destino1="/adicionar-treinamentos"
         color1="roxo"
         color2="branco"
         color3="branco"
+        onClick1={handleOpen('editar')}
+        onClick2={handleOpen('obsoletar')}
+        onClick3={handleOpen('auditoria')}
       />
+
+
+      {openModal === 'editar' && (
+        <ModalEditarTreinamento open={true} handleClose={handleClose} />
+      )}
+      {openModal === 'auditoria' && (
+        <ModalAuditarTreinamento open={true} handleClose={handleClose} />
+      )}
+      {openModal === 'obsoletar' && (
+        <ModalObsoletarTreinamento open={true} handleClose={handleClose} />
+      )}
+
       {/* Main - Container  */}
       <Grid container>
         {/* Vazio Esquerda */}
         <Grid item xs />
+        {/* Principal*/}
         <Grid item xs={10}>
           <Grid container spacing={1}>
             {/* Esquerda - info  */}
             <Grid item xs={12} lg={6}>
               <Grid container spacing={1}>
                 <Grid item xs={12} md={12} lg={12}>
-                  <DemoPaper elevation={2} square={false} variant="elevation">
+                  <DefaultPaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
                       <Grid item xs={12} lg={6}>
                         <Stack
@@ -180,11 +198,11 @@ function TreinamentoInfo() {
                         </Stack>
                       </Grid>
                     </Grid>
-                  </DemoPaper>
+                  </DefaultPaper>
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={12}>
-                  <PaperPurple elevation={2} square={false} variant="elevation">
+                  <PurplePaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
 
                       <Grid item xs={6}>
@@ -199,11 +217,11 @@ function TreinamentoInfo() {
                         </Typography>
                       </Grid>
                     </Grid>
-                  </PaperPurple>
+                  </PurplePaper>
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={6}>
-                  <DemoPaper elevation={2} square={false} variant="elevation">
+                  <DefaultPaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
 
                       <Grid item xs={9}>
@@ -223,11 +241,11 @@ function TreinamentoInfo() {
                         />
                       </Grid>
                     </Grid>
-                  </DemoPaper>
+                  </DefaultPaper>
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={6}>
-                  <DemoPaper elevation={2} square={false} variant="elevation">
+                  <DefaultPaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
 
                       <Grid item xs={9}>
@@ -247,7 +265,7 @@ function TreinamentoInfo() {
                         />
                       </Grid>
                     </Grid>
-                  </DemoPaper>
+                  </DefaultPaper>
                 </Grid>
 
               </Grid>
@@ -255,53 +273,10 @@ function TreinamentoInfo() {
 
             {/* Direita - Grafico  */}
             <Grid item xs={12} lg={6}>
-              <DemoPaper elevation={5} square={false} variant="elevation">
-                <PieChart
-                  series={[
-                    {
-                      highlightScope: { faded: 'global', highlighted: 'item' },
-                      faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                      innerRadius: 50,
-                      outerRadius: 60,
-                      paddingAngle: 2,
-                      cornerRadius: 5,
-                      startAngle: 0,
-                      endAngle: 360,
-                      data: [
-                        { id: 0, value: 25, label: 'Curso Realizado' },
-                        { id: 1, value: 25, label: 'Ccurso Não Realizado' },
-                        { id: 2, value: 25, label: 'Curso Não Realizado' },
-                        { id: 3, value: 25, label: 'Curso Não Realizado' },
-                      ],
-                    },
-                  ]}
-                  width={500}
-                  height={150}
-                />
-
-                <PieChart
-                  series={[
-                    {
-                      highlightScope: { faded: 'global', highlighted: 'item' },
-                      faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                      innerRadius: 50,
-                      outerRadius: 60,
-                      paddingAngle: 2,
-                      cornerRadius: 5,
-                      startAngle: 0,
-                      endAngle: 360,
-                      data: [
-                        { id: 0, value: 25, label: 'Crítica A' },
-                        { id: 1, value: 25, label: 'De Maior (MA)' },
-                        { id: 2, value: 25, label: 'De Menor (ME)' },
-                        { id: 3, value: 25, label: 'Não Aplicavel              ' },
-                      ],
-                    },
-                  ]}
-                  width={500}
-                  height={150}
-                />
-              </DemoPaper>
+              <DefaultPaper elevation={5} square={false} variant="elevation">
+                <Grafico />
+                <Grafico />
+              </DefaultPaper>
             </Grid>
           </Grid>
 
@@ -316,7 +291,7 @@ function TreinamentoInfo() {
             color3="branco"
           />
 
-          <DemoPaper elevation={2} square={false} variant="elevation">
+          <DefaultPaper elevation={2} square={false} variant="elevation">
             <Grid container spacing={1}>
               <Grid item xs={12} md={6} lg={6}>
                 <TextField
@@ -371,7 +346,7 @@ function TreinamentoInfo() {
 
             </Grid>
 
-          </DemoPaper>
+          </DefaultPaper>
         </Grid>
 
 

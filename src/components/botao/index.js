@@ -1,20 +1,19 @@
 import React from "react";
 import "./botao.css";
 
-const Botao = ({ color, children, destino, aoClicar }) => {
-  const teste = () => {
-    if (aoClicar) {
-      aoClicar(); // Chama a função aoClicar, se estiver definida
-    }
-  };
-  return (
-    <>
-      <a href={destino} className="link-botao">
-        <button onClick={teste} className={color}>
-          {children}
-        </button>
-      </a>
-    </>
+const Botao = ({ color, children, destino, onClick }) => {
+  const button = (
+    <button className={color} onClick={onClick}>
+      {children}
+    </button>
+  );
+
+  return destino ? (
+    <a href={destino} className="link-botao">
+      {button}
+    </a>
+  ) : (
+    button
   );
 };
 
