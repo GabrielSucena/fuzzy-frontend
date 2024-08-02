@@ -3,6 +3,16 @@
 // - Consumir da api e coletar as infomrações dos cursos
 // - Estilizar e criar os modais Notificar, Obsoletar
 // - Enviar para a tela de edição
+// - tabela
+
+//Amanhã terminar de criar os modais Adicionar e Notificar
+//Estizar o geral dos modais
+//Criar os modais:
+// Falta:
+// Adicionar
+// Obsoletar
+// Notificar
+// Excluir
 
 
 import TituloPagina from "../../../components/titulopagina";
@@ -28,7 +38,7 @@ import { useLocation } from "react-router";
 import { Stack, fontStyle, margin, textAlign } from "@mui/system";
 import { Flex } from "@chakra-ui/layout";
 import { PieChart } from "@mui/x-charts";
-import { CurtainsClosed } from "@mui/icons-material"
+import { CurtainsClosed, NotificationsRounded } from "@mui/icons-material"
 import DataGridDemo from "../../../components/tabela/tabela";
 import DefaultPaper from "../../../components/defaultPaper";
 import PurplePaper from "../../../components/purplePaper";
