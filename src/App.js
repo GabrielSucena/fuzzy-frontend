@@ -51,7 +51,7 @@ function App() {
                 path="/adicionar-treinamentos"
                 element={<AdicionaTreinamento />}
               />
-              <Route path="/treinamentoInfo" element={<TreinamentoInfo />} />
+              <Route path="/treinamentos/:id" element={<TreinamentoInfo />} />
               {/* Ramo B */}
               <Route path="/colaboradores" element={<Colaboradores />} />
               <Route

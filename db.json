@@ -1,36 +1,36 @@
 {
-  "collaborators": [
+  "treinamentos": [
     {
-      "id": "3ba8",
-      "fullName": "Vinicius Domingues",
-      "collaboratorDepartment": {
-        "id": 1,
-        "name": "Saúde"
-      }
-    },
-    {
-      "id": "0a8b",
-      "collaboratorDepartment": {
-        "id": "1",
-        "name": "Saúde"
-      },
-      "fullName": "Vinicius Domingues"
-    },
-    {
-      "id": "88e9",
-      "fullName": "Vinicius Domingues",
-      "collaboratorDepartment": {
-        "id": "1",
-        "name": "Saúde"
-      }
-    },
-    {
-      "id": "914c",
-      "fullName": "cvb",
-      "collaboratorDepartment": {
-        "id": "3",
-        "name": "Financeiro"
-      }
+      "id": 1,
+      "name_course": "Estequiometria",
+      "codification": "CAD-QU-SOP-000000X",
+      "version": 1,
+      "name_instructor": "Carlos Nogueira",
+      "validity_date": "2026-03-01",
+      "course_duration": 30,
+      "start_date": "2024-03-01",
+      "end_date": "2024-03-31",
+      "status": "Encerrado",
+      "quantidade": 15,
+      "critico": 2,
+      "maior": 3,
+      "menor": 4,
+      "na": 6,
+      "green": 3,
+      "yellow": 3,
+      "orange": 3,
+      "red": 3,
+      "collaborators": [
+        {
+          "id": 1,
+          "name": "Fernanda Povreslo",
+          "department": "Desenvolvimento Analítico",
+          "job": "Analista de Desenvolvimento Analítico Pleno",
+          "shortened_name_criticality": "MA",
+          "status": "Realizado",
+          "color_status": "green"
+        }
+      ]
     }
   ],
   "departments": [

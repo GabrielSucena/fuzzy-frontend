@@ -14,7 +14,6 @@
 // Notificar
 // Excluir
 
-
 import TituloPagina from "../../../components/titulopagina";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
@@ -31,10 +30,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ThemeProvider } from "@emotion/react";
 import BasicCard from "../../../components/cardTreinamento";
-import { useLocation } from "react-router";
+import { useLocation, useParams } from "react-router";
 import { Stack, fontStyle, margin, textAlign } from "@mui/system";
 import { Flex } from "@chakra-ui/layout";
 import { PieChart } from "@mui/x-charts";
@@ -89,14 +88,41 @@ Codificação:
 </Typography> */
 }
 function TreinamentoInfo() {
+  const { id } = useParams();
+  const location = useLocation();
+
+  
+
+  const [treinamento, setTreinamento] = useState([])
+  const { procedimento, cod, nome, duration, dataInicio, dataFinal, versao } = location.state || {};
+
+  console.log("ID:", id)
+
+  useEffect(() => {
+    fetch(`http://localhost:5001/treinamentos/${id}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        console.log("Colaborador fetched:", data);
+        setTreinamento(data);
+    })
+    .catch(error => console.error("Fetch error:", error));
+}, [id]);
+
+
+
+
   const [cargos, setCargos] = React.useState("");
   const [departamentos, setDepartamentos] = React.useState("");
 
-  const location = useLocation();
+
 
   //A ideia aqui é pegar apenas o cod e atraves dele fazer uma requisição na API
-  const { procedimento, cod, nome, duration, dataInicio, dataFinal, versao } =
-    location.state || {};
+
 
   const modalidade = "Online"
   const instrutor = "Isabela Carvatlho"
@@ -155,24 +181,19 @@ function TreinamentoInfo() {
                           useFlexGap
                           flexWrap="wrap"
                         >
-                          <Typography sx={{ ...typographyStyle.topic }}>
-                            Codificação:
-                            <Typography sx={{ ...typographyStyle.text }}>
-                              {cod}
-                            </Typography>
-                          </Typography>
+
 
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Versão:
                             <Typography sx={{ ...typographyStyle.text }}>
-                              {versao}
+                              {treinamento.version}
                             </Typography>
                           </Typography>
 
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Instrutor(a):
                             <Typography sx={{ ...typographyStyle.text, }}>
-                              {instrutor}
+                              {treinamento.name_instructor}
                             </Typography>
                           </Typography>
                         </Stack>
@@ -188,21 +209,14 @@ function TreinamentoInfo() {
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Vencimento:
                             <Typography sx={{ ...typographyStyle.text }}>
-                              {dataFinal}
+                              {treinamento.validity_date}
                             </Typography>
                           </Typography>
 
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Carga horária:
                             <Typography sx={{ ...typographyStyle.text }}>
-                              {duration} minutos
-                            </Typography>
-                          </Typography>
-
-                          <Typography sx={{ ...typographyStyle.topic }}>
-                            Tipo de treinamento:
-                            <Typography sx={{ ...typographyStyle.text }}>
-                              {modalidade}
+                              {treinamento.course_duration} minutos
                             </Typography>
                           </Typography>
                         </Stack>
@@ -217,13 +231,13 @@ function TreinamentoInfo() {
 
                       <Grid item xs={6}>
                         <Typography sx={{ ...typographyStyle.textWhite }}>
-                          Início Vigência: {dataInicio}
+                          Início Vigência: {treinamento.start_date}
                         </Typography>
                       </Grid>
 
                       <Grid item xs={6}>
                         <Typography sx={{ ...typographyStyle.textWhite }}>
-                          Fim Vigência: {dataFinal}
+                          Fim Vigência: {treinamento.end_date}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -239,7 +253,7 @@ function TreinamentoInfo() {
                           Status Treinamento:
                         </Typography>
                         <Typography sx={{ ...typographyStyle.text }}>
-                          {status}
+                          {treinamento.status}
                         </Typography>
                       </Grid>
 
@@ -263,7 +277,7 @@ function TreinamentoInfo() {
                           Participantes:
                         </Typography>
                         <Typography sx={{ ...typographyStyle.text }}>
-                          {participantes}
+                          {treinamento.quantidade}
                         </Typography>
                       </Grid>
 
@@ -284,8 +298,17 @@ function TreinamentoInfo() {
             {/* Direita - Grafico  */}
             <Grid item xs={12} lg={6}>
               <DefaultPaper elevation={5} square={false} variant="elevation">
-                <Grafico />
-                <Grafico />
+                <Grafico 
+                  v1={treinamento.critico} n1={"Crítico"}   c1={'var(--vermelho-escuro)'}
+                  v2={treinamento.maior} n2={"De maior"}    c2={'var(--vermelho)'}
+                  v3={treinamento.menor} n3={"De menor"}    c3={'var(--salmao)'}
+                  v4={treinamento.na} n4={"Não aplicável"}  c4={'var(--cinza)'}
+                />
+                <Grafico
+                v1={treinamento.green} n1={"Cursos realizados"}               c1={'var(--verde)'}
+                v2={treinamento.yellow} n2={"Cursos pendentes (0-15 dias)"}   c2={'var(--amarelo)'}
+                v3={treinamento.orange} n3={"Cursos pendentes (16-30 dias)"}  c3={'var(--laranja)'}
+                v4={treinamento.red} n4={"Cursos não realizados"}             c4={'var(--vermelho-escuro)'}/> 
               </DefaultPaper>
             </Grid>
           </Grid>
@@ -368,3 +391,4 @@ function TreinamentoInfo() {
 }
 
 export default TreinamentoInfo;
+

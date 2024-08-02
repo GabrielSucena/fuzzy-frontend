@@ -22,7 +22,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { createTheme, alpha, getContrastRatio } from "@mui/material/styles";
 import { ThemeProvider } from "@emotion/react";
 import BasicCard from "../../../components/cardTreinamento";
@@ -58,40 +58,38 @@ const CustomSelect = styled(Select)(({ theme }) => ({
 }));
 
 function Treinamentos() {
+
+  const [treinamentos, setTreinamentos] = useState([])
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:5001/treinamentos', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(resp => {
+        if (!resp.ok) {
+            throw new Error(`HTTP error! status: ${resp.status}`);
+        }
+        return resp.json();
+    })
+    .then(treinamento => {
+        console.log("treinamento fetched:", treinamento);
+        setTreinamentos(treinamento); // Garante que Treinamentos seja um array
+    })
+    .catch((err) => {
+        console.error("Fetch error:", err);
+        setError(err);
+    });
+}, []);
+
   const DemoPaper = styled(Paper)(({ theme }) => ({
     padding: "50px",
     borderRadius: "20px",
   }));
 
-  const dados = [
-    {
-      procedimento: "Procedimento 1",
-      cod: "001",
-      nome: "Nome 1",
-      duration: 30,
-      dataInicio: "01/01/2024",
-      dataFinal: "31/01/2024",
-      versao: "1.0",
-    },
-    {
-      procedimento: "Procedimento 2",
-      cod: "002",
-      nome: "Nome 2",
-      duration: 45,
-      dataInicio: "01/02/2024",
-      dataFinal: "28/02/2024",
-      versao: "2.0",
-    },
-    {
-      procedimento: "Procedimento 3",
-      cod: "003",
-      nome: "Nome 3",
-      duration: 60,
-      dataInicio: "01/03/2024",
-      dataFinal: "31/03/2024",
-      versao: "1.5",
-    },
-  ];
 
   const [cargos, setCargos] = React.useState("");
   const [departamentos, setDepartamentos] = React.useState("");
@@ -155,16 +153,17 @@ function Treinamentos() {
                 </FormControl>
               </Grid>
 
-              {dados.map((item, index) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
+              {treinamentos.map((treinamento) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={treinamento.id}>
                   <BasicCard
-                    procedimento={item.procedimento}
-                    cod={item.cod}
-                    nome={item.nome}
-                    duration={item.duration}
-                    dataInicio={item.dataInicio}
-                    dataFinal={item.dataFinal}
-                    versao={item.versao}
+                    id={treinamento.id}
+                    procedimento={treinamento.name_course}
+                    cod={treinamento.codification}
+                    nome={treinamento.name_instructor}
+                    duration={treinamento.course_duration}
+                    dataInicio={treinamento.start_date}
+                    dataFinal={treinamento.end_date}
+                    versao={treinamento.version}
                   />
                 </Grid>
               ))}

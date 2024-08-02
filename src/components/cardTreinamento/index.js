@@ -8,7 +8,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import EventAvailableIcon from "@mui/icons-material/EventAvailable";
 import EventBusyIcon from "@mui/icons-material/EventBusy";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const typographyStyle = {
   base: {
@@ -50,7 +50,10 @@ export default function BasicCard({
   dataInicio,
   dataFinal,
   versao,
+  id
 }) {
+
+
   const navigate = useNavigate();
 
   const [isHovered, setIsHovered] = React.useState(false);
@@ -67,7 +70,8 @@ export default function BasicCard({
 
   // Function to handle card click
   const handleCardClick = () => {
-    navigate("/treinamentoInfo", {
+    
+    navigate(`/treinamentos/${id}`, {
       state: {
         procedimento,
         cod,
@@ -76,6 +80,7 @@ export default function BasicCard({
         dataInicio,
         dataFinal,
         versao,
+        id
       },
     });
   };
