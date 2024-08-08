@@ -45,6 +45,7 @@ import Grafico from "../../../components/grafico";
 import ModalObsoletarTreinamento from "../../../components/modalObsoletarTreinamento";
 import ModalEditarTreinamento from "../../../components/modalEditarTreinamento";
 import ModalAuditarTreinamento from "../../../components/modalAuditoriaTreinamento";
+import ModalNotificarTreinamento from "../../../components/modalNotificarTreinamento";
 
 const CustomSelect = styled(Select)(({ theme }) => ({
   "& .MuiSelect-outlined": {
@@ -91,7 +92,7 @@ function TreinamentoInfo() {
   const { id } = useParams();
   const location = useLocation();
 
-  
+
 
   const [treinamento, setTreinamento] = useState([])
   const { procedimento, cod, nome, duration, dataInicio, dataFinal, versao } = location.state || {};
@@ -100,18 +101,18 @@ function TreinamentoInfo() {
 
   useEffect(() => {
     fetch(`http://localhost:5001/treinamentos/${id}`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        }
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
-    .then(resp => resp.json())
-    .then(data => {
+      .then(resp => resp.json())
+      .then(data => {
         console.log("Colaborador fetched:", data);
         setTreinamento(data);
-    })
-    .catch(error => console.error("Fetch error:", error));
-}, [id]);
+      })
+      .catch(error => console.error("Fetch error:", error));
+  }, [id]);
 
 
 
@@ -129,7 +130,7 @@ function TreinamentoInfo() {
   const status = "Em andamento"
   const participantes = 6
 
-  
+
   //Modal
   const [openModal, setOpenModal] = useState(null);
   const handleOpen = (modalType) => () => setOpenModal(modalType);
@@ -159,7 +160,10 @@ function TreinamentoInfo() {
         <ModalAuditarTreinamento open={true} handleClose={handleClose} />
       )}
       {openModal === 'obsoletar' && (
-        <ModalObsoletarTreinamento open={true} handleClose={handleClose} />
+        <ModalObsoletarTreinamento open={true} handleClose={handleClose} courseId={id} />
+      )}
+      {openModal === 'notificar' && (
+        <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"}/>
       )}
 
       {/* Main - Container  */}
@@ -182,6 +186,12 @@ function TreinamentoInfo() {
                           flexWrap="wrap"
                         >
 
+                          <Typography sx={{ ...typographyStyle.topic }}>
+                            Instrutor(a):
+                            <Typography sx={{ ...typographyStyle.text, }}>
+                              {treinamento.name_instructor}
+                            </Typography>
+                          </Typography>
 
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Versão:
@@ -190,12 +200,7 @@ function TreinamentoInfo() {
                             </Typography>
                           </Typography>
 
-                          <Typography sx={{ ...typographyStyle.topic }}>
-                            Instrutor(a):
-                            <Typography sx={{ ...typographyStyle.text, }}>
-                              {treinamento.name_instructor}
-                            </Typography>
-                          </Typography>
+
                         </Stack>
                       </Grid>
 
@@ -259,7 +264,7 @@ function TreinamentoInfo() {
 
                       <Grid item xs={3}>
                         <img
-                          src="icones/Icon.png"
+                          src="/icones/Icon.png"
                           alt="Ícone de Participantes"
                           style={{ width: "auto", height: "auto" }}
                         />
@@ -283,7 +288,7 @@ function TreinamentoInfo() {
 
                       <Grid item xs={3}>
                         <img
-                          src="icones/Icon.svg"
+                          src="/icones/Icon.svg"
                           alt="Ícone de Participantes"
                           style={{ width: "auto", height: "auto" }}
                         />
@@ -298,18 +303,28 @@ function TreinamentoInfo() {
             {/* Direita - Grafico  */}
             <Grid item xs={12} lg={6}>
               <DefaultPaper elevation={5} square={false} variant="elevation">
-                <Grafico 
-                  v1={treinamento.critico} n1={"Crítico"}   c1={'var(--vermelho-escuro)'}
-                  v2={treinamento.maior} n2={"De maior"}    c2={'var(--vermelho)'}
-                  v3={treinamento.menor} n3={"De menor"}    c3={'var(--salmao)'}
-                  v4={treinamento.na} n4={"Não aplicável"}  c4={'var(--cinza)'}
-                />
-                <Grafico
-                v1={treinamento.green} n1={"Cursos realizados"}               c1={'var(--verde)'}
-                v2={treinamento.yellow} n2={"Cursos pendentes (0-15 dias)"}   c2={'var(--amarelo)'}
-                v3={treinamento.orange} n3={"Cursos pendentes (16-30 dias)"}  c3={'var(--laranja)'}
-                v4={treinamento.red} n4={"Cursos não realizados"}             c4={'var(--vermelho-escuro)'}/> 
+                <Grid container spacing={1}>
+                  <Grid item xs={12} lg={6}>
+
+                    <Grafico
+                      v1={treinamento.critico} n1={"Crítico"} c1={'var(--vermelho-escuro)'}
+                      v2={treinamento.maior} n2={"De maior"} c2={'var(--vermelho)'}
+                      v3={treinamento.menor} n3={"De menor"} c3={'var(--salmao)'}
+                      v4={treinamento.na} n4={"Não aplicável"} c4={'var(--cinza)'}
+                    />
+                  </Grid>
+                  <Grid item xs={12} lg={6}>
+
+                    <Grafico
+                      v1={treinamento.green} n1={"Cursos realizados"} c1={'var(--verde)'}
+                      v2={treinamento.yellow} n2={"Cursos pendentes (0-15 dias)"} c2={'var(--amarelo)'}
+                      v3={treinamento.orange} n3={"Cursos pendentes (16-30 dias)"} c3={'var(--laranja)'}
+                      v4={treinamento.red} n4={"Cursos não realizados"} c4={'var(--vermelho-escuro)'} />
+                  </Grid>
+
+                </Grid>
               </DefaultPaper>
+
             </Grid>
           </Grid>
 
@@ -322,6 +337,7 @@ function TreinamentoInfo() {
             color1="roxo"
             color2="branco"
             color3="branco"
+            onClick3={handleOpen('notificar')}
           />
 
           <DefaultPaper elevation={2} square={false} variant="elevation">

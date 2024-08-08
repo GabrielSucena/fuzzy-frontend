@@ -29,7 +29,10 @@ function AdicionaTreinamento() {
   const [version, setVersion] = React.useState("");
   const [name_course, setName_course] = React.useState("");
   const [course_duration, setCourse_duration] = React.useState("");
-  const [codification, setCodification] = React.useState("");
+  
+  const [codificationNumber, setCodificationNumber] = React.useState("");
+  const [codificationSigla, setCodificationSigla] = React.useState("");
+  
   const [descricao, setDescricao] = React.useState("");
   const [validade, setValidade] = React.useState("");
   const [dataInicial, setDataInicial] = React.useState(dayjs());
@@ -46,11 +49,10 @@ function AdicionaTreinamento() {
       !version ||
       !name_course ||
       !course_duration ||
-      !codification ||
+      !codificationNumber ||
       !descricao ||
       !validade ||
-      !dataInicial ||
-      !codificacao
+      !dataInicial 
     ) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
@@ -61,11 +63,14 @@ function AdicionaTreinamento() {
       version: version,
       name_course: name_course,
       course_duration: course_duration,
-      codification: codification,
+      codification: codificationSigla+'-'+codificationNumber,
       description: descricao,
-      validity_date: dataInicial.add(365, 'day').format('DD/MM/YYYY'),
+      validity_date: dataInicial.add(365, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
       start_date: dataInicial.format('DD/MM/YYYY'),
-      end_date: dataInicial.add(30, 'day').format('DD/MM/YYYY'),
+      end_date: dataInicial.add(30, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
+      la: codificationSigla,
+      le: codificationNumber
+
     };
     console.log("FormSubmetido =>", JSON.stringify(infoCursos));
 
@@ -125,7 +130,7 @@ function AdicionaTreinamento() {
                   required
                   fullWidth
                   id="procedimento"
-                  label="Codificação"
+                  label="Título do Procedimento de Operação Padrão"
                   variant="outlined"
                   onChange={(e) => setName_course(e.target.value)}
                 />
@@ -140,17 +145,33 @@ function AdicionaTreinamento() {
                   onChange={(e) => setCourse_duration(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12} lg={6}>
+              <Grid item xs={12} lg={2}>
+                <FormControl required fullWidth>
+                  <InputLabel id="cod">Cod</InputLabel>
+                  <Select
+                    labelId="cod"
+                    id="cod"
+                    value={codificationSigla}
+                    label="Cod"
+                    onChange={(e) => setCodificationSigla(e.target.value)}
+                  >
+                    <MenuItem value={'CAD-QU-GOP'}>CAD-QU-GOP</MenuItem>
+                    <MenuItem value={'CAD-QU-SOP'}>CAD-QU-SOP</MenuItem>
+                  
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12} lg={2}>
                 <TextField
                   required
                   fullWidth
                   id="codification"
-                  label="Conferência de Procedimento de Operação Padrão"
+                  label="Codificação"
                   variant="outlined"
-                  onChange={(e) => setCodification(e.target.value)}
+                  onChange={(e) => setCodificationNumber(e.target.value)}
                 />
               </Grid>
-              <Grid item xs={12} lg={6}>
+              <Grid item xs={12} lg={4}>
                   <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DateField
                       fullWidth
@@ -164,18 +185,7 @@ function AdicionaTreinamento() {
                     />
                   </LocalizationProvider>
               </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="descricao"
-                  label="Descrição"
-                  multiline
-                  maxRows={4}
-                  onChange={(e) => setDescricao(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12} lg={6}>
+              <Grid item xs={12} lg={4}>
                 <FormControl required fullWidth>
                   <InputLabel id="validade">Validade após</InputLabel>
                   <Select
@@ -191,21 +201,16 @@ function AdicionaTreinamento() {
                   </Select>
                 </FormControl>
               </Grid>
-              <Grid item xs={12} lg={6}>
-                <FormControl required fullWidth>
-                  <InputLabel id="codificacao">Codificação</InputLabel>
-                  <Select
-                    labelId="codificacao"
-                    id="codificacao"
-                    value={codificacao}
-                    label="Codificação"
-                    onChange={(e) => setCodificacao(e.target.value)}
-                  >
-                    <MenuItem value={"Cod1"}>Cod1</MenuItem>
-                    <MenuItem value={"Cod2"}>Cod2</MenuItem>
-                    <MenuItem value={"Híbrida"}>Híbrida</MenuItem>
-                  </Select>
-                </FormControl>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="descricao"
+                  label="Descrição"
+                  multiline
+                  maxRows={4}
+                  onChange={(e) => setDescricao(e.target.value)}
+                />
               </Grid>
               <Grid item xs={4} />
               <Grid item xs={4}>
