@@ -58,7 +58,6 @@ function EditarTreinamento() {
       setCodificationNumber(codificationNumberWithoutPrefix || '');
       const codificationNumberWithoutSufix = (treinamento.codification || '').replace(codificationNumberWithoutPrefix, '');
       setCodificationSigla(codificationNumberWithoutSufix || '');
-      console.log(codificationNumberWithoutSufix);
       setDescricao(treinamento.description || '');
 
       // Calcular a diferença entre validity_date e start_date em anos
@@ -79,7 +78,7 @@ function EditarTreinamento() {
 
       }
 
-      setDataInicial(dayjs(treinamento.start_date) || dayjs());
+      setDataInicial(dayjs(treinamento.start_date,'DD/MM/YYYY') || dayjs());
     }
   }, [treinamento]);
 
@@ -109,7 +108,7 @@ function EditarTreinamento() {
       course_duration,
       codification: codificationSigla + codificationNumber,
       description: descricao,
-      validity_date: dataInicial.add(365, 'day').format('DD/MM/YYYY'),
+      validity_date: dataInicial.add(parseInt(validade), 'day').format('DD/MM/YYYY'),
       start_date: dataInicial.format('DD/MM/YYYY'),
       end_date: dataInicial.add(30, 'day').format('DD/MM/YYYY'),
     };

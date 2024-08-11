@@ -25,28 +25,28 @@
       "end_date": "04/09/2024"
     },
     {
-      "id": "98ed",
       "name_instructor": "Rodrigo",
       "version": "1.0",
       "name_course": "Medicina",
       "course_duration": "100",
       "codification": "[object Object][object Object]",
       "description": "a",
-      "validity_date": "05/08/2025",
+      "validity_date": "06/08/2024",
       "start_date": "05/08/2024",
-      "end_date": "04/09/2024"
+      "end_date": "04/09/2024",
+      "id": "98ed"
     },
     {
-      "id": "9b96",
       "name_instructor": "Carlos Nogueira Santos",
       "version": 1,
       "name_course": "Estequiometria",
       "course_duration": 30,
-      "codification": "CAD-QU-SOP--000000X",
+      "codification": "CAD-QU-SOP-000000X",
       "description": "21030123",
-      "validity_date": "01/03/2025",
-      "start_date": "01/03/2024",
-      "end_date": "31/03/2024"
+      "validity_date": "12/08/2024",
+      "start_date": "11/08/2024",
+      "end_date": "10/09/2024",
+      "id": "9b96"
     },
     {
       "name_instructor": "Rodrigo",
@@ -55,9 +55,9 @@
       "course_duration": "10",
       "codification": "CAD-QU-GOP-0000002",
       "description": "teste teste teste",
-      "validity_date": "08/11/2025",
-      "start_date": "08/11/2024",
-      "end_date": "08/12/2024",
+      "validity_date": "11/08/2025",
+      "start_date": "11/08/2024",
+      "end_date": "10/09/2024",
       "id": "6bbd"
     }
   ],
