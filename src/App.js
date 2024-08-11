@@ -6,6 +6,7 @@ import Container from "./components/container";
 import Treinamentos from "./screens/ramo-a-treinamentos/treinamentos";
 import AdicionaTreinamento from "./screens/ramo-a-treinamentos/adiciona-treinamento";
 import TreinamentoInfo from "./screens/ramo-a-treinamentos/treinamentoInfo";
+import EditarTreinamento from "./screens/ramo-a-treinamentos/editar-treinamento"; 
 // Ramo B
 import Colaboradores from "./screens/ramo-b-colaboradores/colaboradores";
 import CadastroColaborador from "./screens/ramo-b-colaboradores/adiciona-colaborador";
@@ -51,6 +52,10 @@ function App() {
                 path="/adicionar-treinamentos"
                 element={<AdicionaTreinamento />}
               />
+              <Route
+                path="/editar-treinamentos"
+                element={<EditarTreinamento/>}
+              />
               <Route path="/treinamentos/:id" element={<TreinamentoInfo />} />
               {/* Ramo B */}
               <Route path="/colaboradores" element={<Colaboradores />} />
@@ -58,6 +63,7 @@ function App() {
                 path="/adiciona-colaborador"
                 element={<CadastroColaborador />}
               />
+              
               <Route path="/ver-colaborador" element={<VerColaborador />} />
               <Route
                 path="/auditar-colaborador"

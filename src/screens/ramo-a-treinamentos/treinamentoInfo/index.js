@@ -1,51 +1,25 @@
-// Preciso:
-
-// - Consumir da api e coletar as infomrações dos cursos
-// - Estilizar e criar os modais Notificar, Obsoletar
-// - Enviar para a tela de edição
-// - tabela
-
-//Amanhã terminar de criar os modais Adicionar e Notificar
-//Estizar o geral dos modais
-//Criar os modais:
-// Falta:
-// Adicionar
-// Obsoletar
-// Notificar
-// Excluir
-
 import TituloPagina from "../../../components/titulopagina";
-import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import {
-  Box,
-  Button,
-  Divider,
   FormControl,
   Grid,
   InputLabel,
   MenuItem,
-  Modal,
   Select,
   TextField,
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { ThemeProvider } from "@emotion/react";
-import BasicCard from "../../../components/cardTreinamento";
-import { useLocation, useParams } from "react-router";
-import { Stack, fontStyle, margin, textAlign } from "@mui/system";
-import { Flex } from "@chakra-ui/layout";
-import { PieChart } from "@mui/x-charts";
-import { CurtainsClosed, NotificationsRounded } from "@mui/icons-material"
+import { useParams } from "react-router";
+import { Stack} from "@mui/system";
 import DataGridDemo from "../../../components/tabela/tabela";
 import DefaultPaper from "../../../components/defaultPaper";
 import PurplePaper from "../../../components/purplePaper";
 import Grafico from "../../../components/grafico";
 import ModalObsoletarTreinamento from "../../../components/modalObsoletarTreinamento";
-import ModalEditarTreinamento from "../../../components/modalEditarTreinamento";
 import ModalAuditarTreinamento from "../../../components/modalAuditoriaTreinamento";
 import ModalNotificarTreinamento from "../../../components/modalNotificarTreinamento";
+import { useNavigate} from "react-router-dom";
 
 const CustomSelect = styled(Select)(({ theme }) => ({
   "& .MuiSelect-outlined": {
@@ -76,26 +50,11 @@ const typographyStyle = {
     textAlign: "center",
   },
 };
-
-{
-  /* <Typography sx={{ ...typographyStyle.topic }}>
-Codificação:
-<Typography
-  variant="overline"
-  sx={{ ...typographyStyle.text }}
->
-  {cod}
-</Typography>
-</Typography> */
-}
 function TreinamentoInfo() {
   const { id } = useParams();
-  const location = useLocation();
-
-
-
   const [treinamento, setTreinamento] = useState([])
-  const { procedimento, cod, nome, duration, dataInicio, dataFinal, versao } = location.state || {};
+  const [cargos, setCargos] = useState([])
+  const [departamentos, setDepartamentos] = useState([])
 
   console.log("ID:", id)
 
@@ -114,48 +73,41 @@ function TreinamentoInfo() {
       .catch(error => console.error("Fetch error:", error));
   }, [id]);
 
-
-
-
-  const [cargos, setCargos] = React.useState("");
-  const [departamentos, setDepartamentos] = React.useState("");
-
-
-
-  //A ideia aqui é pegar apenas o cod e atraves dele fazer uma requisição na API
-
-
-  const modalidade = "Online"
-  const instrutor = "Isabela Carvatlho"
-  const status = "Em andamento"
-  const participantes = 6
-
-
   //Modal
   const [openModal, setOpenModal] = useState(null);
   const handleOpen = (modalType) => () => setOpenModal(modalType);
   const handleClose = () => setOpenModal(null);
+  const navigate = useNavigate();
+
+
+
+  const handleEditar = () => {
+    
+    navigate(`/editar-treinamentos`, {
+      state: {
+        id
+      },
+    })
+  }
 
   return (
     <>
       <TituloPagina
-        titulopagina={procedimento}
-        descricaotitulo={cod}
+        titulopagina={treinamento.name_course}
+        descricaotitulo={treinamento.codification}
         botao1="Editar"
         botao2="Obsoletar"
         botao3="Auditoria"
         color1="roxo"
         color2="branco"
         color3="branco"
-        onClick1={handleOpen('editar')}
+        onClick1={handleEditar}
         onClick2={handleOpen('obsoletar')}
         onClick3={handleOpen('auditoria')}
       />
 
 
-      {openModal === 'editar' && (
-        <ModalEditarTreinamento open={true} handleClose={handleClose} />
-      )}
+
       {openModal === 'auditoria' && (
         <ModalAuditarTreinamento open={true} handleClose={handleClose} />
       )}

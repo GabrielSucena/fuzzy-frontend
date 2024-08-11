@@ -1,36 +1,16 @@
 {
   "treinamentos": [
     {
-      "id": "1",
-      "name_course": "Estequiometria",
-      "codification": "CAD-QU-SOP-000000X",
-      "version": 1,
       "name_instructor": "Carlos Nogueira",
-      "validity_date": "2026-03-01",
+      "version": 1,
+      "name_course": "Estequiometria",
       "course_duration": 30,
-      "start_date": "2024-03-01",
-      "end_date": "2024-03-31",
-      "status": "Encerrado",
-      "quantidade": 15,
-      "critico": 2,
-      "maior": 3,
-      "menor": 4,
-      "na": 6,
-      "green": 3,
-      "yellow": 3,
-      "orange": 3,
-      "red": 3,
-      "collaborators": [
-        {
-          "id": 1,
-          "name": "Fernanda Povreslo",
-          "department": "Desenvolvimento Analítico",
-          "job": "Analista de Desenvolvimento Analítico Pleno",
-          "shortened_name_criticality": "MA",
-          "status": "Realizado",
-          "color_status": "green"
-        }
-      ]
+      "codification": "CAD-QU-SOP---000000X",
+      "description": "21030123",
+      "validity_date": "02/01/2025",
+      "start_date": "03/01/2024",
+      "end_date": "02/02/2024",
+      "id": "1"
     },
     {
       "id": "c0bf",
@@ -55,6 +35,18 @@
       "validity_date": "05/08/2025",
       "start_date": "05/08/2024",
       "end_date": "04/09/2024"
+    },
+    {
+      "id": "9b96",
+      "name_instructor": "Carlos Nogueira Santos",
+      "version": 1,
+      "name_course": "Estequiometria",
+      "course_duration": 30,
+      "codification": "CAD-QU-SOP--000000X",
+      "description": "21030123",
+      "validity_date": "01/03/2025",
+      "start_date": "01/03/2024",
+      "end_date": "31/03/2024"
     }
   ],
   "departments": [

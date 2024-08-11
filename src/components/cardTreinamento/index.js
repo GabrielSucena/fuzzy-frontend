@@ -73,13 +73,6 @@ export default function BasicCard({
     
     navigate(`/treinamentos/${id}`, {
       state: {
-        procedimento,
-        cod,
-        nome,
-        duration,
-        dataInicio,
-        dataFinal,
-        versao,
         id
       },
     });
