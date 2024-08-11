@@ -54,26 +54,22 @@ function EditarTreinamento() {
       setVersion(treinamento.version || '');
       setName_course(treinamento.name_course || '');
       setCourse_duration(treinamento.course_duration || '');
-      const codificationNumberWithoutPrefix = (treinamento.codification || '').replace('CAD-QU-SOP-', '');
+      const codificationNumberWithoutPrefix = (treinamento.codification ? treinamento.codification.slice(11) : '');
       setCodificationNumber(codificationNumberWithoutPrefix || '');
       const codificationNumberWithoutSufix = (treinamento.codification || '').replace(codificationNumberWithoutPrefix, '');
       setCodificationSigla(codificationNumberWithoutSufix || '');
+      console.log(codificationNumberWithoutSufix);
       setDescricao(treinamento.description || '');
 
       // Calcular a diferença entre validity_date e start_date em anos
       if (treinamento.validity_date && treinamento.start_date) {
         const startDate = dayjs(treinamento.start_date, 'DD/MM/YYYY');
-        console.log(startDate);
-
         const validityDate = dayjs(treinamento.validity_date, 'DD/MM/YYYY');
-        console.log(validityDate);
 
         // Verifica se as datas são válidas
         if (startDate.isValid() && validityDate.isValid()) {
           // Calcular a diferença entre validityDate e startDate em anos
           const differenceInYears = validityDate.diff(startDate, 'year');
-          console.log(differenceInYears);
-
           setValidade(differenceInYears.toString()); // Converte a diferença em anos para string
         } else {
           console.error('Datas inválidas:', startDate.format(), validityDate.format());
@@ -111,7 +107,7 @@ function EditarTreinamento() {
       version,
       name_course,
       course_duration,
-      codification: codificationSigla + '-' + codificationNumber,
+      codification: codificationSigla + codificationNumber,
       description: descricao,
       validity_date: dataInicial.add(365, 'day').format('DD/MM/YYYY'),
       start_date: dataInicial.format('DD/MM/YYYY'),
@@ -225,6 +221,7 @@ function EditarTreinamento() {
                     value={dataInicial}
                     onChange={(newValue) => setDataInicial(newValue)}
                     format='DD/MM/YYYY'
+                    disablePast
                   />
                 </LocalizationProvider>
               </Grid>

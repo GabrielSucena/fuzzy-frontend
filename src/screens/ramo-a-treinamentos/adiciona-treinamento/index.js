@@ -63,7 +63,7 @@ function AdicionaTreinamento() {
       version: version,
       name_course: name_course,
       course_duration: course_duration,
-      codification: codificationSigla+'-'+codificationNumber,
+      codification: codificationSigla+codificationNumber,
       description: descricao,
       validity_date: dataInicial.add(365, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
       start_date: dataInicial.format('DD/MM/YYYY'),
@@ -155,8 +155,8 @@ function AdicionaTreinamento() {
                     label="Cod"
                     onChange={(e) => setCodificationSigla(e.target.value)}
                   >
-                    <MenuItem value={'CAD-QU-GOP'}>CAD-QU-GOP</MenuItem>
-                    <MenuItem value={'CAD-QU-SOP'}>CAD-QU-SOP</MenuItem>
+                    <MenuItem value={'CAD-QU-GOP-'}>CAD-QU-GOP</MenuItem>
+                    <MenuItem value={'CAD-QU-SOP-'}>CAD-QU-SOP</MenuItem>
                   
                   </Select>
                 </FormControl>
@@ -179,7 +179,6 @@ function AdicionaTreinamento() {
                       label="Data de Vigência"
                       value={dataInicial}
                       onChange={(newValue) => setDataInicial(newValue)}
-                      renderInput={(params) => <TextField {...params} fullWidth />}
                       format='DD/MM/YYYY'
                       disablePast
                     />

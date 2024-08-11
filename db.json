@@ -5,11 +5,11 @@
       "version": 1,
       "name_course": "Estequiometria",
       "course_duration": 30,
-      "codification": "CAD-QU-SOP---000000X",
+      "codification": "CAD-QU-SOP-000000X",
       "description": "21030123",
-      "validity_date": "02/01/2025",
-      "start_date": "03/01/2024",
-      "end_date": "02/02/2024",
+      "validity_date": "15/09/2025",
+      "start_date": "15/09/2024",
+      "end_date": "03/02/2024",
       "id": "1"
     },
     {
@@ -47,6 +47,18 @@
       "validity_date": "01/03/2025",
       "start_date": "01/03/2024",
       "end_date": "31/03/2024"
+    },
+    {
+      "name_instructor": "Rodrigo",
+      "version": "1",
+      "name_course": "Teste",
+      "course_duration": "10",
+      "codification": "CAD-QU-GOP-0000002",
+      "description": "teste teste teste",
+      "validity_date": "08/11/2025",
+      "start_date": "08/11/2024",
+      "end_date": "08/12/2024",
+      "id": "6bbd"
     }
   ],
   "departments": [
