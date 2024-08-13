@@ -24,7 +24,9 @@
 
 .bloco1 {
     background-color: var(--branco);
+    
 }
+
 
 .bloco2 {
     display: grid;
@@ -72,6 +74,7 @@
 /* Estilo para os itens dentro dos blocos */
 .bloco1-1, .bloco2-1, .bloco2-2, .bloco2-3 {
     border-radius: 0.25rem;
+    
 }
 
 .bloco1-1 {
@@ -80,9 +83,11 @@
     justify-content: space-around; 
     height: 100%; 
     align-items: flex-start; 
-    padding-left: 4rem; 
+    padding-left: 4rem; /* Ajuste o valor conforme necessário */
     color: #565656;
+    text-align: center;
 }
+
 
 .bloco2-1, .bloco2-2, .bloco2-3 {
     border: 1px solid var(--cinza);
@@ -157,11 +162,29 @@
 
 .botoes-titulo-pagina {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
     flex-wrap: nowrap;
+    max-width: 1rem;
 }
 
-@media (max-width: 800px) {
+/* CSS geral */
+.botoes-titulo-pagina .icon {
+    display: none; /* Esconde os ícones por padrão em telas grandes */
+}
+
+/* Media Query para telas pequenas */
+@media (max-width: 567px) {
+    .botoes-titulo-pagina .icon {
+        display: inline; /* Mostra os ícones em telas pequenas */
+    }
+    
+    .botoes-titulo-pagina span {
+        display: none; /* Esconde o texto em telas pequenas */
+    }
+}
+
+
+@media (max-width: 780px) {
     .titulo-pagina { 
         font-size: 1.032rem;
         padding: 1rem;
@@ -178,16 +201,24 @@
     }
 
     .metricas {
-        width: 100%;
+        width: 80.5%;
         flex-direction: column;
+
     }
 
      .bloco1{
-            padding: 1.5rem 0rem;
+            padding-left: 0.5rem;
+
     }
     
     .bloco1-1{
         gap: 1rem;
+        padding: 1rem;
+    }
+
+    .empty-direita-um{
+        margin: 2rem 2rem 0rem 2rem;
+        text-align: left;
     }
 }
 
@@ -232,7 +263,7 @@
 .treinamentos-card {
     border: 1px solid #EBEBEB;
     width: 78.75%;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
     border-radius: 1rem;
@@ -374,7 +405,7 @@
 
 .meio-info {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     font-size: 1.1rem;
     color: var(--preto);
@@ -402,4 +433,77 @@
     fill: white;
     stroke: black;
     font-size: 1rem;
+}
+
+.empty-direita{
+    margin: 0;
+    text-align: center;
+}
+
+.empty-direita-um{
+    margin: 2rem 2rem 0rem 2rem;
+    text-align: center;
+    padding-bottom: 3rem;
+}
+
+.empty {
+    max-width: 50%;  /* Máximo de 100% da largura do contêiner */
+    max-height: 50%; /* Máximo de 100% da altura do contêiner */
+    width: auto;      /* Ajuste automático de largura */
+    height: auto;     /* Ajuste automático de altura */
+    margin: 2rem auto;
+    box-sizing: border-box;
+    text-decoration: none;
+    display: block;
+}
+
+
+.destaque-grafico {
+    background-color: var(--preto);
+    color: var(--branco); /* Adicione uma cor de texto para garantir que a escrita seja visível */
+    padding-bottom: 1rem; /* Adicione algum espaçamento interno para que o texto não fique colado nas bordas */
+    border-radius: 5px; /* Adicione bordas arredondadas se desejar um efeito mais estilizado */
+    display: inline-block; /* Isso faz com que o fundo se ajuste ao tamanho do conteúdo */
+}
+
+.info-grafico-vazio {
+    text-align: center; /* Alinha o texto e a imagem ao centro */
+    justify-content: center;
+    line-height: 2rem;
+}
+
+.destaque-grafico {
+    background-color: var(--preto);
+    color: var(--branco); /* Adicione uma cor de texto para garantir que a escrita seja visível */
+    padding: 10px; /* Adicione algum espaçamento interno */
+    border-radius: 5px; /* Borda arredondada se desejar */
+    display: inline-block; /* Ajusta o fundo ao tamanho do conteúdo */
+    z-index: 10; /* Garante que o texto fique acima da imagem */
+}
+
+.destaque-dois{
+    background-color: var(--preto);
+    color: var(--branco);
+    display: inline-block;
+    padding: 0rem 0.5rem 0rem 0.5rem;
+    border-radius: 1rem;
+    font-weight: bold;
+}
+
+.destaque-tres{
+    background-color: var(--branco-escuro);
+    color: var(--roxo);
+    display: inline-block;
+    padding: 0rem 0.5rem 0rem 0.5rem;
+    border-radius: 1rem;
+    font-weight: bold;
+    padding-top: 0rem;
+    border: 2px solid var(--roxo);
+    margin: 0.125rem 0rem 0.125rem 0rem;
+}
+
+.bloco1-1 p {
+    padding-right: 5rem; /* Define um padding de 5rem à direita */
+    margin: 0;
+    text-align: left; /* Garante que o texto esteja alinhado à esquerda */
 }

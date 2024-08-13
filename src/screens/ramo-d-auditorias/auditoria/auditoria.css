@@ -1,3 +1,86 @@
-.auditoria{
-    font-size: 200px;
+.auditorias-container {
+    display: flex;
+    flex-direction: column;
+    height: 75vh;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid rgb(134, 134, 134);
+    border-radius: 1rem;
+    max-width: 80%; /* Largura máxima para centralizar em telas grandes */
+    margin: 0 auto; /* Centraliza horizontalmente */
+}
+
+.filtros-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.buscas {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    
+    margin-bottom: 20px;
+}
+
+.buscas .principal {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10rem; /* Arredondamento apenas no lado esquerdo */
+    width: 21.5rem;
+}
+
+.buscas select {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10rem ; /* Arredondamento apenas no lado esquerdo */
+}
+
+.buscas .esquerda {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 10rem 0 0 10rem; /* Arredondamento apenas no lado esquerdo */
+}
+
+.buscas .direita {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 0rem 10rem 10rem 0rem; /* Arredondamento apenas no lado esquerdo */
+}
+
+.auditorias-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-top: 20px;
+    border-radius: 1rem;
+    border: 1px solid #ccc;
+}
+
+.auditoria-item {
+    margin-bottom: 20px;
+}
+
+.auditoria-item p {
+    margin: 5px 0;
+    margin-left: 2rem;
+}
+
+.divisao-auditoria {
+    margin-top: 20px;
+    border: none;
+    border-top: 1px solid #ccc;
+    width: 95%; /* Largura ajustada para 95% */
+    margin: 20px auto 0; /* Centraliza horizontalmente e ajusta a margem superior */
+    text-align: center;
+    padding-left: 1rem;
+}
+
+.topo-auditoria-justificativa{
+    padding-bottom: 0.75rem;
+    color: var(--roxo);
 }

@@ -221,5 +221,67 @@
       "id": "40",
       "name": "Analista de Métodos e Performance Sênior"
     }
+  ],
+  "audits": [
+    {
+      "id": "5673",
+      "uuid": "af69356c-c698-4bc6-a0e9-9e52eabd82d1",
+      "user": "fernanda",
+      "datetime": "2024-08-13T03:20:58.379Z",
+      "course_modified": "",
+      "employee_modified": "12341",
+      "field": "Nome",
+      "field_value": "1",
+      "removed": "N",
+      "reason": "Inclusão"
+    },
+    {
+      "id": "9e47",
+      "uuid": "af69356c-c698-4bc6-a0e9-9e52eabd82d1",
+      "user": "fernanda",
+      "datetime": "2024-08-13T03:20:58.379Z",
+      "course_modified": "",
+      "employee_modified": "12341",
+      "field": "E-mail",
+      "field_value": "1@1",
+      "removed": "N",
+      "reason": "Inclusão"
+    },
+    {
+      "id": "efd3",
+      "uuid": "af69356c-c698-4bc6-a0e9-9e52eabd82d1",
+      "user": "fernanda",
+      "datetime": "2024-08-13T03:20:58.379Z",
+      "course_modified": "",
+      "employee_modified": "12341",
+      "field": "Registro",
+      "field_value": "12341",
+      "removed": "N",
+      "reason": "Inclusão"
+    },
+    {
+      "id": "9c9f",
+      "uuid": "af69356c-c698-4bc6-a0e9-9e52eabd82d1",
+      "user": "fernanda",
+      "datetime": "2024-08-13T03:20:58.379Z",
+      "course_modified": "",
+      "employee_modified": "12341",
+      "field": "Departamento",
+      "field_value": 3,
+      "removed": "N",
+      "reason": "Inclusão"
+    },
+    {
+      "id": "33cc",
+      "uuid": "af69356c-c698-4bc6-a0e9-9e52eabd82d1",
+      "user": "fernanda",
+      "datetime": "2024-08-13T03:20:58.379Z",
+      "course_modified": "",
+      "employee_modified": "12341",
+      "field": "Cargo",
+      "field_value": 1,
+      "removed": "N",
+      "reason": "Inclusão"
+    }
   ]
 }

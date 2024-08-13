@@ -40,7 +40,7 @@ function App() {
 
     <BrowserRouter className='container'>
       <Bannerhome />
-          <Container customClass='container'>
+          <Container className='containers' customClass='containers'>
             <Routes>
 
               {/* Ramo A */}

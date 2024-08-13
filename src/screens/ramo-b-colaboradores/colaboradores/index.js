@@ -20,7 +20,7 @@ function Colaboradores() {
             setMessage(location.state.message);
         }
 
-        fetch('http://localhost:5000/collaborators', {
+        fetch('http://localhost:8080/colaboradores', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,19 +43,20 @@ function Colaboradores() {
                 <div className="colaboradores-card">
                     <div className="grid-container">
                         {collaborators.length > 0 && collaborators.map((collaborator) => (
-                            <Link className='retirar-estilo' to={`/ver-colaborador/${collaborator.id}`}>
-                                <div className='div-card' key={collaborator.id}>
+                            <Link className='retirar-estilo' to={`/ver-colaborador/${collaborator.id}`} key={collaborator.id}>
+                                <div className='div-card'>
                                     <div className="colaborador-item">
                                         <div className="topo">
-                                            <p className="nome-card">{collaborator.fullName}</p>
-                                            <p className="registro-card"><b>RG: </b>{collaborator.collaboratorRecord}</p>
+                                            <p className="nome-card">{collaborator.name}</p>
+                                            <p className="registro-card"><b>RG: </b>{collaborator.register}</p>
                                         </div>
                                         <div className="fundo">
-                                            <p className="setor-card">Cargo: {collaborator.position} - Departamento: {collaborator.department}</p>
+                                            <p className="setor-card">Cargo: {collaborator.position}</p>
                                         </div>
-                                        
+                                        <div className="fundo">
+                                            <p className="setor-card">Departamento: {collaborator.department}</p>
+                                        </div>
                                     </div>
-                                    
                                 </div>
                             </Link>
                         ))}

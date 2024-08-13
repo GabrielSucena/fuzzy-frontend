@@ -29,3 +29,17 @@
     --rosa: #F18DF3;
 }
 
+::-webkit-scrollbar {
+  width: 1.5rem; /* Largura do scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--roxo); /* Cor do thumb do scrollbar */
+  border-radius: 0.5rem; /* Arredondamento geral do thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent; /* Cor do fundo do scrollbar */
+  border-radius: 1rem 0rem 0rem 1rem; /* Arredondamento apenas nos lados direito e esquerdo */
+}
+

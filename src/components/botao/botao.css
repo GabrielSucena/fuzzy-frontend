@@ -15,10 +15,12 @@
 .roxo {
     background-color: var(--roxo);
     color: var(--branco);
+    max-width: 7rem;
 }
 
 .roxo:hover {
     color: #DBB2FF;
+    background-color: blueviolet;
 }
 
 .roxo:visited {
@@ -35,10 +37,13 @@
 .branco {
     background-color: var(--branco);
     color: var(--roxo);
+    max-width: 7rem;
 }
 
 .branco:hover {
     color: var(--preto);
+    font-weight: bold;
+    background-color: var(--branco-escuro);
 }
 
 .branco:visited {
@@ -65,5 +70,6 @@
     .roxo, .branco {
         text-align: center;
         max-width: 6rem; /* Remove limite de largura */
+        padding: 1rem 1.75rem;  /* Ajuste o padding conforme necessário */
     }
 }

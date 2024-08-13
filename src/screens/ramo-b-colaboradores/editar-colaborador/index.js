@@ -1,70 +1,161 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import "./editar-colaborador.css";
-import TituloPagina from "../../../components/titulopagina";
-import Carregando from "../../../components/carregando";
-import FormularioColaborador from "../../../components/formularioColaborador";
-import Botao from "../../../components/botao";
+import TituloPagina from '../../../components/titulopagina';
+import { SimpleGrid } from '@chakra-ui/react'; // Importe o SimpleGrid do Chakra UI
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import Botao from '../../../components/botao';
 
-function EditarColaborador() {
-    const { id } = useParams();
-    const navigate = useNavigate();
-    const [collaborator, setCollaborator] = useState(null);
-    const [message, setMessage] = useState('');
+const EditarColaborador = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [collaborator, setCollaborator] = useState(null);
+  const [departments, setDepartments] = useState([]);
+  const [positions, setPositions] = useState([]);
+  const [form, setForm] = useState({
+    name: '',
+    departmentId: '',
+    positionId: '',
+  });
+  const [message, setMessage] = useState('');
 
-    useEffect(() => {
-        fetch(`http://localhost:5000/collaborators/${id}`, {
-            method: 'GET',
-            headers: {
-                'Content-type': 'application/json'
-            },
-        })
-        .then(resp => resp.json())
-        .then(data => {
-            setCollaborator(data);
-        })
-        .catch(err => console.log(err));
-    }, [id]);
+  useEffect(() => {
+    Promise.all([
+      fetch('http://localhost:8080/departamentos').then(response => response.json()),
+      fetch('http://localhost:8080/posicoes').then(response => response.json()),
+    ])
+      .then(([departmentsData, positionsData]) => {
+        setDepartments(departmentsData);
+        setPositions(positionsData);
 
-    if (!collaborator) {
-        return <Carregando />;
-    }
+        return fetch(`http://localhost:8080/colaboradores/${id}`)
+          .then(response => response.json())
+          .then(collaboratorData => {
+            const matchedDepartment = departmentsData.find(d => d.department === collaboratorData.department)?.id || '';
+            const matchedPosition = positionsData.find(p => p.position === collaboratorData.position)?.id || '';
 
-    function editPost(collaborator) {
-        setMessage('');
-        fetch(`http://localhost:5000/collaborators/${collaborator.id}`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(collaborator)
-        })
-        .then(resp => resp.json())
-        .then((data) => {
-            setCollaborator(data);
-            setMessage('Alterado com sucesso!');
-            setTimeout(() => {
-                setMessage('');
-                navigate(`/ver-colaborador/${id}`);
-            }, 1500); // Redireciona após 1.5 segundos
-        })
-        .catch(err => console.log(err));
-    }
+            console.log(collaboratorData)
+            setCollaborator(collaboratorData);
+            setForm({
+              name: collaboratorData.name,
+              departmentId: matchedDepartment,
+              positionId: matchedPosition,
+            });
+          });
+      })
+      .catch(error => console.error('Error fetching data:', error));
+  }, [id]);
 
-    return (
-        <>
-            {message && (<div className="message">{message}</div>)}
-            
-            <TituloPagina
-                titulopagina="Editar Colaborador"
-            />
-            <FormularioColaborador
-                handleSubmit={editPost}
-                textoBotao="Salvar"
-                collaboratorData={collaborator}
-            />
-        </>
-    );
-}
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const TratamentoEnvio = {
+      name: form.name,
+      departmentId: Number(form.departmentId),
+      positionId: Number(form.positionId),
+    };
+
+    fetch(`http://localhost:8080/colaboradores/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(TratamentoEnvio),
+    })
+      .then(() => {
+        setMessage('Colaborador atualizado com sucesso!');
+        setTimeout(() => navigate(-1), 1500);
+      });
+  };
+
+  return (
+    <div>
+      <TituloPagina titulopagina="Editar colaborador" />
+      {message && <p>{message}</p>}
+      {collaborator ? (
+        <form className="conteiner-cadastro" onSubmit={handleSubmit}>
+          <SimpleGrid className="grid-container-colaborador" spacingX="4rem" spacingY="3rem" autoComplete="on">
+          <TextField 
+                        disabled
+                        className="campo" 
+                        label="ID de Registro Sanofi" 
+                        value={collaborator.register}
+                    />
+                    <TextField 
+                        disabled
+                        className="campo" 
+                        label="ID Fuzzy" 
+                        value={collaborator.id}
+                    />
+                    
+          <TextField 
+                        required
+                        className="campo" 
+                        type='text'
+                        name='name'
+                        label="Nome completo" 
+                        id='name'
+                        placeholder='Digite o nome aqui'
+                        onChange={handleChange}
+                        value={form.name}
+                    />
+                      <FormControl fullWidth className="campo">
+                        <InputLabel id="departmentId">Departamento</InputLabel>
+                        <Select 
+                            required
+                            onChange={handleChange}
+                            value={form.departmentId}
+                            labelId="departmentId"
+                            name="departmentId" 
+                            label="Departamento" 
+                        >
+                            {departments.map((department) => (
+                                <MenuItem value={department.id} key={department.id}>
+                                    {department.department}
+                                </MenuItem>
+                            ))}   
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth className="campo">
+                        <InputLabel id="positionId">Cargo</InputLabel>
+                        <Select 
+                            required
+                            onChange={handleChange}
+                            value={form.positionId}
+                            labelId="positionId"
+                            name="positionId" 
+                            label="Cargo" 
+                        >
+                            {positions.map((position) => (
+                                <MenuItem value={position.id} key={position.id}>
+                                    {position.position}
+                                </MenuItem>
+                            ))}   
+                        </Select>
+                    </FormControl>
+                    <TextField 
+                        disabled
+                        className="campo" 
+                        label="Email" 
+                        value={collaborator.email}
+                    />
+          </SimpleGrid>
+          <div className="botoes">
+                    <Botao type='submit' color='roxo'>Adicionar</Botao>
+                    <Botao type='reset' color='branco'>Cancelar</Botao>
+                </div>
+        </form>
+      ) : (
+        <p>Carregando dados do colaborador...</p>
+      )}
+    </div>
+  );
+};
 
 export default EditarColaborador;

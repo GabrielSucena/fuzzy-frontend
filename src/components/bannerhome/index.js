@@ -19,10 +19,10 @@ function Bannerhome(props) {
             <Link to = "/" className="header-logo"> <img className="header-logo-image" src={`${process.env.PUBLIC_URL}/imagens/logohome.svg`} alt="Logo da Fuzzy"/> </Link>
             {/*<img className="header-logo" src={`${process.env.PUBLIC_URL}/imagens/logohome.svg`} alt="Logo da Fuzzy"/>*/}
             <nav className='topicos' ref={navRef}> {/* Amarra os tópicos ao elemento "navRef" */}
-                <a href="/auditoria"><FontAwesomeIcon icon={faPaintBrush} /> Auditoria</a>       
-                <a href="/treinamentos"><FontAwesomeIcon icon={faPlay} /> Treinamentos</a>  {/* Utiliza o ícone correto */}
-                <a href="/colaboradores"><FontAwesomeIcon icon={faGraduationCap} /> Colaboradores</a>       
-                <a href="/perfil"><FontAwesomeIcon icon={faUser} /> Meu perfil</a>   
+                <a href="/auditoria"><FontAwesomeIcon icon={faPaintBrush} />&nbsp;&nbsp;Auditoria</a>       
+                <a href="/treinamentos"><FontAwesomeIcon icon={faPlay} />&nbsp;&nbsp;Treinamentos</a>  {/* Utiliza o ícone correto */}
+                <a href="/colaboradores"><FontAwesomeIcon icon={faGraduationCap} />&nbsp;&nbsp;Colaboradores</a>       
+                <a href="/perfil"><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;Meu perfil</a>   
             </nav>
             <button className="botao-celular" onClick={showBannerhome}> {/* Ao clicar, chama a função "showBannerhome" */}
                 <FontAwesomeIcon icon={faBars} color="#EBEBEB"/> 

@@ -26,8 +26,13 @@
     background-color: #FFFFFF;
     text-decoration: none;
     box-sizing: border-box; /* Inclui padding e borda no tamanho total do elemento */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden; /* Garante que os filhos não ultrapassem os limites do card */
 }
 
+/* Botão no card */
 .botao-home-card {
     position: absolute;
     bottom: 3rem; /* Distância de 3rem do final */
@@ -36,6 +41,7 @@
     text-decoration: none;
 }
 
+/* Título do card */
 .card-title {
     margin: 0;
     padding: 0;
@@ -45,6 +51,7 @@
     text-decoration: none;
 }
 
+/* Descrição do card */
 .card-description {
     margin: 0;
     padding: 1rem 0rem 2rem 0rem;
@@ -67,10 +74,48 @@
 .botao-enfeite:hover {
     font-weight: bold;
     font-size: 1.25rem;
-    cursor: cell;
-    cursor: pointer;
+    cursor: pointer; /* Ajustado para cursor pointer */
 }
 
 .botao-enfeite:active {
     background-color: var(--preto);
 }
+
+/* Container geral */
+.conteiner-geral {
+    border-radius: 1rem;
+    display: flex;
+    width: 30rem;
+    position: relative;
+    box-sizing: border-box; /* Inclui padding e borda no tamanho total do elemento */
+}
+
+/* Container dos quadrados */
+.conteiner-quadrados {
+    justify-content: space-between;
+    display: flex;
+    width: 100%;
+    height: 10rem;
+    position: relative;
+    align-items: flex-end; /* Alinha os quadrados no fundo */
+    box-sizing: border-box; /* Inclui padding e borda no tamanho total do elemento */
+}
+
+/* Estilo dos quadrados */
+.quadrados {
+    height: 4rem;
+    width: 4rem;
+    background-color: var(--preto);
+    border-radius: 1rem;
+    flex-direction: column;
+    display: flex;
+    transition: transform 0.5s ease; /* Adiciona uma transição suave */
+}
+
+.quadrados:hover {
+    transform: translateY(-7.5rem) rotate(360deg); /* Move o quadrado para cima e gira 360 graus ao passar o mouse */
+    transition: transform 0.5s ease-in-out; /* Adiciona uma transição suave para a movimentação e rotação */
+}
+
+
+

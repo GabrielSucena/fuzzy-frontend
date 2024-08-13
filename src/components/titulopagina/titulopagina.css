@@ -59,20 +59,20 @@
     }
 
     .titulo-paginaa {
-        font-size: 1.5rem; /* Reduz o tamanho da fonte para melhor ajuste */
+        font-size: 1.5rem; 
         padding: 0;
         text-align: center;
     }
 
     .descricao-tituloo {
-        font-size: 1rem; /* Reduz o tamanho da fonte para melhor ajuste */
+        font-size: 1rem; 
         padding: 0;
-        text-align: center;
+        text-align: left;
     }
 
     .botoes-titulo-paginaa {
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: flex-start;
         max-width: 100%;
     }
 
