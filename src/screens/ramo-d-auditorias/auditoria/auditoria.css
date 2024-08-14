@@ -43,7 +43,7 @@
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
-    border-radius: 10rem 0 0 10rem; /* Arredondamento apenas no lado esquerdo */
+    border-radius: 10rem 0 0 10rem; /* Arredondamento apenas no lado esquerdo. */
 }
 
 .buscas .direita {
