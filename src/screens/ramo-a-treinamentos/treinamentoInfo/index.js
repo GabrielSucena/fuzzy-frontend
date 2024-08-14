@@ -1,26 +1,21 @@
-import TituloPagina from "../../../components/titulopagina";
-import { styled } from "@mui/material/styles";
 import {
-  FormControl,
   Grid,
-  InputLabel,
-  MenuItem,
   Select,
-  TextField,
-  Typography,
+  Typography
 } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import { Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Stack } from "@mui/system";
-import DataGridDemo from "../../../components/tabela/tabela";
+import { useNavigate } from "react-router-dom";
 import DefaultPaper from "../../../components/defaultPaper";
-import PurplePaper from "../../../components/purplePaper";
 import Grafico from "../../../components/grafico";
-import ModalObsoletarTreinamento from "../../../components/modalObsoletarTreinamento";
 import ModalAuditarTreinamento from "../../../components/modalAuditoriaTreinamento";
 import ModalNotificarTreinamento from "../../../components/modalNotificarTreinamento";
-import { useNavigate } from "react-router-dom";
-import CardColaborador from "../../../components/cardColaborador";
+import ModalObsoletarTreinamento from "../../../components/modalObsoletarTreinamento";
+import PurplePaper from "../../../components/purplePaper";
+import TituloPagina from "../../../components/titulopagina";
+import TabelaMUI2 from "../../../components/tabelaMUI/tabelaMUI"
 
 const CustomSelect = styled(Select)(({ theme }) => ({
   "& .MuiSelect-outlined": {
@@ -53,7 +48,7 @@ const typographyStyle = {
 };
 function TreinamentoInfo() {
   const { id } = useParams();
-  const [treinamento, setTreinamento] = useState({ collaborators: [] });
+  const [treinamento, setTreinamento] = useState([])
   const [cargos, setCargos] = useState([])
   const [departamentos, setDepartamentos] = useState([])
 
@@ -79,7 +74,9 @@ function TreinamentoInfo() {
   const handleOpen = (modalType) => () => setOpenModal(modalType);
   const handleClose = () => setOpenModal(null);
   const navigate = useNavigate();
-  console.log(treinamento);
+
+
+
 
   const handleEditar = () => {
 
@@ -279,81 +276,8 @@ function TreinamentoInfo() {
 
             </Grid>
           </Grid>
+          <TabelaMUI2/>
 
-          <TituloPagina
-            titulopagina={"Colaboradores Envolvidos"}
-            botao1="Adicionar"
-            botao2="Editar"
-            botao3="Notificar"
-            destino1="/adicionar-treinamentos"
-            color1="roxo"
-            color2="branco"
-            color3="branco"
-            onClick3={handleOpen('notificar')}
-          />
-
-          <DefaultPaper elevation={2} square={false} variant="elevation">
-            <Grid container spacing={1}>
-              <Grid item xs={12} md={6} lg={6}>
-                <TextField
-                  fullWidth
-                  id="pesquisa"
-                  label="Pesquise aqui o treinamento"
-                  variant="outlined"
-                />
-              </Grid>
-              <Grid item xs={6} md={3} lg={3}>
-                <FormControl fullWidth color="primary" variant="outlined">
-                  <InputLabel id="demo-simple-select-label">
-                    Departamento
-                  </InputLabel>
-                  <CustomSelect
-                    variant="outlined"
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={departamentos}
-                    label="Departamentos"
-                    onChange={(e) => setDepartamentos(e.target.value)}
-                  >
-                    <MenuItem value={10}>Vendas</MenuItem>
-                    <MenuItem value={20}>Técnico</MenuItem>
-                    <MenuItem value={30}>Consulta</MenuItem>
-                  </CustomSelect>
-                </FormControl>
-              </Grid>
-
-              <Grid item xs={6} md={3} lg={3}>
-                <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Cargo</InputLabel>
-                  <CustomSelect
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={cargos}
-                    label="Cargo"
-                    onChange={(e) => setCargos(e.target.value)}
-                  >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                  </CustomSelect>
-                </FormControl>
-              </Grid>
-              {treinamento.collaborators && Array.isArray(treinamento.collaborators) && treinamento.collaborators.map((colaborador) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={colaborador.id}>
-                  <CardColaborador
-                    id={colaborador.id}
-                    name={colaborador.name}
-                    department={colaborador.department}
-                    job={colaborador.job}
-                    shortened_name_criticality={colaborador.shortened_name_criticality}
-                    status={colaborador.status}
-                  />
-                </Grid>
-              ))}
-
-            </Grid>
-
-          </DefaultPaper>
         </Grid>
 
 
@@ -365,4 +289,3 @@ function TreinamentoInfo() {
 }
 
 export default TreinamentoInfo;
-
