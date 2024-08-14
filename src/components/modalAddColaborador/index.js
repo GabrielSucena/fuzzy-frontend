@@ -1,15 +1,25 @@
+import { Box, Button, Checkbox, Grid, Modal, TextField, Typography } from '@mui/material';
+import { DataGrid, GridActionsCellItem, GridRowEditStopReasons, GridRowModes } from '@mui/x-data-grid';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Grid } from '@mui/material';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import { DataGrid, GridActionsCellItem, GridRowEditStopReasons, GridRowModes } from '@mui/x-data-grid';
-import React, { useState } from 'react';
-import DefaultPaper from '../defaultPaper';
-import ModalNotificarTreinamento from '../modalNotificarTreinamento';
-import TituloPagina from '../titulopagina';
-import ModalAddColaborador from '../modalAddColaborador';
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 800,
+    bgcolor: 'background.paper',
+    border: '4px solid #6000B6',
+    boxShadow: 24,
+    p: 4,
+    borderRadius: '16px', // Adicione bordas arredondadas
+
+};
+
+
 
 const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['A', 'B', 'C', 'D'];
@@ -24,21 +34,12 @@ const initialRows = Array.from({ length: 5 }, () => ({
     status: 'Inactive',
 }));
 
-export default function TabelaMUI2({ }) {
+function ModalAddColaborador({ open, handleClose, courseId }) {
+
+    const navigate = useNavigate();
     const [rows, setRows] = React.useState(initialRows);
     const [rowModesModel, setRowModesModel] = useState({});
     const [confirmedNames, setConfirmedNames] = useState([]);
-    const [rejectedNames, setRejectedNames] = useState([]);
-    const [openModal, setOpenModal] = useState(null);
-    const handleOpen = (modalType) => () => setOpenModal(modalType);
-    const handleClose = () => setOpenModal(null);
-
-    //Habilitar o edit da tabela
-    const [showDeleteIcon, setShowDeleteIcon] = React.useState(false);
-
-    const toggleDeleteIcon = () => {
-        setShowDeleteIcon(prev => !prev);
-    };
 
     const handleRowEditStop = (params, event) => {
         if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -55,25 +56,6 @@ export default function TabelaMUI2({ }) {
                         setConfirmedNames((prevNames) => [...prevNames, newRow.name]);
                     } else {
                         setConfirmedNames((prevNames) =>
-                            prevNames.filter((name) => name !== newRow.name)
-                        );
-                    }
-                    return newRow;
-                }
-                return row;
-            })
-        );
-    };
-
-    const handleRejectClick = (id) => () => {
-        setRows((prevRows) =>
-            prevRows.map((row) => {
-                if (row.id === id) {
-                    const newRow = { ...row, rejected: !row.rejected };
-                    if (newRow.rejected) {
-                        setRejectedNames((prevNames) => [...prevNames, newRow.name]);
-                    } else {
-                        setRejectedNames((prevNames) =>
                             prevNames.filter((name) => name !== newRow.name)
                         );
                     }
@@ -116,8 +98,8 @@ export default function TabelaMUI2({ }) {
             }))
         );
         console.log('Lista de nomes confirmados:', confirmedNames);
-        console.log('Lista de nomes rejeitados:', rejectedNames);
-        toggleDeleteIcon();
+
+        setConfirmedNames([]); // Certifique-se de que esta linha esteja correta
     };
 
     const handleCancelAllClick = () => {
@@ -136,66 +118,41 @@ export default function TabelaMUI2({ }) {
         { field: 'name', headerName: 'Nome', width: 180, editable: false },
         { field: 'department', headerName: 'Departamento', width: 180, editable: false },
         { field: 'role', headerName: 'Cargo', width: 180, editable: false, type: 'singleSelect', valueOptions: roles },
-        { field: 'classification', headerName: 'Classificação', width: 180, editable: true, type: 'singleSelect', valueOptions: classifications },
-        { field: 'status', headerName: 'Status', width: 180, editable: false, type: 'singleSelect', valueOptions: statuses },
         {
             field: 'actions',
             type: 'actions',
-            headerName: 'Actions',
+            headerName:'Adicionar'
+            ,
             width: 200,
             cellClassName: 'actions',
             getActions: ({ id }) => {
                 const row = rows.find((row) => row.id === id);
-                return showDeleteIcon ? [
+                return [
                     <GridActionsCellItem
                         icon={
                             <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Checkbox checked={row?.confirmed || false} sx={{ color: 'success.main' }} />
-                                <CheckIcon sx={{ color: 'success.main' }} />
+                                <Checkbox checked={row?.confirmed || false} sx={{ color: 'black' }} />
                             </Box>
                         }
                         label="Confirm"
                         onClick={handleConfirmClick(id)}
                         aria-label="Confirm"
                     />,
-                    <GridActionsCellItem
-                        icon={
-                            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Checkbox checked={row?.rejected || false} sx={{ color: 'error.main' }} />
-                                <DeleteIcon sx={{ color: 'error.main' }} />
-                            </Box>
-                        }
-                        label="Reject"
-                        onClick={handleRejectClick(id)}
-                        aria-label="Reject"
-                    />,
-                ] : [];
+                ];
             },
         },
     ];
 
-    return (
-        <>
-            {openModal === 'notificar' && (
-                <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
-            )}
-            {openModal === 'adicionar-colaborador' && (
-                <ModalAddColaborador open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
-            )}
 
-            <TituloPagina
-                titulopagina={"Colaboradores Envolvidos"}
-                botao1="Adicionar"
-                botao2="Editar"
-                botao3="Notificar"
-                color1="roxo"
-                color2="branco"
-                color3="branco"
-                onClick1={handleOpen('adicionar-colaborador')}
-                onClick2={toggleDeleteIcon}
-                onClick3={handleOpen('notificar')}
-            />
-            <DefaultPaper elevation={2} square={false} variant="elevation">
+    return (
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+
+        >
+            <Box sx={style}>
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={12} lg={12}>
                         <Box
@@ -218,24 +175,22 @@ export default function TabelaMUI2({ }) {
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={6}></Grid>
-                    {showDeleteIcon && (
-                        <>
-                            <Grid item xs={3} md={3} lg={3}>
-                                <Button onClick={handleSaveAllClick} variant="contained">
-                                    Salvar Alterações
-                                </Button>
-                            </Grid>
-                            <Grid item xs={3} md={3} lg={3}>
-                                <Button onClick={handleCancelAllClick} variant="outlined">
-                                    Cancelar
-                                </Button>
-                            </Grid>
-                        </>
-                    )}
-                </Grid>
-            </DefaultPaper>
-        </>
+                    <Grid item xs={3}></Grid>
+                    <Grid item xs={4} md={4} lg={4}>
+                        <Button onClick={handleSaveAllClick} variant="contained">
+                            Confirmar                        </Button>
+                    </Grid>
+                    <Grid item xs={4} md={4} lg={4}>
+                        <Button onClick={handleClose} variant="outlined">
+                            Cancelar
+                        </Button>
+                    </Grid>
+                    <Grid item xs={3}></Grid>
 
-    );
+                </Grid>
+            </Box>
+        </Modal>
+    )
 }
+
+export default ModalAddColaborador
