@@ -1,5 +1,6 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 
 const style = {
@@ -20,6 +21,9 @@ const style = {
 
 
 function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
+   
+    const navigate = useNavigate();
+
     const [justificativa, setJustificativa] = useState('');
 
     const handleConfirm = async () => {
@@ -39,6 +43,8 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
                 console.log('Curso removido com sucesso');
                 // Adicione lógica adicional aqui se necessário
                 handleClose(); // Fechar o modal após confirmar
+                navigate("/treinamentos");
+
             } else {
                 console.error('Erro ao remover curso');
             }

@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { Stack} from "@mui/system";
+import { Stack } from "@mui/system";
 import DataGridDemo from "../../../components/tabela/tabela";
 import DefaultPaper from "../../../components/defaultPaper";
 import PurplePaper from "../../../components/purplePaper";
@@ -19,7 +19,8 @@ import Grafico from "../../../components/grafico";
 import ModalObsoletarTreinamento from "../../../components/modalObsoletarTreinamento";
 import ModalAuditarTreinamento from "../../../components/modalAuditoriaTreinamento";
 import ModalNotificarTreinamento from "../../../components/modalNotificarTreinamento";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import CardColaborador from "../../../components/cardColaborador";
 
 const CustomSelect = styled(Select)(({ theme }) => ({
   "& .MuiSelect-outlined": {
@@ -52,7 +53,7 @@ const typographyStyle = {
 };
 function TreinamentoInfo() {
   const { id } = useParams();
-  const [treinamento, setTreinamento] = useState([])
+  const [treinamento, setTreinamento] = useState({ collaborators: [] });
   const [cargos, setCargos] = useState([])
   const [departamentos, setDepartamentos] = useState([])
 
@@ -78,11 +79,10 @@ function TreinamentoInfo() {
   const handleOpen = (modalType) => () => setOpenModal(modalType);
   const handleClose = () => setOpenModal(null);
   const navigate = useNavigate();
-
-
+  console.log(treinamento);
 
   const handleEditar = () => {
-    
+
     navigate(`/editar-treinamentos`, {
       state: {
         id
@@ -115,7 +115,7 @@ function TreinamentoInfo() {
         <ModalObsoletarTreinamento open={true} handleClose={handleClose} courseId={id} />
       )}
       {openModal === 'notificar' && (
-        <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"}/>
+        <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
       )}
 
       {/* Main - Container  */}
@@ -338,12 +338,18 @@ function TreinamentoInfo() {
                   </CustomSelect>
                 </FormControl>
               </Grid>
-
-
-
-              <Grid item xs={12} md={12} lg={12}>
-                <DataGridDemo />
-              </Grid>
+              {treinamento.collaborators && Array.isArray(treinamento.collaborators) && treinamento.collaborators.map((colaborador) => (
+                <Grid item xs={12} sm={6} md={4} lg={3} key={colaborador.id}>
+                  <CardColaborador
+                    id={colaborador.id}
+                    name={colaborador.name}
+                    department={colaborador.department}
+                    job={colaborador.job}
+                    shortened_name_criticality={colaborador.shortened_name_criticality}
+                    status={colaborador.status}
+                  />
+                </Grid>
+              ))}
 
             </Grid>
 

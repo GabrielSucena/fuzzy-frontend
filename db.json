@@ -1,92 +1,72 @@
 {
   "treinamentos": [
     {
+      "id":1,
+      "name_course": "Estequiometria",
+      "codification": "CAD-QU-SOP-0000001",
+      "version": 1,
       "name_instructor": "Carlos Nogueira",
-      "version": 1,
-      "name_course": "Estequiometria",
+      "validity_date": "2026-03-01",
       "course_duration": 30,
-      "codification": "CAD-QU-SOP-000000X",
-      "description": "21030123",
-      "validity_date": "15/09/2025",
-      "start_date": "15/09/2024",
-      "end_date": "03/02/2024",
-      "id": "1"
-    },
-    {
-      "id": "c0bf",
-      "name_instructor": "Rodrigo",
-      "version": "1",
-      "name_course": "12134",
-      "course_duration": "10",
-      "codification": "112043124",
-      "description": "21030123",
-      "validity_date": "05/08/2025",
-      "start_date": "05/08/2024",
-      "end_date": "04/09/2024"
-    },
-    {
-      "name_instructor": "Rodrigo",
-      "version": "1.0",
-      "name_course": "Medicina",
-      "course_duration": "100",
-      "codification": "[object Object][object Object]",
-      "description": "a",
-      "validity_date": "06/08/2024",
-      "start_date": "05/08/2024",
-      "end_date": "04/09/2024",
-      "id": "98ed"
-    },
-    {
-      "name_instructor": "Carlos Nogueira Santos",
-      "version": 1,
-      "name_course": "Estequiometria",
-      "course_duration": 30,
-      "codification": "CAD-QU-SOP-000000X",
-      "description": "21030123",
-      "validity_date": "12/08/2024",
-      "start_date": "11/08/2024",
-      "end_date": "10/09/2024",
-      "id": "9b96"
-    },
-    {
-      "name_instructor": "Rodrigo",
-      "version": "1",
-      "name_course": "Teste",
-      "course_duration": "10",
-      "codification": "CAD-QU-GOP-0000002",
-      "description": "teste teste teste",
-      "validity_date": "11/08/2025",
-      "start_date": "11/08/2024",
-      "end_date": "10/09/2024",
-      "id": "6bbd"
-    }
-  ],
-  "departments": [
-    {
-      "id": "1",
-      "name": "Saúde"
-    },
-    {
-      "id": "2",
-      "name": "Recursos Humanos"
-    },
-    {
-      "id": "3",
-      "name": "Financeiro"
-    }
-  ],
-  "jobs": [
-    {
-      "id": "1",
-      "name": "Analista I"
-    },
-    {
-      "id": "2",
-      "name": "Analista II"
-    },
-    {
-      "id": "3",
-      "name": "Analista III"
+      "start_date": "2024-03-01",
+      "end_date": "2024-03-31",
+      "status": "Encerrado",
+      "quantidade": 15,
+      "critico": 2,
+      "maior": 3,
+      "menor": 4,
+      "na": 6,
+      "green": 3,
+      "yellow": 3,
+      "orange": 3,
+      "red": 3,
+      "collaborators": [
+        {
+          "id": 1,
+          "name": "Fernanda Povreslo",
+          "department": "Desenvolvimento Analítico",
+          "job": "Analista de Desenvolvimento Analítico Pleno",
+          "shortened_name_criticality": "MA",
+          "status": "Realizado",
+          "color_status": "green"
+        },
+        {
+          "id": 2,
+          "name": "João Silva",
+          "department": "Tecnologia da Informação",
+          "job": "Desenvolvedor Backend",
+          "shortened_name_criticality": "MB",
+          "status": "Em Andamento",
+          "color_status": "yellow"
+        },
+        {
+          "id": 3,
+          "name": "Mariana Costa",
+          "department": "Recursos Humanos",
+          "job": "Analista de RH",
+          "shortened_name_criticality": "MA",
+          "status": "Realizado",
+          "color_status": "green"
+        },
+        {
+          "id": 4,
+          "name": "Pedro Almeida",
+          "department": "Marketing",
+          "job": "Coordenador de Marketing",
+          "shortened_name_criticality": "MC",
+          "status": "Pendente",
+          "color_status": "orange"
+        },
+        {
+          "id": 5,
+          "name": "Juliana Lima",
+          "department": "Financeiro",
+          "job": "Analista Financeiro",
+          "shortened_name_criticality": "MA",
+          "status": "Realizado",
+          "color_status": "green"
+        }
+      ]
     }
   ]
 }
