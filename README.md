@@ -68,3 +68,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+Script: git clone https://github.com/GabrielSucena/fuzzy-frontend.git && cd fuzzy-frontend && git checkout d55b2b2cb9519e6610bb550373f891c5c8859a1c
+
