@@ -138,10 +138,10 @@ export default function TabelaMUI2({ }) {
         { field: 'role', headerName: 'Cargo', width: 180, editable: false, type: 'singleSelect', valueOptions: roles },
         { field: 'classification', headerName: 'Classificação', width: 180, editable: true, type: 'singleSelect', valueOptions: classifications },
         { field: 'status', headerName: 'Status', width: 180, editable: false, type: 'singleSelect', valueOptions: statuses },
-        {
+        showDeleteIcon ? {
             field: 'actions',
             type: 'actions',
-            headerName: 'Actions',
+            headerName: 'Ações',
             width: 200,
             cellClassName: 'actions',
             getActions: ({ id }) => {
@@ -171,7 +171,7 @@ export default function TabelaMUI2({ }) {
                     />,
                 ] : [];
             },
-        },
+        }:{},
     ];
 
     return (
