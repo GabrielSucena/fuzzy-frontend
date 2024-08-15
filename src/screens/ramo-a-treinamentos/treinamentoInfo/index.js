@@ -251,7 +251,7 @@ function TreinamentoInfo() {
 
             {/* Direita - Grafico  */}
             <Grid item xs={12} lg={6}>
-              <DefaultPaper elevation={5} square={false} variant="elevation">
+              <DefaultPaper elevation={2} square={false} variant="elevation">
                 <Grid container spacing={1}>
                   <Grid item xs={12} lg={6}>
 
@@ -276,7 +276,7 @@ function TreinamentoInfo() {
 
             </Grid>
           </Grid>
-          <TabelaMUI2/>
+          <TabelaMUI2 colaboradores={treinamento.collaborators}/>
 
         </Grid>
 

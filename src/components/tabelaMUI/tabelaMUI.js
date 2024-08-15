@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import { DataGrid, GridActionsCellItem, GridRowEditStopReasons, GridRowModes } from '@mui/x-data-grid';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DefaultPaper from '../defaultPaper';
 import ModalNotificarTreinamento from '../modalNotificarTreinamento';
 import TituloPagina from '../titulopagina';
@@ -15,17 +15,24 @@ const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['A', 'B', 'C', 'D'];
 const statuses = ['Active', 'Inactive', 'Pending'];
 
-const initialRows = Array.from({ length: 5 }, () => ({
-    id: Math.random().toString(36).substr(2, 9),
-    name: 'John Doe',
-    department: 'Finance',
-    role: 'Market',
-    classification: 'A',
-    status: 'Inactive',
-}));
 
-export default function TabelaMUI2({ }) {
-    const [rows, setRows] = React.useState(initialRows);
+
+export default function TabelaMUI2({ colaboradores }) {
+    useEffect(() => {
+        if (Array.isArray(colaboradores)) {
+            const initialRows = colaboradores.map((colaborador) => ({
+                id: colaborador.id,
+                name: colaborador.name,
+                department: colaborador.department,
+                role: colaborador.job,
+                classification: colaborador.shortened_name_criticality,
+                status: colaborador.status,
+            }));
+            setRows(initialRows);
+        }
+    }, [colaboradores]);
+
+    const [rows, setRows] = React.useState();
     const [rowModesModel, setRowModesModel] = useState({});
     const [confirmedNames, setConfirmedNames] = useState([]);
     const [rejectedNames, setRejectedNames] = useState([]);
@@ -171,7 +178,7 @@ export default function TabelaMUI2({ }) {
                     />,
                 ] : [];
             },
-        }:{},
+        } : {},
     ];
 
     return (
