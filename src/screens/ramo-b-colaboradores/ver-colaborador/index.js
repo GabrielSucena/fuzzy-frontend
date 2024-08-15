@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from "react";
-import "./ver-colaborador.css";
-import TituloPagina from "../../../components/titulopagina";
-import { useParams, useNavigate, Link } from 'react-router-dom';
-import Carregando from "../../../components/carregando";
-import Botao from "../../../components/botao";
+import { faBan, faCircleExclamation, faEye, faPencil, faPrint, faQuestion, faSquare, faStar } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleExclamation, faStar, faSquare, faQuestion, faPencil, faBan, faEye, faPrint  } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import vazioImg from "../../../../src/empty.svg"; // Importação da imagem
+import Botao from "../../../components/botao";
+import Carregando from "../../../components/carregando";
+import TituloPagina from "../../../components/titulopagina";
+import { v4 as uuidv4 } from 'uuid';
+import "./ver-colaborador.css";
 
 
 function VerColaborador() {
     const { id } = useParams();
     const navigate = useNavigate();
-    
+
     const [collaborator, setCollaborator] = useState(null);
     const [trainings, setTrainings] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -37,10 +38,10 @@ function VerColaborador() {
         const day = String(date.getDate()).padStart(2, '0');
         const month = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0
         const year = date.getFullYear();
-    
+
         return `${day}/${month}/${year}`;
     }
-    
+
 
     useEffect(() => {
         fetch(`http://localhost:8080/colaboradores/${id}`, {
@@ -49,36 +50,36 @@ function VerColaborador() {
                 'Content-Type': 'application/json'
             },
         })
-        .then(resp => resp.json())
-        .then(data => {
-            setCollaborator({
-                ...data,
-                courses: data.courses.map(course => ({
-                    ...course,
-                    start_date: formatDate(course.start_date) // Formata a data aqui
-                }))
-            });
-            setTrainings(data.courses);
-        })
-        .catch(err => console.log(err));
+            .then(resp => resp.json())
+            .then(data => {
+                setCollaborator({
+                    ...data,
+                    courses: data.courses.map(course => ({
+                        ...course,
+                        start_date: formatDate(course.start_date) // Formata a data aqui
+                    }))
+                });
+                setTrainings(data.courses);
+            })
+            .catch(err => console.log(err));
     }, [id]);
-    
-    
+
+
 
     useEffect(() => {
         const filtered = trainings
             .filter(course =>
                 course.course_title.toLowerCase().includes(searchTerm.toLowerCase())
             )
-            .filter(course => 
+            .filter(course =>
                 selectedCriticality ? course.classification === selectedCriticality : true
             )
-            .filter(course => 
+            .filter(course =>
                 selectedStatus ? course.status === selectedStatus : true
             );
         setFilteredTrainings(filtered);
     }, [searchTerm, selectedCriticality, selectedStatus, trainings]);
-    
+
 
 
     if (!collaborator) {
@@ -86,28 +87,62 @@ function VerColaborador() {
     }
 
     function handleRemove() {
-        fetch(`http://localhost:8080/colaboradores/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-        })
-        .then(resp => {
-            console.log(resp); // Adicionado para depuração
-            if (resp.ok) {
-                navigate('/colaboradores', { state: { message: 'Colaborador removido com sucesso!' } });
-            } else {
-                return resp.json().then(data => {
-                    throw new Error(data.message);
+        const user = 'fernanda';
+        const auditId = uuidv4();
+        const datetime = new Date().toISOString();
+    
+        const auditEntries = [
+            { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Nome', field_value: collaborator.name, removed: 'N', reason: 'Exclusão' }
+        ];
+    
+        const sendAuditRecords = async () => {
+            try {
+                for (const audit of auditEntries) {
+                    console.log("Enviando registro de auditoria:", audit);
+                    const response = await fetch('http://localhost:5000/audits', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(audit)
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error(`Erro ao adicionar auditoria, status: ${response.status}`);
+                    }
+                    const auditData = await response.json();
+                    console.log("Audit record added:", auditData);
+                }
+                // Após todas as auditorias serem enviadas com sucesso, exclua o colaborador
+                return fetch(`http://localhost:8080/colaboradores/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                 });
+            } catch (err) {
+                throw new Error(`Erro ao enviar registros de auditoria: ${err.message}`);
             }
-        })
-        .catch(err => {
-            setCollaboratorMessage(`Erro ao remover colaborador: ${err.message}`);
-            console.log(err);
-        });
+        };
+    
+        sendAuditRecords()
+            .then((resp) => {
+                if (resp.ok) {
+                    navigate('/colaboradores', { state: { message: 'Colaborador removido com sucesso!' } });
+                } else {
+                    return resp.json().then(data => {
+                        throw new Error(data.message);
+                    });
+                }
+            })
+            .catch(err => {
+                setCollaboratorMessage(`Erro ao remover colaborador: ${err.message}`);
+                console.log(err);
+            });
     }
     
+
+
 
     const statusGrafico = {
         chart: { type: 'donut' },
@@ -125,10 +160,10 @@ function VerColaborador() {
         },
         colors:
             [
-                verde, 
-                vermelho, 
-                laranja, 
-                vermelhoEscuro, 
+                verde,
+                vermelho,
+                laranja,
+                vermelhoEscuro,
             ],
     };
 
@@ -160,21 +195,21 @@ function VerColaborador() {
         },
         colors:
             [
-                azul, 
-                rosa, 
+                azul,
+                rosa,
 
             ],
     };
 
-    function handlePrint(){
+    function handlePrint() {
         return "Olá"
     }
 
     const totalStatus = (
-    (collaborator?.describeCollaborator?.green || 0) +
-    (collaborator?.describeCollaborator?.yellow || 0) +
-    (collaborator?.describeCollaborator?.orange || 0) +
-    (collaborator?.describeCollaborator?.red || 0));
+        (collaborator?.describeCollaborator?.green || 0) +
+        (collaborator?.describeCollaborator?.yellow || 0) +
+        (collaborator?.describeCollaborator?.orange || 0) +
+        (collaborator?.describeCollaborator?.red || 0));
 
     const totalTypes = (
         (collaborator?.describeCollaborator?.sop || 0) +
@@ -191,13 +226,13 @@ function VerColaborador() {
                 <div className="conteiner-botao">
                     <div className="botoes-titulo-pagina">
                         <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
-                        <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
+                            <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
                         </Botao>
                         <Botao aoClicar={handleRemove} color={"branco"}>
-                        <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
+                            <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
                         </Botao>
                         <Botao aoClicar={() => navigate(`/auditar-colaborador/${id}`)} color={"branco"}>
-                        <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
+                            <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
                         </Botao>
                         <Botao aoClicar={handlePrint} color={"branco"}>
                             <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
@@ -219,7 +254,7 @@ function VerColaborador() {
                     <div className="bloco2-1">
                         <div className="info-bloco-2">
                             <p className="topico">Treinamentos realizados</p>
-                            <p className="valor-topico">{collaborator?.describeCollaborator?.green}</p>   
+                            <p className="valor-topico">{collaborator?.describeCollaborator?.green}</p>
                         </div>
                         <img src="/icones/done.svg" alt="ícone realizados" />
                     </div>
@@ -239,7 +274,7 @@ function VerColaborador() {
                     </div>
                 </div>
                 <div className="bloco bloco3">
-                {totalTypes > 0 ? (
+                    {totalTypes > 0 ? (
                         <>
                             <div className="grafico1">
                                 {totalStatus > 0 ? (
@@ -316,7 +351,7 @@ function VerColaborador() {
                     ) : (
                         <div className="info-grafico-vazio">
                             <p className="destaque-grafico">Oops...</p>
-                            <img src={vazioImg} alt="Imagem vazia" className="empty"/>
+                            <img src={vazioImg} alt="Imagem vazia" className="empty" />
                             <p className="empty-direita-um">Quando este <p className="destaque-dois">colaborador</p> for inserido em algum <p className="destaque-tres">treinamento,</p> os gráficos aparecerão aqui!</p>
                         </div>
 
@@ -325,20 +360,20 @@ function VerColaborador() {
             </div>
             <TituloPagina
                 titulopagina="Treinamentos atrelados" divisor1={true}
-                    botao1="Notificar" color1="roxo"
-                    botao2="Extrair" color2="branco"
-                />
+                botao1="Notificar" color1="roxo"
+                botao2="Extrair" color2="branco"
+            />
             <div className="treinamentos">
                 <div className="treinamentos-card">
                     <div className="busca-filtros">
-                        <input 
-                            type="text" 
-                            className="campo-busca" 
-                            placeholder="Pesquise aqui o treinamento" 
+                        <input
+                            type="text"
+                            className="campo-busca"
+                            placeholder="Pesquise aqui o treinamento"
                             value={searchTerm}
                             onChange={e => setSearchTerm(e.target.value)}
                         />
-                        <select 
+                        <select
                             className="filtro"
                             onChange={e => setSelectedCriticality(e.target.value)}
                             value={selectedCriticality}
@@ -349,7 +384,7 @@ function VerColaborador() {
                             <option value="C">C</option>
                             <option value="N/A">N/A</option>
                         </select>
-                        <select 
+                        <select
                             className="filtro"
                             onChange={e => setSelectedStatus(e.target.value)}
                             value={selectedStatus}
@@ -366,7 +401,7 @@ function VerColaborador() {
                                     <div className="treinamento-item">
                                         <div className="cima-info">
                                             <p className="nome-card">{course.course_title}</p>
-                                            <p className="course_type">Versão {course.course_version}&nbsp; - &nbsp;{course.codification}</p>                   
+                                            <p className="course_type">Versão {course.course_version}&nbsp; - &nbsp;{course.codification}</p>
                                         </div>
                                         <div className="meio-info">
                                             <p className="meio"><FontAwesomeIcon icon={faCircleExclamation} />&nbsp;{course.classification}</p>

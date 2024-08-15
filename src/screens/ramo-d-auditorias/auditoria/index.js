@@ -116,7 +116,7 @@ function Auditoria() {
 
     // Agrupar os logs de auditoria por uuid, user, datetime e reason
     const groupedAuditoria = auditoria.reduce((acc, item) => {
-        const key = `${item.uuid}-${item.user}-${item.datetime}-${item.reason}`;
+        const key = `${item.uuid}-${item.user}-${item.datetime}-${item.reason}-${item.course_modified}-${item.employee_modified}`;
         if (!acc[key]) {
             acc[key] = {
                 uuid: item.uuid,
@@ -124,6 +124,8 @@ function Auditoria() {
                 datetime: item.datetime,
                 reason: item.reason,
                 removed: item.removed,
+                course: item.course_modified,
+                employee: item.employee_modified,
                 changes: []
             };
         }
@@ -193,40 +195,47 @@ function Auditoria() {
                         <button className='botao-auditoria' onClick={handlePrint}>Print</button>
                     </div>
                 </div>
-                <div className="auditorias-content">
-                    {groupedAuditoriaArray.map((item, index) => {
-                        return (
-                            <div key={index} className="auditoria-item">
-                                <p className="topo-auditoria">Usuário(a) <strong>{item.user.toUpperCase()}</strong></p>
-                                <p className="topo-auditoria">{formatDateTime(item.datetime)}</p>
-                                <p className="topo-auditoria-justificativa"><b>{item.reason}</b></p>
-                                {item.removed === 'S' ? (
-                                    <p>
-                                        {item.course_modified && (
-                                            <span className="remocao-auditoria">
-                                                Curso removido: {item.course_modified}
-                                            </span>
-                                        )}
-                                        {item.employee_modified && (
-                                            <span className="remocao-auditoria">
-                                                Colaborador removido: {item.employee_modified}
-                                            </span>
-                                        )}
-                                    </p>
-                                ) : (
-                                    <div >
-                                        {item.changes.map((change, idx) => (
-                                            <p className="bullet" key={idx}>
-                                                <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />&nbsp;&nbsp;{change.field}: {change.field_value}
-                                            </p>
-                                        ))}
-                                    </div>
-                                )}
-                                <hr className="divisao-auditoria"/>
-                            </div>
-                        );
-                    })}
-                </div>
+<div className="auditorias-content">
+    {groupedAuditoriaArray.map((item, index) => {
+        {console.log("oi:", item)}
+        return (
+            <div key={index} className="auditoria-item">
+                <p className="topo-auditoria">Usuário(a) <strong>{item.user.toUpperCase()}</strong></p>
+                <p className="topo-auditoria">
+                    <strong>
+                        {item.course ? `ID do treinamento: ${item.course}` : `ID (Registro Sanofi) do colaborador: ${item.employee}`}
+                    </strong>
+                    </p>
+                <p className="topo-auditoria">{formatDateTime(item.datetime)}</p>
+                <p className="topo-auditoria-justificativa"><b>{item.reason}</b></p>
+                {item.removed === 'S' ? (
+                    <p>
+                        {item.employee_modified && (
+                            <span className="remocao-auditoria">
+                                Colaborador removido: {getJobName(item.employee_modified)}
+                            </span>
+                        )}
+                        {item.course_modified && (
+                            <span className="remocao-auditoria">
+                                Curso removido: {getDepartmentName(item.course_modified)}
+                            </span>
+                        )}
+                    </p>
+                ) : (
+                    <div >
+                        {item.changes.map((change, idx) => (
+                            <p className="bullet" key={idx}>
+                                <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />&nbsp;&nbsp;{change.field}: {change.field_value}
+                            </p>
+                        ))}
+                    </div>
+                )}
+                <hr className="divisao-auditoria"/>
+            </div>
+        );
+    })}
+</div>
+
             </div>
         </>
     );

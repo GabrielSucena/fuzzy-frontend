@@ -78,7 +78,6 @@ function CadastroColaborador() {
             const auditEntries = [
                 { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Nome', field_value: collaborator.name, removed: 'N', reason: 'Inclusão' },
                 { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'E-mail', field_value: collaborator.email, removed: 'N', reason: 'Inclusão' },
-                { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Registro', field_value: collaborator.register, removed: 'N', reason: 'Inclusão' },
                 { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Departamento', field_value: collaborator.departmentId, removed: 'N', reason: 'Inclusão' },
                 { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Cargo', field_value: collaborator.positionId, removed: 'N', reason: 'Inclusão' },
             ];

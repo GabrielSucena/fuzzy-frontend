@@ -1,30 +1,64 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom'; // Use `useNavigate` para navegação
+import imgLogin from '../../login.svg';
+import Botao from '../botao';
 import CampoSenha from '../camposenha';
 import CampoTexto from '../campotexto';
 import './formulario.css';
-import Botao from '../botao';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import imgLogin from '../../login.svg';
 
 const Formulario = (props) => {
-    const [nome, setNome] = useState('');
-    const [senha, setSenha] = useState('');
+    const [register, setRegister] = useState('');
+    const [password, setSenha] = useState('');
+    const navigate = useNavigate(); // Use `useNavigate` para navegação
+
+    // Função para criar login e enviar auditoria
+    function createLogin(login) {
+        console.log("Dados enviados ao login:", login);
+
+        fetch('http://localhost:8080/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(login),
+        })
+            .then((response) => {
+                if (response.ok) {
+                    return response.json().then(data => {
+                        const token = data.token;
+
+                        localStorage.setItem('authToken', token);
+
+                        console.log("Dados do login recebidos:", data);
+
+                        navigate('/', { state: { message: 'Colaborador adicionado com sucesso!' } });
+                    });
+                } else {
+                    return response.json().then(error => {
+                        console.error("Erro ao realizar login:", error);
+                        throw new Error("Erro na resposta da API");
+                    });
+                }
+            })
+            .catch(err => {
+                console.error("Erro na requisição de login:", err);
+            });
+    }
 
     const validador = (aoClicar) => {
         aoClicar.preventDefault();
         console.log('Tentativa realizada.');
         props.aoColaboradorCadastrado({
-            nome,
-            senha
+            register,
+            password
         });
 
-        // Verifica se ambos os campos estão preenchidos antes de trocar de página
-        if (nome !== '' && senha !== '') {
+        // Verifica se ambos os campos estão preenchidos antes de enviar o login
+        if (register !== '' && password !== '') {
             console.log('Ambos os campos estão preenchidos. Redirecionando...');
+            createLogin({ register, password });
         } else {
-            // Exibe uma mensagem de erro ou realiza outra ação desejada
             console.log('Por favor, preencha ambos os campos.');
-            aoClicar.preventDefault(); // Impede a troca de página
         }
     };
 
@@ -34,26 +68,26 @@ const Formulario = (props) => {
                 <form className='formulario-login' onSubmit={validador}>
                     <CampoTexto
                         obrigatorio={true}
-                        label="E-mail"
-                        placeholder="Digite seu e-mail aqui"
-                        valor={nome}
-                        aoAlterado={valor => setNome(valor)}
+                        label="ID Sanofi"
+                        placeholder="Digite o seu ID de registro aqui"
+                        valor={register}
+                        aoAlterado={setRegister}
                     />
-                    
+
                     <CampoSenha
                         obrigatorio={true}
                         label="Senha"
                         placeholder="Digite sua senha aqui"
-                        valor={senha}
-                        aoAlterado={valor => setSenha(valor)}
+                        valor={password}
+                        aoAlterado={setSenha}
                     />
                     <div className='entrar-esqueci'>
                         <Link to='/digite-o-email'><p>Esqueci a senha</p></Link>
-                        <Link to='/home'>
-                            <Botao type="submit" color="roxo">
-                                Entrar
-                            </Botao>
-                        </Link>
+
+                        <Botao type="submit" color="roxo">
+                            Entrar
+                        </Botao>
+
                     </div>
                 </form>
                 <img src={imgLogin} alt="Imagem login" className='imgLogin' />
