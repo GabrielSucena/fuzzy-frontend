@@ -1,78 +1,105 @@
-/* modal.css */
 
-.modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 32rem;
-    padding: 2rem 3rem;
-    margin: 0rem;
-    background-color: white;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.125);
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
+.modal-conteiner{
+    
+    width: 35rem;
+    gap: 3rem;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 3rem 4rem 3rem;
+    border-radius: 1rem;
+    background-color: var(--branco);
+    box-shadow: 1ch;
+    vertical-align: auto;
     align-items: center;
-    box-sizing: border-box;
-    border: 1px solid #EFEFEF;
-    z-index: 3; /* Coloca o modal na frente do overlay */
+    border: 2px solid;
+}
+
+.titulo-modal{
+    
+    padding: 0rem 0rem 2rem 0rem;
+    font-weight: bold;
+    font-size: 1.7rem;
+}
+
+.botao-popup{
+    background-color: var(--roxo);
+    color: var(--branco);
+    border: none;
+    padding: 0.75rem 3rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
 }
 
 
-.overlay {
+.botoes-popup {
+    margin: 2rem;
+    display: flex;
+    gap: 1rem;
+    justify-content: center ;
+}
+
+
+.campo-justificativa{
+    border: 1px solid var(--cinza-escuro);
+    margin-bottom: 2rem;
+    width: 90%;
+    height: 2rem;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.75rem;
+}
+
+.complemento-do-modal{
+    
+    font-weight: bold;
+    color: var(--cinza-escuro);
+}
+
+
+.botoes-modal{
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding-top: 3rem;
+    
+    
+
+}
+
+.reason{
+    text-align: left;
+    justify-content: start;
+    display: flex;
+    font-weight: bold;
+    color: var(--cinza-escuro);
+    margin-bottom: 0.35rem;
+}
+
+.campo-justificativa{
+    display: flex;
+    flex-direction: column;
+    border-color: rgb(134, 134, 134, 0.25);
+}
+
+/* modal.css */
+
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Fundo escuro semitransparente */
-    z-index: 2; /* Certifica-se de que o overlay esteja atrás do modal */
-}
-
-
-.titulomodal {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-.justificativa {
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.justificativa input {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.descricaomodal {
-    font-size: 1rem;
-    color: #777777;
-    margin-bottom: 2rem;
-    text-align: center;
-}
-
-.botoesmodal{
+    background: rgba(0, 0, 0, 0.7); /* Fundo escuro e opaco */
     display: flex;
     justify-content: center;
-    width: 100%;
-    margin: 2rem 0rem;
-}
-.botoespopup {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-bottom: 2rem;
+    align-items: center;
+    z-index: 3; /* Assegure-se de que o modal esteja acima do restante do conteúdo */
 }
 
-.botoesmodal button, .botoespopup button {
-    flex: 1;
-    margin: 0 0.5rem;
+.modal-conteiner {
+    background: white;
+    padding: 4rem;
+    border-radius: 1rem;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
 }

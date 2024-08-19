@@ -21,8 +21,8 @@
     --vermelho: #FF5B5B;
     --salmao: #FFC6C6;
     --laranja: #FF9900;
-    --amarelo: #FFC700;
-    --verde: #30B72E;
+    --amarelo: #ffcb0f;
+    --verde: #259923;
     --cinza-escuro: #969696;
 
     --azul: #42A4EC;
@@ -43,3 +43,76 @@
   border-radius: 1rem 0rem 0rem 1rem; /* Arredondamento apenas nos lados direito e esquerdo */
 }
 
+.verde{
+  color: var(--verde);
+}
+
+.vermelho{
+  color: var(--vermelho);
+}
+
+.laranja{
+  color: var(--laranja);
+}
+
+.azul{
+  color: var(--azul);
+}
+
+.amarelo{
+  color: var(--amarelo);
+}
+
+.roxo{
+  color: var(--roxo);
+}
+
+.cinza{
+  color: var(--cinza);
+}
+
+/* Estilizando o elemento select (caixa de seleção) */
+select {
+  color: #6a0dad; /* Cor do texto roxa */
+  font-weight: bold; /* Texto em negrito */
+  border: 1px solid #6a0dad; /* Borda roxa para combinar com o texto */
+  padding: 1rem 1rem; /* Espaçamento interno para melhorar a aparência */
+  border-radius: 4px; /* Bordas arredondadas para um visual mais suave */
+  font-size: 14px; /* Tamanho da fonte */
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 10rem ; /* Arredondamento apenas no lado esquerdo */
+}
+
+/* Estilizando as opções dentro do dropdown */
+select option {
+  background-color: var(--branco); /* Fundo branco das opções */
+  color: var(--roxo); /* Cor do texto roxo das opções */
+  font-weight: bold; /* Texto das opções em negrito */
+  
+}
+
+/* Estilo para a opção selecionada */
+select:focus option:checked {
+  background-color: var(--roxo); /* Fundo roxo da opção selecionada */
+  color: var(--branco); /* Cor do texto branco na opção selecionada */
+}
+
+/* Estilo para a opção ao passar o mouse */
+select option:hover {
+  background-color: var(--roxo); /* Fundo roxo ao passar o mouse */
+  color: var(--branco); /* Cor do texto branco ao passar o mouse */
+  border-radius: 1rem; /* Bordas arredondadas para um visual mais suave */
+
+}
+
+select:hover {
+  background-color: var(--roxo); /* Fundo roxo ao passar o mouse */
+  color: var(--branco); /* Cor do texto branco ao passar o mouse */
+  cursor: pointer;
+}
+
+.sem-estilo{
+  all: unset;
+}

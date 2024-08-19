@@ -1,47 +1,37 @@
 import { DoDisturb } from "@mui/icons-material";
 import React, { useState } from "react";
 import "./teste.css";
+import Modal from "../../../components/modal";
 
 function Teste() {
-    const [campo1, setCampo1] = useState('');
-    const [campo2, setCampo2] = useState('');
 
-    const handleFormSubmit = (event) => {
-        event.preventDefault();
-        
-        const jsonOutput = {
-            id: Number(campo1),
-            campo: campo2
-        };
-
-        console.log(jsonOutput);
-    };
 
     return (
-        <form id="customForm" onSubmit={handleFormSubmit}>
-            <label htmlFor="campo1">Campo 1:</label>
-            <input
-                type="text"
-                id="campo1"
-                value={campo1}
-                onChange={(e) => setCampo1(e.target.value)}
-                required
-            />
+        <>
+            <Modal
+                    success={true}
+                    complement={"Notificar todos os colaboradores com status à realizar"}
+                    actions={true} buttons={true}
+                    text="Notificar colaboradores?" />
 
-            <label htmlFor="campo2">Campo 2:</label>
-            <input
-                type="text"
-                id="campo2"
-                value={campo2}
-                onChange={(e) => setCampo2(e.target.value)}
-                required
-            />
+                                <Modal
+                    buttons={false} actions={true}
+                    text="Adicionar colaboradores?"
+                    way={true}           
+/>
+                    
 
-            <button type="submit">
-                <DoDisturb />
-                Enviar
-            </button>
-        </form>
+                                <Modal
+                    reason={true}
+                    complement={"Esse(a) colaborador(a) será excluído(a) da lista de colaboradores."}
+                    actions={true} buttons={true}
+                    text="Excluir colaborador(a)?"/>
+                                                    <Modal
+                    complement={"Esse(a) colaborador(a) foi excluído(a) com sucesso."}
+                    mode="success"
+                    text="Exclusão"/>
+        </>
+        
     );
 }
 

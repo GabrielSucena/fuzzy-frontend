@@ -4,10 +4,12 @@
     height: 75vh;
     padding: 20px;
     box-sizing: border-box;
-    border: 1px solid rgb(134, 134, 134);
+    border: 1px solid rgb(134, 134, 134, 0.25);
     border-radius: 1rem;
     max-width: 80%; /* Largura máxima para centralizar em telas grandes */
     margin: 0 auto; /* Centraliza horizontalmente */
+    background-color: var(--branco);
+    box-shadow: 0px 29px 29px -25px rgba(77,75,77,0.2);
 }
 
 .filtros-container {
@@ -15,7 +17,7 @@
     flex-direction: column;
 }
 
-.buscas {
+.busca-filtros {
     display: flex;
     gap: 10px;
     align-items: center;
@@ -24,33 +26,36 @@
     margin-bottom: 20px;
 }
 
-.buscas .principal {
+
+.busca-filtros .principal {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 10rem; /* Arredondamento apenas no lado esquerdo */
-    width: 21.5rem;
+    width: 50%;
 }
 
-.buscas select {
-    padding: 10px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 10rem ; /* Arredondamento apenas no lado esquerdo */
-}
 
-.buscas .esquerda {
+.busca-filtros .esquerda {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 10rem 0 0 10rem; /* Arredondamento apenas no lado esquerdo. */
+    cursor: pointer;
+
 }
 
-.buscas .direita {
+.busca-filtros .direita {
     padding: 10px;
     font-size: 1rem;
     border: 1px solid #ccc;
     border-radius: 0rem 10rem 10rem 0rem; /* Arredondamento apenas no lado esquerdo */
+    cursor: pointer;
+
+}
+
+.busca-filtros select {
+    width: 5%;
 }
 
 .auditorias-content {
@@ -83,4 +88,94 @@
 .topo-auditoria-justificativa{
     padding-bottom: 0.75rem;
     color: var(--roxo);
+}
+
+/* Define a animação para o efeito de pulsação */
+@keyframes pulsar {
+    0% {
+        background-color: var(--roxo);
+        box-shadow: 0 0 10px rgba(96, 0, 182, 0.1);
+    }
+    50% {
+        background-color: #9b4dff; /* Cor de degradê mais clara */
+        box-shadow: 0 0 20px rgba(96, 0, 182, 0.5);
+    }
+    100% {
+        background-color: var(--roxo);
+        box-shadow: 0 0 10px rgba(96, 0, 182, 0.1);
+    }
+}
+
+/* Estilo do botão com o efeito de pulsação */
+.botao-auditoria {
+    background-color: var(--roxo);
+    width: 15%;
+    color: var(--branco);
+    font-weight: bolder;
+    height: 2.8rem;
+    border-radius: 0.45rem;
+    border: none;
+    box-shadow: 0 0 10px rgba(96, 0, 182, 0.1); /* Sombra inicial */
+    animation: pulsar 3s infinite; /* Aplica a animação de pulsação */
+    transition: background-color 10s, box-shadow 10s; /* Suaviza a transição das propriedades */
+    cursor: pointer;
+}
+
+/* Opcional: adicionar um efeito ao passar o mouse */
+.botao-auditoria:hover {
+    background-color: #9b4dff; /* Cor ao passar o mouse */
+    box-shadow: 0 0 20px rgba(96, 0, 182, 0.1); /* Intensifica a sombra */
+}
+
+.date-range-picker{
+    flex-wrap: nowrap;
+    display: flex;
+    width: auto;
+}
+
+.busca-filtros {
+    display: flex;
+    width: 100%;
+    margin-bottom: 1rem;
+    gap: 0.5rem; 
+    flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha se necessário */
+    justify-content: space-between; /* Distribui os itens com espaço igual entre eles */
+    align-items: center; /* Alinha os itens verticalmente ao centro */
+}
+
+.busca-filtros > * {
+    flex: auto; /* Permite que os itens cresçam e encolham conforme necessário */
+    min-width: 0; /* Impede que os itens se tornem menores que o necessário */
+}
+
+.auditoria-vazio{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.sem-auditoria{
+    max-width: 65%;
+}
+
+/* Consultas de mídia para telas pequenas */
+@media (max-width: 1456px) {
+    .busca-filtros .principal {
+        width: 20%;
+    }
+
+    .busca-filtros select {
+        width: 21%;
+    }
+}
+
+
+.mensagem-auditoria-vazio {
+    padding: 1rem 1rem 2rem 1rem;
+    font-weight: bold;
+    font-size: 1.15rem;
+    text-decoration: none;
+    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites */
+    text-align: center;
 }

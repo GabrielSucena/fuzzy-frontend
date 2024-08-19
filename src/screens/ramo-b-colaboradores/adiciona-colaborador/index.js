@@ -111,8 +111,6 @@ function CadastroColaborador() {
             console.error("Erro na requisição de adição de colaborador:", err);
         });
     }
-    
-    
 
     function handleChange(e) {
         setCollaborator({ ...collaborator, [e.target.name]: e.target.value });
@@ -130,6 +128,11 @@ function CadastroColaborador() {
             ...collaborator,
             positionId: parseInt(e.target.value, 10), // Garanta que o valor é um número
         });
+    }
+
+    function handleCancel(e) {
+        e.preventDefault(); // Evita o comportamento padrão do formulário
+        navigate("/colaboradores"); // Redireciona para a página de colaboradores
     }
 
     return (
@@ -212,7 +215,6 @@ function CadastroColaborador() {
                 </SimpleGrid>
                 <div className="botoes">
                     <Botao type='submit' color='roxo'>Adicionar</Botao>
-                    <Botao type='reset' color='branco'>Cancelar</Botao>
                 </div>
             </form>
         </>

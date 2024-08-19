@@ -1,4 +1,4 @@
-
+/* Estilo para o contêiner geral de colaboradores */
 .colaboradores {
     justify-content: center;
     align-items: center;
@@ -7,21 +7,23 @@
     text-decoration: none;
 }
 
-
+/* Estilo para os cartões de colaboradores */
 .colaboradores-card {
-    border: 1px solid #EBEBEB;
-    width: 78.75%;  
+    width: 78.75%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 1rem;  
+    border-radius: 1rem;
     padding: 1rem;
     flex-wrap: wrap;
     color: inherit;
     text-decoration: none;
+    background-color: var(--branco);
+    border: 1px solid rgb(134, 134, 134, 0.25);
+    margin-bottom: 10rem;
 }
 
-
+/* Estilo para o contêiner da grade de cartões */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
@@ -30,6 +32,7 @@
     text-decoration: none;
 }
 
+/* Estilo para os links dos cartões */
 .link-card,
 .link-card:hover,
 .link-card:visited,
@@ -38,26 +41,39 @@
     color: inherit;
 }
 
-
+/* Estilo para cada item de colaborador */
 .colaborador-item {
-    border: 0.25rem solid #6000B6;
+    border: 1px solid rgb(134, 134, 134, 0.25);
     padding: 1rem;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 16rem;
+    height: 100%;
     text-decoration: none;
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura e altura */
+    overflow: hidden; /* Oculta o conteúdo que ultrapassa o limite do contêiner */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Suaviza a transformação e a sombra */
+    visibility: visible;
+    background-color: var(--branco);
+}
+
+/* Efeito de sobressair ao passar o mouse */
+.colaborador-item:hover {
+    transform: scale(1.175); /* Aumenta a escala do card para 105% */
+    box-shadow: 0 4px 10px rgba(65, 11, 119, 0.5); /* Adiciona uma sombra para dar profundidade */
 }
 
 
+/* Estilo para o topo do item do colaborador */
 .topo {
     display: flex;
     flex-direction: column;
     text-decoration: none;
+    box-sizing: border-box; /* Garante que padding e border não causem estouro */
 }
 
-
+/* Estilo para o fundo do item do colaborador */
 .fundo {
     display: flex;
     flex-direction: column;
@@ -65,70 +81,113 @@
     text-decoration: none;
 }
 
-
+/* Estilo para o nome e registro do colaborador */
 .nome-card, .registro-card {
     margin: 0;
     padding-bottom: 0.5rem;
+    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites */
+    text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
+    white-space: nowrap; /* Impede a quebra de linha dentro dos elementos */
     text-decoration: none;
 }
 
+/* Estilo para o setor do colaborador */
 .setor-card {
-    margin: 0;
-    color: white;
-    font-weight: bold;
-    background: linear-gradient(0deg, #2E2E2E, #161616); 
-    padding: 1rem 1rem;
+    margin-top: 1rem;
+    color: var(--preto);
+    padding: 1rem;
     border-radius: 0.75rem;
     text-decoration: none;
+    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites */
+    border: 1px solid var(--roxo);
 }
 
+/* Estilo para o nome do colaborador */
 .nome-card {
     font-weight: bold;
-    color: #1C1C1C;
+    color: var(--preto);
     font-size: 1.25rem;
     text-decoration: none;
 }
 
+/* Estilo para o registro do colaborador */
 .registro-card {
-    color: #ABABAB;
+    color: var(--branco-escuro);
     font-size: 1rem;
     text-decoration: none;
+    background: var(--roxo);
+    box-sizing: content-box;
+    width: 5rem;
+    justify-content: center;
+    vertical-align: auto;
+    display: flex;
+    padding-top: 0.5rem;
+    padding: 0.5rem 0.3rem 0rem 0.25rem;
+    border-radius: 1rem;
 }
 
-
-.link-card:hover,
-.link-card:visited,
-.link-card:active {
-    color: inherit;
-    text-decoration: none;
-}
-
+/* Estilo para a imagem vazia */
 .imagem-vazio {
-    max-width: 100%; 
-    max-height: 100%; 
-    margin: auto; 
-    top: 50%; 
-    left: 50%; 
-    box-sizing: border-box; 
-    padding: 1rem 0rem;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    top: 50%;
+    left: 50%;
+    box-sizing: border-box;
+    padding: 1rem 0;
     text-decoration: none;
+    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites */
 }
 
-.mensagem-vazio{
+/* Estilo para a mensagem de vazio */
+.mensagem-vazio {
     padding: 1rem 1rem 2rem 1rem;
     font-weight: bold;
     font-size: 1.15rem;
     text-decoration: none;
+    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites */
 }
 
-.destaque{
+/* Estilo para o destaque */
+.destaque {
     color: var(--branco);
     background-color: var(--preto);
     border-radius: 1rem;
     padding: 0.1rem 0.75rem 0.25rem 0.75rem;
     text-decoration: none;
+    overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites */
 }
 
-.retirar-estilo{
+/* Estilo para remover o estilo de texto decorado */
+.retirar-estilo {
     text-decoration: none;
 }
+
+.icon-copy{
+    cursor: copy;
+}
+
+/* colaboradores.css */
+
+.colaboradores {
+    transition: height 0.3s ease; /* Suaviza a transição de altura */
+  }
+  
+  .colaboradores.loading {
+    height: 25rem; /* Define a altura quando estiver carregando */
+  }
+
+  .colaboradores-card.loading {
+    height: 25rem; /* Define a altura quando estiver carregando */
+    margin-bottom: 4.5rem;
+  }
+  
+  .campo-busca{
+    padding: 0.35rem;
+    border: 1px solid rgb(134, 134, 134, 0.25);
+    color: var(--preto);
+    font-weight: bold;
+    border-radius: 10rem;
+    box-sizing: border-box;
+    height: 2.5rem;
+  }

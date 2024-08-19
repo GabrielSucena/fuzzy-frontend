@@ -1,28 +1,11 @@
-import { SimpleGrid } from '@chakra-ui/react'; // Importe o SimpleGrid do Chakra UI
-import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { SimpleGrid } from '@chakra-ui/react';
+import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import Botao from '../../../components/botao';
 import TituloPagina from '../../../components/titulopagina';
-
-const Modal = ({ isOpen, onClose, onConfirm }) => {
-  if (!isOpen) return null;
-
-  return (
-    <>
-      <div className="overlay" onClick={onClose}></div>
-      <div className="modal">
-        <h2 className="titulomodal">Colaborador Atualizado</h2>
-        <p className="descricaomodal">Confirme para salvar as alterações.</p>
-        <div className="botoesmodal">
-          <button onClick={onConfirm}>OK</button>
-          <button onClick={onClose}>Cancelar</button>
-        </div>
-      </div>
-    </>
-  );
-};
+import Modal from '../../../components/modal'; // Certifique-se de que o caminho esteja correto
 
 const EditarColaborador = () => {
   const { id } = useParams();
@@ -53,7 +36,6 @@ const EditarColaborador = () => {
             const matchedDepartment = departmentsData.find(d => d.department === collaboratorData.department)?.id || '';
             const matchedPosition = positionsData.find(p => p.position === collaboratorData.position)?.id || '';
 
-            console.log(collaboratorData)
             setCollaborator(collaboratorData);
             setForm({
               name: collaboratorData.name,
@@ -74,10 +56,10 @@ const EditarColaborador = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setModalOpen(true); // Abre o modal, mas não salva ainda
+    setModalOpen(true); // Abre o modal ao clicar no botão "Salvar"
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = (justificativa) => {
     const TratamentoEnvio = {
       name: form.name,
       departmentId: Number(form.departmentId),
@@ -99,13 +81,12 @@ const EditarColaborador = () => {
         const datetime = new Date().toISOString();
 
         const auditEntries = [
-          { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Nome', field_value: form.name, removed: 'N', reason: 'Edição' },
-          { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Departamento', field_value: form.departmentId, removed: 'N', reason: 'Edição' },
-          { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Cargo', field_value: form.positionId, removed: 'N', reason: 'Edição' },
+          { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Nome', field_value: form.name, removed: '', reason: justificativa },
+          { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Departamento', field_value: form.departmentId, removed: '', reason: justificativa },
+          { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Cargo', field_value: form.positionId, removed: '', reason: justificativa },
         ];
 
         auditEntries.forEach(audit => {
-          console.log("Enviando registro de auditoria:", audit);
           fetch('http://localhost:5000/audits', {
             method: 'POST',
             headers: {
@@ -127,23 +108,43 @@ const EditarColaborador = () => {
             });
         });
 
-        setModalOpen(false); // Fechar o modal
+        setModalOpen(false);
         setTimeout(() => navigate(-1), 1500);
       })
       .catch(error => console.error('Error updating collaborator:', error));
   };
 
-  const handleClose = () => {
+  const handleClose = (e) => {
+    e.preventDefault();
     setModalOpen(false);
+  };
+
+  const handleCancel = (e) => {
+    e.preventDefault();
+    // Aqui apenas resetamos o formulário sem abrir o modal
+    setForm({
+      name: '',
+      departmentId: '',
+      positionId: '',
+    });
   };
 
   return (
     <div>
-      <Modal isOpen={modalOpen} onClose={handleClose} onConfirm={handleConfirm} />
+      <Modal 
+        isOpen={modalOpen} 
+        onClose={handleClose} 
+        onConfirm={handleConfirm} 
+        reason={true} 
+        complement={"Esse(a) colaborador(a) será alterado(a) com os novos dados."} 
+        actions={true} 
+        buttons={true} 
+        text="Editar colaborador(a)?" 
+      />
       <TituloPagina titulopagina="Editar colaborador" />
       {message && <p>{message}</p>}
       {collaborator ? (
-        <form className="conteiner-cadastro" onSubmit={handleSubmit}>
+        <form className="conteiner-cadastro" onSubmit={handleSubmit} onReset={handleCancel}>
           <SimpleGrid className="grid-container-colaborador" spacingX="4rem" spacingY="3rem" autoComplete="on">
             <TextField
               disabled
@@ -212,7 +213,6 @@ const EditarColaborador = () => {
           </SimpleGrid>
           <div className="botoes">
             <Botao type='submit' color='roxo'>Salvar</Botao>
-            <Botao type='reset' color='branco'>Cancelar</Botao>
           </div>
         </form>
       ) : (

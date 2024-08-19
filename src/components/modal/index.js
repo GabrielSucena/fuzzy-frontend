@@ -1,46 +1,94 @@
-import React from "react";
-import './modal.css';
-import Botao from "../botao";
+import React, { useState } from "react";
+import "./modal.css";
 
 function Modal({
-    justificativa = '',
-    titulomodal = 'Título do modal',
-    descricaomodal = 'Descrição modal',
-    destinoconfirmar = '/confirmar',      destinocancelar = '/cancelar',
-    destino1 = '/modalporcolaborador',   destino2 = '/modalportreinamento',
-    acaoBotao = (e) => {
-        e.preventDefault();
-        console.log("Ação padrão ativada!");
-    }
+    isOpen,
+    text,
+    mode,
+    acaoColaborador,
+    acaoDepartamento,
+    complement,
+    way,
+    buttons,
+    actions,
+    reason,
+    onConfirm,
+    onClose
 }) {
+    const [justificativa, setJustificativa] = useState('');
+
+    if (!isOpen) return null; // Renderiza nada se o modal não estiver aberto
+
+    const getModalClassName = () => {
+        if (mode === "success") {
+            return "var(--verde)";
+        } else if (mode === "fail") {
+            return "var(--vermelho)";
+        } else {
+            return "var(--amarelo)";
+        }
+    };
+
+    const handleConfirm = () => {
+        if (reason && justificativa.trim() === '') {
+            alert("Por favor, insira uma justificativa.");
+            return;
+        }
+        onConfirm(justificativa); // Passa a justificativa para a função onConfirm
+    };
 
     return (
-        <>
-            {justificativa === '' ? (
-                <form className="modal" onSubmit={acaoBotao}>
-                    <p className="titulomodal">{titulomodal}</p>
-                    <div className="botoesmodal">
-                        <Botao destino={destino1} color="roxo">Por colaborador</Botao>
-                        <Botao destino={destino2} color="roxo">Por treinamento</Botao>
+        <div className="modal-overlay" onClick={onClose}>
+            <div 
+                className="modal-conteiner" 
+                style={{ borderColor: getModalClassName(mode), borderStyle: 'solid', borderWidth: '3px' }}
+                onClick={(e) => e.stopPropagation()} // Impede o clique no modal de fechar o modal
+            >
+                <div className="titulo-modal">
+                    {text ? <p>{text}</p> : null}
+                </div>
+
+                {way ? (
+                    <div className="opcoes">
+                        <div className="botoes-popup">
+                            <button className="botao-popup" onClick={acaoColaborador}>Por colaborador</button>
+                            <button className="botao-popup" onClick={acaoDepartamento}>Por departamento</button>
+                        </div>
                     </div>
-                    <div className="botoespopup">
-                        <Botao type='reset' color="branco">Cancelar</Botao>
-                    </div>
-                </form>
-            ) : (
-                <form className="modal" onSubmit={acaoBotao}>
-                    <p className="titulomodal">{titulomodal}</p>
+                ) : null}
+
+                {reason && (
                     <div className="justificativa">
-                        <input type="text" placeholder={justificativa} />
+                        <label htmlFor="reason" className="reason">Justificativa:</label>
+                        <input
+                            id="reason"
+                            className="campo-justificativa"
+                            type="text"
+                            placeholder="Digite AQUI o motivo"
+                            value={justificativa}
+                            onChange={(e) => setJustificativa(e.target.value)}
+                        />
                     </div>
-                    <p className="descricaomodal">{descricaomodal}</p>
-                    <div className="botoespopup">
-                        <Botao destino={destinoconfirmar} type='submit' color="roxo">Confirmar</Botao>
-                        <Botao destino={destinocancelar} type='reset' color="branco">Cancelar</Botao>
+                )}
+
+                <div className="complemento-do-modal">
+                    {complement ? <p className="complemento-modal">{complement}</p> : null}
+                </div>
+
+                {actions ? (
+                    <div className="botoes-modal">
+                        {buttons ? (
+                            <>
+                                <button className="roxo" onClick={handleConfirm}>Confirmar</button>
+                                <button className="branco" onClick={onClose}>Cancelar</button>
+                            </>
+                        ) : (
+                            <button className="branco" onClick={onClose}>Cancelar</button>
+                        )}
                     </div>
-                </form>
-            )}
-        </>
+                ) : null}
+            </div>
+        </div>
     );
 }
 

@@ -2,8 +2,9 @@ import "./perfil.css";
 import TituloPagina from "../../../components/titulopagina";
 import { SimpleGrid } from "@chakra-ui/react";
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Botao from "../../../components/botao";
+import { Link, useNavigate } from "react-router-dom";
 
 function Perfil() {
     const [fullName, setFullName] = useState('Fernanda Povreslo');
@@ -12,6 +13,9 @@ function Perfil() {
     const [email, setEmail] = useState('teste@sanofi.com.br');
     const [emailError, setEmailError] = useState('');
     const [password, setPassword] = useState('123456');
+
+    const navigate = useNavigate();
+
 
     const handleChangeFullName = (event) => {
         setFullName(event.target.value);
@@ -122,13 +126,12 @@ function Perfil() {
                         label="Senha"
                         type="password"
                         value={password}
-                        autoComplete="current-password"
                         onChange={handleChangePassword} 
                     />
                 </SimpleGrid>
                 <div className="botoes">
-                    <Botao type='submit' color='roxo'>Confirmar</Botao>
-                    <Botao type='reset' color='branco' destino='/home'>Cancelar</Botao>
+                    <Link to={navigate('/')} className="sem-estilo"><Botao type='submit' color='roxo'>Confirmar</Botao></Link>
+                    <Link to={navigate('/')} className="sem-estilo"><Botao type='reset' color='branco'>Cancelar</Botao></Link>
                 </div>
             </form>
         </>

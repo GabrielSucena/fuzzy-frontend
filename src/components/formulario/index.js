@@ -72,6 +72,7 @@ const Formulario = (props) => {
                         placeholder="Digite o seu ID de registro aqui"
                         valor={register}
                         aoAlterado={setRegister}
+                        autoComplete="on"
                     />
 
                     <CampoSenha
@@ -80,6 +81,7 @@ const Formulario = (props) => {
                         placeholder="Digite sua senha aqui"
                         valor={password}
                         aoAlterado={setSenha}
+                        autoComplete="on"
                     />
                     <div className='entrar-esqueci'>
                         <Link to='/digite-o-email'><p>Esqueci a senha</p></Link>

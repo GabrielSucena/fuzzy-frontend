@@ -11,13 +11,13 @@ function Card(props) {
         <div className="card">
             <h5 className="card-title"><b>{cTipo}</b></h5>
             <p className="card-description">{cDescricao}</p>
-            <div class="conteiner-geral">
-              <div class="conteiner-quadrados">
-                  <div class="quadrados"></div>
-                  <div class="quadrados"></div>
-                  <div class="quadrados"></div>
-                  <div class="quadrados"></div>
-                  <div class="quadrados"></div>
+            <div className="conteiner-geral">
+              <div className="conteiner-quadrados">
+                  <div className="quadrados"></div>
+                  <div className="quadrados"></div>
+                  <div className="quadrados"></div>
+                  <div className="quadrados"></div>
+                  <div className="quadrados"></div>
               </div>
             </div>
             <div className="botao-home-card">

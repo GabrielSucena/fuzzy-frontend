@@ -1,19 +1,22 @@
+/* Define a camada de sobreposição com carregamento */
 .div-carregar {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1 /* Garante que estará sobre outros elementos */
+  position: fixed; /* Fixa a posição em relação à janela */
+  top: 50%; /* Posiciona verticalmente no meio da janela */
+  left: 50%; /* Posiciona horizontalmente no meio da janela */
+  transform: translate(-50%, -50%); /* Ajusta a posição para que o centro do elemento fique no centro da janela */
+  display: flex; /* Usa Flexbox para centralizar o conteúdo */
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
 }
 
+/* Estilo para a animação do logo de carregamento */
 .logo-carregar {
   width: 4rem;
+  height: 4rem; /* Adiciona altura para garantir que a dimensão esteja correta */
   animation: spin 2s linear infinite;
 }
 
+/* Define a animação de rotação */
 @keyframes spin {
   0% {
       transform: rotate(0deg);
