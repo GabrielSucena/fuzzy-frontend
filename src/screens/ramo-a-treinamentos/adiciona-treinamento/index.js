@@ -58,24 +58,36 @@ function AdicionaTreinamento() {
       return;
     }
 
-    const infoCursos = {
-      name_instructor: name_instructor,
-      version: version,
-      name_course: name_course,
-      course_duration: course_duration,
-      codification: codificationSigla+codificationNumber,
-      description: descricao,
-      validity_date: dataInicial.add(365, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
-      start_date: dataInicial.format('DD/MM/YYYY'),
-      end_date: dataInicial.add(30, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
-      la: codificationSigla,
-      le: codificationNumber
+  const infoCursos = {
+    instructor: name_instructor,
+    version: version,
+    title: name_course,
+    workload: course_duration,
+    codification: codificationSigla+codificationNumber,
+    description: descricao,
+    validityYears: parseInt(validade),
+    startDate: dataInicial.format('DD/MM/YYYY'),
+  };
 
-    };
+
+
+    // const infoCursos = {
+    //   name_instructor: name_instructor,
+    //   version: version,
+    //   name_course: name_course,
+    //   course_duration: course_duration,
+    //   codification: codificationSigla+codificationNumber,
+    //   description: descricao,
+    //   // validity_date: dataInicial.add(parseInt(validade)*365, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
+    //   start_date: dataInicial.format('DD/MM/YYYY'),
+    //   // end_date: dataInicial.add(31, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
+    // };
+
+    
     console.log("FormSubmetido =>", JSON.stringify(infoCursos));
 
     try {
-      const response = await fetch('http://localhost:5001/treinamentos', {
+      const response = await fetch('http://localhost:8080/cursos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

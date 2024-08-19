@@ -63,7 +63,7 @@ function Treinamentos() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:5001/treinamentos', {
+    fetch('http://localhost:8080/cursos', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
@@ -152,17 +152,16 @@ function Treinamentos() {
                   </CustomSelect>
                 </FormControl>
               </Grid>
-
               {treinamentos.map((treinamento) => (
                 <Grid item xs={12} sm={6} md={4} lg={3} key={treinamento.id}>
                   <BasicCard
                     id={treinamento.id}
-                    procedimento={treinamento.name_course}
+                    procedimento={treinamento.title}
                     cod={treinamento.codification}
-                    nome={treinamento.name_instructor}
-                    duration={treinamento.course_duration}
-                    dataInicio={treinamento.start_date}
-                    dataFinal={treinamento.end_date}
+                    nome={treinamento.instructor}
+                    duration={treinamento.workload}
+                    dataInicio={treinamento.startDate}
+                    dataFinal={treinamento.validityDate}
                     versao={treinamento.version}
                   />
                 </Grid>

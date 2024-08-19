@@ -17,12 +17,6 @@ import PurplePaper from "../../../components/purplePaper";
 import TituloPagina from "../../../components/titulopagina";
 import TabelaMUI2 from "../../../components/tabelaMUI/tabelaMUI"
 
-const CustomSelect = styled(Select)(({ theme }) => ({
-  "& .MuiSelect-outlined": {
-    borderRadius: 50,
-  },
-}));
-
 const typographyStyle = {
   text: {
     display: "flex",
@@ -46,16 +40,15 @@ const typographyStyle = {
     textAlign: "center",
   },
 };
+
 function TreinamentoInfo() {
   const { id } = useParams();
-  const [treinamento, setTreinamento] = useState([])
-  const [cargos, setCargos] = useState([])
-  const [departamentos, setDepartamentos] = useState([])
-
-  console.log("ID:", id)
+  const [treinamento, setTreinamento] = useState(null);
+  const [cargos, setCargos] = useState([]);
+  const [departamentos, setDepartamentos] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:5001/treinamentos/${id}`, {
+    fetch(`http://localhost:8080/cursos/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -69,28 +62,25 @@ function TreinamentoInfo() {
       .catch(error => console.error("Fetch error:", error));
   }, [id]);
 
-  //Modal
   const [openModal, setOpenModal] = useState(null);
   const handleOpen = (modalType) => () => setOpenModal(modalType);
   const handleClose = () => setOpenModal(null);
   const navigate = useNavigate();
 
-
-
-
   const handleEditar = () => {
-
     navigate(`/editar-treinamentos`, {
-      state: {
-        id
-      },
-    })
+      state: { id },
+    });
+  };
+
+  if (!treinamento) {
+    return <div>Loading...</div>; // or another loading indicator
   }
 
   return (
     <>
       <TituloPagina
-        titulopagina={treinamento.name_course}
+        titulopagina={treinamento.title}
         descricaotitulo={treinamento.codification}
         botao1="Editar"
         botao2="Obsoletar"
@@ -103,8 +93,6 @@ function TreinamentoInfo() {
         onClick3={handleOpen('auditoria')}
       />
 
-
-
       {openModal === 'auditoria' && (
         <ModalAuditarTreinamento open={true} handleClose={handleClose} />
       )}
@@ -115,62 +103,45 @@ function TreinamentoInfo() {
         <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
       )}
 
-      {/* Main - Container  */}
       <Grid container>
-        {/* Vazio Esquerda */}
         <Grid item xs />
-        {/* Principal*/}
         <Grid item xs={10}>
           <Grid container spacing={1}>
-            {/* Esquerda - info  */}
             <Grid item xs={12} lg={6}>
               <Grid container spacing={1}>
                 <Grid item xs={12} md={12} lg={12}>
                   <DefaultPaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
                       <Grid item xs={12} lg={6}>
-                        <Stack
-                          spacing={{ xs: 2 }}
-                          useFlexGap
-                          flexWrap="wrap"
-                        >
-
+                        <Stack spacing={{ xs: 2 }} useFlexGap flexWrap="wrap">
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Instrutor(a):
-                            <Typography sx={{ ...typographyStyle.text, }}>
-                              {treinamento.name_instructor}
+                            <Typography sx={{ ...typographyStyle.text }}>
+                              {treinamento.instructor}
                             </Typography>
                           </Typography>
-
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Versão:
                             <Typography sx={{ ...typographyStyle.text }}>
                               {treinamento.version}
                             </Typography>
                           </Typography>
-
-
                         </Stack>
                       </Grid>
 
                       <Grid item xs={12} lg={6}>
-                        <Stack
-                          spacing={{ xs: 1, sm: 2 }}
-                          direction="row"
-                          useFlexGap
-                          flexWrap="wrap"
-                        >
+                        <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Vencimento:
                             <Typography sx={{ ...typographyStyle.text }}>
-                              {treinamento.validity_date}
+                              {treinamento.validityDate}
                             </Typography>
                           </Typography>
 
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Carga horária:
                             <Typography sx={{ ...typographyStyle.text }}>
-                              {treinamento.course_duration} minutos
+                              {treinamento.workload} minutos
                             </Typography>
                           </Typography>
                         </Stack>
@@ -182,16 +153,15 @@ function TreinamentoInfo() {
                 <Grid item xs={12} md={12} lg={12}>
                   <PurplePaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
-
                       <Grid item xs={6}>
                         <Typography sx={{ ...typographyStyle.textWhite }}>
-                          Início Vigência: {treinamento.start_date}
+                          Início Vigência: {treinamento.startDate}
                         </Typography>
                       </Grid>
 
                       <Grid item xs={6}>
                         <Typography sx={{ ...typographyStyle.textWhite }}>
-                          Fim Vigência: {treinamento.end_date}
+                          Fim Vigência: {treinamento.describeCourse?.end_date || ''}
                         </Typography>
                       </Grid>
                     </Grid>
@@ -201,13 +171,12 @@ function TreinamentoInfo() {
                 <Grid item xs={12} md={12} lg={6}>
                   <DefaultPaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
-
                       <Grid item xs={9}>
                         <Typography sx={{ ...typographyStyle.topic }}>
                           Status Treinamento:
                         </Typography>
                         <Typography sx={{ ...typographyStyle.text }}>
-                          {treinamento.status}
+                          {treinamento.describeCourse?.status}
                         </Typography>
                       </Grid>
 
@@ -225,13 +194,12 @@ function TreinamentoInfo() {
                 <Grid item xs={12} md={12} lg={6}>
                   <DefaultPaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
-
                       <Grid item xs={9}>
                         <Typography sx={{ ...typographyStyle.topic }}>
                           Participantes:
                         </Typography>
                         <Typography sx={{ ...typographyStyle.text }}>
-                          {treinamento.quantidade}
+                          {treinamento.describeCourse?.quantidade}
                         </Typography>
                       </Grid>
 
@@ -245,43 +213,50 @@ function TreinamentoInfo() {
                     </Grid>
                   </DefaultPaper>
                 </Grid>
-
               </Grid>
             </Grid>
 
-            {/* Direita - Grafico  */}
             <Grid item xs={12} lg={6}>
               <DefaultPaper elevation={2} square={false} variant="elevation">
                 <Grid container spacing={1}>
                   <Grid item xs={12} lg={6}>
-
                     <Grafico
-                      v1={treinamento.critico} n1={"Crítico"} c1={'var(--vermelho-escuro)'}
-                      v2={treinamento.maior} n2={"De maior"} c2={'var(--vermelho)'}
-                      v3={treinamento.menor} n3={"De menor"} c3={'var(--salmao)'}
-                      v4={treinamento.na} n4={"Não aplicável"} c4={'var(--cinza)'}
+                      v1={treinamento.describeCourse?.critico}
+                      n1={"Crítico"}
+                      c1={'var(--vermelho-escuro)'}
+                      v2={treinamento.describeCourse?.maior}
+                      n2={"De maior"}
+                      c2={'var(--vermelho)'}
+                      v3={treinamento.describeCourse?.menor}
+                      n3={"De menor"}
+                      c3={'var(--salmao)'}
+                      v4={treinamento.describeCourse?.na}
+                      n4={"Não aplicável"}
+                      c4={'var(--cinza)'}
                     />
                   </Grid>
                   <Grid item xs={12} lg={6}>
-
                     <Grafico
-                      v1={treinamento.green} n1={"Cursos realizados"} c1={'var(--verde)'}
-                      v2={treinamento.yellow} n2={"Cursos pendentes (0-15 dias)"} c2={'var(--amarelo)'}
-                      v3={treinamento.orange} n3={"Cursos pendentes (16-30 dias)"} c3={'var(--laranja)'}
-                      v4={treinamento.red} n4={"Cursos não realizados"} c4={'var(--vermelho-escuro)'} />
+                      v1={treinamento.describeCourse?.green}
+                      n1={"Cursos realizados"}
+                      c1={'var(--verde)'}
+                      v2={treinamento.describeCourse?.yellow}
+                      n2={"Cursos pendentes (0-15 dias)"}
+                      c2={'var(--amarelo)'}
+                      v3={treinamento.describeCourse?.orange}
+                      n3={"Cursos pendentes (16-30 dias)"}
+                      c3={'var(--laranja)'}
+                      v4={treinamento.describeCourse?.red}
+                      n4={"Cursos não realizados"}
+                      c4={'var(--vermelho-escuro)'}
+                    />
                   </Grid>
-
                 </Grid>
               </DefaultPaper>
-
             </Grid>
           </Grid>
-          <TabelaMUI2 colaboradores={treinamento.collaborators}/>
-
+          <TabelaMUI2 curso_id={id} colaboradores={treinamento.collaborators} />
         </Grid>
-
-
-        {/* Vazio Esquerda */}
         <Grid item xs />
       </Grid>
     </>

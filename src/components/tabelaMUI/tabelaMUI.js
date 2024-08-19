@@ -17,15 +17,15 @@ const statuses = ['Active', 'Inactive', 'Pending'];
 
 
 
-export default function TabelaMUI2({ colaboradores }) {
+export default function TabelaMUI2({ curso_id, colaboradores }) {
     useEffect(() => {
         if (Array.isArray(colaboradores)) {
             const initialRows = colaboradores.map((colaborador) => ({
                 id: colaborador.id,
                 name: colaborador.name,
                 department: colaborador.department,
-                role: colaborador.job,
-                classification: colaborador.shortened_name_criticality,
+                role: colaborador.position,
+                classification: colaborador.status,
                 status: colaborador.status,
             }));
             setRows(initialRows);
@@ -71,17 +71,16 @@ export default function TabelaMUI2({ colaboradores }) {
             })
         );
     };
-
     const handleRejectClick = (id) => () => {
         setRows((prevRows) =>
             prevRows.map((row) => {
                 if (row.id === id) {
                     const newRow = { ...row, rejected: !row.rejected };
                     if (newRow.rejected) {
-                        setRejectedNames((prevNames) => [...prevNames, newRow.name]);
+                        setRejectedNames((prevIds) => [...prevIds, newRow.id]);
                     } else {
-                        setRejectedNames((prevNames) =>
-                            prevNames.filter((name) => name !== newRow.name)
+                        setRejectedNames((prevIds) =>
+                            prevIds.filter((rowId) => rowId !== newRow.id)
                         );
                     }
                     return newRow;
@@ -90,7 +89,7 @@ export default function TabelaMUI2({ colaboradores }) {
             })
         );
     };
-
+    
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow, isNew: false };
         setRows((prevRows) =>
@@ -113,7 +112,7 @@ export default function TabelaMUI2({ colaboradores }) {
             });
             return newModel;
         });
-
+    
         // Resetar os checkboxes
         setRows((prevRows) =>
             prevRows.map((row) => ({
@@ -122,10 +121,32 @@ export default function TabelaMUI2({ colaboradores }) {
                 rejected: false,
             }))
         );
-        console.log('Lista de nomes confirmados:', confirmedNames);
-        console.log('Lista de nomes rejeitados:', rejectedNames);
+    
+        console.log('IDs rejeitados:', rejectedNames);
+    
+        fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ collaboratorsId: rejectedNames }),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+            return response.text(); // ou response.json(), caso a API retorne JSON
+        })
+        .then((data) => {
+            console.log('Requisição bem-sucedida:', data);
+        })
+        .catch((error) => {
+            console.error('Erro ao fazer a requisição:', error);
+        });
+    
         toggleDeleteIcon();
     };
+    
 
     const handleCancelAllClick = () => {
         setRowModesModel((prevModel) => {
@@ -187,7 +208,7 @@ export default function TabelaMUI2({ colaboradores }) {
                 <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
             )}
             {openModal === 'adicionar-colaborador' && (
-                <ModalAddColaborador open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
+                <ModalAddColaborador id_curso={curso_id} open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
             )}
 
             <TituloPagina

@@ -101,6 +101,8 @@ function EditarTreinamento() {
       return;
     }
 
+
+    
     const infoCursos = {
       name_instructor,
       version,
@@ -108,9 +110,9 @@ function EditarTreinamento() {
       course_duration,
       codification: codificationSigla + codificationNumber,
       description: descricao,
-      validity_date: dataInicial.add(parseInt(validade), 'day').format('DD/MM/YYYY'),
+      validity_date: dataInicial.add(parseInt(validade)*365, 'day').format('DD/MM/YYYY'),
       start_date: dataInicial.format('DD/MM/YYYY'),
-      end_date: dataInicial.add(30, 'day').format('DD/MM/YYYY'),
+      end_date: dataInicial.add(31, 'day').format('DD/MM/YYYY'),
     };
 
     try {

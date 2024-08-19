@@ -1,9 +1,7 @@
-import { Box, Button, Checkbox, Grid, Modal, TextField, Typography } from '@mui/material';
+import { Box, Button, Checkbox, Grid, Modal } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridRowEditStopReasons, GridRowModes } from '@mui/x-data-grid';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import CheckIcon from '@mui/icons-material/Check';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 const style = {
     position: 'absolute',
@@ -16,30 +14,30 @@ const style = {
     boxShadow: 24,
     p: 4,
     borderRadius: '16px', // Adicione bordas arredondadas
-
 };
 
 
-
-const roles = ['Market', 'Finance', 'Development'];
-const classifications = ['A', 'B', 'C', 'D'];
-const statuses = ['Active', 'Inactive', 'Pending'];
-
-const initialRows = Array.from({ length: 5 }, () => ({
-    id: Math.random().toString(36).substr(2, 9),
-    name: 'John Doe',
-    department: 'Finance',
-    role: 'Market',
-    classification: 'A',
-    status: 'Inactive',
-}));
-
-function ModalAddColaborador({ open, handleClose, courseId }) {
+function ModalAddColaborador({ id_curso, open, handleClose, courseId }) {
 
     const navigate = useNavigate();
-    const [rows, setRows] = React.useState(initialRows);
+    const [rows, setRows] = useState([]); // Inicialize com um array vazio
     const [rowModesModel, setRowModesModel] = useState({});
     const [confirmedNames, setConfirmedNames] = useState([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:8080/colaboradores`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(resp => resp.json())
+        .then(data => {
+            console.log("Colaboradores fetched:", data);
+            setRows(data); // Defina os dados recebidos na requisição como as linhas do DataGrid
+        })
+        .catch(error => console.error("Fetch error:", error));
+    }, []); // O array vazio como segundo argumento garante que o efeito seja executado apenas uma vez
 
     const handleRowEditStop = (params, event) => {
         if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -77,18 +75,32 @@ function ModalAddColaborador({ open, handleClose, courseId }) {
     const handleRowModesModelChange = (newRowModesModel) => {
         setRowModesModel(newRowModesModel);
     };
-
     const handleSaveAllClick = () => {
-        setRowModesModel((prevModel) => {
-            const newModel = { ...prevModel };
-            rows.forEach((row) => {
-                if (newModel[row.id]?.mode === GridRowModes.Edit) {
-                    newModel[row.id].mode = GridRowModes.View;
-                }
-            });
-            return newModel;
+        const confirmedIds = rows
+            .filter((row) => row.confirmed)
+            .map((row) => row.id);
+    
+        fetch(`http://localhost:8080/cursos/${id_curso}/colaboradores`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ collaboratorsId: confirmedIds }),
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+            // Se a resposta não tiver um corpo JSON, evite tentar analisá-la
+            return response.text(); // ou response.json(), caso a API retorne JSON
+        })
+        .then((data) => {
+            console.log('Requisição bem-sucedida:', data);
+        })
+        .catch((error) => {
+            console.error('Erro ao fazer a requisição:', error);
         });
-
+    
         // Resetar os checkboxes
         setRows((prevRows) =>
             prevRows.map((row) => ({
@@ -97,10 +109,11 @@ function ModalAddColaborador({ open, handleClose, courseId }) {
                 rejected: false,
             }))
         );
-        console.log('Lista de nomes confirmados:', confirmedNames);
-
-        setConfirmedNames([]); // Certifique-se de que esta linha esteja correta
+        console.log('IDs confirmados:', confirmedIds);
+        handleClose()
+        setConfirmedNames([]);
     };
+
 
     const handleCancelAllClick = () => {
         setRowModesModel((prevModel) => {
@@ -117,12 +130,11 @@ function ModalAddColaborador({ open, handleClose, courseId }) {
     const columns = [
         { field: 'name', headerName: 'Nome', width: 180, editable: false },
         { field: 'department', headerName: 'Departamento', width: 180, editable: false },
-        { field: 'role', headerName: 'Cargo', width: 180, editable: false, type: 'singleSelect', valueOptions: roles },
+        { field: 'position', headerName: 'Cargo', width: 180, editable: false },
         {
             field: 'actions',
             type: 'actions',
-            headerName:'Adicionar'
-            ,
+            headerName: 'Adicionar',
             width: 200,
             cellClassName: 'actions',
             getActions: ({ id }) => {
@@ -143,14 +155,12 @@ function ModalAddColaborador({ open, handleClose, courseId }) {
         },
     ];
 
-
     return (
         <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-
         >
             <Box sx={style}>
                 <Grid container spacing={1}>
@@ -178,7 +188,8 @@ function ModalAddColaborador({ open, handleClose, courseId }) {
                     <Grid item xs={3}></Grid>
                     <Grid item xs={4} md={4} lg={4}>
                         <Button onClick={handleSaveAllClick} variant="contained">
-                            Confirmar                        </Button>
+                            Confirmar
+                        </Button>
                     </Grid>
                     <Grid item xs={4} md={4} lg={4}>
                         <Button onClick={handleClose} variant="outlined">
@@ -186,11 +197,10 @@ function ModalAddColaborador({ open, handleClose, courseId }) {
                         </Button>
                     </Grid>
                     <Grid item xs={3}></Grid>
-
                 </Grid>
             </Box>
         </Modal>
-    )
+    );
 }
 
-export default ModalAddColaborador
+export default ModalAddColaborador;
