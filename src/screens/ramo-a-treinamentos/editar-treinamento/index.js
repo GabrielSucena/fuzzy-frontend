@@ -25,7 +25,7 @@ function EditarTreinamento() {
   const [treinamento, setTreinamento] = useState({}); // Inicializa como um objeto vazio
 
   useEffect(() => {
-    fetch(`http://localhost:5001/treinamentos/${id}`, {
+    fetch(`http://localhost:8080/cursos/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -38,47 +38,50 @@ function EditarTreinamento() {
       .catch((error) => console.error("Fetch error:", error));
   }, [id]);
 
-  const [name_instructor, setName_instructor] = useState('');
+
+  
+  const [instructor, setInstructor] = useState('');
   const [version, setVersion] = useState('');
-  const [name_course, setName_course] = useState('');
-  const [course_duration, setCourse_duration] = useState('');
+  const [title, setTitle] = useState('');
+  const [workload, setCourse_duration] = useState('');
   const [codificationNumber, setCodificationNumber] = useState('');
   const [codificationSigla, setCodificationSigla] = useState('');
-  const [descricao, setDescricao] = useState('');
-  const [validade, setValidade] = useState('');
-  const [dataInicial, setDataInicial] = useState(dayjs());
+  const [description, setDescription] = useState('');
+  const [validityDate, setValidityYears] = useState('');
+  const [startDate, setStartDate] = useState(dayjs());
 
   useEffect(() => {
     if (treinamento) {
-      setName_instructor(treinamento.name_instructor || '');
+      setInstructor(treinamento.instructor || '');
       setVersion(treinamento.version || '');
-      setName_course(treinamento.name_course || '');
-      setCourse_duration(treinamento.course_duration || '');
+      setTitle(treinamento.title || '');
+      setCourse_duration(treinamento.workload || '');
       const codificationNumberWithoutPrefix = (treinamento.codification ? treinamento.codification.slice(11) : '');
       setCodificationNumber(codificationNumberWithoutPrefix || '');
       const codificationNumberWithoutSufix = (treinamento.codification || '').replace(codificationNumberWithoutPrefix, '');
       setCodificationSigla(codificationNumberWithoutSufix || '');
-      setDescricao(treinamento.description || '');
+      setDescription(treinamento.description || '');
 
-      // Calcular a diferença entre validity_date e start_date em anos
-      if (treinamento.validity_date && treinamento.start_date) {
-        const startDate = dayjs(treinamento.start_date, 'DD/MM/YYYY');
-        const validityDate = dayjs(treinamento.validity_date, 'DD/MM/YYYY');
+      // Calcular a diferença entre validityDate e startDate em anos
+      if (treinamento.validityDate && treinamento.startDate) {
+        const startDate = dayjs(treinamento.startDate, 'YYYY-MM-DD');
+        console.log(startDate)
+        const validityDate = dayjs(treinamento.validityDate, 'YYYY-MM-DD');
 
         // Verifica se as datas são válidas
         if (startDate.isValid() && validityDate.isValid()) {
           // Calcular a diferença entre validityDate e startDate em anos
           const differenceInYears = validityDate.diff(startDate, 'year');
-          setValidade(differenceInYears.toString()); // Converte a diferença em anos para string
+          setValidityYears(differenceInYears.toString()); // Converte a diferença em anos para string
         } else {
           console.error('Datas inválidas:', startDate.format(), validityDate.format());
-          setValidade('');
+          setValidityYears('');
         }
 
 
       }
 
-      setDataInicial(dayjs(treinamento.start_date,'DD/MM/YYYY') || dayjs());
+      setStartDate(dayjs(treinamento.startDate,'YYYY-MM-DD') || dayjs());
     }
   }, [treinamento]);
 
@@ -88,14 +91,14 @@ function EditarTreinamento() {
     e.preventDefault();
 
     if (
-      !name_instructor ||
+      !instructor ||
       !version ||
-      !name_course ||
-      !course_duration ||
+      !title ||
+      !workload ||
       !codificationNumber ||
-      !descricao ||
-      !validade ||
-      !dataInicial
+      !description ||
+      !validityDate ||
+      !startDate
     ) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
@@ -104,26 +107,25 @@ function EditarTreinamento() {
 
     
     const infoCursos = {
-      name_instructor,
+      instructor,
       version,
-      name_course,
-      course_duration,
+      title,
+      workload,
       codification: codificationSigla + codificationNumber,
-      description: descricao,
-      validity_date: dataInicial.add(parseInt(validade)*365, 'day').format('DD/MM/YYYY'),
-      start_date: dataInicial.format('DD/MM/YYYY'),
-      end_date: dataInicial.add(31, 'day').format('DD/MM/YYYY'),
+      description: description,
+      validityYears:parseInt(validityDate),
+      startDate: startDate.format('DD/MM/YYYY'),
     };
 
     try {
-      const response = await fetch(`http://localhost:5001/treinamentos/${id}`, {
+      const response = await fetch(`http://localhost:8080/cursos/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(infoCursos),
       });
-
+      console.log(infoCursos)
       if (response.ok) {
         navigate("/treinamentos");
       } else {
@@ -147,11 +149,11 @@ function EditarTreinamento() {
                 <TextField
                   required
                   fullWidth
-                  value={name_instructor}
-                  id="name_instructor"
+                  value={instructor}
+                  id="instructor"
                   label="Nome do Instrutor (a)"
                   variant="outlined"
-                  onChange={(e) => setName_instructor(e.target.value)}
+                  onChange={(e) => setInstructor(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} lg={6}>
@@ -169,18 +171,18 @@ function EditarTreinamento() {
                 <TextField
                   required
                   fullWidth
-                  value={name_course}
+                  value={title}
                   id="procedimento"
                   label="Título do Procedimento de Operação Padrão"
                   variant="outlined"
-                  onChange={(e) => setName_course(e.target.value)}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} lg={6}>
                 <TextField
                   required
                   fullWidth
-                  value={course_duration}
+                  value={workload}
                   id="cargaHoraria"
                   label="Carga Horária (minutos)"
                   variant="outlined"
@@ -219,23 +221,22 @@ function EditarTreinamento() {
                     fullWidth
                     required
                     label="Data de Vigência"
-                    value={dataInicial}
-                    onChange={(newValue) => setDataInicial(newValue)}
+                    value={startDate}
+                    onChange={(newValue) => setStartDate(newValue)}
                     format='DD/MM/YYYY'
-                    disablePast
                   />
                 </LocalizationProvider>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <FormControl required fullWidth>
-                  <InputLabel id="validade">Validade após</InputLabel>
+                  <InputLabel id="validityDate">Validade após</InputLabel>
                   <Select
-                    labelId="validade"
-                    id="validade"
-                    value={validade}
+                    labelId="validityDate"
+                    id="validityDate"
+                    value={validityDate}
                     label="Validade após"
-                    onChange={(e) => setValidade(e.target.value)}
-                    defaultValue={validade}
+                    onChange={(e) => setValidityYears(e.target.value)}
+                    defaultValue={validityDate}
                   >
                     <MenuItem value={1}>1 ano</MenuItem>
                     <MenuItem value={2}>2 anos</MenuItem>
@@ -247,12 +248,12 @@ function EditarTreinamento() {
                 <TextField
                   required
                   fullWidth
-                  value={descricao}
-                  id="descricao"
+                  value={description}
+                  id="description"
                   label="Descrição"
                   multiline
                   maxRows={4}
-                  onChange={(e) => setDescricao(e.target.value)}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </Grid>
               <Grid item xs={4} />

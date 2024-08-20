@@ -80,6 +80,7 @@ function ModalAddColaborador({ id_curso, open, handleClose, courseId }) {
             .filter((row) => row.confirmed)
             .map((row) => row.id);
     
+
         fetch(`http://localhost:8080/cursos/${id_curso}/colaboradores`, {
             method: 'POST',
             headers: {
