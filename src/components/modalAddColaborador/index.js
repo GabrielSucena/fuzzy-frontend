@@ -31,12 +31,12 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
                 'Content-Type': 'application/json'
             }
         })
-        .then(resp => resp.json())
-        .then(data => {
-            console.log("Colaboradores fetched:", data);
-            setRows(data); // Defina os dados recebidos na requisição como as linhas do DataGrid
-        })
-        .catch(error => console.error("Fetch error:", error));
+            .then(resp => resp.json())
+            .then(data => {
+                console.log("Colaboradores fetched:", data);
+                setRows(data); // Defina os dados recebidos na requisição como as linhas do DataGrid
+            })
+            .catch(error => console.error("Fetch error:", error));
     }, []); // O array vazio como segundo argumento garante que o efeito seja executado apenas uma vez
 
     const handleRowEditStop = (params, event) => {
@@ -79,7 +79,7 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
         const confirmedIds = rows
             .filter((row) => row.confirmed)
             .map((row) => row.id);
-    
+
 
         fetch(`http://localhost:8080/cursos/${id_curso}/colaboradores`, {
             method: 'POST',
@@ -88,20 +88,22 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
             },
             body: JSON.stringify({ collaboratorsId: confirmedIds }),
         })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Erro na requisição');
-            }
-            // Se a resposta não tiver um corpo JSON, evite tentar analisá-la
-            return response.text(); // ou response.json(), caso a API retorne JSON
-        })
-        .then((data) => {
-            console.log('Requisição bem-sucedida:', data);
-        })
-        .catch((error) => {
-            console.error('Erro ao fazer a requisição:', error);
-        });
-    
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                // Se a resposta não tiver um corpo JSON, evite tentar analisá-la
+                return response.text(); // ou response.json(), caso a API retorne JSON
+            })
+            .then((data) => {
+                console.log('Requisição bem-sucedida:', data);
+                refreshColaboradores()
+
+            })
+            .catch((error) => {
+                console.error('Erro ao fazer a requisição:', error);
+            });
+
         // Resetar os checkboxes
         setRows((prevRows) =>
             prevRows.map((row) => ({
@@ -111,7 +113,6 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
             }))
         );
         console.log('IDs confirmados:', confirmedIds);
-        refreshColaboradores()
         handleClose()
         setConfirmedNames([]);
     };
