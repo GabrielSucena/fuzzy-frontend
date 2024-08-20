@@ -1,16 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./adiciona-treinamento.css";
 import TituloPagina from "../../../components/titulopagina";
-
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
 import Stack from "@mui/material/Stack";
-import Paper from "@mui/material/Paper";
-import { styled } from "@mui/material/styles";
 import {
-  Box,
   FormControl,
   Grid,
   InputLabel,
@@ -21,84 +15,119 @@ import {
 import Botao from "../../../components/botao";
 import dayjs from "dayjs";
 import DefaultPaper from "../../../components/defaultPaper";
-import { Navigate, useNavigate } from "react-router-dom";
-import { DateField, DesktopDatePicker } from "@mui/x-date-pickers";
+import { useLocation, useNavigate } from "react-router-dom";
+import { DateField } from "@mui/x-date-pickers";
 
-function AdicionaTreinamento() {
-  const [name_instructor, setName_instructor] = React.useState("");
-  const [version, setVersion] = React.useState("");
-  const [name_course, setName_course] = React.useState("");
-  const [course_duration, setCourse_duration] = React.useState("");
-  
-  const [codificationNumber, setCodificationNumber] = React.useState("");
-  const [codificationSigla, setCodificationSigla] = React.useState("");
-  
-  const [descricao, setDescricao] = React.useState("");
-  const [validade, setValidade] = React.useState("");
-  const [dataInicial, setDataInicial] = React.useState(dayjs());
-  const [codificacao, setCodificacao] = React.useState("");
+function EditarTreinamento() {
+  const location = useLocation();
+  const { id } = location.state || {};
 
-  const navigate = useNavigate(); // Hook useNavigate
+  const [treinamento, setTreinamento] = useState({}); // Inicializa como um objeto vazio
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/cursos/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setTreinamento(data);
+      })
+      .catch((error) => console.error("Fetch error:", error));
+  }, [id]);
+
+
+  
+  const [instructor, setInstructor] = useState('');
+  const [version, setVersion] = useState('');
+  const [title, setTitle] = useState('');
+  const [workload, setCourse_duration] = useState('');
+  const [codificationNumber, setCodificationNumber] = useState('');
+  const [codificationSigla, setCodificationSigla] = useState('');
+  const [description, setDescription] = useState('');
+  const [validityDate, setValidityYears] = useState('');
+  const [startDate, setStartDate] = useState(dayjs());
+
+  useEffect(() => {
+    if (treinamento) {
+      setInstructor(treinamento.instructor || '');
+      setVersion(treinamento.version || '');
+      setTitle(treinamento.title || '');
+      setCourse_duration(treinamento.workload || '');
+      const codificationNumberWithoutPrefix = (treinamento.codification ? treinamento.codification.slice(11) : '');
+      setCodificationNumber(codificationNumberWithoutPrefix || '');
+      const codificationNumberWithoutSufix = (treinamento.codification || '').replace(codificationNumberWithoutPrefix, '');
+      setCodificationSigla(codificationNumberWithoutSufix || '');
+      setDescription(treinamento.description || '');
+
+      // Calcular a diferença entre validityDate e startDate em anos
+      if (treinamento.validityDate && treinamento.startDate) {
+        const startDate = dayjs(treinamento.startDate, 'YYYY-MM-DD');
+        console.log(startDate)
+        const validityDate = dayjs(treinamento.validityDate, 'YYYY-MM-DD');
+
+        // Verifica se as datas são válidas
+        if (startDate.isValid() && validityDate.isValid()) {
+          // Calcular a diferença entre validityDate e startDate em anos
+          const differenceInYears = validityDate.diff(startDate, 'year');
+          setValidityYears(differenceInYears.toString()); // Converte a diferença em anos para string
+        } else {
+          console.error('Datas inválidas:', startDate.format(), validityDate.format());
+          setValidityYears('');
+        }
+
+
+      }
+
+      setStartDate(dayjs(treinamento.startDate,'YYYY-MM-DD') || dayjs());
+    }
+  }, [treinamento]);
+
+  const navigate = useNavigate();
 
   const aoSalvar = async (e) => {
-    e.preventDefault(); // Prevenir comportamento padrão do formulário
+    e.preventDefault();
 
-    // Verificar se todos os campos obrigatórios estão preenchidos
     if (
-      !name_instructor ||
+      !instructor ||
       !version ||
-      !name_course ||
-      !course_duration ||
+      !title ||
+      !workload ||
       !codificationNumber ||
-      !descricao ||
-      !validade ||
-      !dataInicial 
+      !description ||
+      !validityDate ||
+      !startDate
     ) {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
 
-  const infoCursos = {
-    instructor: name_instructor,
-    version: version,
-    title: name_course,
-    workload: course_duration,
-    codification: codificationSigla+codificationNumber,
-    description: descricao,
-    validityYears: parseInt(validade),
-    startDate: dataInicial.format('DD/MM/YYYY'),
-  };
-
-
-
-    // const infoCursos = {
-    //   name_instructor: name_instructor,
-    //   version: version,
-    //   name_course: name_course,
-    //   course_duration: course_duration,
-    //   codification: codificationSigla+codificationNumber,
-    //   description: descricao,
-    //   // validity_date: dataInicial.add(parseInt(validade)*365, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
-    //   start_date: dataInicial.format('DD/MM/YYYY'),
-    //   // end_date: dataInicial.add(31, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
-    // };
 
     
-    console.log("FormSubmetido =>", JSON.stringify(infoCursos));
+    const infoCursos = {
+      instructor,
+      version,
+      title,
+      workload,
+      codification: codificationSigla + codificationNumber,
+      description: description,
+      validityYears:parseInt(validityDate),
+      startDate: startDate.format('DD/MM/YYYY'),
+    };
 
     try {
-      const response = await fetch('http://localhost:8080/cursos', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:8080/cursos/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(infoCursos),
       });
-
+      console.log(infoCursos)
       if (response.ok) {
-        console.log("Dados enviados com sucesso");
-        
-        navigate("/treinamentos"); // Navegar para a página de treinamentos
+        navigate("/treinamentos");
       } else {
         console.error("Erro ao enviar os dados:", response.statusText);
       }
@@ -107,10 +136,9 @@ function AdicionaTreinamento() {
     }
   };
 
-
   return (
     <>
-      <TituloPagina titulopagina={"Adicionar treinamento"} />
+      <TituloPagina titulopagina={"Editar treinamento"} />
 
       <Grid container>
         <Grid item xs></Grid>
@@ -121,16 +149,18 @@ function AdicionaTreinamento() {
                 <TextField
                   required
                   fullWidth
-                  id="name_instructor"
+                  value={instructor}
+                  id="instructor"
                   label="Nome do Instrutor (a)"
                   variant="outlined"
-                  onChange={(e) => setName_instructor(e.target.value)}
+                  onChange={(e) => setInstructor(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} lg={6}>
                 <TextField
                   required
                   fullWidth
+                  value={version}
                   id="version"
                   label="Versão"
                   variant="outlined"
@@ -141,16 +171,18 @@ function AdicionaTreinamento() {
                 <TextField
                   required
                   fullWidth
+                  value={title}
                   id="procedimento"
                   label="Título do Procedimento de Operação Padrão"
                   variant="outlined"
-                  onChange={(e) => setName_course(e.target.value)}
+                  onChange={(e) => setTitle(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12} lg={6}>
                 <TextField
                   required
                   fullWidth
+                  value={workload}
                   id="cargaHoraria"
                   label="Carga Horária (minutos)"
                   variant="outlined"
@@ -169,7 +201,6 @@ function AdicionaTreinamento() {
                   >
                     <MenuItem value={'CAD-QU-GOP-'}>CAD-QU-GOP</MenuItem>
                     <MenuItem value={'CAD-QU-SOP-'}>CAD-QU-SOP</MenuItem>
-                  
                   </Select>
                 </FormControl>
               </Grid>
@@ -177,6 +208,7 @@ function AdicionaTreinamento() {
                 <TextField
                   required
                   fullWidth
+                  value={codificationNumber}
                   id="codification"
                   label="Codificação"
                   variant="outlined"
@@ -184,27 +216,27 @@ function AdicionaTreinamento() {
                 />
               </Grid>
               <Grid item xs={12} lg={4}>
-                  <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DateField
-                      fullWidth
-                      required
-                      label="Data de Vigência"
-                      value={dataInicial}
-                      onChange={(newValue) => setDataInicial(newValue)}
-                      format='DD/MM/YYYY'
-                      disablePast
-                    />
-                  </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DateField
+                    fullWidth
+                    required
+                    label="Data de Vigência"
+                    value={startDate}
+                    onChange={(newValue) => setStartDate(newValue)}
+                    format='DD/MM/YYYY'
+                  />
+                </LocalizationProvider>
               </Grid>
               <Grid item xs={12} lg={4}>
                 <FormControl required fullWidth>
-                  <InputLabel id="validade">Validade após</InputLabel>
+                  <InputLabel id="validityDate">Validade após</InputLabel>
                   <Select
-                    labelId="validade"
-                    id="validade"
-                    value={validade}
+                    labelId="validityDate"
+                    id="validityDate"
+                    value={validityDate}
                     label="Validade após"
-                    onChange={(e) => setValidade(e.target.value)}
+                    onChange={(e) => setValidityYears(e.target.value)}
+                    defaultValue={validityDate}
                   >
                     <MenuItem value={1}>1 ano</MenuItem>
                     <MenuItem value={2}>2 anos</MenuItem>
@@ -216,20 +248,18 @@ function AdicionaTreinamento() {
                 <TextField
                   required
                   fullWidth
-                  id="descricao"
+                  value={description}
+                  id="description"
                   label="Descrição"
                   multiline
                   maxRows={4}
-                  onChange={(e) => setDescricao(e.target.value)}
+                  onChange={(e) => setDescription(e.target.value)}
                 />
               </Grid>
               <Grid item xs={4} />
               <Grid item xs={4}>
                 <Stack spacing={2} direction={"row"}>
-                  <Botao
-                    onClick={aoSalvar}
-                    color={"roxo"}
-                  >
+                  <Botao onClick={aoSalvar} color={"roxo"}>
                     Confirmar
                   </Botao>
                   <Botao color={"branco"} destino={"./treinamentos"}>
@@ -247,4 +277,4 @@ function AdicionaTreinamento() {
   );
 }
 
-export default AdicionaTreinamento;
+export default EditarTreinamento;

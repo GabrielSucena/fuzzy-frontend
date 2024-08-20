@@ -1,4 +1,76 @@
 {
+  "treinamentos": [
+    {
+      "id":1,
+      "name_course": "Estequiometria",
+      "codification": "CAD-QU-SOP-0000001",
+      "version": 1,
+      "name_instructor": "Carlos Nogueira",
+      "validity_date": "2026-03-01",
+      "course_duration": 30,
+      "start_date": "2024-03-01",
+      "end_date": "2024-03-31",
+      "status": "Encerrado",
+      "quantidade": 15,
+      "critico": 2,
+      "maior": 3,
+      "menor": 4,
+      "na": 6,
+      "green": 3,
+      "yellow": 3,
+      "orange": 3,
+      "red": 3,
+      "collaborators": [
+        {
+          "id": 1,
+          "name": "Fernanda Povreslo",
+          "department": "Desenvolvimento Analítico",
+          "job": "Analista de Desenvolvimento Analítico Pleno",
+          "shortened_name_criticality": "MA",
+          "status": "Realizado",
+          "color_status": "green"
+        },
+        {
+          "id": 2,
+          "name": "João Silva",
+          "department": "Tecnologia da Informação",
+          "job": "Desenvolvedor Backend",
+          "shortened_name_criticality": "MB",
+          "status": "Em Andamento",
+          "color_status": "yellow"
+        },
+        {
+          "id": 3,
+          "name": "Mariana Costa",
+          "department": "Recursos Humanos",
+          "job": "Analista de RH",
+          "shortened_name_criticality": "MA",
+          "status": "Realizado",
+          "color_status": "green"
+        },
+        {
+          "id": 4,
+          "name": "Pedro Almeida",
+          "department": "Marketing",
+          "job": "Coordenador de Marketing",
+          "shortened_name_criticality": "MC",
+          "status": "Pendente",
+          "color_status": "orange"
+        },
+        {
+          "id": 5,
+          "name": "Juliana Lima",
+          "department": "Financeiro",
+          "job": "Analista Financeiro",
+          "shortened_name_criticality": "MA",
+          "status": "Realizado",
+          "color_status": "green"
+        }
+      ]
+    }
+  ]
+}
+
   "collaborators": [],
   "trainings": [
     {

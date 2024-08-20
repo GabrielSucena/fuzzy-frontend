@@ -1,0 +1,18 @@
+.conteiner-cadastro{
+    color: red;
+    display: flex;
+    justify-content: center;
+    border: 2px solid blue;
+    
+}
+
+.quadrado-cadastro{
+    width: 75%;
+    gap: 1rem; 
+    height: 20rem;
+    border: 2px solid red;
+    border-radius: 2rem;
+    padding: 2rem;
+    
+}
+

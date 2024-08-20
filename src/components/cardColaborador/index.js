@@ -42,15 +42,13 @@ const personIconStyle = {
   },
 };
 
-export default function BasicCard({
-  procedimento,
-  cod,
-  nome,
-  duration,
-  dataInicio,
-  dataFinal,
-  versao,
-  id
+export default function CardColaborador({
+  id,
+  name,
+  department,
+  job,
+  shortened_name_criticality,
+  status,
 }) {
 
 
@@ -92,29 +90,21 @@ export default function BasicCard({
         sx={{ display: "flex", flexDirection: "column", alignItems: "right" }}
       >
         <Typography component="div" sx={{ ...typographyStyle.title }}>
-          {procedimento}
+          {name}
         </Typography>
-        <Typography sx={{ ...typographyStyle.subtitle }}>{cod}</Typography>
+        <Typography sx={{ ...typographyStyle.subtitle }}>{department}</Typography>
 
         <Typography sx={{ ...typographyStyle.base }}>
-          <PersonIcon sx={{ ...personIconStyle.base }} /> {nome}
+          <PersonIcon sx={{ ...personIconStyle.base }} /> {job}
         </Typography>
 
         <Typography sx={{ ...typographyStyle.base }}>
           <AccessTimeIcon sx={{ ...personIconStyle.base }} />
-          {duration} minutos
+          {shortened_name_criticality}
         </Typography>
 
         <Typography sx={{ ...typographyStyle.base }}>
-          <EventAvailableIcon sx={{ ...personIconStyle.base }} /> {dataInicio}
-        </Typography>
-
-        <Typography sx={{ ...typographyStyle.base }}>
-          <EventBusyIcon sx={{ ...personIconStyle.base }} /> {dataFinal}
-        </Typography>
-
-        <Typography sx={{ ...typographyStyle.base }}>
-          <TimelineIcon sx={{ ...personIconStyle.base }} /> {versao}
+          <EventAvailableIcon sx={{ ...personIconStyle.base }} /> {status}
         </Typography>
       </CardContent>
     </Card>

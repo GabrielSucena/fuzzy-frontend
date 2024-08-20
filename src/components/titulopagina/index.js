@@ -8,9 +8,9 @@ function TituloPagina({
     descricaotitulo = '',
     divisor1 = false,
     divisor2 = false,
-    botao1 = '', color1 = 'roxo', destino1 = '/', aoClicar1 = {},
-    botao2 = '', color2 = 'roxo', destino2 = '/', aoClicar2 = {},
-    botao3 = '', color3 = 'roxo', destino3 = '/', aoClicar3 = {}
+    botao1 = '', color1 = 'roxo', destino1 = '', onClick1 = null,
+    botao2 = '', color2 = 'roxo', destino2 = '', onClick2 = null,
+    botao3 = '', color3 = 'roxo', destino3 = '', onClick3 = null
 }) {
     return (
         <>
@@ -25,9 +25,9 @@ function TituloPagina({
                 <div className="conteiner-botaoo">
                     {(botao1 || botao2 || botao3) && (
                         <div className="botoes-titulo-paginaa">
-                            {botao1 && (<Botao onClick={aoClicar1} destino={destino1} color={color1}>{botao1}</Botao>)}
-                            {botao2 && (<Botao onClick={aoClicar2} destino={destino2} color={color2}>{botao2}</Botao>)}
-                            {botao3 && (<Botao onClick={aoClicar3} destino={destino3} color={color3}>{botao3}</Botao>)}
+                            {botao1 && (<Botao onClick={onClick1} destino={destino1} color={color1}>{botao1}</Botao>)}
+                            {botao2 && (<Botao onClick={onClick2} destino={destino2} color={color2}>{botao2}</Botao>)}
+                            {botao3 && (<Botao onClick={onClick3} destino={destino3} color={color3}>{botao3}</Botao>)}
                         </div>
                     )}
                 </div>
