@@ -17,7 +17,7 @@ const style = {
 };
 
 
-function ModalAddColaborador({ id_curso, open, handleClose, courseId }) {
+function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores }) {
 
     const navigate = useNavigate();
     const [rows, setRows] = useState([]); // Inicialize com um array vazio
@@ -111,6 +111,7 @@ function ModalAddColaborador({ id_curso, open, handleClose, courseId }) {
             }))
         );
         console.log('IDs confirmados:', confirmedIds);
+        refreshColaboradores()
         handleClose()
         setConfirmedNames([]);
     };

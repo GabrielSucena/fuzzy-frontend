@@ -46,6 +46,7 @@ function TreinamentoInfo() {
   const [treinamento, setTreinamento] = useState(null);
   const [cargos, setCargos] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
+  const [colaboradores, setColaboradores] = useState([]); // Supondo que você tenha um initialColaboradores
 
   useEffect(() => {
     fetch(`http://localhost:8080/cursos/${id}`, {
@@ -58,9 +59,12 @@ function TreinamentoInfo() {
       .then(data => {
         console.log("Colaborador fetched:", data);
         setTreinamento(data);
+        setColaboradores(data.collaborators)
       })
       .catch(error => console.error("Fetch error:", error));
   }, [id]);
+
+
 
   const [openModal, setOpenModal] = useState(null);
   const handleOpen = (modalType) => () => setOpenModal(modalType);
@@ -72,6 +76,16 @@ function TreinamentoInfo() {
       state: { id },
     });
   };
+
+
+  const refreshColaboradores = async () => {
+    // Faz uma requisição para obter a lista atualizada de colaboradores
+    const response = await fetch(`http://localhost:8080/cursos/${id}`);
+    const updatedColaboradores = await response.json();
+    console.log(updatedColaboradores)
+    setColaboradores(updatedColaboradores.collaborators);
+};
+
 
   if (!treinamento) {
     return <div>Loading...</div>; // or another loading indicator
@@ -255,7 +269,7 @@ function TreinamentoInfo() {
               </DefaultPaper>
             </Grid>
           </Grid>
-          <TabelaMUI2 curso_id={id} colaboradores={treinamento.collaborators} />
+          <TabelaMUI2 curso_id={id} colaboradores={colaboradores}  refreshColaboradores={refreshColaboradores} />
         </Grid>
         <Grid item xs />
       </Grid>

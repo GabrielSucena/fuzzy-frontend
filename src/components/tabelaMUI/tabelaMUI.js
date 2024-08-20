@@ -10,6 +10,7 @@ import DefaultPaper from '../defaultPaper';
 import ModalNotificarTreinamento from '../modalNotificarTreinamento';
 import TituloPagina from '../titulopagina';
 import ModalAddColaborador from '../modalAddColaborador';
+import ModalConfirmarExclusãoColaborador from '../modalConfirmarExclusãoColaborador';
 
 const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['A', 'B', 'C', 'D'];
@@ -17,7 +18,7 @@ const statuses = ['Active', 'Inactive', 'Pending'];
 
 
 
-export default function TabelaMUI2({ curso_id, colaboradores }) {
+export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradores }) {
     useEffect(() => {
         if (Array.isArray(colaboradores)) {
             const initialRows = colaboradores.map((colaborador) => ({
@@ -32,6 +33,8 @@ export default function TabelaMUI2({ curso_id, colaboradores }) {
         }
     }, [colaboradores]);
 
+
+    const [resetRows, setResetRows] = useState(false);
     const [rows, setRows] = React.useState();
     const [rowModesModel, setRowModesModel] = useState({});
     const [confirmedNames, setConfirmedNames] = useState([]);
@@ -39,6 +42,13 @@ export default function TabelaMUI2({ curso_id, colaboradores }) {
     const [openModal, setOpenModal] = useState(null);
     const handleOpen = (modalType) => () => setOpenModal(modalType);
     const handleClose = () => setOpenModal(null);
+   
+    useEffect(() => {
+        if (resetRows) {
+            setRows(rows);
+            setResetRows(false);
+        }
+    }, [resetRows, rows]);
 
     //Habilitar o edit da tabela
     const [showDeleteIcon, setShowDeleteIcon] = React.useState(false);
@@ -89,7 +99,7 @@ export default function TabelaMUI2({ curso_id, colaboradores }) {
             })
         );
     };
-    
+
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow, isNew: false };
         setRows((prevRows) =>
@@ -103,6 +113,7 @@ export default function TabelaMUI2({ curso_id, colaboradores }) {
     };
 
     const handleSaveAllClick = () => {
+
         setRowModesModel((prevModel) => {
             const newModel = { ...prevModel };
             rows.forEach((row) => {
@@ -112,7 +123,12 @@ export default function TabelaMUI2({ curso_id, colaboradores }) {
             });
             return newModel;
         });
-    
+        console.log(rejectedNames);
+        if (rejectedNames.length > 0) {
+            const openModalFunction = handleOpen('retirar-colaborador');
+            openModalFunction();
+        }
+
         // Resetar os checkboxes
         setRows((prevRows) =>
             prevRows.map((row) => ({
@@ -121,32 +137,9 @@ export default function TabelaMUI2({ curso_id, colaboradores }) {
                 rejected: false,
             }))
         );
-    
-        console.log('IDs rejeitados:', rejectedNames);
-    
-        fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ collaboratorsId: rejectedNames }),
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error('Erro na requisição');
-            }
-            return response.text(); // ou response.json(), caso a API retorne JSON
-        })
-        .then((data) => {
-            console.log('Requisição bem-sucedida:', data);
-        })
-        .catch((error) => {
-            console.error('Erro ao fazer a requisição:', error);
-        });
-    
         toggleDeleteIcon();
     };
-    
+
 
     const handleCancelAllClick = () => {
         setRowModesModel((prevModel) => {
@@ -158,6 +151,8 @@ export default function TabelaMUI2({ curso_id, colaboradores }) {
             });
             return newModel;
         });
+        setConfirmedNames([]);
+        setRejectedNames([]);
     };
 
     const columns = [
@@ -208,9 +203,12 @@ export default function TabelaMUI2({ curso_id, colaboradores }) {
                 <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
             )}
             {openModal === 'adicionar-colaborador' && (
-                <ModalAddColaborador id_curso={curso_id} open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
+                <ModalAddColaborador id_curso={curso_id} open={true} handleClose={handleClose}  refreshColaboradores={refreshColaboradores} />
             )}
-
+            {openModal === 'retirar-colaborador' && (
+                <ModalConfirmarExclusãoColaborador setRejectedNames={setRejectedNames} setResetRows={setResetRows}
+                    colaboradores={rejectedNames} courseId={curso_id} open={true} handleClose={handleClose} refreshColaboradores={refreshColaboradores} />
+            )}
             <TituloPagina
                 titulopagina={"Colaboradores Envolvidos"}
                 botao1="Adicionar"

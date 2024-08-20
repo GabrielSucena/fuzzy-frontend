@@ -20,39 +20,39 @@ const style = {
 
 
 
-function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
-   
+function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, open, handleClose, courseId, refreshColaboradores,setResetRows
+}) {
+
     const navigate = useNavigate();
 
     const [justificativa, setJustificativa] = useState('');
 
     const handleConfirm = async () => {
-        if (!justificativa) {
-            alert("Por favor, preencha todos os campos obrigatórios.");
-            return;
-        }
-        try {
-            const response = await fetch(`http://localhost:8080/cursos/${courseId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+        console.log('IDs rejeitados:', colaboradores);
+
+        fetch(`http://localhost:8080/cursos/${courseId}/colaboradores`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ collaboratorsId: colaboradores }),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return response.text(); // ou response.json(), caso a API retorne JSON
+            })
+            .then((data) => {
+                console.log('Requisição bem-sucedida:', data);
+                refreshColaboradores(); 
+            })
+            .catch((error) => {
+                console.error('Erro ao fazer a requisição:', error);
             });
 
-            if (response.ok) {
-                console.log('Curso removido com sucesso');
-                // Adicione lógica adicional aqui se necessário
-                handleClose(); // Fechar o modal após confirmar
-                navigate("/treinamentos");
-
-            } else {
-                console.error('Erro ao remover curso');
-            }
-        } catch (error) {
-            console.error('Erro de rede:', error);
-        }
-
-
+        setRejectedNames([]);
+        handleClose()
     };
     return (
         <Modal
@@ -64,7 +64,7 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 'bold' }}>
-                    Obsoletar treinamento ?
+                    Excluir Participantes ?
                 </Typography>
                 <TextField
                     required
@@ -76,7 +76,7 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
                     onChange={(e) => setJustificativa(e.target.value)}
                 />
                 <Typography id="modal-modal-description" sx={{ mt: 2, mb: 2, color: '#565656', }}>
-                    Essa ação inativará o treinamento atual e congelará o histórico atual.
+                    Essa ação irá retirar os colaboradores selecionados desse treinamento.
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', width: '100%' }}>
                     <Button variant="contained" onClick={handleConfirm}>Confirmar</Button>
@@ -88,4 +88,4 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
     )
 }
 
-export default ModalObsoletarTreinamento
+export default ModalConfirmarExclusãoColaborador
