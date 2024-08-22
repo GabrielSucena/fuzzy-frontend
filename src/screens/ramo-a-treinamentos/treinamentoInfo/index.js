@@ -9,7 +9,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import DefaultPaper from "../../../components/defaultPaper";
-import Grafico from "../../../components/grafico";
+import GraficoMUI from "../../../components/graficoMUI";
 import ModalAuditarTreinamento from "../../../components/modalAuditoriaTreinamento";
 import ModalNotificarTreinamento from "../../../components/modalNotificarTreinamento";
 import ModalObsoletarTreinamento from "../../../components/modalObsoletarTreinamento";
@@ -234,7 +234,7 @@ function TreinamentoInfo() {
               <DefaultPaper elevation={2} square={false} variant="elevation">
                 <Grid container spacing={1}>
                   <Grid item xs={12} lg={6}>
-                    <Grafico
+                    <GraficoMUI
                       v1={treinamento.describeCourse?.critico}
                       n1={"Crítico"}
                       c1={'var(--vermelho-escuro)'}
@@ -246,11 +246,11 @@ function TreinamentoInfo() {
                       c3={'var(--salmao)'}
                       v4={treinamento.describeCourse?.na}
                       n4={"Não aplicável"}
-                      c4={'var(--cinza)'}
+                      c4={'var(--cinza-escuro)'}
                     />
                   </Grid>
                   <Grid item xs={12} lg={6}>
-                    <Grafico
+                    <GraficoMUI
                       v1={treinamento.describeCourse?.green}
                       n1={"Cursos realizados"}
                       c1={'var(--verde)'}

@@ -303,13 +303,13 @@ function VerColaborador() {
                         <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
                             <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
                         </Botao>
-                        <Botao aoClicar={preExclusao} color={"branco"}>
+                        <Botao onClick={preExclusao} color={"branco"}>
                             <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
                         </Botao>
-                        <Botao aoClicar={() => navigate(`/auditar-colaborador/${collaborator.register}`)} color={"branco"}>
+                        <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.register}`)} color={"branco"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
                         </Botao>
-                        <Botao aoClicar={() => handlePrint('cima')} color={"branco"}>
+                        <Botao onClick={() => handlePrint('cima')} color={"branco"}>
                             <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
                         </Botao>
 
@@ -440,10 +440,10 @@ function VerColaborador() {
             />
                 <div className="conteiner-botao-dois">
                     <div className="botoes-titulo-pagina">
-                        <Botao aoClicar={'a'} color={"roxo"}>
+                        <Botao onClick={'a'} color={"roxo"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={branco} /> <span>Notificar</span>
                         </Botao>
-                        <Botao aoClicar={() => handlePrint('baixo')} color={"branco"}>
+                        <Botao onClick={() => handlePrint('baixo')} color={"branco"}>
                             <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
                         </Botao>
 

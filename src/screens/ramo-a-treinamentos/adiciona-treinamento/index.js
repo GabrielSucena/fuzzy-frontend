@@ -1,5 +1,4 @@
 import React from "react";
-import "./adiciona-treinamento.css";
 import TituloPagina from "../../../components/titulopagina";
 
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
