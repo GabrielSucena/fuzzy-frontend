@@ -83,7 +83,24 @@ function TreinamentoInfo() {
   const refreshColaboradores = async () => {
     // Faz uma requisição para obter a lista atualizada de colaboradores
     const response = await fetch(`http://localhost:8080/cursos/${id}`); //Precisa passar o corpo da API
-    const updatedColaboradores = await response.json();
+   
+    useEffect(() => {
+      fetch(`http://localhost:8080/cursos/${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        }
+      })
+        .then(resp => resp.json())
+        .then(data => {
+          const updatedColaboradores = data.json();
+          console.log(updatedColaboradores)
+          setColaboradores(updatedColaboradores.collaborators);
+        })
+        .catch(error => console.error("Fetch error:", error));
+    }, [id]);
+  
     console.log(updatedColaboradores)
     setColaboradores(updatedColaboradores.collaborators);
 };
