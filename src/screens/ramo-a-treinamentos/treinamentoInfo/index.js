@@ -47,12 +47,14 @@ function TreinamentoInfo() {
   const [cargos, setCargos] = useState([]);
   const [departamentos, setDepartamentos] = useState([]);
   const [colaboradores, setColaboradores] = useState([]); // Supondo que você tenha um initialColaboradores
+  const token = localStorage.getItem('authToken');
 
   useEffect(() => {
     fetch(`http://localhost:8080/cursos/${id}`, {
       method: 'GET',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       }
     })
       .then(resp => resp.json())
@@ -80,7 +82,7 @@ function TreinamentoInfo() {
 
   const refreshColaboradores = async () => {
     // Faz uma requisição para obter a lista atualizada de colaboradores
-    const response = await fetch(`http://localhost:8080/cursos/${id}`);
+    const response = await fetch(`http://localhost:8080/cursos/${id}`); //Precisa passar o corpo da API
     const updatedColaboradores = await response.json();
     console.log(updatedColaboradores)
     setColaboradores(updatedColaboradores.collaborators);

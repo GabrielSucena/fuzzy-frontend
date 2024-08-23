@@ -38,6 +38,7 @@ function VerColaborador() {
     const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
     const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
     const amarelo = getComputedStyle(document.documentElement).getPropertyValue('--amarelo').trim();
+    const token = localStorage.getItem('authToken');
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -53,6 +54,7 @@ function VerColaborador() {
         fetch(`http://localhost:8080/colaboradores/${id}`, {
             method: 'GET',
             headers: {
+                'Authorization': `Bearer ${token}`, 
                 'Content-Type': 'application/json'
             },
         })
@@ -123,6 +125,7 @@ function VerColaborador() {
                     const response = await fetch('http://localhost:5000/audits', {
                         method: 'POST',
                         headers: {
+                            'Authorization': `Bearer ${token}`, 
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify(audit)
@@ -138,6 +141,7 @@ function VerColaborador() {
                 return fetch(`http://localhost:8080/colaboradores/${id}`, {
                     method: 'DELETE',
                     headers: {
+                        'Authorization': `Bearer ${token}`, 
                         'Content-Type': 'application/json'
                     },
                 });

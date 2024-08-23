@@ -23,11 +23,13 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
     const [rows, setRows] = useState([]); // Inicialize com um array vazio
     const [rowModesModel, setRowModesModel] = useState({});
     const [confirmedNames, setConfirmedNames] = useState([]);
+    const token = localStorage.getItem('authToken');
 
     useEffect(() => {
         fetch(`http://localhost:8080/colaboradores`, {
             method: 'GET',
             headers: {
+                'Authorization': `Bearer ${token}`, 
                 'Content-Type': 'application/json'
             }
         })
@@ -84,6 +86,7 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
         fetch(`http://localhost:8080/cursos/${id_curso}/colaboradores`, {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${token}`, 
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({ collaboratorsId: confirmedIds }),

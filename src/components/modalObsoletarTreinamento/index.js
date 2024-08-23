@@ -25,6 +25,7 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
     const navigate = useNavigate();
 
     const [justificativa, setJustificativa] = useState('');
+    const token = localStorage.getItem('authToken');
 
     const handleConfirm = async () => {
         if (!justificativa) {
@@ -36,6 +37,7 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`, 
                 },
             });
 

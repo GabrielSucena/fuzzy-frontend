@@ -1,6 +1,7 @@
 // Rotas
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Container from './components/container'
+import Teste2 from './screens/ramo-e-estruturais/teste2';
 
 // Ramo A
 import Layout from './gerenciador'; // Importe o novo Layout
@@ -33,9 +34,8 @@ import { ThemeProvider, createTheme } from "@mui/material";
 const theme = createTheme({
   palette: { primary: { main: "#6000B6" } },
 });
-
+const token = 'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJmdXp6eSIsInN1YiI6IjMiLCJleHAiOjE3MjQ0NTYyODIsImlhdCI6MTcyNDM2OTg4Miwic2NvcGUiOiJhZG1pbiJ9.RtcYVjXSMwZVMCQaf7BbMle9yy5bsVnxYe4ww_H0hcDzsQRjTB8l5qfujK8ddlvo2DVttCmGdu8uZmYOM2_JUcy02Mfrr1epylrz5BQP7XeWFlvhXGbees7BF0P1foN9UU8APazSl30QzoFE37F5JHLetFtNunh70DlnlOcl6gewwFqKqysbRvu985T1K_kWBxxYuSClvvTF_IkcKURRuWb8rk65vr4X2TFPAir1ePv5gpoyllM4i_EeJJPb_8RVJDNgBzUNhvE_KFP5wbiqUHxdQNMVrbgMwPfq4kCfIq-p71v5tw0A1r8GIG2h1sEYZNU50In5RgirA3Tk9joAGg'
 // Pode-se passar por parâmetro pois im cpmponente no fundo é uma função, que a função anonima recebera (label)
-import Teste2 from './screens/ramo-e-estruturais/teste2';
 
 function App() {
   return (

@@ -23,6 +23,7 @@ function Colaboradores() {
     const [selectedDepartment, setSelectedDepartment] = useState('');
 
     const location = useLocation();
+    const token = localStorage.getItem('authToken');
 
     useEffect(() => {
         if (location.state && location.state.message) {
@@ -32,7 +33,9 @@ function Colaboradores() {
         fetch('http://localhost:8080/colaboradores', {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, 
+
             }
         }).then(resp => resp.json())
         .then(data => {

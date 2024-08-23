@@ -81,14 +81,15 @@ function AdicionaTreinamento() {
     //   start_date: dataInicial.format('DD/MM/YYYY'),
     //   // end_date: dataInicial.add(31, 'day').format('DD/MM/YYYY'), //Não vai precisar no back
     // };
+    const token = localStorage.getItem('authToken');
 
-    
     console.log("FormSubmetido =>", JSON.stringify(infoCursos));
 
     try {
       const response = await fetch('http://localhost:8080/cursos', {
         method: 'POST',
         headers: {
+          'Authorization': `Bearer ${token}`, // Adiciona o token nos headers
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(infoCursos),

@@ -61,12 +61,14 @@ function Treinamentos() {
 
   const [treinamentos, setTreinamentos] = useState([])
   const [error, setError] = useState(null);
+  const token = localStorage.getItem('authToken');
 
   useEffect(() => {
     fetch('http://localhost:8080/cursos', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, 
         }
     })
     .then(resp => {

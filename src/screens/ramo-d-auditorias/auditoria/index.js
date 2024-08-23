@@ -37,6 +37,7 @@ function Auditoria({
     const [loading, setLoading] = useState(true); // Adiciona o estado de carregamento
     const [removeLoading, setRemoveLoading] = useState(false);
     const [error, setError] = useState(null); // Adiciona o estado de erro
+    const token = localStorage.getItem('authToken');
 
     useEffect(() => {
         const fetchData = async () => {
@@ -51,7 +52,9 @@ function Auditoria({
     
                 // Inicia todas as requisições e aguarda a conclusão
                 const [auditoriaResp] = await Promise.all([
-                    fetch(fetchUrl, { method: 'GET', headers: { 'Content-Type': 'application/json' } })
+                    fetch(fetchUrl, { method: 'GET', headers: { 
+                        'Authorization': `Bearer ${token}`, 
+                        'Content-Type': 'application/json' } })
                 ]);
 
                 // Processa a resposta de auditoria

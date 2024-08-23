@@ -23,10 +23,12 @@ function EditarTreinamento() {
 
   const [treinamento, setTreinamento] = useState({}); // Inicializa como um objeto vazio
 
+  const token = localStorage.getItem('authToken');
   useEffect(() => {
     fetch(`http://localhost:8080/cursos/${id}`, {
       method: 'GET',
       headers: {
+        'Authorization': `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     })
@@ -120,6 +122,7 @@ function EditarTreinamento() {
       const response = await fetch(`http://localhost:8080/cursos/${id}`, {
         method: 'PUT',
         headers: {
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(infoCursos),

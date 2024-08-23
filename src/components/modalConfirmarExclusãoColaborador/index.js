@@ -26,6 +26,7 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
     const navigate = useNavigate();
 
     const [justificativa, setJustificativa] = useState('');
+    const token = localStorage.getItem('authToken');
 
     const handleConfirm = async () => {
         console.log('IDs rejeitados:', colaboradores);
@@ -34,6 +35,7 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, 
             },
             body: JSON.stringify({ collaboratorsId: colaboradores }),
         })

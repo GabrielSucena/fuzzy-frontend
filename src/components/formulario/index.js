@@ -10,6 +10,7 @@ const Formulario = (props) => {
     const [register, setRegister] = useState('');
     const [password, setSenha] = useState('');
     const navigate = useNavigate(); // Use `useNavigate` para navegação
+    const token = localStorage.getItem('authToken');
 
     // Função para criar login e enviar auditoria
     function createLogin(login) {
@@ -18,6 +19,7 @@ const Formulario = (props) => {
         fetch('http://localhost:8080/login', {
             method: 'POST',
             headers: {
+                'Authorization': `Bearer ${token}`, 
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(login),
@@ -25,7 +27,7 @@ const Formulario = (props) => {
             .then((response) => {
                 if (response.ok) {
                     return response.json().then(data => {
-                        const token = data.token;
+                        const token = data.accessToken;
 
                         localStorage.setItem('authToken', token);
 

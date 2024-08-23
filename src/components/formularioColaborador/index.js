@@ -8,11 +8,13 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
     const [departments, setDepartments] = useState([]);
     const [positions, setPositions] = useState([]);
     const [collaborator, setCollaborator] = useState(collaboratorData || {});
+    const token = localStorage.getItem('authToken');
 
     useEffect(() => {
         fetch('http://localhost:5000/departments', {
             method: 'GET',
             headers: {
+                'Authorization': `Bearer ${token}`, 
                 'Content-Type': 'application/json',
             },
         })
@@ -28,6 +30,8 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, 
+
             },
         })
             .then((resp) => resp.json())

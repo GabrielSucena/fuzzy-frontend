@@ -20,13 +20,15 @@ const EditarColaborador = () => {
   });
   const [message, setMessage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-
+  
+  const token = localStorage.getItem('authToken');
+  //Refatorar para colocar o token
   useEffect(() => {
     Promise.all([
       fetch('http://localhost:8080/departamentos').then(response => response.json()),
       fetch('http://localhost:8080/posicoes').then(response => response.json()),
     ])
-      .then(([departmentsData, positionsData]) => {
+      .then(([departmentsData, positionsData]) => {   
         setDepartments(departmentsData);
         setPositions(positionsData);
 
@@ -65,10 +67,11 @@ const EditarColaborador = () => {
       departmentId: Number(form.departmentId),
       positionId: Number(form.positionId),
     };
-
+    const token = localStorage.getItem('authToken');
     fetch(`http://localhost:8080/colaboradores/${id}`, {
       method: 'PUT',
       headers: {
+        'Authorization': `Bearer ${token}`, 
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(TratamentoEnvio),
@@ -90,6 +93,7 @@ const EditarColaborador = () => {
           fetch('http://localhost:5000/audits', {
             method: 'POST',
             headers: {
+              'Authorization': `Bearer ${token}`, 
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(audit)

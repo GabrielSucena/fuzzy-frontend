@@ -18,12 +18,14 @@ function CadastroColaborador() {
         positionId: '',
         departmentId: '',
     });
-
+    const token = localStorage.getItem('authToken');
     useEffect(() => {
         fetch('http://localhost:8080/departamentos', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, 
+
             },
         })
             .then((resp) => resp.json())
@@ -39,6 +41,8 @@ function CadastroColaborador() {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, 
+
             },
         })
             .then((resp) => resp.json())
@@ -56,6 +60,8 @@ function CadastroColaborador() {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`, 
+
             },
             body: JSON.stringify(collaborator),
         })
@@ -87,7 +93,9 @@ function CadastroColaborador() {
                 fetch('http://localhost:5000/audits', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, 
+
                     },
                     body: JSON.stringify(audit)
                 })
