@@ -11,10 +11,19 @@ import ModalNotificarTreinamento from '../modalNotificarTreinamento';
 import TituloPagina from '../titulopagina';
 import ModalAddColaborador from '../modalAddColaborador';
 import ModalConfirmarExclusãoColaborador from '../modalConfirmarExclusãoColaborador';
+import Botao from '../botao';
+import './tabelamui.css';
+import { color } from 'framer-motion';
+import { background } from '@chakra-ui/react';
+import Teste from '../../screens/ramo-e-estruturais/teste';
+import { ExtraiRelatorio } from '../../functionsCenter/functionsCenter';
+import PdfSender from '../../screens/ramo-a-treinamentos/pdfsender';
 
 const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['A', 'B', 'C', 'D'];
 const statuses = ['Active', 'Inactive', 'Pending'];
+
+
 
 
 
@@ -33,7 +42,7 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
         }
     }, [colaboradores]);
 
-
+    const [isTesteOpen, setIsTesteOpen] = useState(false);
     const [resetRows, setResetRows] = useState(false);
     const [rows, setRows] = React.useState();
     const [rowModesModel, setRowModesModel] = useState({});
@@ -43,6 +52,21 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
     const handleOpen = (modalType) => () => setOpenModal(modalType);
     const handleClose = () => setOpenModal(null);
    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
+    const abreModal = () => {
+        setIsModalOpen(true);
+    };
+
+    // Função para fechar o modal
+    const fechaModal = () => {
+        setIsModalOpen(false);
+    };
+
+    const handleExtrair = () => {
+        ExtraiRelatorio({ div: 'box' });
+    };
+
     useEffect(() => {
         if (resetRows) {
             setRows(rows);
@@ -199,6 +223,7 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
 
     return (
         <>
+            
             {openModal === 'notificar' && (
                 <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
             )}
@@ -209,22 +234,19 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                 <ModalConfirmarExclusãoColaborador setRejectedNames={setRejectedNames} setResetRows={setResetRows}
                     colaboradores={rejectedNames} courseId={curso_id} open={true} handleClose={handleClose} refreshColaboradores={refreshColaboradores} />
             )}
-            <TituloPagina
-                titulopagina={"Colaboradores Envolvidos"}
-                botao1="Adicionar"
-                botao2="Editar"
-                botao3="Notificar"
-                color1="roxo"
-                color2="branco"
-                color3="branco"
-                onClick1={handleOpen('adicionar-colaborador')}
-                onClick2={toggleDeleteIcon}
-                onClick3={handleOpen('notificar')}
-            />
-            <DefaultPaper elevation={2} square={false} variant="elevation">
+            <hr className='divider-treinamento'></hr>
+            <p className='titulo-mui2'>Colaboradores envolvidos</p>
+            <DefaultPaper elevation={2} square={false} variant="elevation" className='lista-colaboradores-dentro'>
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={12} lg={12}>
+                    <div className='botoes-mui2'>
+                        <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>Adicionar</Botao>
+                        <Botao color='branco' onClick={toggleDeleteIcon}>Editar</Botao>
+                        <Botao color='branco' onClick={handleExtrair}>Extrair</Botao>
+                        <Botao color='branco' onClick={handleOpen('notificar')}>Notificar</Botao>
+                    </div>
                         <Box
+                            className='box'
                             sx={{
                                 height: 500,
                                 width: '100%',
@@ -234,6 +256,7 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                             }}
                         >
                             <DataGrid
+                                className='linhas'
                                 rows={rows}
                                 columns={columns}
                                 editMode="row"
@@ -244,21 +267,26 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                             />
                         </Box>
                     </Grid>
-                    <Grid item xs={6}></Grid>
+                    
+                    <Grid item className='grider' xs={0}>
+                            <Grid className='botao-alteracao-dois'>
+                                <PdfSender  />
+                            </Grid>
                     {showDeleteIcon && (
                         <>
-                            <Grid item xs={3} md={3} lg={3}>
-                                <Button onClick={handleSaveAllClick} variant="contained">
-                                    Salvar Alterações
+                            <Grid className='botao-alteracao'>
+                                <Button  onClick={handleSaveAllClick} variant="contained">
+                                    confirmar
                                 </Button>
-                            </Grid>
-                            <Grid item xs={3} md={3} lg={3}>
                                 <Button onClick={handleCancelAllClick} variant="outlined">
-                                    Cancelar
+                                    cancelar
                                 </Button>
                             </Grid>
+                            
                         </>
                     )}
+                    
+                    </Grid>
                 </Grid>
             </DefaultPaper>
         </>

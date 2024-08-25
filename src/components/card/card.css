@@ -4,9 +4,9 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 2rem;
+    margin-top: 1rem;
+    margin-bottom: 11rem;
     gap: 5rem;
-    padding: 2rem; /* Adiciona espaço ao redor do conteúdo */
     box-sizing: border-box; /* Inclui padding e borda no tamanho total do elemento */
     max-width: 100vw; /* Garante que não ultrapasse a largura da viewport */
     overflow-x: auto; /* Permite rolagem horizontal se necessário */

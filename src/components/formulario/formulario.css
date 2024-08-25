@@ -46,3 +46,12 @@
   height: auto; /* Mantém a proporção da imagem */
 }
 
+.error-message{
+  margin-bottom: 3rem;
+  background-color: var(--vermelho);
+  padding: 1%;
+  text-align: center;
+  color: var(--branco);
+  font-weight: bolder;
+  border-radius: 0.25rem;
+}

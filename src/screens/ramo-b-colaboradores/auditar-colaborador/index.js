@@ -1,13 +1,16 @@
 
 import './auditar-colaborador.css';
 import Auditoria from '../../ramo-d-auditorias/auditoria';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 
 
 function AuditarColaborador( ) {
 
-    const { id } = useParams(); // ID do colaborador para filtragem
+    const { id } = useParams();
+    // X ou XX
 
+    const register = new URLSearchParams(useLocation().search).get('register');
+    // XXXXX
 
 
     return (
@@ -15,7 +18,7 @@ function AuditarColaborador( ) {
             <Auditoria
                 titulo="Audite este colaborador"
                 subtitulo = "Verifique pontualmente a movimentação deste colaborador"
-                tipo="employee_modified"
+                tipo="collaborator"
                 entidade={id}
             />
         </>

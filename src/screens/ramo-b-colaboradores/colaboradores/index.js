@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./colaboradores.css";
 import Rodape from '../../../components/rodape';
 import TituloPagina from "../../../components/titulopagina";
-import { Link, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Mensagem from "../../../components/mensagem";
 import Carregando from "../../../components/carregando";
 import vazioImg from "../../../../src/vazio.svg"; // Importação da imagem
@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Padding } from "@mui/icons-material";
 
 function Colaboradores() {
+    const token = localStorage.getItem('authToken');
     const [collaborators, setCollaborators] = useState([]);
     const [filteredCollaborators, setFilteredCollaborators] = useState([]);
     const [removeLoading, setRemoveLoading] = useState(false);
@@ -23,7 +24,8 @@ function Colaboradores() {
     const [selectedDepartment, setSelectedDepartment] = useState('');
 
     const location = useLocation();
-    const token = localStorage.getItem('authToken');
+    const navigate = useNavigate();
+    
 
     useEffect(() => {
         if (location.state && location.state.message) {
@@ -90,8 +92,10 @@ function Colaboradores() {
     const handleCopy = (text) => {
         navigator.clipboard.writeText(text).then(() => {
             setMessage('Texto copiado com sucesso!');
+            navigate('/colaboradores')
         }).catch((err) => {
             console.error('Erro ao copiar o texto: ', err);
+            navigate('/colaboradores')
         });
     };
 

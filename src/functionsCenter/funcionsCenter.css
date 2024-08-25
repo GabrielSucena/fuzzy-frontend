@@ -1,0 +1,23 @@
+/* Adiciona espaçamento entre todos os elementos filhos do conteúdo com a classe 'spaced-content' */
+.spaced-content * {
+    margin-bottom: 1rem;
+}
+
+/* Estilos para impressão */
+@media print {
+    .no-print {
+        display: none; /* Ocultar elementos não desejados na impressão */
+    }
+    .data-grid {
+        width: 100%;
+        border-collapse: collapse; /* Melhora a aparência das bordas na impressão */
+    }
+    .data-grid th, .data-grid td {
+        border: 1px solid #ddd; /* Adiciona bordas para a tabela */
+        padding: 8px; /* Adiciona espaçamento nas células */
+    }
+    .data-grid th {
+        background-color: #f4f4f4; /* Cor de fundo para cabeçalhos */
+        text-align: left;
+    }
+}

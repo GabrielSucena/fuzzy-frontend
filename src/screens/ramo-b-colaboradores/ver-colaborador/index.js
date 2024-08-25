@@ -96,83 +96,47 @@ function VerColaborador() {
 
     function preExclusao(){
         setModalOpen(true);
-
     }
-
+    
     function handleRemove(justificativa) {
-        const user = 'fernanda';
-        const auditId = uuidv4();
-        const datetime = new Date().toISOString();
-    
-        const auditEntries = [
-            {
-                uuid: auditId,
-                user,
-                datetime,
-                course_modified: '',
-                employee_modified: collaborator.register,
-                field: 'Nome',
-                field_value: collaborator.name,
-                removed: 'S',
-                reason: justificativa // Usa a justificativa
+        // Defina a URL correta, usando a variável id que você tem disponível
+        const url = `http://localhost:8080/colaboradores/${id}`;
+        const motivo = JSON.stringify({reason: justificativa})
+        console.log("Exclusão sendo enviada: ", motivo, "para: ", url)
+
+        fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'},
+            body: JSON.stringify(motivo)
+        })
+        .then(response => {
+            if (!response.ok) {
+                // Se a resposta não for bem-sucedida, lance um erro
+                return response.text().then(text => { throw new Error(text); });
             }
-        ];
-    
-        const sendAuditRecords = async () => {
-            try {
-                for (const audit of auditEntries) {
-                    console.log("Enviando registro de auditoria:", audit);
-                    const response = await fetch('http://localhost:5000/audits', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': `Bearer ${token}`, 
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(audit)
-                    });
-    
-                    if (!response.ok) {
-                        throw new Error(`Erro ao adicionar auditoria, status: ${response.status}`);
-                    }
-                    const auditData = await response.json();
-                    console.log("Audit record added:", auditData);
-                }
-                // Após todas as auditorias serem enviadas com sucesso, exclua o colaborador
-                return fetch(`http://localhost:8080/colaboradores/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${token}`, 
-                        'Content-Type': 'application/json'
-                    },
-                });
-            } catch (err) {
-                throw new Error(`Erro ao enviar registros de auditoria: ${err.message}`);
-            }
-        };
-    
-        sendAuditRecords()
-            .then((resp) => {
-                if (resp.ok) {
-                    navigate('/colaboradores', { state: { message: 'Colaborador removido com sucesso!' } });
-                } else {
-                    return resp.json().then(data => {
-                        throw new Error(data.message);
-                    });
-                }
-            })
-            .catch(err => {
-                const errorMessage = err.message.includes('500')
+            return response.json(); // ou response.text() dependendo do que a API retorna
+        })
+        .then(data => {
+            // Aqui você pode manipular a resposta se necessário
+            console.log('Colaborador removido com sucesso:', data);
+        })
+        .catch(err => {
+            // Manipulação de erro
+            const errorMessage = err.message.includes('500')
                 ? 'Para que o(a) colaborador(a) ser excluido(a), por integridade, este não pode estar em nenhum curso.'
-                : `Erro ao remover colaborador ${err.message}`;
-
-                setCollaboratorMessage(errorMessage);
-
-                setTimeout(() => {
-                    setCollaboratorMessage('');
-                }, 2000);
-
-            });
+                : `Erro ao remover colaborador: ${err.message}`;
+    
+            setCollaboratorMessage(errorMessage);
+    
+            // Limpa a mensagem de erro após 2 segundos
+            setTimeout(() => {
+                setCollaboratorMessage('');
+            }, 2000);
+        });
     }
+    
     
 
 
@@ -310,7 +274,7 @@ function VerColaborador() {
                         <Botao onClick={preExclusao} color={"branco"}>
                             <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
                         </Botao>
-                        <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.register}`)} color={"branco"}>
+                        <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}?register=${collaborator.register}`)} color={"branco"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
                         </Botao>
                         <Botao onClick={() => handlePrint('cima')} color={"branco"}>
@@ -444,7 +408,7 @@ function VerColaborador() {
             />
                 <div className="conteiner-botao-dois">
                     <div className="botoes-titulo-pagina">
-                        <Botao onClick={'a'} color={"roxo"}>
+                        <Botao onClick={() => {}} color={"roxo"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={branco} /> <span>Notificar</span>
                         </Botao>
                         <Botao onClick={() => handlePrint('baixo')} color={"branco"}>
@@ -487,7 +451,7 @@ function VerColaborador() {
                 <div className="grid-container">
                     {filteredTrainings.length > 0 ? (
                         filteredTrainings.map((course) => (
-                            <Link className='retirar-estilo' to={`/ver-treinamento/${course.id}`} key={course.id}>
+                            <Link className='retirar-estilo' to={`/treinamentos/${course.id}`} key={course.id}>
                                 <div className='div-card'>
                                     <div className={"treinamento-item"}>
                                         <div className="cima-info">

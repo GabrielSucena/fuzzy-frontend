@@ -1,11 +1,11 @@
 import { useRef } from "react";  
 import "./bannerhome.css";  
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faGraduationCap, faPaintBrush, faPlay, faUser} from '@fortawesome/free-solid-svg-icons';  // Importação correta do ícone
+import { faBars, faGraduationCap, faPaintBrush, faPlay, faUser, faRightFromBracket} from '@fortawesome/free-solid-svg-icons';  // Importação correta do ícone
 
 function Bannerhome(props) {
-
+    const vermelho = getComputedStyle(document.documentElement).getPropertyValue('--vermelho').trim();
     const navRef = useRef();
     // Elemento "navRef" escuta a função "useRef" padrão do React
 
@@ -13,6 +13,11 @@ function Bannerhome(props) {
         navRef.current.classList.toggle("responsivo");  
         // Procura e chama no CSS a estrutura ID chamada ".responsivo", que entra como fosse o novo "class" do elemento <nav>
     };
+
+    function logOut() {
+        localStorage.removeItem('authToken'); 
+        setTimeout(() => {Navigate('/login');}, 1000); 
+    }
 
     return (
         <header className="header-home">  
@@ -22,7 +27,11 @@ function Bannerhome(props) {
                 <a href="/auditoria"><FontAwesomeIcon icon={faPaintBrush} />&nbsp;&nbsp;Auditoria</a>       
                 <a href="/treinamentos"><FontAwesomeIcon icon={faPlay} />&nbsp;&nbsp;Treinamentos</a>  {/* Utiliza o ícone correto */}
                 <a href="/colaboradores"><FontAwesomeIcon icon={faGraduationCap} />&nbsp;&nbsp;Colaboradores</a>       
-                <a href="/perfil"><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;Meu perfil</a>   
+                <a href="/perfil" className="perfil-bannerhome"><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;Meu perfil</a>  
+                <a href="/login" className="sair" onClick={logOut} style={{ color: vermelho, textDecoration: 'none' }}>
+                    <FontAwesomeIcon icon={faRightFromBracket} style={{ color: vermelho }} />
+                    &nbsp;&nbsp;SAIR
+                    </a>
             </nav>
             <button className="botao-celular" onClick={showBannerhome}> {/* Ao clicar, chama a função "showBannerhome" */}
                 <FontAwesomeIcon icon={faBars} color="#EBEBEB"/> 

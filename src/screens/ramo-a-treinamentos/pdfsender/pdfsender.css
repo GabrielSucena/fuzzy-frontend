@@ -1,0 +1,172 @@
+/* pdfsender.css */
+.conteiner-pdf {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.conteudo-pdf {
+    background: white;
+    padding: 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.form-pdf {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.titulo-pdf{
+    text-align: start;
+    font-size: 2rem;
+}
+
+.titulo-pdf2{
+    text-align: start;
+    color: var(--cinza-escuro);
+    font-size: 20px;
+    margin-bottom: 1.5rem;
+}
+
+.titulo-pdf3{
+    text-align: start;
+    color: var(--vermelho-escuro);
+    margin-bottom: 0.25rem;
+    background-color: var(--branco);
+    border: 1px solid var(--vermelho-escuro);
+    text-align: center;
+    border-radius: 0.25rem;
+    padding: 1rem;
+}
+
+.selected-file{
+    text-align: start;
+    padding-top: 0.25rem;
+
+}
+
+.input-pdf {
+    display: none; /* Oculta o input file padrão */
+}
+
+.input-pdf + label {
+    display: inline-block;
+    background: var(--roxo);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+.input-pdf + label:hover {
+    background: var(--roxo);
+}
+
+.botoes-pdf {
+    display: flex;
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+    justify-content: space-evenly;
+}
+
+
+.dropzone {
+    border: 2px dashed var(--roxo);
+    border-radius: 8px;
+    padding: 5rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f9f9f9;
+    margin-top: 1rem;
+}
+
+.dropzone.active {
+    border-color: var(--roxo);
+}
+
+.dropzone p {
+    margin: 0;
+    color: #333;
+}
+
+.selecionado{
+    color: var(--branco);
+    font-weight: bold;
+    background-color: var(--preto);
+    display: flex;
+    border-radius: 0.25rem;
+    padding: 1rem 10%;
+}
+
+.modal-overlay-pdf {
+    position: fixed; /* Fixa o overlay na tela */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3; /* Garantir que o modal esteja sobre outros elementos */
+  }
+  
+  /* Estilo para o conteúdo do modal */
+  .modal-content-pdf {
+    background: var(--branco); /* Fundo branco para o modal */
+    border-radius: 8px;
+    padding: 4rem;
+    width: 70%;
+    max-width: 58%;
+    z-index: 5; /* Garantir que o conteúdo do modal esteja sobre o overlay */
+  }
+
+  .titulo-atualizacao{
+    font-size: 2rem;
+    
+  }
+
+  .texto-atualizacao{
+    font-size: 1.25rem;
+    padding-bottom: 3rem;
+    color: var(--cinza-escuro);
+    font-weight: bold;
+  }
+
+  .modal-buttons{
+    display: flex;
+    justify-content: space-around;
+    padding: 4rem 0rem 0rem 0rem;
+    width: 100%;
+  }
+
+
+.lista-att{
+    font-size: 2rem;
+}
+
+.css-1rtad1{
+    overflow-y: hidden !important;
+    overflow-y: hidden !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

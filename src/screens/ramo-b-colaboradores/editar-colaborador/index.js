@@ -8,6 +8,7 @@ import TituloPagina from '../../../components/titulopagina';
 import Modal from '../../../components/modal'; // Certifique-se de que o caminho esteja correto
 
 const EditarColaborador = () => {
+  const token = localStorage.getItem('authToken');
   const { id } = useParams();
   const navigate = useNavigate();
   const [collaborator, setCollaborator] = useState(null);
@@ -21,33 +22,51 @@ const EditarColaborador = () => {
   const [message, setMessage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   
-  const token = localStorage.getItem('authToken');
-  //Refatorar para colocar o token
+
   useEffect(() => {
-    Promise.all([
-      fetch('http://localhost:8080/departamentos').then(response => response.json()),
-      fetch('http://localhost:8080/posicoes').then(response => response.json()),
-    ])
-      .then(([departmentsData, positionsData]) => {   
+    const fetchData = async () => {
+      try {
+        const [departmentsResponse, positionsResponse] = await Promise.all([
+          fetch('http://localhost:8080/departamentos', {
+            headers: {
+              'Authorization': `Bearer ${token}`, // Inclui o token
+            }
+          }),
+          fetch('http://localhost:8080/posicoes', {
+            headers: {
+              'Authorization': `Bearer ${token}`, // Inclui o token
+            }
+          })
+        ]);
+
+        const departmentsData = await departmentsResponse.json();
+        const positionsData = await positionsResponse.json();
+
+        const collaboratorResponse = await fetch(`http://localhost:8080/colaboradores/${id}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`, // Inclui o token
+          }
+        });
+        const collaboratorData = await collaboratorResponse.json();
+
+        const matchedDepartment = departmentsData.find(d => d.department === collaboratorData.department)?.id || '';
+        const matchedPosition = positionsData.find(p => p.position === collaboratorData.position)?.id || '';
+
         setDepartments(departmentsData);
         setPositions(positionsData);
+        setCollaborator(collaboratorData);
+        setForm({
+          name: collaboratorData.name,
+          departmentId: matchedDepartment,
+          positionId: matchedPosition,
+        });
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
-        return fetch(`http://localhost:8080/colaboradores/${id}`)
-          .then(response => response.json())
-          .then(collaboratorData => {
-            const matchedDepartment = departmentsData.find(d => d.department === collaboratorData.department)?.id || '';
-            const matchedPosition = positionsData.find(p => p.position === collaboratorData.position)?.id || '';
-
-            setCollaborator(collaboratorData);
-            setForm({
-              name: collaboratorData.name,
-              departmentId: matchedDepartment,
-              positionId: matchedPosition,
-            });
-          });
-      })
-      .catch(error => console.error('Error fetching data:', error));
-  }, [id]);
+    fetchData();
+  }, [id, token]); // Adicione token às dependências do useEffect
 
   const handleChange = (e) => {
     setForm({
@@ -67,55 +86,24 @@ const EditarColaborador = () => {
       departmentId: Number(form.departmentId),
       positionId: Number(form.positionId),
     };
-    const token = localStorage.getItem('authToken');
+    
     fetch(`http://localhost:8080/colaboradores/${id}`, {
       method: 'PUT',
       headers: {
-        'Authorization': `Bearer ${token}`, 
+        'Authorization': `Bearer ${token}`, // Inclui o token
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(TratamentoEnvio),
     })
       .then(() => {
         setMessage('Colaborador atualizado com sucesso!');
-
-        const user = 'fernanda';
-        const auditId = uuidv4();
-        const datetime = new Date().toISOString();
-
-        const auditEntries = [
-          { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Nome', field_value: form.name, removed: '', reason: justificativa },
-          { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Departamento', field_value: form.departmentId, removed: '', reason: justificativa },
-          { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Cargo', field_value: form.positionId, removed: '', reason: justificativa },
-        ];
-
-        auditEntries.forEach(audit => {
-          fetch('http://localhost:5000/audits', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${token}`, 
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(audit)
-          })
-            .then(auditResp => {
-              if (!auditResp.ok) {
-                throw new Error(`Erro ao adicionar auditoria, status: ${auditResp.status}`);
-              }
-              return auditResp.json();
-            })
-            .then(auditData => {
-              console.log("Audit record added:", auditData);
-            })
-            .catch((err) => {
-              console.error("Audit fetch error:", err);
-            });
-        });
-
         setModalOpen(false);
         setTimeout(() => navigate(-1), 1500);
       })
-      .catch(error => console.error('Error updating collaborator:', error));
+      .catch(error => {
+        console.error('Error updating collaborator:', error);
+        setMessage('Erro ao atualizar colaborador.');
+      });
   };
 
   const handleClose = (e) => {

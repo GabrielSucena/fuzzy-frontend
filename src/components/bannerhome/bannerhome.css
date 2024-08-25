@@ -4,10 +4,8 @@
     
     display: flex;                              
     /* Deixa seus elementos internos livres */
-    
-    justify-content: space-between;             
     background: linear-gradient(240deg, #2E2E2E, #161616); 
-    
+    justify-content: space-between;
     padding: 1rem 0rem 1rem 0rem;
     margin: 0rem;
     align-items: center;
@@ -15,9 +13,12 @@
 
 .header-logo{
     padding-left: 10%;
-    width: auto;
-    height: auto;
     
+}
+
+.topicos{
+    margin-left: auto; /* Empurra .topicos para a direita */
+    margin-right: 9.5%; /* Cria o espaço desejado à direita do elemento */
 }
 
 /* Estilo do botão celular sem tela pequena*/
@@ -32,8 +33,12 @@
 nav a {
     color: #EBEBEB;                            
     text-decoration: none; 
-    margin: 1.75rem;
+    padding-left: 4rem;
     font-weight: 500;              
+}
+
+nav .perfil-bannerhome {
+    padding-right: 4rem;           
 }
 
 
@@ -42,15 +47,33 @@ nav a:hover {
     color: #D4A5FF;                             
 }
 
+.sair {
+    background-color: #2A2A2A;        
+    padding: 0.5rem 0.75rem; 
+    border-radius: 1rem;   
+    border: 1px solid var(--branco);            
+}
+
+.sair:hover {
+    background-color: var(--branco);        
+    padding: 0.5rem; 
+    border-radius: 1rem;              
+}
+
 
 /* Programação quando a tela estiver na metade */
-@media only screen and (max-width: 1065px) {
+@media only screen and (max-width: 1280px) {
     .header-home{
         position: sticky;
         top: 0;
         width: 100%;
         z-index: 3;
     }
+
+    .header-home nav a{
+        margin-bottom: 2rem;
+    }
+
     /* Botão celular */
     .header-home .botao-celular {
         font-size: 2rem;                          
@@ -80,7 +103,7 @@ nav a:hover {
         top: -92vh;                            
         /* Posição de baixo para cima quando aba descer */
         
-        height: 40%;                           
+        height: 50%;                           
         /* Altura da aba que desce */
         
         width: 100%;                            

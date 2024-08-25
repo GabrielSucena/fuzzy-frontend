@@ -16,3 +16,65 @@
     
     border: 1px solid rgb(134, 134, 134, 0.25);
 }
+
+.trocar-senha-auditoria{
+    color: var(--branco);
+    background-color: var(--roxo);
+    border: none;
+    border-radius: 100rem;
+
+}
+
+.trocar-senha-auditoria:hover{
+    color: var(--branco);
+    background-color: #8a22c5;
+    font-weight: bolder;
+    border: none;
+    border-radius: 100rem;
+    cursor: pointer;
+}
+
+.status-message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--verde);
+    color: aliceblue;
+    font-weight: bolder;
+    margin: 1%;
+    padding: 1rem;
+    border-radius: 0.35rem;
+    text-wrap: nowrap;
+    position: fixed; /* Usa fixed para manter a mensagem no topo da tela */
+    top: 10px; /* Ajuste a posição vertical conforme necessário */
+    left: -100%; /* Começa fora da tela à esquerda */
+    opacity: 0; /* Começa invisível */
+    width: auto; /* Ajusta a largura automaticamente conforme o conteúdo */
+    max-width: 90vw; /* Garante que a mensagem não exceda 90% da largura da tela */
+    box-sizing: border-box; /* Inclui padding e border no cálculo da largura */
+    z-index: 1000; /* Garante que a mensagem esteja acima de outros conteúdos */
+}
+
+.status-message.show {
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajusta a posição centralizada */
+    opacity: 1; /* Torna a mensagem visível */
+    transition: left 1s ease-in;
+    opacity: 1s ease-in;
+}
+
+.status-message.move-right {
+    left: 100vw; /* Move para a direita após 5 segundos */
+    transform: translateX(0); /* Remove a transformação para que o elemento mova para a direita */
+    transition: left 1s ease-out;
+    opacity: 1s ease-out;
+}
+
+/* Animação da mensagem de status para telas pequenas */
+@media (max-width: 600px) {
+    .status-message {
+        top: 10%; /* Ajusta a posição para telas menores */
+        max-width: 80vw; /* Garante que a mensagem não exceda 80% da largura da tela */
+        text-wrap: nowrap;
+    }
+}

@@ -1,0 +1,16 @@
+
+.botoes-treinamento-editar-conteiner{
+    
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.botoes-treinamento-editar{
+    
+    display: flex;
+    justify-content: flex-start;
+    gap: 3%;
+    width: 83%;
+}

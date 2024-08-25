@@ -16,8 +16,8 @@ function BoasVindas(props){
     
     return(
         <div className='boasvindas'>
-            <p className='p-boas-vindas'>{cPeriodo} <b>{cNome}</b></p>
-            <p className='desc-boas-vindas'>Cheque suas principais tarefas</p>
+            <p className='p-boas-vindas'>{cPeriodo} <b>{cNome}!</b></p>
+            <p className='desc-boas-vindas'>Seja bem-vindo(a) de volta, cheque aqui suas principais tarefas</p>
         </div>
     )
 }

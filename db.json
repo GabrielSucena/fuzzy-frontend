@@ -678,6 +678,54 @@
       "field_value": "Rodrigo Lima de Carvalhor",
       "removed": "S",
       "reason": "excluir"
+    },
+    {
+      "id": "93c2",
+      "uuid": "41441df5-bdf4-4963-9c41-8087cd1c106b",
+      "user": "fernanda",
+      "datetime": "2024-08-24T01:29:44.786Z",
+      "course_modified": "",
+      "employee_modified": "12352",
+      "field": "Nome",
+      "field_value": "Enzo Araújo Malacridar",
+      "removed": "N",
+      "reason": "Inclusão"
+    },
+    {
+      "id": "351c",
+      "uuid": "41441df5-bdf4-4963-9c41-8087cd1c106b",
+      "user": "fernanda",
+      "datetime": "2024-08-24T01:29:44.786Z",
+      "course_modified": "",
+      "employee_modified": "12352",
+      "field": "E-mail",
+      "field_value": "1@2",
+      "removed": "N",
+      "reason": "Inclusão"
+    },
+    {
+      "id": "d3cb",
+      "uuid": "41441df5-bdf4-4963-9c41-8087cd1c106b",
+      "user": "fernanda",
+      "datetime": "2024-08-24T01:29:44.786Z",
+      "course_modified": "",
+      "employee_modified": "12352",
+      "field": "Departamento",
+      "field_value": 16,
+      "removed": "N",
+      "reason": "Inclusão"
+    },
+    {
+      "id": "e800",
+      "uuid": "41441df5-bdf4-4963-9c41-8087cd1c106b",
+      "user": "fernanda",
+      "datetime": "2024-08-24T01:29:44.786Z",
+      "course_modified": "",
+      "employee_modified": "12352",
+      "field": "Cargo",
+      "field_value": 12,
+      "removed": "N",
+      "reason": "Inclusão"
     }
   ]
 }

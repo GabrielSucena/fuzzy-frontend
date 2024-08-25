@@ -115,4 +115,9 @@ select:hover {
 
 .sem-estilo{
   all: unset;
+  display: none;
+}
+
+::-webkit-scrollbar:horizontal {
+  display: none;
 }

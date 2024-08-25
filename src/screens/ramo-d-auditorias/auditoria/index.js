@@ -2,12 +2,17 @@ import "./auditoria.css";
 import TituloPagina from "../../../components/titulopagina";
 import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleChevronRight, faPrint } from '@fortawesome/free-solid-svg-icons';
+import { faCircleChevronRight, faPrint, faCodeCommit, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 import Carregando from "../../../components/carregando";
 import semAuditoria from "../../../../src/semAuditoria.svg"; // Importação da imagem
 
+const token = localStorage.getItem('authToken');
 const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
 const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
+const azul = getComputedStyle(document.documentElement).getPropertyValue('--azul').trim();
+const verde = getComputedStyle(document.documentElement).getPropertyValue('--verde').trim();
+const cinza = getComputedStyle(document.documentElement).getPropertyValue('--cinza-escuro').trim();
+const vermelho = getComputedStyle(document.documentElement).getPropertyValue('--vermelho-escuro').trim();
 
 // Função para formatar a data
 const formatDateTime = (dateTime) => {
@@ -17,7 +22,7 @@ const formatDateTime = (dateTime) => {
     const year = date.getFullYear();
     const hours = String(date.getHours()).padStart(2, '0');
     const minutes = String(date.getMinutes()).padStart(2, '0');
-    return `Ação feita em ${day}/${month}/${year} às ${hours}:${minutes}.`;
+    return `Ação feita em ${day}/${month}/${year} às ${hours}:${minutes}`;
 };
 
 function Auditoria({
@@ -27,133 +32,91 @@ function Auditoria({
     tipo
 }) {
     const [auditoria, setAuditoria] = useState([]);
-    const [departments, setDepartments] = useState([]);
-    const [jobs, setJobs] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState('');
     const [filterEntity, setFilterEntity] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [loading, setLoading] = useState(true); // Adiciona o estado de carregamento
+    const [loading, setLoading] = useState(true);
     const [removeLoading, setRemoveLoading] = useState(false);
-    const [error, setError] = useState(null); // Adiciona o estado de erro
-    const token = localStorage.getItem('authToken');
+    const [error, setError] = useState(null);
+
 
     useEffect(() => {
         const fetchData = async () => {
-            setLoading(true); // Define o estado de carregamento como verdadeiro ao iniciar a requisição
-    
+            setLoading(true);
+
             try {
-                let fetchUrl = 'http://localhost:5000/audits';
-    
+                let fetchUrl = 'http://localhost:8080/auditorias';
+                
+                console.log(fetchUrl)
+
                 if (entidade && tipo) {
                     fetchUrl += `?${tipo}=${entidade}`;
                 }
-    
-                // Inicia todas as requisições e aguarda a conclusão
-                const [auditoriaResp] = await Promise.all([
-                    fetch(fetchUrl, { method: 'GET', headers: { 
-                        'Authorization': `Bearer ${token}`, 
-                        'Content-Type': 'application/json' } })
-                ]);
 
-                // Processa a resposta de auditoria
-                const auditoriaData = await auditoriaResp.json();
+
+                console.log("URL: ", fetchUrl)
+                
+                const response = await fetch(fetchUrl, { 
+                    method: 'GET', 
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,  
+                    } 
+                });
+                const auditoriaData = await response.json();
+
                 setAuditoria(auditoriaData);
-                setRemoveLoading(true); // Define removeLoading como true se a requisição de auditoria for bem-sucedida
-    
-    
+                setRemoveLoading(true);
+
             } catch (error) {
                 console.error("Fetch error:", error);
-                setError('Erro ao carregar dados.'); // Define uma mensagem de erro
+                setError('Erro ao carregar dados.'); 
             } finally {
-                setLoading(false); // Define o estado de carregamento como falso quando os dados são carregados ou ocorre um erro
+                setLoading(false); 
             }
         };
-    
+
         fetchData();
     }, [entidade, tipo]);
- 
 
-    // Função para encontrar o nome do departamento pelo ID
-    const getDepartmentName = (id) => {
-        const department = departments.find(dep => dep.id === id);
-        return department ? department.department : 'Desconhecido';
-    };
-
-    // Função para encontrar o nome do cargo pelo ID
-    const getJobName = (id) => {
-        const job = jobs.find(job => job.id === id);
-        return job ? job.position : 'Desconhecido';
-    };
-
-    // Função para aplicar os filtros de busca, tipo, entidade e intervalo de datas
     const applyFilters = (items) => {
         return items.filter(item => {
-            const matchesSearchTerm = (item.user && item.user.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                (item.employee_modified && item.employee_modified.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                (item.course_modified && item.course_modified.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                (item.reason && item.reason.toLowerCase().includes(searchTerm.toLowerCase())) || // Inclusão da busca por justificativa
-                item.changes.some(change => 
-                    (change.field === 'Nome' && change.field_value.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                    (change.field === 'E-mail' && change.field_value.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                    (change.field === 'Registro' && change.field_value.toLowerCase().includes(searchTerm.toLowerCase())) ||
-                    (change.field === 'Departamento' && getDepartmentName(change.field_value).toLowerCase().includes(searchTerm.toLowerCase())) ||
-                    (change.field === 'Cargo' && getJobName(change.field_value).toLowerCase().includes(searchTerm.toLowerCase()))
-                );
+            const matchesSearchTerm =
+            (item.course && String(item.course).toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (item.employee && String(item.employee).toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (item.user && item.user.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (item.reason && item.reason.toLowerCase().includes(searchTerm.toLowerCase()));
 
-            const matchesTypeFilter = filterType === '' ||
-                (filterType === 'inclusao' && item.removed === 'N') ||
-                (filterType === 'alteracao' && item.removed === '') ||
-                (filterType === 'exclusao' && item.removed === 'S');
+            const matchesTypeFilter =
+                filterType === '' ||
+                (filterType === 'inclusao' && !item.removed && !item.changedField) ||
+                (filterType === 'alteracao' && !item.removed && item.changedField) ||
+                (filterType === 'exclusao' && item.removed);
 
-            const matchesEntityFilter = filterEntity === '' ||
-                (filterEntity === 'course_modified' && item.course_modified) ||
-                (filterEntity === 'employee_modified' && item.employee_modified) ||
-                (filterEntity === 'both' && (item.course_modified && item.employee_modified));
+            const matchesEntityFilter =
+                filterEntity === '' ||
+                (filterEntity === 'course' && item.course && !item.collaborator) ||
+                (filterEntity === 'collaborator' && item.collaborator && !item.course) ||
+                (filterEntity === 'both' && (item.course && item.collaborator));
 
-            const matchesDateFilter = (!startDate || new Date(item.datetime) >= new Date(startDate)) &&
-                (!endDate || new Date(item.datetime) <= new Date(endDate));
-
+            const matchesDateFilter =
+                (!startDate || new Date(item.createdOn) >= new Date(startDate)) && (!endDate || new Date(item.createdOn) <= new Date(endDate));
             return matchesSearchTerm && matchesTypeFilter && matchesEntityFilter && matchesDateFilter;
         });
     };
 
-    // Agrupar os logs de auditoria por uuid, user, datetime e reason
-    const groupedAuditoria = auditoria.reduce((acc, item) => {
-        const key = `${item.uuid}-${item.user}-${item.datetime}-${item.reason}-${item.course_modified}-${item.employee_modified}`;
-        if (!acc[key]) {
-            acc[key] = {
-                uuid: item.uuid,
-                user: item.user,
-                datetime: item.datetime,
-                reason: item.reason,
-                removed: item.removed,
-                course_modified: item.course_modified,
-                employee_modified: item.employee_modified,
-                changes: []
-            };
-        }
-        if (item.removed !== 'S') {
-            acc[key].changes.push({
-                field: item.field,
-                field_value: item.field_value
-            });
-        }
-        return acc;
-    }, {});
-
-    const groupedAuditoriaArray = applyFilters(Object.values(groupedAuditoria));
-
-    // Função para imprimir o conteúdo filtrado
     const handlePrint = () => {
         const originalContent = document.body.innerHTML;
         const printContent = document.querySelector('.auditorias-content').innerHTML;
         document.body.innerHTML = printContent;
         window.print();
         document.body.innerHTML = originalContent;
-        window.location.reload(); // Para recarregar a página e restaurar o conteúdo original
+        window.location.reload();
     };
+
+    const agrupar = applyFilters(auditoria);
 
     return (
         <>
@@ -167,7 +130,7 @@ function Auditoria({
                         <input
                             className="principal"
                             type="text"
-                            placeholder="Buscar por nome, ID ou justificativa"
+                            placeholder="Busque por ID, gestor(a) ou justificativa"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
@@ -181,7 +144,8 @@ function Auditoria({
                             <option value="">Ação</option>
                             <option value="inclusao">Inclusão</option>
                             <option value="alteracao">Alteração</option>
-                            <option value="exclusao">Exclusão</option>
+                            {!entidade && <option value="exclusao">Exclusão</option>}
+                            
                         </select>
                         <select 
                             onChange={(e) => {
@@ -190,10 +154,15 @@ function Auditoria({
                                 setFilterEntity(value);
                             }}
                         >
-                            <option value="">Modo</option>
-                            <option value="course_modified">Cursos</option>
-                            <option value="employee_modified">Colaboradores</option>
-                            <option value="both">Ambos</option>
+                            {tipo === 'course' 
+                                ? <option value="course">Apenas o treinamento</option>
+                                : tipo === 'collaborator'
+                                ? <option value="collaborator">Apenas o colaborador</option>
+                                : <option value="">Modo</option>
+                            }
+                            {!tipo && <option value="course">Cursos</option>}
+                            {!tipo && <option value="collaborator">Colaboradores</option>}
+                            <option value="both">Colaboradores em treinamentos</option>
                         </select>
                         <div className="date-range-picker">
                             <input
@@ -214,58 +183,66 @@ function Auditoria({
                         </button>
                     </div>
                 </div>
+                {loading && (
+                    <div className="sem-conexao-colaborador">
+                        <Carregando className="div-carregar">Carregando</Carregando>
+                    </div>
+                )}
                 {!removeLoading && (
                     <div className="sem-conexao-colaborador">
-                        
-                        <Carregando className="div-carregar" >Carregando</Carregando>
-            
+                        <img src={semAuditoria} alt="Sem auditoria" />
                     </div>
                 )}
                 <div className="auditorias-content">
-                    {removeLoading ? (
-                        groupedAuditoriaArray.length > 0 ? (
-                            groupedAuditoriaArray.map((item, index) => (
-                                <div key={index} className="auditoria-item">
-                                    <p className="topo-auditoria">Usuário(a) <strong>{item.user.toUpperCase()}</strong></p>
-                                    <p className="topo-auditoria">
-                                        <strong>
-                                            {item.course_modified ? `ID do treinamento: ${item.course_modified}` : `ID (Registro Sanofi) do colaborador: ${item.employee_modified}`}
-                                        </strong>
+                    {removeLoading && auditoria.length > 0 ? (
+                        agrupar.map((auditoriaItem) => (
+                            <div key={auditoriaItem.id} className="auditoria-item">
+                                <p className="gestor"><strong>Gestor(a):&nbsp;</strong> {auditoriaItem.user}</p>
+                                <p className="momento"><strong>{formatDateTime(auditoriaItem.createdOn)}</strong></p>
+                                {auditoriaItem.removed && (
+                                    <p className="desativado">
+                                        <FontAwesomeIcon className="icon" icon={faX} color={vermelho} />
+                                        &nbsp;&nbsp;<strong>Desativado: <span className="reason">{auditoriaItem.reason || 'N/A'}</span></strong>
                                     </p>
-                                    <p className="topo-auditoria">{formatDateTime(item.datetime)}</p>
-                                    <p className="topo-auditoria-justificativa"><b>{item.reason}</b></p>
-                                    {item.removed === 'S' ? (
+                                )}
+                                {auditoriaItem.changedField  && (
+                                    <>
                                         <p>
-                                            {item.employee_modified && (
-                                                <span className="remocao-auditoria">
-                                                    <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />&nbsp;&nbsp;Colaborador removido: {item.employee_modified}
-                                                </span>
-                                            )}
-                                            {item.course_modified && (
-                                                <span className="remocao-auditoria">
-                                                    <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />&nbsp;&nbsp;Curso removido: {getDepartmentName(item.course_modified)}
-                                                </span>
-                                            )}
+                                            <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />
+                                            &nbsp;&nbsp;<strong>Mudanças:</strong> {auditoriaItem.changedField || 'N/A'}
                                         </p>
-                                    ) : (
-                                        <div>
-                                            {item.changes.map((change, idx) => (
-                                                <p className="bullet" key={idx}>
-                                                    <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />&nbsp;&nbsp;{change.field}: {change.field_value}
-                                                </p>
-                                            ))}
-                                        </div>
-                                    )}
-                                    <hr className="divisao-auditoria"/>
-                                </div>
-                            ))
-                        ) : (
-                            <div className="auditoria-vazio">
-                                <p className="mensagem-auditoria-vazio">Ainda não há auditoria pois não foram realizadas ações.</p>
-                                <img src={semAuditoria} alt="Ícone simbolizando a falta de auditoria." className="sem-auditoria" />
-                                </div>
-                        )
-                    ) : null}
+                                        <p style={{paddingBottom:'0.25rem'}}>
+                                            <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />
+                                            &nbsp;&nbsp;<strong>Anteriormente:</strong> {auditoriaItem.oldValues || 'N/A'}
+                                        </p>
+                                    </>
+                                )}
+                                {auditoriaItem.collaborator && (
+                                    <p style={{paddingBottom:'0.25rem'}}>
+                                        <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={azul} />
+                                        &nbsp;&nbsp;<strong>Colaborador (ID):</strong> {auditoriaItem.collaborator}
+                                    </p>
+                                )}
+                                {auditoriaItem.course && (
+                                    <>
+                                        <p style={{paddingBottom:'1rem'}}>
+                                            <strong>
+                                                <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={verde} />
+                                                &nbsp;&nbsp;Treinamento (ID):
+                                            </strong> {auditoriaItem.course}
+                                        </p>
+                                        <p style={{paddingBottom:'0.25rem'}}>
+                                            <FontAwesomeIcon className="icon" icon={faCodeCommit} color={cinza} />
+                                            &nbsp;&nbsp;<strong>Versão no momento da ação: </strong> {auditoriaItem.courseVersion} (atualmente na versão {Number(auditoriaItem.courseVersion) + 1})
+                                        </p>
+                                    </>
+                                )}
+                                <hr className="divisao-auditoria"/>
+                            </div>
+                        ))
+                    ) : (
+                       <><p className="destaque" style={{textAlign:'center', padding:'2rem 0rem', fontWeight:'bolder', fontSize:'1.5rem'}}>Não há dados disponíveis atualmente.</p></>
+                    )}
                 </div>
             </div>
         </>

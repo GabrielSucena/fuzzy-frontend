@@ -64,26 +64,53 @@
     padding-top: 20px;
     border-radius: 1rem;
     border: 1px solid #ccc;
+    padding: 1rem;
 }
 
 .auditoria-item {
     margin-bottom: 20px;
 }
 
-.auditoria-item p {
-    margin: 5px 0;
-    margin-left: 2rem;
-}
 
 .divisao-auditoria {
     margin-top: 20px;
     border: none;
     border-top: 1px solid #ccc;
-    width: 95%; /* Largura ajustada para 95% */
-    margin: 20px auto 0; /* Centraliza horizontalmente e ajusta a margem superior */
+    width: 100%; 
+    margin: 20px auto 0; 
     text-align: center;
     padding-left: 1rem;
 }
+
+.gestor{
+    display: inline-table;
+    border-top: 2px solid var(--roxo);
+    padding: 0.5rem;
+    background-color: var(--cinza);
+    border-start-start-radius: 1rem;
+    border-start-end-radius: 1rem;
+    margin: 0;
+}
+
+.momento{
+    border-bottom: 2px solid var(--roxo);
+    padding: 0.5rem;
+    background-color: var(--cinza);
+    border-end-start-radius: 1rem;
+    border-end-end-radius: 1rem;
+    margin-bottom: 1rem;
+}
+
+.desativado{
+    color: var(--vermelho);
+    display: block;
+}
+
+.desativado .reason{
+    display: inline-flex;
+    color: var(--preto);
+}
+
 
 .topo-auditoria-justificativa{
     padding-bottom: 0.75rem;

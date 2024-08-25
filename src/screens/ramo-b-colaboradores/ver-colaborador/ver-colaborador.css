@@ -177,7 +177,7 @@
     }
 }
 
-@media (max-width: 780px) {
+@media (max-width: 1139px) {
     .titulo-pagina { 
         font-size: 1.032rem;
         padding: 1rem;
@@ -346,6 +346,7 @@
 
 .email-colaborador {
     cursor: copy;
+    text-wrap: wrap;
 }
 
 .realization_status {
@@ -548,8 +549,9 @@
 
 .conteiner-botao-dois{
     display: flex;
-    width: 100%;
-    align-self: center;
+    width: 90%;
     padding-left: 10%;
+    align-self: center;
     padding-bottom: 2rem;
+    justify-content: flex-start;
 }

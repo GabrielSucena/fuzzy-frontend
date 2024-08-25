@@ -12,7 +12,7 @@
     width: 78.75%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     border-radius: 1rem;
     padding: 1rem;
     flex-wrap: wrap;

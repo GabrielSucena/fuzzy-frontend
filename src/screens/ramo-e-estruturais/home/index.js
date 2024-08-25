@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './home.css';
 import Card from '../../../components/card';
 import BoasVindas from '../../../components/boasvindas';
 import { Link } from 'react-router-dom';
 
 export function Home() {
+  const token = localStorage.getItem('authToken');
+  const [nome, setNome] = useState('')
 
-  const nome = "Fernanda"
+  useEffect(() => {
+    fetch('http://localhost:8080/usuario', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        }
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        console.log(data);
+        setNome(data.name || 'usuário(a)');
+    })
+    .catch(err => console.log(err));
+  }, [token]);
+
 
   return (
     <>

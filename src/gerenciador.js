@@ -5,6 +5,9 @@ import Rodape from './components/rodape';
 
 const Layout = () => {
   const location = useLocation();
+  
+  // Verifica se o token está presente no localStorage
+  const token = localStorage.getItem('authToken');
 
   // Define as rotas onde o Banner deve ser exibido
   const bannerRoutes = [
@@ -14,11 +17,11 @@ const Layout = () => {
     '/login'
   ];
 
-  const showBanner = bannerRoutes.includes(location.pathname);
+  // Determina se deve mostrar o Banner ou o Bannerhome
 
   return (
     <>
-      {showBanner ? <Banner /> : <Bannerhome />}
+      {token ? <Bannerhome/> : <Banner/>}
       <div className="main-content">
         <Outlet />
       </div>

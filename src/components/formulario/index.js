@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Use `useNavigate` para navegação
+import { Link, useNavigate } from 'react-router-dom';
 import imgLogin from '../../login.svg';
 import Botao from '../botao';
 import CampoSenha from '../camposenha';
@@ -8,18 +8,18 @@ import './formulario.css';
 
 const Formulario = (props) => {
     const [register, setRegister] = useState('');
-    const [password, setSenha] = useState('');
-    const navigate = useNavigate(); // Use `useNavigate` para navegação
-    const token = localStorage.getItem('authToken');
+    const [password, setPassword] = useState(''); // Renomeado para manter a consistência
+    const [error, setError] = useState(''); // Adiciona estado para mensagem de erro
+    const navigate = useNavigate();
 
     // Função para criar login e enviar auditoria
     function createLogin(login) {
         console.log("Dados enviados ao login:", login);
-
+        localStorage.removeItem('authToken');
+        
         fetch('http://localhost:8080/login', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${token}`, 
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(login),
@@ -33,33 +33,34 @@ const Formulario = (props) => {
 
                         console.log("Dados do login recebidos:", data);
 
-                        navigate('/', { state: { message: 'Colaborador adicionado com sucesso!' } });
+                        // Navega para a página inicial com uma mensagem de sucesso
+                        navigate('/', { state: { message: 'Login bem-sucedido!' } });
                     });
                 } else {
                     return response.json().then(error => {
                         console.error("Erro ao realizar login:", error);
-                        throw new Error("Erro na resposta da API");
+                        // Define mensagem de erro a ser exibida
+                        setError("Login falhou. Verifique suas credenciais e tente novamente.");
                     });
                 }
             })
             .catch(err => {
                 console.error("Erro na requisição de login:", err);
+                // Define mensagem de erro a ser exibida
+                setError("Usuário ou senha incorretos.");
             });
     }
 
-    const validador = (aoClicar) => {
-        aoClicar.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
         console.log('Tentativa realizada.');
-        props.aoColaboradorCadastrado({
-            register,
-            password
-        });
 
         // Verifica se ambos os campos estão preenchidos antes de enviar o login
         if (register !== '' && password !== '') {
-            console.log('Ambos os campos estão preenchidos. Redirecionando...');
+            console.log('Ambos os campos estão preenchidos. Enviando login...');
             createLogin({ register, password });
         } else {
+            setError('Por favor, preencha ambos os campos.'); // Mensagem de erro
             console.log('Por favor, preencha ambos os campos.');
         }
     };
@@ -67,7 +68,7 @@ const Formulario = (props) => {
     return (
         <>
             <section className='formulario-container'>
-                <form className='formulario-login' onSubmit={validador}>
+                <form className='formulario-login' onSubmit={handleSubmit}>
                     <CampoTexto
                         obrigatorio={true}
                         label="ID Sanofi"
@@ -82,16 +83,16 @@ const Formulario = (props) => {
                         label="Senha"
                         placeholder="Digite sua senha aqui"
                         valor={password}
-                        aoAlterado={setSenha}
+                        aoAlterado={setPassword}
                         autoComplete="on"
                     />
+                    {error && <p className="error-message">{error}</p>} {/* Exibe mensagem de erro */}
                     <div className='entrar-esqueci'>
                         <Link to='/digite-o-email'><p>Esqueci a senha</p></Link>
 
                         <Botao type="submit" color="roxo">
                             Entrar
                         </Botao>
-
                     </div>
                 </form>
                 <img src={imgLogin} alt="Imagem login" className='imgLogin' />
