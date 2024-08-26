@@ -19,7 +19,7 @@ const style = {
 };
 
 
-function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores }) {
+function ModalAddColaboradorDepartamento({ id_curso, open, handleClose, refreshColaboradores }) {
 
     const navigate = useNavigate();
     const [rows, setRows] = useState([]); // Inicialize com um array vazio
@@ -28,7 +28,7 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
     const token = localStorage.getItem('authToken');
 
     useEffect(() => {
-        fetch(`http://localhost:8080/colaboradores`, {
+        fetch(`http://localhost:8080/departamentos`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`, 
@@ -55,10 +55,10 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
                 if (row.id === id) {
                     const newRow = { ...row, confirmed: !row.confirmed };
                     if (newRow.confirmed) {
-                        setConfirmedNames((prevNames) => [...prevNames, newRow.name]);
+                        setConfirmedNames((prevIds) => [...prevIds, newRow.id]); // Adiciona o ID do departamento
                     } else {
-                        setConfirmedNames((prevNames) =>
-                            prevNames.filter((name) => name !== newRow.name)
+                        setConfirmedNames((prevIds) =>
+                            prevIds.filter((deptId) => deptId !== newRow.id) // Remove o ID do departamento
                         );
                     }
                     return newRow;
@@ -67,7 +67,6 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
             })
         );
     };
-
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow, isNew: false };
         setRows((prevRows) =>
@@ -79,49 +78,48 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
     const handleRowModesModelChange = (newRowModesModel) => {
         setRowModesModel(newRowModesModel);
     };
-    const handleSaveAllClick = () => {
-        const confirmedIds = rows
-            .filter((row) => row.confirmed)
-            .map((row) => row.id);
 
 
-        fetch(`http://localhost:8080/cursos/${id_curso}/colaboradores`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${token}`, 
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ collaboratorsId: confirmedIds }),
+
+const handleSaveAllClick = () => {
+    const confirmedIds = rows
+        .filter((row) => row.confirmed)
+        .map((row) => row.id);
+
+    fetch(`http://localhost:8080/cursos/${id_curso}/colaboradores`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`, 
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ departmentId: confirmedIds }), // Envia IDs dos departamentos confirmados
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+            return response.text(); // ou response.json(), caso a API retorne JSON
         })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Erro na requisição');
-                }
-                // Se a resposta não tiver um corpo JSON, evite tentar analisá-la
-                return response.text(); // ou response.json(), caso a API retorne JSON
-            })
-            .then((data) => {
-                console.log('Requisição bem-sucedida:', data);
-                refreshColaboradores()
+        .then((data) => {
+            console.log('Requisição bem-sucedida:', data);
+            refreshColaboradores();
+        })
+        .catch((error) => {
+            console.error('Erro ao fazer a requisição:', error);
+        });
 
-            })
-            .catch((error) => {
-                console.error('Erro ao fazer a requisição:', error);
-            });
-
-        // Resetar os checkboxes
-        setRows((prevRows) =>
-            prevRows.map((row) => ({
-                ...row,
-                confirmed: false,
-                rejected: false,
-            }))
-        );
-        console.log('IDs confirmados:', confirmedIds);
-        handleClose()
-        setConfirmedNames([]);
-    };
-
+    // Resetar os checkboxes
+    setRows((prevRows) =>
+        prevRows.map((row) => ({
+            ...row,
+            confirmed: false,
+            rejected: false,
+        }))
+    );
+    console.log('Departamentos confirmados:', confirmedNames);
+    handleClose();
+    setConfirmedNames([]);
+};
 
     const handleCancelAllClick = () => {
         setRowModesModel((prevModel) => {
@@ -136,9 +134,7 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
     };
 
     const columns = [
-        { field: 'name', headerName: 'Nome', width: 180, editable: false },
         { field: 'department', headerName: 'Departamento', width: 180, editable: false },
-        { field: 'position', headerName: 'Cargo', width: 180, editable: false },
         {
             field: 'actions',
             type: 'actions',
@@ -211,4 +207,4 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
     );
 }
 
-export default ModalAddColaborador;
+export default ModalAddColaboradorDepartamento;

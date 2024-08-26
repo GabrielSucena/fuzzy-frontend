@@ -19,13 +19,10 @@ const style = {
 };
 
 
-
-
-function ModalNotificarTreinamento({ open, handleClose, colaboradores }) {
+function ModalDescription({ open, handleClose, description }) {
     const [justificativa, setJustificativa] = useState('');
 
     const handleConfirm = () => {
-        console.log("Enviando notificação aos coloaboradores", colaboradores);
         handleClose(); // Fechar o modal após confirmar
 
     };
@@ -39,19 +36,14 @@ function ModalNotificarTreinamento({ open, handleClose, colaboradores }) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 'bold' }}>
-                    Notificar treinamento ?
+                    Descrição:
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2, mb: 2, color: '#565656', }}>
-                    Notificar colaborador de todos seus cursos com status à realizar.
+                {description}
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', width: '100%' }}>
-                    <Button variant="contained" onClick={handleConfirm}>Confirmar</Button>
-                    <Button variant="outlined" onClick={handleClose}>Cancelar</Button>
-                </Box>
-
             </Box>
         </Modal>
     )
 }
 
-export default ModalNotificarTreinamento
+export default ModalDescription

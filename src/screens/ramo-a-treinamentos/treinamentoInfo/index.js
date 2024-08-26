@@ -1,6 +1,7 @@
 import './treinamentoInfo.css'
 import {
   Grid,
+  IconButton,
   Select,
   Typography
 } from "@mui/material";
@@ -22,6 +23,9 @@ import Botao from "../../../components/botao";
 import { ExtraiRelatorio } from '../../../functionsCenter/functionsCenter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ModalDescription from '../../../components/modalDescription';
+
 
 const typographyStyle = {
   text: {
@@ -101,8 +105,8 @@ function TreinamentoInfo() {
       console.error("Fetch error:", error);
     }
   };
-  
-  
+
+
 
   const handleExtrair = (divExtrair) => {
     // Cria uma função anônima que será chamada no evento de clique
@@ -119,15 +123,28 @@ function TreinamentoInfo() {
   return (
     <>
       <TituloPagina
-        titulopagina={treinamento.title}
+        titulopagina=
+
+
+        {
+          <box>
+            {treinamento.title}
+            <IconButton onClick={handleOpen('description')} aria-label="delete" color="primary">
+              <InfoOutlinedIcon/>
+            </IconButton>
+
+          </box>
+        }
         descricaotitulo={treinamento.codification}
       />
+
+
       <div className='botoes-treinamento-editar-conteiner'>
         <div className="botoes-treinamento-editar">
           <Botao color='roxo' onClick={handleEditar}>Editar</Botao>
           <Botao color='branco' onClick={handleOpen('obsoletar')}>Obsoletar</Botao>
           <Botao color='branco' onClick={handleExtrair('informacao-treinamento')}>Extrair</Botao>
-          <Botao onClick={() => navigate(`/auditar-treinamento/${treinamento.id}`)} color={"branco"}>Auditar</Botao>
+          {/* <Botao onClick={() => navigate(`/auditar-treinamento/${treinamento.id}`)} color={"branco"}>Auditar</Botao> */}
 
         </div>
       </div>
@@ -137,7 +154,9 @@ function TreinamentoInfo() {
       {openModal === 'notificar' && (
         <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro, João"} />
       )}
-
+      {openModal === 'description' && (
+        <ModalDescription open={true} handleClose={handleClose} description={treinamento.description}/>
+      )}
       <Grid container >
         <Grid item xs />
         <Grid item xs={10}>
@@ -169,7 +188,7 @@ function TreinamentoInfo() {
                           <Typography sx={{ ...typographyStyle.topic }}>
                             Vencimento:
                             <Typography sx={{ ...typographyStyle.text }}>
-                              {arrumaDatas({ data: treinamento.validityDate})}
+                              {arrumaDatas({ data: treinamento.validityDate })}
                             </Typography>
                           </Typography>
 
@@ -190,7 +209,7 @@ function TreinamentoInfo() {
                     <Grid container spacing={1}>
                       <Grid item xs={6}>
                         <Typography sx={{ ...typographyStyle.textWhite }}>
-                          Começo: {arrumaDatas({ data: treinamento.startDate})}
+                          Começo: {arrumaDatas({ data: treinamento.startDate })}
                         </Typography>
                       </Grid>
 
@@ -207,7 +226,7 @@ function TreinamentoInfo() {
                   <DefaultPaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
                       <Grid item xs={9}>
-                        <Typography sx={{ ...typographyStyle.topic, fontWeight:'bold'}}>
+                        <Typography sx={{ ...typographyStyle.topic, fontWeight: 'bold' }}>
                           Vigência atual
                         </Typography>
                         <Typography sx={{ ...typographyStyle.text }}>
@@ -230,7 +249,7 @@ function TreinamentoInfo() {
                   <DefaultPaper elevation={2} square={false} variant="elevation">
                     <Grid container spacing={1}>
                       <Grid item xs={9}>
-                        <Typography sx={{ ...typographyStyle.topic, fontWeight:'bold'}}>
+                        <Typography sx={{ ...typographyStyle.topic, fontWeight: 'bold' }}>
                           Participantes
                         </Typography>
                         <Typography sx={{ ...typographyStyle.text }}>
@@ -250,7 +269,7 @@ function TreinamentoInfo() {
                 </Grid>
               </Grid>
             </Grid>
-            
+
             <Grid item xs={12} lg={6}>
               <DefaultPaper elevation={2} square={false} variant="elevation">
                 <Grid container spacing={1}>
@@ -290,12 +309,12 @@ function TreinamentoInfo() {
               </DefaultPaper>
             </Grid>
           </Grid>
-          
-          <TabelaMUI2 curso_id={id} colaboradores={colaboradores}  refreshColaboradores={refreshColaboradores} />
+
+          <TabelaMUI2 curso_id={id} colaboradores={colaboradores} refreshColaboradores={refreshColaboradores} />
         </Grid>
         <Grid item xs />
       </Grid>
-      
+
     </>
   );
 }

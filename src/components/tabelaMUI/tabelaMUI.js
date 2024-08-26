@@ -18,6 +18,7 @@ import { background } from '@chakra-ui/react';
 import Teste from '../../screens/ramo-e-estruturais/teste';
 import { ExtraiRelatorio } from '../../functionsCenter/functionsCenter';
 import PdfSender from '../../screens/ramo-a-treinamentos/pdfsender';
+import ModalSelecionarAdd from '../modalSelecionarAdd';
 
 const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['A', 'B', 'C', 'D'];
@@ -177,6 +178,8 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
         });
         setConfirmedNames([]);
         setRejectedNames([]);
+        toggleDeleteIcon();
+
     };
 
     const columns = [
@@ -228,7 +231,8 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                 <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
             )}
             {openModal === 'adicionar-colaborador' && (
-                <ModalAddColaborador id_curso={curso_id} open={true} handleClose={handleClose}  refreshColaboradores={refreshColaboradores} />
+                // <ModalAddColaborador id_curso={curso_id} open={true} handleClose={handleClose}  refreshColaboradores={refreshColaboradores} />
+                <ModalSelecionarAdd open={true} handleClose={handleClose} curso_id={curso_id}  refreshColaboradores={refreshColaboradores} />
             )}
             {openModal === 'retirar-colaborador' && (
                 <ModalConfirmarExclusãoColaborador setRejectedNames={setRejectedNames} setResetRows={setResetRows}

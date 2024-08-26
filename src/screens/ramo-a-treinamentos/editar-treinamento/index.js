@@ -40,7 +40,7 @@ function EditarTreinamento() {
   }, [id]);
 
 
-  
+
   const [instructor, setInstructor] = useState('');
   const [version, setVersion] = useState('');
   const [title, setTitle] = useState('');
@@ -82,12 +82,19 @@ function EditarTreinamento() {
 
       }
 
-      setStartDate(dayjs(treinamento.startDate,'YYYY-MM-DD') || dayjs());
+      setStartDate(dayjs(treinamento.startDate, 'YYYY-MM-DD') || dayjs());
     }
   }, [treinamento]);
 
   const navigate = useNavigate();
-
+    
+  const handleCancelClick = () => {
+    navigate(`/treinamentos/${id}`, {
+      state: {
+        id
+      },
+    });
+  };
   const aoSalvar = async (e) => {
     e.preventDefault();
 
@@ -106,7 +113,6 @@ function EditarTreinamento() {
     }
 
 
-    
     const infoCursos = {
       instructor,
       version,
@@ -114,7 +120,7 @@ function EditarTreinamento() {
       workload,
       codification: codificationSigla + codificationNumber,
       description: description,
-      validityYears:parseInt(validityDate),
+      validityYears: parseInt(validityDate),
       startDate: startDate.format('DD/MM/YYYY'),
     };
 
@@ -160,7 +166,7 @@ function EditarTreinamento() {
               </Grid>
               <Grid item xs={12} lg={6}>
                 <TextField
-                  required
+                  disabled
                   fullWidth
                   value={version}
                   id="version"
@@ -195,6 +201,7 @@ function EditarTreinamento() {
                 <FormControl required fullWidth>
                   <InputLabel id="cod">Cod</InputLabel>
                   <Select
+                    disabled
                     labelId="cod"
                     id="cod"
                     value={codificationSigla}
@@ -208,7 +215,7 @@ function EditarTreinamento() {
               </Grid>
               <Grid item xs={12} lg={2}>
                 <TextField
-                  required
+                  disabled
                   fullWidth
                   value={codificationNumber}
                   id="codification"
@@ -264,7 +271,7 @@ function EditarTreinamento() {
                   <Botao onClick={aoSalvar} color={"roxo"}>
                     Confirmar
                   </Botao>
-                  <Botao color={"branco"} destino={"./treinamentos"}>
+                  <Botao color={"branco"} onClick={handleCancelClick}>
                     Cancelar
                   </Botao>
                 </Stack>

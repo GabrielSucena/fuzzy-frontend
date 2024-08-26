@@ -78,6 +78,11 @@ export default function BasicCard({
     });
   };
 
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <Card
       onClick={handleCardClick}
@@ -106,11 +111,11 @@ export default function BasicCard({
         </Typography>
 
         <Typography sx={{ ...typographyStyle.base }}>
-          <EventAvailableIcon sx={{ ...personIconStyle.base }} /> {dataInicio}
+          <EventAvailableIcon sx={{ ...personIconStyle.base }} /> {formatDate(dataInicio)}
         </Typography>
 
         <Typography sx={{ ...typographyStyle.base }}>
-          <EventBusyIcon sx={{ ...personIconStyle.base }} /> {dataFinal}
+          <EventBusyIcon sx={{ ...personIconStyle.base }} /> {formatDate(dataFinal)}
         </Typography>
 
         <Typography sx={{ ...typographyStyle.base }}>

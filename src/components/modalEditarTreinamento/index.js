@@ -7,7 +7,9 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: '70%', // Largura responsiva
+    maxWidth: 600, // Largura máxima
+    overflow: 'auto', // Adicione rolagem se necessário
     bgcolor: 'background.paper',
     border: '2px solid #6000B6',
     boxShadow: 24,
