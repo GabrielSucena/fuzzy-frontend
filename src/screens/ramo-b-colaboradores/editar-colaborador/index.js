@@ -6,11 +6,15 @@ import { v4 as uuidv4 } from 'uuid';
 import Botao from '../../../components/botao';
 import TituloPagina from '../../../components/titulopagina';
 import Modal from '../../../components/modal'; // Certifique-se de que o caminho esteja correto
+import { useRole } from '../../../functionsCenter/RoleContext';
 
 const EditarColaborador = () => {
   const token = localStorage.getItem('authToken');
   const { id } = useParams();
   const navigate = useNavigate();
+  const { role } = useRole();
+  const isDisabled = veRegra(role);
+
   const [collaborator, setCollaborator] = useState(null);
   const [departments, setDepartments] = useState([]);
   const [positions, setPositions] = useState([]);
@@ -21,7 +25,6 @@ const EditarColaborador = () => {
   });
   const [message, setMessage] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -98,7 +101,7 @@ const EditarColaborador = () => {
       .then(() => {
         setMessage('Colaborador atualizado com sucesso!');
         setModalOpen(false);
-        setTimeout(() => navigate(-1), 1500);
+        setTimeout(() => navigate(-1), 2000);
       })
       .catch(error => {
         console.error('Error updating collaborator:', error);
@@ -113,7 +116,6 @@ const EditarColaborador = () => {
 
   const handleCancel = (e) => {
     e.preventDefault();
-    // Aqui apenas resetamos o formulário sem abrir o modal
     setForm({
       name: '',
       departmentId: '',
@@ -121,94 +123,190 @@ const EditarColaborador = () => {
     });
   };
 
+  function veRegra(role) {
+    return role === '[admin]';  // Ajuste a string conforme necessário
+  }
+
   return (
     <div>
-      <Modal 
-        isOpen={modalOpen} 
-        onClose={handleClose} 
-        onConfirm={handleConfirm} 
-        reason={true} 
-        complement={"Esse(a) colaborador(a) será alterado(a) com os novos dados."} 
-        actions={true} 
-        buttons={true} 
-        text="Editar colaborador(a)?" 
-      />
-      <TituloPagina titulopagina="Editar colaborador" />
-      {message && <p>{message}</p>}
-      {collaborator ? (
-        <form className="conteiner-cadastro" onSubmit={handleSubmit} onReset={handleCancel}>
-          <SimpleGrid className="grid-container-colaborador" spacingX="4rem" spacingY="3rem" autoComplete="on">
-            <TextField
-              disabled
-              className="campo"
-              label="ID de Registro Sanofi"
-              value={collaborator.register}
-            />
-            <TextField
-              disabled
-              className="campo"
-              label="ID Fuzzy"
-              value={collaborator.id}
-            />
-
-            <TextField
-              required
-              className="campo"
-              type='text'
-              name='name'
-              label="Nome completo"
-              id='name'
-              placeholder='Digite o nome aqui'
-              onChange={handleChange}
-              value={form.name}
-            />
-            <FormControl fullWidth className="campo">
-              <InputLabel id="departmentId">Departamento</InputLabel>
-              <Select
-                required
-                onChange={handleChange}
-                value={form.departmentId}
-                labelId="departmentId"
-                name="departmentId"
-                label="Departamento"
-              >
-                {departments.map((department) => (
-                  <MenuItem value={department.id} key={department.id}>
-                    {department.department}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <FormControl fullWidth className="campo">
-              <InputLabel id="positionId">Cargo</InputLabel>
-              <Select
-                required
-                onChange={handleChange}
-                value={form.positionId}
-                labelId="positionId"
-                name="positionId"
-                label="Cargo"
-              >
-                {positions.map((position) => (
-                  <MenuItem value={position.id} key={position.id}>
-                    {position.position}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <TextField
-              disabled
-              className="campo"
-              label="Email"
-              value={collaborator.email}
-            />
-          </SimpleGrid>
-          <div className="botoes">
-            <Botao type='submit' color='roxo'>Salvar</Botao>
-          </div>
-        </form>
+      {role === '[admin]' ? (
+        <>
+          <Modal 
+            isOpen={modalOpen} 
+            onClose={handleClose} 
+            onConfirm={handleConfirm} 
+            reason={true} 
+            complement={"Esse(a) colaborador(a) será alterado(a) com os novos dados."} 
+            actions={true} 
+            buttons={true} 
+            text="Editar colaborador(a)?" 
+          />
+          <TituloPagina titulopagina="Editar colaborador" />
+          {message && <p>{message}</p>}
+          {collaborator ? (
+            <form className="conteiner-cadastro" onSubmit={handleSubmit} onReset={handleCancel}>
+              <SimpleGrid className="grid-container-colaborador" spacingX="4rem" spacingY="3rem" autoComplete="on">
+                <TextField
+                  className="campo"
+                  label="ID de Registro Sanofi"
+                  value={collaborator.register}
+                  disabled
+                />
+                <TextField
+                  disabled
+                  className="campo"
+                  label="ID Fuzzy"
+                  value={collaborator.id}
+                />
+                <TextField
+                  required
+                  className="campo"
+                  type='text'
+                  name='name'
+                  label="Nome completo"
+                  id='name'
+                  placeholder='Digite o nome aqui'
+                  onChange={handleChange}
+                  value={form.name}
+                />
+                <FormControl fullWidth className="campo">
+                  <InputLabel id="departmentId">Departamento</InputLabel>
+                  <Select
+                    required
+                    onChange={handleChange}
+                    value={form.departmentId}
+                    labelId="departmentId"
+                    name="departmentId"
+                    label="Departamento"
+                  >
+                    {departments.map((department) => (
+                      <MenuItem value={department.id} key={department.id}>
+                        {department.department}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth className="campo">
+                  <InputLabel id="positionId">Cargo</InputLabel>
+                  <Select
+                    required
+                    onChange={handleChange}
+                    value={form.positionId}
+                    labelId="positionId"
+                    name="positionId"
+                    label="Cargo"
+                  >
+                    {positions.map((position) => (
+                      <MenuItem value={position.id} key={position.id}>
+                        {position.position}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <TextField
+                  disabled
+                  className="campo"
+                  label="Email"
+                  value={collaborator.email}
+                />
+              </SimpleGrid>
+              <div className="botoes">
+                <Botao type='submit' color='roxo'>Salvar</Botao>
+              </div>
+            </form>
+          ) : (
+            <p>Carregando dados do colaborador...</p>
+          )}
+        </>
       ) : (
-        <p>Carregando dados do colaborador...</p>
+        <>
+          <Modal 
+            isOpen={modalOpen} 
+            onClose={handleClose} 
+            onConfirm={handleConfirm} 
+            reason={true} 
+            complement={"Esse(a) colaborador(a) será alterado(a) com os novos dados."} 
+            actions={true} 
+            buttons={true} 
+            text="Editar colaborador(a)?" 
+          />
+          <TituloPagina titulopagina="Editar colaborador" />
+          {message && <p>{message}</p>}
+          {collaborator ? (
+            <form className="conteiner-cadastro" onSubmit={handleSubmit} onReset={handleCancel}>
+              <SimpleGrid className="grid-container-colaborador" spacingX="4rem" spacingY="3rem" autoComplete="on">
+                <TextField
+                  className="campo"
+                  label="ID de Registro Sanofi"
+                  value={collaborator.register}
+                  disabled
+                />
+                <TextField
+                  disabled
+                  className="campo"
+                  label="ID Fuzzy"
+                  value={collaborator.id}
+                />
+                <TextField
+                  required
+                  className="campo"
+                  type='text'
+                  name='name'
+                  label="Nome completo"
+                  id='name'
+                  placeholder='Digite o nome aqui'
+                  onChange={handleChange}
+                  value={form.name}
+                />
+                <FormControl fullWidth className="campo">
+                  <InputLabel id="departmentId">Departamento</InputLabel>
+                  <Select
+                    disabled
+                    onChange={handleChange}
+                    value={form.departmentId}
+                    labelId="departmentId"
+                    name="departmentId"
+                    label="Departamento"
+                  >
+                    {departments.map((department) => (
+                      <MenuItem value={department.id} key={department.id}>
+                        {department.department}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth className="campo">
+                  <InputLabel id="positionId">Cargo</InputLabel>
+                  <Select
+                    disabled
+                    onChange={handleChange}
+                    value={form.positionId}
+                    labelId="positionId"
+                    name="positionId"
+                    label="Cargo"
+                  >
+                    {positions.map((position) => (
+                      <MenuItem value={position.id} key={position.id}>
+                        {position.position}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <TextField
+                  disabled
+                  className="campo"
+                  label="Email"
+                  value={collaborator.email}
+                />
+              </SimpleGrid>
+              <div className="botoes">
+                <Botao type='submit' color='roxo'>Salvar</Botao>
+              </div>
+            </form>
+          ) : (
+            <p>Carregando dados do colaborador...</p>
+          )}
+        </>
       )}
     </div>
   );

@@ -11,10 +11,12 @@ import { v4 as uuidv4 } from 'uuid';
 import "./ver-colaborador.css";
 import semTreinamento from '../../semTreinamento.svg';
 import Modal from '../../../components/modal';
+import { useRole } from '../../../functionsCenter/RoleContext';
 
 function VerColaborador() {
     const { id } = useParams();
     const navigate = useNavigate();
+    const { role } = useRole();
 
     const [collaborator, setCollaborator] = useState(null);
     const [trainings, setTrainings] = useState([]);
@@ -43,7 +45,7 @@ function VerColaborador() {
     function formatDate(dateString) {
         const date = new Date(dateString);
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0
+        const month = String(date.getMonth() + 1).padStart(2, '0'); 
         const year = date.getFullYear();
 
         return `${day}/${month}/${year}`;
@@ -101,29 +103,34 @@ function VerColaborador() {
     function handleRemove(justificativa) {
         // Defina a URL correta, usando a variável id que você tem disponível
         const url = `http://localhost:8080/colaboradores/${id}`;
-        const motivo = JSON.stringify({reason: justificativa})
-        console.log("Exclusão sendo enviada: ", motivo, "para: ", url)
-
+        const motivo = { reason: justificativa };
+        console.log("Exclusão sendo enviada: ", motivo, "para: ", url);
+    
         fetch(url, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'},
-            body: JSON.stringify(motivo)
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(motivo) // Adicione o corpo apenas se a API suportar
         })
         .then(response => {
             if (!response.ok) {
-                // Se a resposta não for bem-sucedida, lance um erro
-                return response.text().then(text => { throw new Error(text); });
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }else{
+                setTimeout(() => {
+                    navigate('/colaboradores');
+                }, 2000);
             }
-            return response.json(); // ou response.text() dependendo do que a API retorna
+            
         })
         .then(data => {
-            // Aqui você pode manipular a resposta se necessário
+            
             console.log('Colaborador removido com sucesso:', data);
+
         })
         .catch(err => {
-            // Manipulação de erro
+            
             const errorMessage = err.message.includes('500')
                 ? 'Para que o(a) colaborador(a) ser excluido(a), por integridade, este não pode estar em nenhum curso.'
                 : `Erro ao remover colaborador: ${err.message}`;
@@ -136,6 +143,7 @@ function VerColaborador() {
             }, 2000);
         });
     }
+    
     
     
 
@@ -266,23 +274,28 @@ function VerColaborador() {
                     <p className="titulo-pagina" onClick={() => handleCopy(collaborator.name)}>{collaborator.name || "Nome do Colaborador"}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={'#7B50A6'} /></p>
                     <p className="descricao-titulo" onClick={() => handleCopy(collaborator.register)}>Sanofi ID: {`${collaborator.register || ""}`}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={cinza} /></p>
                 </div>
-                <div className="conteiner-botao">
-                    <div className="botoes-titulo-pagina">
-                        <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
-                            <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
-                        </Botao>
-                        <Botao onClick={preExclusao} color={"branco"}>
-                            <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
-                        </Botao>
-                        <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}?register=${collaborator.register}`)} color={"branco"}>
-                            <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
-                        </Botao>
-                        <Botao onClick={() => handlePrint('cima')} color={"branco"}>
-                            <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
-                        </Botao>
-
+                
+                    <div className="conteiner-botao">
+                        <div className="botoes-titulo-pagina">
+                            <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
+                                <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
+                            </Botao>
+                            {
+                                role === '[admin]' &&
+                                <Botao onClick={preExclusao} color={"branco"}>
+                                    <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
+                                </Botao>
+                            }
+                            <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}?register=${collaborator.register}`)} color={"branco"}>
+                                <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
+                            </Botao>
+                            <Botao onClick={() => handlePrint('cima')} color={"branco"}>
+                                <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
+                            </Botao>
+                        </div>
                     </div>
-                </div>
+                
+
                 <hr className="divisorbaixo" />
             </div>
 
@@ -406,17 +419,22 @@ function VerColaborador() {
                 titulopagina="Treinamentos atrelados"
                 divisor1={true}
             />
+            
                 <div className="conteiner-botao-dois">
                     <div className="botoes-titulo-pagina">
+                    {role === '[admin]' && 
                         <Botao onClick={() => {}} color={"roxo"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={branco} /> <span>Notificar</span>
                         </Botao>
+                    }
                         <Botao onClick={() => handlePrint('baixo')} color={"branco"}>
                             <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
                         </Botao>
 
                     </div>
-                </div>
+                </div>    
+            
+
         <div className="treinamentos">
             <div className="treinamentos-card">
                 <div className="busca-filtros-treinamento">

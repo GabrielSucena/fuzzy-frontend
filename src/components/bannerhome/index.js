@@ -1,10 +1,14 @@
-import { useRef } from "react";  
+import { useEffect, useRef, useState } from "react";  
 import "./bannerhome.css";  
 import { Link, Navigate } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faGraduationCap, faPaintBrush, faPlay, faUser, faRightFromBracket} from '@fortawesome/free-solid-svg-icons';  // Importação correta do ícone
+import { useRole } from '../../functionsCenter/RoleContext'; // Corrija o caminho conforme necessário
 
-function Bannerhome(props) {
+
+
+function Bannerhome( ) {
+    const { role } = useRole(); // Obtém o role do contexto
     const vermelho = getComputedStyle(document.documentElement).getPropertyValue('--vermelho').trim();
     const navRef = useRef();
     // Elemento "navRef" escuta a função "useRef" padrão do React
@@ -16,6 +20,7 @@ function Bannerhome(props) {
 
     function logOut() {
         localStorage.removeItem('authToken'); 
+        localStorage.removeItem('role'); 
         setTimeout(() => {Navigate('/login');}, 1000); 
     }
 
@@ -23,10 +28,14 @@ function Bannerhome(props) {
         <header className="header-home">  
             <Link to = "/" className="header-logo"> <img className="header-logo-image" src={`${process.env.PUBLIC_URL}/imagens/logohome.svg`} alt="Logo da Fuzzy"/> </Link>
             {/*<img className="header-logo" src={`${process.env.PUBLIC_URL}/imagens/logohome.svg`} alt="Logo da Fuzzy"/>*/}
-            <nav className='topicos' ref={navRef}> {/* Amarra os tópicos ao elemento "navRef" */}
-                <a href="/auditoria"><FontAwesomeIcon icon={faPaintBrush} />&nbsp;&nbsp;Auditoria</a>       
-                <a href="/treinamentos"><FontAwesomeIcon icon={faPlay} />&nbsp;&nbsp;Treinamentos</a>  {/* Utiliza o ícone correto */}
-                <a href="/colaboradores"><FontAwesomeIcon icon={faGraduationCap} />&nbsp;&nbsp;Colaboradores</a>       
+            <nav className='topicos' ref={navRef}> {/* Amarra os tópicos ao elemento "navRef" */}          
+                {role === '[admin]' &&
+                    <>  
+                        <a href="/auditoria"><FontAwesomeIcon icon={faPaintBrush} />&nbsp;&nbsp;Auditoria</a>
+                        <a href="/treinamentos"><FontAwesomeIcon icon={faPlay} />&nbsp;&nbsp;Treinamentos</a>  
+                        <a href="/colaboradores"><FontAwesomeIcon icon={faGraduationCap} />&nbsp;&nbsp;Colaboradores</a> 
+                    </>
+                } 
                 <a href="/perfil" className="perfil-bannerhome"><FontAwesomeIcon icon={faUser} />&nbsp;&nbsp;Meu perfil</a>  
                 <a href="/login" className="sair" onClick={logOut} style={{ color: vermelho, textDecoration: 'none' }}>
                     <FontAwesomeIcon icon={faRightFromBracket} style={{ color: vermelho }} />

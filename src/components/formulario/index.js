@@ -5,12 +5,15 @@ import Botao from '../botao';
 import CampoSenha from '../camposenha';
 import CampoTexto from '../campotexto';
 import './formulario.css';
+import { useRole } from '../../functionsCenter/RoleContext';
 
 const Formulario = (props) => {
     const [register, setRegister] = useState('');
-    const [password, setPassword] = useState(''); // Renomeado para manter a consistência
-    const [error, setError] = useState(''); // Adiciona estado para mensagem de erro
+    const [password, setPassword] = useState(''); 
+    const [error, setError] = useState(''); 
     const navigate = useNavigate();
+    const { setRole } = useRole();
+
 
     // Função para criar login e enviar auditoria
     function createLogin(login) {
@@ -28,13 +31,17 @@ const Formulario = (props) => {
                 if (response.ok) {
                     return response.json().then(data => {
                         const token = data.accessToken;
+                        const role = data.role;
+                        /*const role = '[basic]';*/
+
+                        setRole(role)
 
                         localStorage.setItem('authToken', token);
 
-                        console.log("Dados do login recebidos:", data);
-
                         // Navega para a página inicial com uma mensagem de sucesso
                         navigate('/', { state: { message: 'Login bem-sucedido!' } });
+
+                        
                     });
                 } else {
                     return response.json().then(error => {

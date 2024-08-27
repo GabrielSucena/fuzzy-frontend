@@ -26,6 +26,7 @@ import { faEye } from '@fortawesome/free-solid-svg-icons';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ModalDescription from '../../../components/modalDescription';
 
+import { useRole } from '../../../functionsCenter/RoleContext';
 
 const typographyStyle = {
   text: {
@@ -34,6 +35,8 @@ const typographyStyle = {
     color: "#9E9E9E",
     textAlign: "center",
     ml: 1
+
+    
 
   },
   topic: {
@@ -58,6 +61,7 @@ function TreinamentoInfo() {
   const [departamentos, setDepartamentos] = useState([]);
   const [colaboradores, setColaboradores] = useState([]); // Supondo que você tenha um initialColaboradores
   const token = localStorage.getItem('authToken');
+  const { role } = useRole();
 
   useEffect(() => {
     fetch(`http://localhost:8080/cursos/${id}`, {
@@ -137,17 +141,18 @@ function TreinamentoInfo() {
         }
         descricaotitulo={treinamento.codification}
       />
-
-
-      <div className='botoes-treinamento-editar-conteiner'>
-        <div className="botoes-treinamento-editar">
-          <Botao color='roxo' onClick={handleEditar}>Editar</Botao>
-          <Botao color='branco' onClick={handleOpen('obsoletar')}>Obsoletar</Botao>
-          <Botao color='branco' onClick={handleExtrair('informacao-treinamento')}>Extrair</Botao>
-          {/* <Botao onClick={() => navigate(`/auditar-treinamento/${treinamento.id}`)} color={"branco"}>Auditar</Botao> */}
-
+      {role === '[admin]' &&
+        <div className='botoes-treinamento-editar-conteiner'>
+          <div className="botoes-treinamento-editar">
+            <Botao color='roxo' onClick={handleEditar}>Editar</Botao>
+            <Botao color='branco' onClick={handleOpen('obsoletar')}>Obsoletar</Botao>
+            <Botao color='branco' onClick={handleExtrair('informacao-treinamento')}>Extrair</Botao>
+            <Botao onClick={() => navigate(`/auditar-treinamento/${treinamento.id}`)} color={"branco"}>Auditar</Botao>
+  
+          </div>
         </div>
-      </div>
+      }
+
       {openModal === 'obsoletar' && (
         <ModalObsoletarTreinamento open={true} handleClose={handleClose} courseId={id} />
       )}

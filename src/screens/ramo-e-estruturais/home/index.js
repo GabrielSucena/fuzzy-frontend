@@ -3,10 +3,13 @@ import './home.css';
 import Card from '../../../components/card';
 import BoasVindas from '../../../components/boasvindas';
 import { Link } from 'react-router-dom';
+import { useRole } from '../../../functionsCenter/RoleContext';
 
 export function Home() {
   const token = localStorage.getItem('authToken');
   const [nome, setNome] = useState('')
+  const { role } = useRole();
+  const [idUser, setIdUser] = useState('')
 
   useEffect(() => {
     fetch('http://localhost:8080/usuario', {
@@ -20,6 +23,7 @@ export function Home() {
     .then(data => {
         console.log(data);
         setNome(data.name || 'usuário(a)');
+        setIdUser(data.id);
     })
     .catch(err => console.log(err));
   }, [token]);
@@ -29,16 +33,34 @@ export function Home() {
     <>
       <BoasVindas nome={nome} />
       <div className='home-content'>
-        <Link to='/treinamentos' className='link-card'>
+        {role !== '[basic]' &&
+          <Link to='/treinamentos' className='link-card'>
+            <div>
+              <Card
+                tipo="Matriz de treinamentos"
+                descricao="Verifique também as vigências, aproveitamento e classificações"
+              />
+            </div>
+          </Link>
+        }
+        {role === '[admin]' ?
+          <Link to='/colaboradores' className='link-card'>
+            <div>
+              <Card
+                  tipo="Lista de colaboradores"
+                  descricao="Veja os nomes, cargos e a participação em treinamentos"
+                />
+            </div>
+          </Link>
+        :
+        <Link to={`/ver-colaborador/${idUser}`} className='link-card'>
           <div>
-            <Card tipo="Matriz de treinamentos" descricao="Verifique também as vigências, aproveitamento e classificações" />
+            <Card
+              tipo="Central"
+              descricao="Veja seus resultados e cursos"
+            />
           </div>
-        </Link>
-        <Link to='/colaboradores' className='link-card'>
-          <div>
-            <Card tipo="Lista de colaboradores" descricao="Veja os nomes, cargos e a participação em treinamentos" />
-          </div>
-        </Link>
+        </Link>}
       </div>
     </>
   );

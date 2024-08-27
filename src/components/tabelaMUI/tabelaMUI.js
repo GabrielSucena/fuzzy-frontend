@@ -11,7 +11,7 @@ import ModalNotificarTreinamento from '../modalNotificarTreinamento';
 import TituloPagina from '../titulopagina';
 import ModalAddColaborador from '../modalAddColaborador';
 import ModalConfirmarExclusãoColaborador from '../modalConfirmarExclusãoColaborador';
-import Botao from '../botao';
+import Botao from '../botao/index';
 import './tabelamui.css';
 import { color } from 'framer-motion';
 import { background } from '@chakra-ui/react';
@@ -19,6 +19,7 @@ import Teste from '../../screens/ramo-e-estruturais/teste';
 import { ExtraiRelatorio } from '../../functionsCenter/functionsCenter';
 import PdfSender from '../../screens/ramo-a-treinamentos/pdfsender';
 import ModalSelecionarAdd from '../modalSelecionarAdd';
+import { useRole } from '../../functionsCenter/RoleContext';
 
 const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['A', 'B', 'C', 'D'];
@@ -27,8 +28,9 @@ const statuses = ['Active', 'Inactive', 'Pending'];
 
 
 
-
 export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradores }) {
+    const { regra } = useRole();
+
     useEffect(() => {
         if (Array.isArray(colaboradores)) {
             const initialRows = colaboradores.map((colaborador) => ({
@@ -243,12 +245,15 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
             <DefaultPaper elevation={2} square={false} variant="elevation" className='lista-colaboradores-dentro'>
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={12} lg={12}>
-                    <div className='botoes-mui2'>
-                        <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>Adicionar</Botao>
-                        <Botao color='branco' onClick={toggleDeleteIcon}>Editar</Botao>
-                        <Botao color='branco' onClick={handleExtrair}>Extrair</Botao>
-                        <Botao color='branco' onClick={handleOpen('notificar')}>Notificar</Botao>
-                    </div>
+                        {regra !== '[admin]' &&
+                            <div className='botoes-mui2'>
+                                <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>Adicionar</Botao>
+                                <Botao color='branco' onClick={toggleDeleteIcon}>Editar</Botao>
+                                <Botao color='branco' onClick={handleExtrair}>Extrair</Botao>
+                                <Botao color='branco' onClick={handleOpen('notificar')}>Notificar</Botao>
+                            </div>
+                        }
+
                         <Box
                             className='box'
                             sx={{
@@ -274,7 +279,10 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                     
                     <Grid item className='grider' xs={0}>
                             <Grid className='botao-alteracao-dois'>
-                                <PdfSender  />
+                            {regra !== '[admin]' ? 
+                                <PdfSender  /> :
+                                <Botao color='roxo' onClick={() => {}}>Concluir o treinamento</Botao>
+                            }  
                             </Grid>
                     {showDeleteIcon && (
                         <>
