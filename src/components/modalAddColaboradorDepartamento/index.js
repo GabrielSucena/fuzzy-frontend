@@ -92,10 +92,11 @@ const handleSaveAllClick = () => {
             'Authorization': `Bearer ${token}`, 
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ departmentId: confirmedIds }), // Envia IDs dos departamentos confirmados
+        body: JSON.stringify({ departmentsId: confirmedIds }), // Envia IDs dos departamentos confirmados
     })
         .then((response) => {
             if (!response.ok) {
+                console.log(JSON.stringify({ departmentsId: confirmedIds }))
                 throw new Error('Erro na requisição');
             }
             return response.text(); // ou response.json(), caso a API retorne JSON
