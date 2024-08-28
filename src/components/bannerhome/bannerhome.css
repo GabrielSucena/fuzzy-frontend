@@ -100,7 +100,7 @@ nav a:hover {
         /* Fixa na tela o menu que não desce*/
         /* [IMPORTANTE] */
         
-        top: -92vh;                            
+        top: -100vh;                            
         /* Posição de baixo para cima quando aba descer */
         
         height: 50%;                           

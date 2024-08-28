@@ -1,4 +1,4 @@
-import { faBan, faCircleExclamation, faEye, faCopy, faPencil, faPrint, faQuestion, faSquare, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faBan, faCircleExclamation, faEye, faCopy, faPencil, faPrint, faQuestion, faSquare, faStar, faCalendar, faCreditCardAlt, faCertificate } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
@@ -282,13 +282,16 @@ function VerColaborador() {
                             </Botao>
                             {
                                 role === '[admin]' &&
-                                <Botao onClick={preExclusao} color={"branco"}>
-                                    <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
-                                </Botao>
+                                <>
+                                    <Botao onClick={preExclusao} color={"branco"}>
+                                        <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
+                                    </Botao>
+                            
+                                    <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}?register=${collaborator.register}`)} color={"branco"}>
+                                        <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
+                                    </Botao>
+                                </>
                             }
-                            <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}?register=${collaborator.register}`)} color={"branco"}>
-                                <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
-                            </Botao>
                             <Botao onClick={() => handlePrint('cima')} color={"branco"}>
                                 <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
                             </Botao>
@@ -483,11 +486,11 @@ function VerColaborador() {
                                         </div>
                                         <div className="meio-info">
                                             <p className="meio">
-                                                <FontAwesomeIcon icon={faCircleExclamation} color={vermelhoEscuro}/>
+                                                <FontAwesomeIcon icon={faCircleExclamation} color={amarelo}/>
                                                 &nbsp;{course.classification}
                                             </p>
                                             <p className="meio">
-                                                <FontAwesomeIcon icon={faStar} color={amarelo}/>
+                                                <FontAwesomeIcon icon={faCalendar} color={amarelo}/>
                                                 &nbsp;{formatDate(course.start_date)}
                                             </p>
                                         </div>

@@ -61,11 +61,16 @@
 .auditorias-content {
     flex-grow: 1;
     overflow-y: auto;
-    padding-top: 20px;
+    padding-top: 1rem;
+    justify-content:center;
+    vertical-align: middle;
     border-radius: 1rem;
     border: 1px solid #ccc;
     padding: 1rem;
+    display: flex;
 }
+
+.de
 
 .auditoria-item {
     margin-bottom: 20px;
@@ -205,4 +210,18 @@
     text-decoration: none;
     overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites */
     text-align: center;
+}
+
+.sem-conexao-colaborador {
+    display: inline-flex; 
+    justify-content: center;
+}
+
+.sem-conexao-colaborador img {
+    max-width: 80%; 
+    height: auto;   
+    display: flex;  
+    margin: 0;       
+    padding: 3.75rem 0rem;     
+    
 }

@@ -241,7 +241,7 @@ function Auditoria({
                             </div>
                         ))
                     ) : (
-                       <><p className="destaque" style={{textAlign:'center', padding:'2rem 0rem', fontWeight:'bolder', fontSize:'1.5rem'}}>Não há dados disponíveis atualmente.</p></>
+                       <div className="texto-sem-auditoria"><p className="destaque" style={{textAlign:'center', padding:'2rem 0rem', fontWeight:'bolder', fontSize:'1.5rem'}}>Não há dados disponíveis atualmente.</p></div>
                     )}
                 </div>
             </div>
