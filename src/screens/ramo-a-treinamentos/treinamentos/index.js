@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import BasicCard from "../../../components/cardTreinamento";
 import { Link } from "react-router-dom"; // Certifique-se de importar Link
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Certifique-se de importar FontAwesomeIcon
-import { faCopy, faCircleExclamation, faCalendar } from "@fortawesome/free-solid-svg-icons"; // Importar ícones necessários
+import { faCopy, faCircleExclamation, faCalendar, faArrowAltCircleRight, faUser, faUserTie, faClock } from "@fortawesome/free-solid-svg-icons"; // Importar ícones necessários
 
 function Treinamentos() {
   const [treinamentos, setTreinamentos] = useState([]);
@@ -64,6 +64,11 @@ function Treinamentos() {
     borderRadius: "20px",
   }));
   
+  const preto = getComputedStyle(document.documentElement).getPropertyValue('--preto-escuro').trim();
+  const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
+  const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
+
+
   return (
     <>
       <TituloPagina
@@ -91,13 +96,27 @@ function Treinamentos() {
                 <Link className='retirar-estilo' to={`/treinamentos/${treinamento.id}`} key={treinamento.id}>
                   <div className='div-card'>
                     <div className={"treinamento-item"}>
-                      {treinamento.title}
-                      {treinamento.codification}
-                      {treinamento.instructor}
-                      {treinamento.workload}
-                      {treinamento.startDate}
-                      {treinamento.endDate}
-                      {treinamento.version}
+
+                      <div className="topo-treinamento-card">
+                        <div className="treinamento-part">
+                          <div className="title-card">{treinamento.title}</div>
+                          <div className="version">v{treinamento.version}</div>
+                        </div>
+                        
+                        <div className="codification">{treinamento.codification}</div>
+                        
+                      </div>
+
+                      <div className="info-treinamento-card">
+                        <div className="instructor"><FontAwesomeIcon icon={faUserTie} color={roxo}/>&nbsp;&nbsp;&nbsp;Prof. {treinamento.instructor}</div>
+                        <div className="wokrload"><FontAwesomeIcon icon={faClock} color={roxo}/>&nbsp;&nbsp;{treinamento.workload} minutos</div>
+
+                      </div>
+                      <div className="fundo-card-treinamento">
+                        <div className="date1">{treinamento.startDate}</div>
+                          <FontAwesomeIcon icon={faArrowAltCircleRight} color={roxo}/> 
+                        <div className="date2">{treinamento.endDate}</div>
+                      </div>
                     </div>
                   </div>
                 </Link>

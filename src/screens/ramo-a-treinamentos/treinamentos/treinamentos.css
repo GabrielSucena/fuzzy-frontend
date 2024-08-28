@@ -1,0 +1,114 @@
+
+.topo-treinamento-card{
+    gap: 5rem;
+    padding: 0.2rem;
+    background-color: var(--roxo);
+    border-radius: 0.75rem;
+    height: auto;
+    overflow: hidden;
+}
+
+.treinamento-part {
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 5rem;
+    gap: 10%; /* Adiciona um gap de 10% entre os itens */
+    padding: 0.25rem;
+}
+
+.title-card {
+    color: var(--branco);
+    font-weight: bolder;
+    font-size: 1.5rem;
+    padding-top: 0.75rem;
+    align-items: center;
+    vertical-align: middle;
+    text-align: center;
+    justify-content: center;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    flex: 1 1 60%; 
+    max-width: 60%; 
+    overflow: hidden; 
+    
+}
+
+.version {
+    display: flex;
+    align-items: center;
+    background-color: var(--preto);
+    color: var(--branco);
+    padding: 0 1rem;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: bolder;
+    border: 2px solid var(--branco);
+    flex: 1 1 30%; 
+    max-width: 30%;
+    text-align: center;
+    justify-content: center;
+}
+
+.codification {
+    display: flex;
+    font-size: 1.2rem;
+    color: var(--branco-escuro);
+    text-align: center;
+    justify-content: center; 
+    width: 100%; 
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    word-wrap: break-word; 
+}
+
+.treinamento-part > * {
+    box-sizing: border-box;
+}
+
+
+
+.info-treinamento-card{
+    gap: 1rem;
+    display: inline-flex;
+    flex-direction: column;
+    color: var(--preto);
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+.fundo-card-treinamento{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    border-radius: 1rem;
+    padding: 0.25rem;
+    background-color: var(--branco);
+    text-align: center;
+    box-sizing: border-box;
+    max-width: 100%;
+
+}
+
+.date1{
+    font-weight: bolder;
+    color: var(--preto);
+    font-size: 15px;  
+    border: 1px solid var(--preto);
+    border-radius: 0.2rem;
+    width: 40%;
+    padding: 0.25rem;
+
+
+}
+
+.date2{
+    padding: 0.25rem;
+    font-weight: bolder;
+    color: var(--branco);
+    font-size: 15px; 
+    background-color: var(--preto);
+    border-radius: 0.2rem;
+    width: 40%;
+}
