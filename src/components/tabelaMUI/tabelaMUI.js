@@ -96,12 +96,13 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
         setRows((prevRows) =>
             prevRows.map((row) => {
                 if (row.id === id) {
-                    const newRow = { ...row, confirmed: !row.confirmed };
+                    const newRow = { ...row, confirmed: !row.confirmed, rejected: false };  // Desmarca o checkbox 'rejected'
                     if (newRow.confirmed) {
-                        setConfirmedNames((prevNames) => [...prevNames, newRow.name]);
+                        setConfirmedNames((prevNames) => [...prevNames, newRow.id]);
+                        setRejectedNames((prevIds) => prevIds.filter((rowId) => rowId !== newRow.id));  // Remove o id da lista de rejeitados
                     } else {
                         setConfirmedNames((prevNames) =>
-                            prevNames.filter((name) => name !== newRow.name)
+                            prevNames.filter((name) => name !== newRow.id)
                         );
                     }
                     return newRow;
@@ -110,13 +111,15 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
             })
         );
     };
+    
     const handleRejectClick = (id) => () => {
         setRows((prevRows) =>
             prevRows.map((row) => {
                 if (row.id === id) {
-                    const newRow = { ...row, rejected: !row.rejected };
+                    const newRow = { ...row, rejected: !row.rejected, confirmed: false };  // Desmarca o checkbox 'confirmed'
                     if (newRow.rejected) {
                         setRejectedNames((prevIds) => [...prevIds, newRow.id]);
+                        setConfirmedNames((prevNames) => prevNames.filter((rowId) => rowId !== newRow.id));  // Remove o id da lista de confirmados
                     } else {
                         setRejectedNames((prevIds) =>
                             prevIds.filter((rowId) => rowId !== newRow.id)
@@ -141,10 +144,6 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
         if (updatedClassifications.length === 0) {
             return; // Não faz a requisição se não houver classificações para atualizar
         }
-
-
-
-
         try {
             setIsSaving(true);  // Define o estado de carregamento como verdadeiro
 
@@ -157,16 +156,9 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
                 body: JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }),
             });
             console.log('Requisição:', JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }))
-
-            if (!response.ok) {
-                throw new Error('Erro na requisição');
-            }
-
             refreshColaboradores(); // Atualiza a lista de colaboradores após a requisição
             setUpdatedClassifications([]); // Limpa a lista após o envio
 
-        } catch (error) {
-            console.error('Erro ao fazer a requisição:', error);
         } finally {
             setIsSaving(false);  // Define o estado de carregamento como falso
         }
@@ -217,7 +209,47 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
             });
             return newModel;
         });
-        console.log(rejectedNames);
+        console.log('Nomes Confirmados:',confirmedNames);        
+        console.log('Nomes Rejeitados:',rejectedNames);
+        console.log('Classificações Atualizadas:',updatedClassifications);
+
+        if (confirmedNames.length > 0) {
+            const updateClassificationAndStatusDtoList = confirmedNames.map((id) => ({
+                collaboratorId: id,
+                statusId: 1, // Supondo que statusId 2 é o desejado para atualizar o status
+            }));
+    
+            try {
+                setIsSaving(true);  // Define o estado de carregamento como verdadeiro
+    
+                fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Assumindo que o token está no localStorage
+                    },
+                    body: JSON.stringify({ updateClassificationAndStatusDtoList }),
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Erro na requisição de atualização');
+                        }
+                        console.log('Requisição:', JSON.stringify({ updateClassificationAndStatusDtoList }));
+                        refreshColaboradores(); // Atualiza a lista de colaboradores após a requisição
+                        setConfirmedNames([]); // Limpa a lista após o envio
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao atualizar colaboradores:', error);
+                    })
+                    .finally(() => {
+                        setIsSaving(false);  // Define o estado de carregamento como falso
+                    });
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                setIsSaving(false);  // Define o estado de carregamento como falso
+            }
+        }
+
         if (rejectedNames.length > 0) {
             const openModalFunction = handleOpen('retirar-colaborador');
             openModalFunction();
@@ -303,7 +335,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
 
     return (
         <>
-
+             
             {openModal === 'notificar' && (
                 <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
             )}
