@@ -53,7 +53,7 @@ function GraficoMUI({ v1, v2, v3, v4, n1, n2, n3, n4, c1, c2, c3, c4 }) {
                                         marginRight: '8px',
                                     }}
                                 />
-                                <Typography>{item.label}</Typography>
+                                <Typography fontSize={'16px'} fontFamily={'Nunito Sans, sans-serif'} color={item.color}>{item.label}</Typography>
                             </Box>
                         </Grid>
                     ))}

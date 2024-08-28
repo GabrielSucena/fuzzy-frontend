@@ -12,6 +12,8 @@ import "./ver-colaborador.css";
 import semTreinamento from '../../semTreinamento.svg';
 import Modal from '../../../components/modal';
 import { useRole } from '../../../functionsCenter/RoleContext';
+import GraficoMUI from '../../../components/graficoMUI';
+import { Grid } from '@mui/material';
 
 function VerColaborador() {
     const { id } = useParams();
@@ -45,7 +47,7 @@ function VerColaborador() {
     function formatDate(dateString) {
         const date = new Date(dateString);
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
 
         return `${day}/${month}/${year}`;
@@ -56,7 +58,7 @@ function VerColaborador() {
         fetch(`http://localhost:8080/colaboradores/${id}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`, 
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
         })
@@ -96,16 +98,16 @@ function VerColaborador() {
         return <Carregando />;
     }
 
-    function preExclusao(){
+    function preExclusao() {
         setModalOpen(true);
     }
-    
+
     function handleRemove(justificativa) {
         // Defina a URL correta, usando a variável id que você tem disponível
         const url = `http://localhost:8080/colaboradores/${id}`;
         const motivo = { reason: justificativa };
         console.log("Exclusão sendo enviada: ", motivo, "para: ", url);
-    
+
         fetch(url, {
             method: 'DELETE',
             headers: {
@@ -114,38 +116,38 @@ function VerColaborador() {
             },
             body: JSON.stringify(motivo) // Adicione o corpo apenas se a API suportar
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }else{
-                setTimeout(() => {
-                    navigate('/colaboradores');
-                }, 2000);
-            }
-            
-        })
-        .then(data => {
-            
-            console.log('Colaborador removido com sucesso:', data);
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                } else {
+                    setTimeout(() => {
+                        navigate('/colaboradores');
+                    }, 2000);
+                }
 
-        })
-        .catch(err => {
-            
-            const errorMessage = err.message.includes('500')
-                ? 'Para que o(a) colaborador(a) ser excluido(a), por integridade, este não pode estar em nenhum curso.'
-                : `Erro ao remover colaborador: ${err.message}`;
-    
-            setCollaboratorMessage(errorMessage);
-    
-            // Limpa a mensagem de erro após 2 segundos
-            setTimeout(() => {
-                setCollaboratorMessage('');
-            }, 2000);
-        });
+            })
+            .then(data => {
+
+                console.log('Colaborador removido com sucesso:', data);
+
+            })
+            .catch(err => {
+
+                const errorMessage = err.message.includes('500')
+                    ? 'Para que o(a) colaborador(a) ser excluido(a), por integridade, este não pode estar em nenhum curso.'
+                    : `Erro ao remover colaborador: ${err.message}`;
+
+                setCollaboratorMessage(errorMessage);
+
+                // Limpa a mensagem de erro após 2 segundos
+                setTimeout(() => {
+                    setCollaboratorMessage('');
+                }, 2000);
+            });
     }
-    
-    
-    
+
+
+
 
 
 
@@ -216,57 +218,57 @@ function VerColaborador() {
         (collaborator?.describeCollaborator?.sop || 0) +
         (collaborator?.describeCollaborator?.gop || 0));
 
-        const handleCopy = (text) => {
-            navigator.clipboard.writeText(text);
-        };
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text);
+    };
 
-        function normalizeText(text) {
-            // Converte o texto para minúsculas
-            const lowerCaseText = text.toLowerCase();
-            
-            // Remove acentos usando uma expressão regular
-            const noAccentsText = lowerCaseText.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-            
-            // Remove espaços
-            const normalizedText = noAccentsText.replace(/\s+/g, '');
-            
-            return normalizedText;
+    function normalizeText(text) {
+        // Converte o texto para minúsculas
+        const lowerCaseText = text.toLowerCase();
+
+        // Remove acentos usando uma expressão regular
+        const noAccentsText = lowerCaseText.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+        // Remove espaços
+        const normalizedText = noAccentsText.replace(/\s+/g, '');
+
+        return normalizedText;
+    }
+
+    const handleClose = (e) => {
+        e.preventDefault();
+        setModalOpen(false);
+    };
+
+    const handlePrint = (parte) => {
+        const originalContent = document.body.innerHTML;
+
+        let printContent = ''; // Declara a variável printContent fora do bloco condicional
+
+        if (parte === 'cima') {
+            printContent = document.querySelector('.metricas').innerHTML;
+        } else {
+            printContent = document.querySelector('.grid-container').innerHTML;
         }
 
-        const handleClose = (e) => {
-            e.preventDefault();
-            setModalOpen(false);
-          };
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
+        window.location.reload(); // Recarregar a página e restaurar o conteúdo original
+    };
 
-          const handlePrint = (parte) => {
-            const originalContent = document.body.innerHTML;
-        
-            let printContent = ''; // Declara a variável printContent fora do bloco condicional
-        
-            if (parte === 'cima') {
-                printContent = document.querySelector('.metricas').innerHTML;
-            } else {
-                printContent = document.querySelector('.grid-container').innerHTML;
-            }
-        
-            document.body.innerHTML = printContent;
-            window.print();
-            document.body.innerHTML = originalContent;
-            window.location.reload(); // Recarregar a página e restaurar o conteúdo original
-        };
-        
 
     return (
         <>
-              <Modal 
-                    isOpen={modalOpen} 
-                    onClose={handleClose} 
-                    onConfirm={handleRemove} 
-                    reason={true} 
-                    complement={"Este colaborador(a) será excluído(a) da lista de colaboradores."} 
-                    actions={true} 
-                    buttons={true} 
-                    text="Excluir colaborador(a)?" 
+            <Modal
+                isOpen={modalOpen}
+                onClose={handleClose}
+                onConfirm={handleRemove}
+                reason={true}
+                complement={"Este colaborador(a) será excluído(a) da lista de colaboradores."}
+                actions={true}
+                buttons={true}
+                text="Excluir colaborador(a)?"
             />
             {collaboratorMessage && <div className="message">{collaboratorMessage}</div>}
             <div className="topo-telas">
@@ -274,27 +276,27 @@ function VerColaborador() {
                     <p className="titulo-pagina" onClick={() => handleCopy(collaborator.name)}>{collaborator.name || "Nome do Colaborador"}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={'#7B50A6'} /></p>
                     <p className="descricao-titulo" onClick={() => handleCopy(collaborator.register)}>Sanofi ID: {`${collaborator.register || ""}`}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={cinza} /></p>
                 </div>
-                
-                    <div className="conteiner-botao">
-                        <div className="botoes-titulo-pagina">
-                            <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
-                                <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
+
+                <div className="conteiner-botao">
+                    <div className="botoes-titulo-pagina">
+                        <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
+                            <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
+                        </Botao>
+                        {
+                            role === '[admin]' &&
+                            <Botao onClick={preExclusao} color={"branco"}>
+                                <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
                             </Botao>
-                            {
-                                role === '[admin]' &&
-                                <Botao onClick={preExclusao} color={"branco"}>
-                                    <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
-                                </Botao>
-                            }
-                            <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}?register=${collaborator.register}`)} color={"branco"}>
-                                <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
-                            </Botao>
-                            <Botao onClick={() => handlePrint('cima')} color={"branco"}>
-                                <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
-                            </Botao>
-                        </div>
+                        }
+                        <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}?register=${collaborator.register}`)} color={"branco"}>
+                            <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
+                        </Botao>
+                        <Botao onClick={() => handlePrint('cima')} color={"branco"}>
+                            <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
+                        </Botao>
                     </div>
-                
+                </div>
+
 
                 <hr className="divisorbaixo" />
             </div>
@@ -303,7 +305,7 @@ function VerColaborador() {
                 <div className="bloco bloco1">
                     <div className="bloco1-1">
                         <p><b>Cargo:</b> {collaborator.position}</p>
-                        <p className='email-colaborador'  onClick={() => handleCopy(collaborator.email)}><b>Email:</b> {collaborator.email}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={cinza}/></p>
+                        <p className='email-colaborador' onClick={() => handleCopy(collaborator.email)}><b>Email:</b> {collaborator.email}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={cinza} /></p>
                         <p><b>Setor:</b> {collaborator.department}</p>
                     </div>
                 </div>
@@ -336,28 +338,20 @@ function VerColaborador() {
                             <div className="grafico1">
                                 {totalStatus > 0 ? (
                                     <>
-                                        <ReactApexChart
-                                            options={statusGrafico}
-                                            series={statusGrafico.series}
-                                            type="donut"
-                                            height={200}
+                                        <GraficoMUI
+                                            v1={collaborator?.describeCollaborator?.green}
+                                            n1={"CURSO REALIZADO"}
+                                            c1={'var(--verde)'}
+                                            v2={collaborator.describeCollaborator?.yellow}
+                                            n2={"EM ANDAMENTO (QUINZENA 1)"}
+                                            c2={'var(--amarelo)'}
+                                            v3={collaborator.describeCollaborator?.orange}
+                                            n3={"EM ANDAMENTO (QUINZENA 2)"}
+                                            c3={'var(--laranja)'}
+                                            v4={collaborator.describeCollaborator?.red}
+                                            n4={"CURSO NÃO REALIZADO"}
+                                            c4={'var(--vermelho-escuro)'}
                                         />
-                                        <div className="legendas-conteiner">
-                                            <div className="legendas">
-                                                <p className="legenda" style={{ color: verde }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={verde} /> {`Curso realizado`.toUpperCase()}
-                                                </p>
-                                                <p className="legenda" style={{ color: vermelho }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={vermelho} /> {`em andamento (Quizena 1)`.toUpperCase()}
-                                                </p>
-                                                <p className="legenda" style={{ color: laranja }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={laranja} /> {`em andamento (Quizena 2)`.toUpperCase()}
-                                                </p>
-                                                <p className="legenda" style={{ color: vermelhoEscuro }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={vermelhoEscuro} /> {`Curso não realizado`.toUpperCase()}
-                                                </p>
-                                            </div>
-                                        </div>
                                     </>
                                 ) : (
                                     <>
@@ -377,25 +371,19 @@ function VerColaborador() {
                                     </>
                                 )}
                             </div>
+
                             <div className="grafico2">
                                 {totalTypes > 0 ? (
                                     <>
-                                        <ReactApexChart
-                                            options={codificacoesGrafico}
-                                            series={codificacoesGrafico.series}
-                                            type="donut"
-                                            height={200}
+
+                                        <GraficoMUI
+                                            v1={collaborator?.describeCollaborator?.sop}
+                                            n1={"CODIFICAÇÃO SOP"}
+                                            c1={'var(--azul)'}
+                                            v2={collaborator?.describeCollaborator?.gop}
+                                            n2={"CODIFICAÇÃO GOP"}
+                                            c2={'var(--rosa)'}
                                         />
-                                        <div className="legendas-conteiner">
-                                            <div className="legendas">
-                                                <p className="legenda" style={{ color: azul }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={azul} /> {`Codificação SOP`.toUpperCase()}
-                                                </p>
-                                                <p className="legenda" style={{ color: rosa }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={rosa} /> {`Codificação GOP`.toUpperCase()}
-                                                </p>
-                                            </div>
-                                        </div>
                                     </>
                                 ) : (
                                     <div className="grafico2">
@@ -419,99 +407,99 @@ function VerColaborador() {
                 titulopagina="Treinamentos atrelados"
                 divisor1={true}
             />
-            
-                <div className="conteiner-botao-dois">
-                    <div className="botoes-titulo-pagina">
-                    {role === '[admin]' && 
-                        <Botao onClick={() => {}} color={"roxo"}>
+
+            <div className="conteiner-botao-dois">
+                <div className="botoes-titulo-pagina">
+                    {role === '[admin]' &&
+                        <Botao onClick={() => { }} color={"roxo"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={branco} /> <span>Notificar</span>
                         </Botao>
                     }
-                        <Botao onClick={() => handlePrint('baixo')} color={"branco"}>
-                            <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
-                        </Botao>
+                    <Botao onClick={() => handlePrint('baixo')} color={"branco"}>
+                        <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
+                    </Botao>
 
-                    </div>
-                </div>    
-            
-
-        <div className="treinamentos">
-            <div className="treinamentos-card">
-                <div className="busca-filtros-treinamento">
-                    <input
-                        type="text"
-                        className="campo-busca"
-                        placeholder="Pesquise AQUI o treinamento pelo nome"
-                        value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
-                    />
-                    <select
-                        className="filtro"
-                        onChange={e => setSelectedCriticality(e.target.value)}
-                        value={selectedCriticality}
-                    >
-                        <option value="">Classificação</option>
-                        <option value="ME">De menor</option>
-                        <option value="MA">De maior</option>
-                        <option value="C">Crítico</option>
-                        <option value="N/A">Não aplicável</option>
-                    </select>
-                    <select
-                        className="filtro"
-                        onChange={e => setSelectedStatus(e.target.value)}
-                        value={selectedStatus}
-                    >
-                        <option value="">Conclusão</option>
-                        <option value="Realizado">Realizado</option>
-                        <option value="À realizar">À realizar</option>
-                    </select>
-                </div>
-                <div className="grid-container">
-                    {filteredTrainings.length > 0 ? (
-                        filteredTrainings.map((course) => (
-                            <Link className='retirar-estilo' to={`/treinamentos/${course.id}`} key={course.id}>
-                                <div className='div-card'>
-                                    <div className={"treinamento-item"}>
-                                        <div className="cima-info">
-                                            <p className="nome-card">{course.course_title}</p>
-                                            <p className="course_type">Versão {course.course_version}</p>
-                                            <p className="course_type">
-                                                {course.codification}
-                                                &nbsp;&nbsp;
-                                                <FontAwesomeIcon className="icon-copy" icon={faCopy} color="#6c757d" />
-                                            </p>
-                                        </div>
-                                        <div className="meio-info">
-                                            <p className="meio">
-                                                <FontAwesomeIcon icon={faCircleExclamation} color={vermelhoEscuro}/>
-                                                &nbsp;{course.classification}
-                                            </p>
-                                            <p className="meio">
-                                                <FontAwesomeIcon icon={faStar} color={amarelo}/>
-                                                &nbsp;{formatDate(course.start_date)}
-                                            </p>
-                                        </div>
-                                        <div className="baixo-info">
-                                            <p className={normalizeText(course.status)}>{course.status}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Link>
-                        ))
-                    ) : (
-<div className='sem-treinamentos' style={{display: 'flex'}}>
-    <p className="mensagem-sem-treinamento">
-        Ainda <span className="destaque-tres">não há treinamentos</span> para este colaborador ou <span className="destaque-dois">os filtros</span> não trouxeram resultados.
-    </p>
-    <img className='imagem-sem-treinamento' src={semTreinamento} alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API'/>
-</div>
-
-
-                        
-                    )}
                 </div>
             </div>
-        </div>
+
+
+            <div className="treinamentos">
+                <div className="treinamentos-card">
+                    <div className="busca-filtros-treinamento">
+                        <input
+                            type="text"
+                            className="campo-busca"
+                            placeholder="Pesquise AQUI o treinamento pelo nome"
+                            value={searchTerm}
+                            onChange={e => setSearchTerm(e.target.value)}
+                        />
+                        <select
+                            className="filtro"
+                            onChange={e => setSelectedCriticality(e.target.value)}
+                            value={selectedCriticality}
+                        >
+                            <option value="">Classificação</option>
+                            <option value="ME">De menor</option>
+                            <option value="MA">De maior</option>
+                            <option value="C">Crítico</option>
+                            <option value="N/A">Não aplicável</option>
+                        </select>
+                        <select
+                            className="filtro"
+                            onChange={e => setSelectedStatus(e.target.value)}
+                            value={selectedStatus}
+                        >
+                            <option value="">Conclusão</option>
+                            <option value="Realizado">Realizado</option>
+                            <option value="À realizar">À realizar</option>
+                        </select>
+                    </div>
+                    <div className="grid-container">
+                        {filteredTrainings.length > 0 ? (
+                            filteredTrainings.map((course) => (
+                                <Link className='retirar-estilo' to={`/treinamentos/${course.id}`} key={course.id}>
+                                    <div className='div-card'>
+                                        <div className={"treinamento-item"}>
+                                            <div className="cima-info">
+                                                <p className="nome-card">{course.course_title}</p>
+                                                <p className="course_type">Versão {course.course_version}</p>
+                                                <p className="course_type">
+                                                    {course.codification}
+                                                    &nbsp;&nbsp;
+                                                    <FontAwesomeIcon className="icon-copy" icon={faCopy} color="#6c757d" />
+                                                </p>
+                                            </div>
+                                            <div className="meio-info">
+                                                <p className="meio">
+                                                    <FontAwesomeIcon icon={faCircleExclamation} color={vermelhoEscuro} />
+                                                    &nbsp;{course.classification}
+                                                </p>
+                                                <p className="meio">
+                                                    <FontAwesomeIcon icon={faStar} color={amarelo} />
+                                                    &nbsp;{formatDate(course.start_date)}
+                                                </p>
+                                            </div>
+                                            <div className="baixo-info">
+                                                <p className={normalizeText(course.status)}>{course.status}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Link>
+                            ))
+                        ) : (
+                            <div className='sem-treinamentos' style={{ display: 'flex' }}>
+                                <p className="mensagem-sem-treinamento">
+                                    Ainda <span className="destaque-tres">não há treinamentos</span> para este colaborador ou <span className="destaque-dois">os filtros</span> não trouxeram resultados.
+                                </p>
+                                <img className='imagem-sem-treinamento' src={semTreinamento} alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API' />
+                            </div>
+
+
+
+                        )}
+                    </div>
+                </div>
+            </div>
         </>
     );
 }
