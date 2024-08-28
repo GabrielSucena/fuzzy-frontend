@@ -22,13 +22,13 @@ import ModalSelecionarAdd from '../modalSelecionarAdd';
 import { useRole } from '../../functionsCenter/RoleContext';
 
 const roles = ['Market', 'Finance', 'Development'];
-const classifications = ['A', 'B', 'C', 'D'];
+const classifications = ['N/A', 'ME', 'MA', 'C'];
 const statuses = ['Active', 'Inactive', 'Pending'];
 
 
 
 
-export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradores }) {
+export default function TabelaMUI2({ curso_id, colaboradores, refreshColaboradores }) {
     const { regra } = useRole();
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                 name: colaborador.name,
                 department: colaborador.department,
                 role: colaborador.position,
-                classification: colaborador.status,
+                classification: colaborador.classification,
                 status: colaborador.status,
             }));
             setRows(initialRows);
@@ -50,11 +50,13 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
     const [rows, setRows] = React.useState();
     const [rowModesModel, setRowModesModel] = useState({});
     const [confirmedNames, setConfirmedNames] = useState([]);
+    const [updatedClassifications, setUpdatedClassifications] = useState([]); // Lista de classificações atualizadas
     const [rejectedNames, setRejectedNames] = useState([]);
     const [openModal, setOpenModal] = useState(null);
     const handleOpen = (modalType) => () => setOpenModal(modalType);
     const handleClose = () => setOpenModal(null);
-   
+    const [isSaving, setIsSaving] = useState(false);  // Estado para controlar o carregamento
+
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const abreModal = () => {
@@ -127,13 +129,78 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
         );
     };
 
+    const classificationMapping = {
+        'N/A': { classificationId: 1 },
+        'ME': { classificationId: 2 },
+        'MA': { classificationId: 3 },
+        'C': { classificationId: 4 },
+    };
+    // Função para enviar as atualizações de classificações
+    const PatchAttClassification = () => {
+
+        if (updatedClassifications.length === 0) {
+            return; // Não faz a requisição se não houver classificações para atualizar
+        }
+
+
+
+
+        try {
+            setIsSaving(true);  // Define o estado de carregamento como verdadeiro
+
+            const response = fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Assumindo que o token está no localStorage
+                },
+                body: JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }),
+            });
+            console.log('Requisição:', JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }))
+
+            if (!response.ok) {
+                throw new Error('Erro na requisição');
+            }
+
+            refreshColaboradores(); // Atualiza a lista de colaboradores após a requisição
+            setUpdatedClassifications([]); // Limpa a lista após o envio
+
+        } catch (error) {
+            console.error('Erro ao fazer a requisição:', error);
+        } finally {
+            setIsSaving(false);  // Define o estado de carregamento como falso
+        }
+    };
+
+
+    // useEffect para executar a requisição quando updatedClassifications mudar
+    useEffect(() => {
+        if (updatedClassifications.length > 0) {
+            PatchAttClassification();
+        }
+    }, [updatedClassifications]);
+
+
+    // Função para atualizar a lista de classificações
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow, isNew: false };
+        const originalRow = rows.find(row => row.id === newRow.id);
+        if (originalRow.classification !== newRow.classification) {
+            const { classificationId } = classificationMapping[newRow.classification];
+
+            // Adiciona ou atualiza a lista de classificações atualizadas
+            setUpdatedClassifications(prev => [
+                ...prev,
+                { collaboratorId: newRow.id, classificationId }
+            ]);
+        }
+
         setRows((prevRows) =>
             prevRows.map((row) => (row.id === newRow.id ? updatedRow : row))
         );
         return updatedRow;
     };
+
 
     const handleRowModesModelChange = (newRowModesModel) => {
         setRowModesModel(newRowModesModel);
@@ -155,6 +222,7 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
             const openModalFunction = handleOpen('retirar-colaborador');
             openModalFunction();
         }
+        //PatchAttClassification(); // Chama a função para enviar as atualizações de classificações
 
         // Resetar os checkboxes
         setRows((prevRows) =>
@@ -188,7 +256,14 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
         { field: 'name', headerName: 'Nome', width: 180, editable: false },
         { field: 'department', headerName: 'Departamento', width: 180, editable: false },
         { field: 'role', headerName: 'Cargo', width: 180, editable: false, type: 'singleSelect', valueOptions: roles },
-        { field: 'classification', headerName: 'Classificação', width: 180, editable: true, type: 'singleSelect', valueOptions: classifications },
+        {
+            field: 'classification',
+            headerName: 'Classificação',
+            width: 180,
+            editable: showDeleteIcon, // Torna editável apenas se o botão de editar foi pressionado
+            type: 'singleSelect',
+            valueOptions: classifications
+        },
         { field: 'status', headerName: 'Status', width: 180, editable: false, type: 'singleSelect', valueOptions: statuses },
         showDeleteIcon ? {
             field: 'actions',
@@ -228,13 +303,13 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
 
     return (
         <>
-            
+
             {openModal === 'notificar' && (
                 <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
             )}
             {openModal === 'adicionar-colaborador' && (
                 // <ModalAddColaborador id_curso={curso_id} open={true} handleClose={handleClose}  refreshColaboradores={refreshColaboradores} />
-                <ModalSelecionarAdd open={true} handleClose={handleClose} curso_id={curso_id}  refreshColaboradores={refreshColaboradores} />
+                <ModalSelecionarAdd open={true} handleClose={handleClose} curso_id={curso_id} refreshColaboradores={refreshColaboradores} />
             )}
             {openModal === 'retirar-colaborador' && (
                 <ModalConfirmarExclusãoColaborador setRejectedNames={setRejectedNames} setResetRows={setResetRows}
@@ -276,28 +351,28 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                             />
                         </Box>
                     </Grid>
-                    
+
                     <Grid item className='grider' xs={0}>
-                            <Grid className='botao-alteracao-dois'>
-                            {regra !== '[admin]' ? 
-                                <PdfSender  /> :
-                                <Botao color='roxo' onClick={() => {}}>Concluir o treinamento</Botao>
-                            }  
-                            </Grid>
-                    {showDeleteIcon && (
-                        <>
-                            <Grid className='botao-alteracao'>
-                                <Button  onClick={handleSaveAllClick} variant="contained">
-                                    confirmar
-                                </Button>
-                                <Button onClick={handleCancelAllClick} variant="outlined">
-                                    cancelar
-                                </Button>
-                            </Grid>
-                            
-                        </>
-                    )}
-                    
+                        <Grid className='botao-alteracao-dois'>
+                            {regra !== '[admin]' ?
+                                <PdfSender /> :
+                                <Botao color='roxo' onClick={() => { }}>Concluir o treinamento</Botao>
+                            }
+                        </Grid>
+                        {showDeleteIcon && (
+                            <>
+                                <Grid className='botao-alteracao'>
+                                    <Button onClick={handleSaveAllClick} variant="contained">
+                                        confirmar
+                                    </Button>
+                                    <Button onClick={handleCancelAllClick} variant="outlined">
+                                        cancelar
+                                    </Button>
+                                </Grid>
+
+                            </>
+                        )}
+
                     </Grid>
                 </Grid>
             </DefaultPaper>
