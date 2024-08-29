@@ -4,6 +4,7 @@ import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataGrid, GridActionsCellItem, GridRowEditStopReasons, GridRowModes } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import DefaultPaper from '../defaultPaper';
@@ -20,16 +21,19 @@ import { ExtraiRelatorio } from '../../functionsCenter/functionsCenter';
 import PdfSender from '../../screens/ramo-a-treinamentos/pdfsender';
 import ModalSelecionarAdd from '../modalSelecionarAdd';
 import { useRole } from '../../functionsCenter/RoleContext';
+import { Navigate } from 'react-router-dom';
 
 const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['N/A', 'ME', 'MA', 'C'];
 const statuses = ['Active', 'Inactive', 'Pending'];
 
+const token = localStorage.getItem('authToken');
 
 
 
 export default function TabelaMUI2({ curso_id, colaboradores, refreshColaboradores }) {
     const { regra } = useRole();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (Array.isArray(colaboradores)) {
@@ -333,11 +337,13 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
         } : {},
     ];
 
+    
+
     return (
         <>
              
             {openModal === 'notificar' && (
-                <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
+                <ModalNotificarTreinamento open={true} handleClose={handleClose} curso_id={curso_id}/>
             )}
             {openModal === 'adicionar-colaborador' && (
                 // <ModalAddColaborador id_curso={curso_id} open={true} handleClose={handleClose}  refreshColaboradores={refreshColaboradores} />

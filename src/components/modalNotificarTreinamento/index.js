@@ -1,6 +1,5 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react'
-
+import React, { useState } from 'react';
 
 const style = {
     position: 'absolute',
@@ -15,43 +14,54 @@ const style = {
     boxShadow: 24,
     p: 4,
     borderRadius: '16px', // Adicione bordas arredondadas
-
 };
 
+const token = localStorage.getItem('authToken');
 
-
-
-function ModalNotificarTreinamento({ open, handleClose, colaboradores }) {
+function ModalNotificarTreinamento({ open, handleClose, id }) {
     const [justificativa, setJustificativa] = useState('');
 
-    const handleConfirm = () => {
-        console.log("Enviando notificação aos coloaboradores", colaboradores);
-        handleClose(); // Fechar o modal após confirmar
-
+    const handleConfirm = (id) => {
+        fetch(`http://localhost:8080/emailsender/curso/${id}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(resp => {
+                if (!resp.ok) {
+                    throw new Error(`Erro enviando email: ${resp.status}`);
+                }
+                
+            })
+            .then(data => {
+                console.log('Email enviado com sucesso:', data);
+                handleClose(); // Fechar o modal após confirmar (movido para o local correto)
+            })
     };
+
     return (
         <Modal
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 'bold' }}>
-                    Notificar treinamento ?
+                    Notificar colaboradores?
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2, mb: 2, color: '#565656', }}>
-                    Notificar colaborador de todos seus cursos com status à realizar.
+                    Essa ação irá notificar todos os colaboradores com cursos não realizados!
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', width: '100%' }}>
-                    <Button variant="contained" onClick={handleConfirm}>Confirmar</Button>
+                    <Button variant="contained" onClick={() => handleConfirm(id)}>Confirmar</Button>
                     <Button variant="outlined" onClick={handleClose}>Cancelar</Button>
                 </Box>
-
             </Box>
         </Modal>
-    )
+    );
 }
 
-export default ModalNotificarTreinamento
+export default ModalNotificarTreinamento;

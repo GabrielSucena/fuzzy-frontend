@@ -102,6 +102,28 @@ function VerColaborador() {
         setModalOpen(true);
     }
 
+    function handleEmail(id){
+        //Abre modal
+
+        fetch(`http://localhost:8080/emailsender/usuario/${id}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(resp => {
+                if (!resp.ok) {
+                    throw new Error(`Erro enviando email: ${resp.status}`);
+                } else {
+                    setTimeout(() => {navigate(`http://localhost:8080/colaboradores/${id}`)}, 2000);
+                    //FechaModal
+                }
+            })
+            .then(data => {
+                console.log('Email enviado com sucesso:', data);
+            })}
+
     function handleRemove(justificativa) {
         // Defina a URL correta, usando a variável id que você tem disponível
         const url = `http://localhost:8080/colaboradores/${id}`;
@@ -116,9 +138,9 @@ function VerColaborador() {
             },
             body: JSON.stringify(motivo) // Adicione o corpo apenas se a API suportar
         })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
+            .then(resp => {
+                if (!resp.ok) {
+                    throw new Error(`HTTP error! status: ${resp.status}`);
                 } else {
                     setTimeout(() => {
                         navigate('/colaboradores');
@@ -411,7 +433,7 @@ function VerColaborador() {
             <div className="conteiner-botao-dois">
                 <div className="botoes-titulo-pagina">
                     {role === '[admin]' &&
-                        <Botao onClick={() => { }} color={"roxo"}>
+                        <Botao onClick={() => handleEmail(id)} color={"roxo"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={branco} /> <span>Notificar</span>
                         </Botao>
                     }

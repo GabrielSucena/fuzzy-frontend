@@ -278,7 +278,6 @@ function TreinamentoInfo() {
             <Grid item xs={12} lg={6}>
               <DefaultPaper elevation={2} square={false} variant="elevation">
                 <Grid container spacing={1}>
-                  <Grid item xs={12} lg={6}>
                     <GraficoMUI
                       v1={treinamento.describeCourse?.critico}
                       n1={"Crítico"}
@@ -293,8 +292,7 @@ function TreinamentoInfo() {
                       n4={"Não aplicável"}
                       c4={'var(--cinza-escuro)'}
                     />
-                  </Grid>
-                  <Grid item xs={12} lg={6}>
+
                     <GraficoMUI
                       v1={treinamento.describeCourse?.green}
                       n1={"Cursos realizados"}
@@ -309,7 +307,6 @@ function TreinamentoInfo() {
                       n4={"Cursos não realizados"}
                       c4={'var(--vermelho-escuro)'}
                     />
-                  </Grid>
                 </Grid>
               </DefaultPaper>
             </Grid>
