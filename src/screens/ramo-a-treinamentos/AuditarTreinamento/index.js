@@ -15,7 +15,7 @@ function AuditarTreinamento( ) {
             <Auditoria
                 titulo="Audite este treinamento"
                 subtitulo = "Verifique pontualmente a movimentação deste treinamento"
-                tipo="course"
+                tipo="curso"
                 entidade={id}
             />
         </>

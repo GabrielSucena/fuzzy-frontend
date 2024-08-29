@@ -41,18 +41,15 @@ function Auditoria({
     const [removeLoading, setRemoveLoading] = useState(false);
     const [error, setError] = useState(null);
 
-
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
 
             try {
-                let fetchUrl = 'http://localhost:8080/auditorias';
+                let fetchUrl = 'http://localhost:8080/auditorias/';
                 
-                console.log(fetchUrl)
-
                 if (entidade && tipo) {
-                    fetchUrl += `?${tipo}=${entidade}`;
+                    fetchUrl += `${tipo}/${entidade}`;
                 }
 
 

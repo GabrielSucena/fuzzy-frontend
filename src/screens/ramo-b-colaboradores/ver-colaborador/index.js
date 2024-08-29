@@ -277,17 +277,18 @@ function VerColaborador() {
                 
                     <div className="conteiner-botao">
                         <div className="botoes-titulo-pagina">
-                            <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
+
+                            {
+                                (role === '[admin]' || role === '[manager]') &&
+                                <>
+                                                            <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
                                 <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
                             </Botao>
-                            {
-                                role === '[admin]' &&
-                                <>
                                     <Botao onClick={preExclusao} color={"branco"}>
                                         <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
                                     </Botao>
                             
-                                    <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}?register=${collaborator.register}`)} color={"branco"}>
+                                    <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}`)} color={"branco"}>
                                         <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
                                     </Botao>
                                 </>
@@ -425,7 +426,7 @@ function VerColaborador() {
             
                 <div className="conteiner-botao-dois">
                     <div className="botoes-titulo-pagina">
-                    {role === '[admin]' && 
+                    {(role === '[admin]' || role === '[manager]') && 
                         <Botao onClick={() => {}} color={"roxo"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={branco} /> <span>Notificar</span>
                         </Botao>

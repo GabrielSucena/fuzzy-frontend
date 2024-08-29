@@ -66,13 +66,13 @@ function PdfSender() {
     const handleConfirm = async () => {
         console.log('Resultado confirmado:', uploadResponse);
 
-        if (uploadResponse && uploadResponse.registers) {
+        if (uploadResponse && uploadResponse.records) {
             try {
                 console.log('Enviando dados para o servidor...');
                 await axios.patch(
-                    'http://localhost:8080/cursos/41/registros',
+                    'http://localhost:8080/cursos/101/registros',
                     {
-                        registers: uploadResponse.registers
+                        body: uploadResponse.records
                     },
                     {
                         headers: {
@@ -119,8 +119,8 @@ function PdfSender() {
     const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
 
     // Função para formatar os registros para exibição com ícones
-    const formatRegisters = (registers) => {
-        return registers.map((reg) => (
+    const formatrecords = (records) => {
+        return records.map((reg) => (
             <div key={reg} className="register-item">
                 <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />
                 &nbsp;{reg}
@@ -177,8 +177,8 @@ function PdfSender() {
                                 <div className='modal-content-pdf'>
                                     <h2 className='titulo-atualizacao'>Resultado da Análise</h2>
                                     <p className='texto-atualizacao'>Os colaboradores abaixo terão seu status alterado para "Realizado":</p>
-                                    {uploadResponse && uploadResponse.registers && (
-                                        <pre className='lista-att'>{formatRegisters(uploadResponse.registers)}</pre>
+                                    {uploadResponse && uploadResponse.records && (
+                                        <pre className='lista-att'>{formatrecords(uploadResponse.records)}</pre>
                                     )}
                                     <div className='modal-buttons'>
                                         <Botao color='roxo' onClick={handleConfirm}>Confirmar</Botao>

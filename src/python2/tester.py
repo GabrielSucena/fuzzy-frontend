@@ -41,7 +41,7 @@ def upload_file():
         grouped_numbers = [combined_numbers[i:i+5] for i in range(0, len(combined_numbers), 5)]
         logger.debug('Grouped numbers: %s', grouped_numbers)
 
-        return jsonify({'registers': grouped_numbers}), 200
+        return jsonify({'records': grouped_numbers}), 200
     
     logger.error('Invalid file type')
     return jsonify({'error': 'Invalid file type'}), 400

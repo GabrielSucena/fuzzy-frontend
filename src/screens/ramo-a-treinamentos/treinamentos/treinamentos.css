@@ -44,7 +44,7 @@
     border-radius: 0.25rem;
     font-size: 1rem;
     font-weight: bolder;
-    border: 2px solid var(--branco);
+    border: 5px solid var(--branco);
     flex: 1 1 30%; 
     max-width: 30%;
     text-align: center;
@@ -111,4 +111,19 @@
     background-color: var(--preto);
     border-radius: 0.2rem;
     width: 40%;
+}
+
+.sem-treinamentos-train-div{
+    text-align: center;
+}
+
+.sem-treinamentos-train-div .destaque{
+    padding: 1rem;
+    margin-top: 0.5rem;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+.sem-treinamentos-train{
+    width: 50%;
 }

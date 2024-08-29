@@ -20,6 +20,7 @@ import { ExtraiRelatorio } from '../../functionsCenter/functionsCenter';
 import PdfSender from '../../screens/ramo-a-treinamentos/pdfsender';
 import ModalSelecionarAdd from '../modalSelecionarAdd';
 import { useRole } from '../../functionsCenter/RoleContext';
+import vazioImg from "../../../src/empty.svg";
 
 const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['A', 'B', 'C', 'D'];
@@ -242,65 +243,82 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
             )}
             <hr className='divider-treinamento'></hr>
             <p className='titulo-mui2'>Colaboradores envolvidos</p>
-            <DefaultPaper elevation={2} square={false} variant="elevation" className='lista-colaboradores-dentro'>
-                <Grid container spacing={1}>
-                    <Grid item xs={12} md={12} lg={12}>
-                        {regra !== '[admin]' &&
-                            <div className='botoes-mui2'>
-                                <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>Adicionar</Botao>
-                                <Botao color='branco' onClick={toggleDeleteIcon}>Editar</Botao>
-                                <Botao color='branco' onClick={handleExtrair}>Extrair</Botao>
-                                <Botao color='branco' onClick={handleOpen('notificar')}>Notificar</Botao>
-                            </div>
-                        }
 
-                        <Box
-                            className='box'
-                            sx={{
-                                height: 500,
-                                width: '100%',
-                                '& .actions': {
-                                    color: 'text.secondary',
-                                },
-                            }}
-                        >
-                            <DataGrid
-                                className='linhas'
-                                rows={rows}
-                                columns={columns}
-                                editMode="row"
-                                rowModesModel={rowModesModel}
-                                onRowModesModelChange={handleRowModesModelChange}
-                                onRowEditStop={handleRowEditStop}
-                                processRowUpdate={processRowUpdate}
-                            />
-                        </Box>
-                    </Grid>
-                    
-                    <Grid item className='grider' xs={0}>
-                            <Grid className='botao-alteracao-dois'>
-                            {regra !== '[admin]' ? 
-                                <PdfSender  /> :
-                                <Botao color='roxo' onClick={() => {}}>Concluir o treinamento</Botao>
-                            }  
+
+                    <DefaultPaper 
+                        elevation={2} 
+                        square={false} 
+                        variant="elevation" 
+                        className='lista-colaboradores-dentro'
+                    >
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} md={12} lg={12}>
+                                {(regra === '[admin]' || '[manager]') && (
+                                    <div className='botoes-mui2'>
+                                        <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>Adicionar</Botao>
+                                        <Botao color='branco' onClick={toggleDeleteIcon}>Editar</Botao>
+                                        <Botao color='branco' onClick={handleExtrair}>Extrair</Botao>
+                                        <Botao color='branco' onClick={handleOpen('notificar')}>Notificar</Botao>
+                                    </div>
+                                )}
+                                            {Object.keys(colaboradores).length === 0 ? (
+                <>
+                <div className='sem-treinamentos-train-div'>
+                    <div className='destaque' style={{backgroundColor:'var(--branco)', color:'var(--roxo)'}}>Oops!</div>
+                    <div className='destaque'>Parece que ainda não há colaboradores nesse treinamento.</div>
+                    <img
+                        src={vazioImg}
+                        className='sem-treinamentos-train'
+                        alt='Imagem simbolizando que não há treinamentos'
+                    />
+                </div>
+
+                </>
+            ) : (
+                <>
+                            <Box
+                                    className='box'
+                                    sx={{
+                                        height: 500,
+                                        width: '100%',
+                                        '& .actions': {
+                                            color: 'text.secondary',
+                                        },
+                                    }}
+                                >
+                                    <DataGrid
+                                        className='linhas'
+                                        rows={rows}
+                                        columns={columns}
+                                        editMode="row"
+                                        rowModesModel={rowModesModel}
+                                        onRowModesModelChange={handleRowModesModelChange}
+                                        onRowEditStop={handleRowEditStop}
+                                        processRowUpdate={processRowUpdate}
+                                    />
+                                </Box>
+                </>)}
+    
                             </Grid>
-                    {showDeleteIcon && (
-                        <>
-                            <Grid className='botao-alteracao'>
-                                <Button  onClick={handleSaveAllClick} variant="contained">
-                                    confirmar
-                                </Button>
-                                <Button onClick={handleCancelAllClick} variant="outlined">
-                                    cancelar
-                                </Button>
+                            <Grid item className='grider' xs={0}>
+                                <Grid className='botao-alteracao-dois'>
+                                    {((regra === '[admin]' || '[manager]') && Object.keys(colaboradores).length > 0) && <PdfSender />}
+                                </Grid>
+                                {showDeleteIcon && (
+                                    <Grid className='botao-alteracao'>
+                                        <Button onClick={handleSaveAllClick} variant="contained">
+                                            Confirmar
+                                        </Button>
+                                        <Button onClick={handleCancelAllClick} variant="outlined">
+                                            Cancelar
+                                        </Button>
+                                    </Grid>
+                                )}
                             </Grid>
-                            
-                        </>
-                    )}
-                    
-                    </Grid>
-                </Grid>
-            </DefaultPaper>
+                        </Grid>
+                    </DefaultPaper>
+                
+            
         </>
 
     );

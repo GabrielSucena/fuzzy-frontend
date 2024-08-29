@@ -18,7 +18,7 @@ function AuditarColaborador( ) {
             <Auditoria
                 titulo="Audite este colaborador"
                 subtitulo = "Verifique pontualmente a movimentação deste colaborador"
-                tipo="collaborator"
+                tipo="colaborador"
                 entidade={id}
             />
         </>

@@ -32,9 +32,9 @@ const Formulario = (props) => {
                     return response.json().then(data => {
                         const token = data.accessToken;
                         const role = data.role;
-                        /*const role = '[basic]';*/
 
-                        setRole(role)
+
+                         setRole(role);
 
                         localStorage.setItem('authToken', token);
 
