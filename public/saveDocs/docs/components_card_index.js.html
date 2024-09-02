@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>components/card/index.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Auditoria">Auditoria</a></li><li><a href="global.html#Banner">Banner</a></li><li><a href="global.html#Bannerhome">Bannerhome</a></li><li><a href="global.html#BoasVindas">BoasVindas</a></li><li><a href="global.html#Botao">Botao</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#Carregando">Carregando</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#Rodape">Rodape</a></li><li><a href="global.html#TituloPagina">TituloPagina</a></li><li><a href="global.html#arrumaDatas">arrumaDatas</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">components/card/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "./card.css";
+//import { Button } from "react-native-web";
+import Botao from "../../components/botao";
+import { Link } from "react-router-dom";
+
+function Card( {tipo, descricao}) {
+
+/**
+ * @function Card
+ * @since 2024
+ * @version 2
+ * @param {String} tipo - Título do card
+ * @param {String} descricao - Chamada para ação do card
+ * @returns {} O elemento (div) em tela.
+ * @description Card visual para direcionamento de telas.
+ * @author Vinicius Domingues 
+ * @see [LinkedIn do autor](https://www.linkedin.com/in/vinicius-domingues-fonseca/)
+ * @see [GitHub do autor](https://github.com/vinicius-domingues)
+ * @see [Documentação do React](https://legacy.reactjs.org/docs/getting-started.html)
+ */
+
+  const cTipo = tipo;
+  const cDescricao = descricao;
+
+    return(
+        &lt;div className="card">
+            &lt;h5 className="card-title">&lt;b>{cTipo}&lt;/b>&lt;/h5>
+            &lt;p className="card-description">{cDescricao}&lt;/p>
+            &lt;div className="conteiner-geral">
+              &lt;div className="conteiner-quadrados">
+                  &lt;div className="quadrados">&lt;/div>
+                  &lt;div className="quadrados">&lt;/div>
+                  &lt;div className="quadrados">&lt;/div>
+                  &lt;div className="quadrados">&lt;/div>
+                  &lt;div className="quadrados">&lt;/div>
+              &lt;/div>
+            &lt;/div>
+            &lt;div className="botao-home-card">
+                &lt;button className="botao-enfeite"> Acessar &lt;/button>
+            &lt;/div>
+            
+        &lt;/div>
+    )
+}
+
+export default Card;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

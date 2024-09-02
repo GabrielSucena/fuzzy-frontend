@@ -15,6 +15,30 @@ function Modal({
     onConfirm,
     onClose
 }) {
+
+    /**
+ * @function Modal
+ * @since 2024
+ * @version 4
+ * @param {Boolean} isOpen - Se o modal está ativo
+ * @param {String} text - Texto inicial do modal
+ * @param {Function} acaoColaborador - Ação a ser realizada sobre o colaborador
+ * @param {Function} acaoDepartamento - Ação a ser realizada sobre o colaborador
+ * @param {String} complement - Texto final do modal
+ * @param {Boolean} way - Se há os botões de inclusão
+ * @param {Boolean} buttons - Se há os botões de inclusão genéricos
+ * @param {Boolean} actions - Botões de fechamento ou confirmação do modal, não deve ser passado se o modal for informativo
+ * @param {String} reason - Campo para inclusão de justificativa se a ação for exclusão
+ * @param {Function} onConfirm - Ação realizada ao clicar no confirmar do modal
+ * @param {Function} onCancel - Ação realizada ao clicar no cancelar do modal
+ * @returns {} O elemento (div) em tela.
+ * @description Modais do site.
+ * @author Vinicius Domingues 
+ * @see [LinkedIn do autor](https://www.linkedin.com/in/vinicius-domingues-fonseca/)
+ * @see [GitHub do autor](https://github.com/vinicius-domingues)
+ * @see [Documentação do React](https://legacy.reactjs.org/docs/getting-started.html)
+ */
+
     const [justificativa, setJustificativa] = useState('');
 
     if (!isOpen) return null; // Renderiza nada se o modal não estiver aberto

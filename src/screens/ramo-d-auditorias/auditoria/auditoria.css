@@ -213,15 +213,17 @@
 }
 
 .sem-conexao-colaborador {
-    display: inline-flex; 
+    display: block;
     justify-content: center;
+    text-align: center;
+    
+    align-self: center;
 }
 
-.sem-conexao-colaborador img {
-    max-width: 80%; 
-    height: auto;   
-    display: flex;  
+.sem-conexao-colaborador .img-sem-auditoria {
+    max-width: 60%; 
     margin: 0;       
     padding: 3.75rem 0rem;     
     
 }
+

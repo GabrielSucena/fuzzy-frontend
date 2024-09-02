@@ -1,0 +1,52 @@
+/* src/components/toggleContent/ToggleContent.css */
+.toggle-content {
+    border: 1px solid #ddd;
+    
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+    justify-content: center;
+  }
+  
+  .toggle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    padding-left: 2rem;
+    cursor: pointer;
+    color: var(--branco);
+    background-color: var(--cinza-escuro);
+  }
+  
+  .toggle-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    
+  }
+  
+  .toggle-icon {
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: var(--preto);
+    padding: 0.5rem 1rem;
+    border-radius: 10rem;
+  }
+  
+  .toggle-body {
+    padding-left: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #fafafa;
+    width: 90%;
+  }
+  
+
+
+  .tutorial-conteudo ol li{
+        padding-bottom: 0.5rem;
+  }
+
+  .tutorial-conteudo ul li{
+    padding-bottom: 0.5rem;
+}

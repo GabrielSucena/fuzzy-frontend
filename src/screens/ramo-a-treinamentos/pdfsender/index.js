@@ -6,7 +6,7 @@ import { faCircleExclamation, faCircleChevronRight } from '@fortawesome/free-sol
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 
-function PdfSender() {
+function PdfSender( {id} ) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadResponse, setUploadResponse] = useState(null);
@@ -63,20 +63,21 @@ function PdfSender() {
         }
     };
 
-    const handleConfirm = async () => {
-        console.log('Resultado confirmado:', uploadResponse);
-
+    const handleConfirm = async (id) => {
+        console.log('Resultado confirmado:', uploadResponse, "no ID: ", id);
+    
         if (uploadResponse && uploadResponse.records) {
             try {
                 console.log('Enviando dados para o servidor...');
                 await axios.patch(
-                    'http://localhost:8080/cursos/101/registros',
+                    `http://localhost:8080/extracaopdf/${id}`,
                     {
-                        body: uploadResponse.records
+                        records: uploadResponse.records // Corrigido: deve ser um objeto com a chave `records`
                     },
                     {
                         headers: {
-                            'Authorization': `Bearer ${token}`
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json' // Certifique-se de que o tipo de conteúdo esteja correto
                         }
                     }
                 );
@@ -103,6 +104,7 @@ function PdfSender() {
             }
         }
     };
+    
 
     const handleCancel = () => {
         if (showConfirmation) {
@@ -181,7 +183,8 @@ function PdfSender() {
                                         <pre className='lista-att'>{formatrecords(uploadResponse.records)}</pre>
                                     )}
                                     <div className='modal-buttons'>
-                                        <Botao color='roxo' onClick={handleConfirm}>Confirmar</Botao>
+                                        <Botao color='roxo' onClick={() => handleConfirm(id)}>Confirmar</Botao>
+
                                         <Botao color='branco' onClick={handleCancel}>Cancelar</Botao>
                                     </div>
                                 </div>

@@ -26,10 +26,14 @@ function VerColaborador() {
     const [selectedCriticality, setSelectedCriticality] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
 
+
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen2, setModalOpen2] = useState(false);
+    const openModal2 = () => {
+        setModalOpen2(true);
+    };
 
-    const [popupMessage, setPopupMessage] = useState('');
-
+    
     const verde = getComputedStyle(document.documentElement).getPropertyValue('--verde').trim();
     const vermelho = getComputedStyle(document.documentElement).getPropertyValue('--vermelho').trim();
     const laranja = getComputedStyle(document.documentElement).getPropertyValue('--laranja').trim();
@@ -41,6 +45,20 @@ function VerColaborador() {
     const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
     const amarelo = getComputedStyle(document.documentElement).getPropertyValue('--amarelo').trim();
     const token = localStorage.getItem('authToken');
+
+    const handleSendEmail = async () => {
+        await fetch(`http://localhost:8080/emailsender/usuario/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+    
+        // Fecha o modal após a requisição
+        handleClose();
+    };
+    
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -233,10 +251,16 @@ function VerColaborador() {
             return normalizedText;
         }
 
+
+
         const handleClose = (e) => {
-            e.preventDefault();
+            if (e) {
+                e.preventDefault(); // Apenas chama preventDefault se e não for undefined
+            }
             setModalOpen(false);
-          };
+            setModalOpen2(false);
+        };
+        
 
           const handlePrint = (parte) => {
             const originalContent = document.body.innerHTML;
@@ -256,6 +280,7 @@ function VerColaborador() {
         };
         
 
+
     return (
         <>
               <Modal 
@@ -267,6 +292,15 @@ function VerColaborador() {
                     actions={true} 
                     buttons={true} 
                     text="Excluir colaborador(a)?" 
+            />
+            <Modal 
+                    isOpen={modalOpen2} 
+                    onClose={handleClose} 
+                    onConfirm={handleSendEmail} 
+                    text="Notificar colaborador(a)?" 
+                    actions={true} 
+                    buttons={true} 
+                    complement={"Este colaborador(a) será notificado(a) sobre seus cursos pendentes via email."} 
             />
             {collaboratorMessage && <div className="message">{collaboratorMessage}</div>}
             <div className="topo-telas">
@@ -427,7 +461,7 @@ function VerColaborador() {
                 <div className="conteiner-botao-dois">
                     <div className="botoes-titulo-pagina">
                     {(role === '[admin]' || role === '[manager]') && 
-                        <Botao onClick={() => {}} color={"roxo"}>
+                        <Botao onClick={openModal2} color={"roxo"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={branco} /> <span>Notificar</span>
                         </Botao>
                     }

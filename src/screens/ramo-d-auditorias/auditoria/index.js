@@ -31,6 +31,24 @@ function Auditoria({
     entidade,
     tipo
 }) {
+
+    
+/**
+ * @function Auditoria
+ * @since 2024
+ * @version 1
+ * @param {String} titulo - Título da auditoria
+ * @param {String} subtitulo - Descrição da auditoria
+ * @param {String} entidade - ID da entidade
+ * @param {String} tipo - Deve ser 'curso' ou 'colaborador'
+ * @returns {} - A auditoria do tipo específico
+ * @description Auditoria de todas as ações realizadas sobre os cursos, colaboradores e colaboradores dentro de cursos.
+ * @author Vinicius Domingues 
+ * @see [LinkedIn do autor](https://www.linkedin.com/in/vinicius-domingues-fonseca/)
+ * @see [GitHub do autor](https://github.com/vinicius-domingues)
+ * @see
+ */
+ 
     const [auditoria, setAuditoria] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterType, setFilterType] = useState('');
@@ -46,10 +64,10 @@ function Auditoria({
             setLoading(true);
 
             try {
-                let fetchUrl = 'http://localhost:8080/auditorias/';
+                let fetchUrl = 'http://localhost:8080/auditorias';
                 
                 if (entidade && tipo) {
-                    fetchUrl += `${tipo}/${entidade}`;
+                    fetchUrl += `/${tipo}/${entidade}`;
                 }
 
 
@@ -185,11 +203,7 @@ function Auditoria({
                         <Carregando className="div-carregar">Carregando</Carregando>
                     </div>
                 )}
-                {!removeLoading && (
-                    <div className="sem-conexao-colaborador">
-                        <img src={semAuditoria} alt="Sem auditoria" />
-                    </div>
-                )}
+
                 <div className="auditorias-content">
                     {removeLoading && auditoria.length > 0 ? (
                         agrupar.map((auditoriaItem) => (
@@ -238,7 +252,14 @@ function Auditoria({
                             </div>
                         ))
                     ) : (
-                       <div className="texto-sem-auditoria"><p className="destaque" style={{textAlign:'center', padding:'2rem 0rem', fontWeight:'bolder', fontSize:'1.5rem'}}>Não há dados disponíveis atualmente.</p></div>
+                       <>
+                                       {!removeLoading && (
+                    <div className="sem-conexao-colaborador">
+                        <div className="texto-sem-auditoria"><p className="destaque" style={{textAlign:'center', padding:'2rem 0rem', fontWeight:'bolder', fontSize:'1.5rem'}}>Não há dados disponíveis atualmente.</p></div>
+                        <img src={semAuditoria} className="img-sem-auditoria" alt="Sem auditoria" />
+                    </div>
+                )}
+                       </>
                     )}
                 </div>
             </div>

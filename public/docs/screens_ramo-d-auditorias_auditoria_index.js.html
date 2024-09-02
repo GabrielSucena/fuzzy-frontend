@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>screens/ramo-d-auditorias/auditoria/index.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Auditoria">Auditoria</a></li><li><a href="global.html#Banner">Banner</a></li><li><a href="global.html#Bannerhome">Bannerhome</a></li><li><a href="global.html#BoasVindas">BoasVindas</a></li><li><a href="global.html#Botao">Botao</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#Carregando">Carregando</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#Rodape">Rodape</a></li><li><a href="global.html#TituloPagina">TituloPagina</a></li><li><a href="global.html#arrumaDatas">arrumaDatas</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">screens/ramo-d-auditorias/auditoria/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import "./auditoria.css";
+import TituloPagina from "../../../components/titulopagina";
+import { useEffect, useState } from 'react';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleChevronRight, faPrint, faCodeCommit, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
+import Carregando from "../../../components/carregando";
+import semAuditoria from "../../../../src/semAuditoria.svg"; // Importação da imagem
+
+const token = localStorage.getItem('authToken');
+const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
+const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
+const azul = getComputedStyle(document.documentElement).getPropertyValue('--azul').trim();
+const verde = getComputedStyle(document.documentElement).getPropertyValue('--verde').trim();
+const cinza = getComputedStyle(document.documentElement).getPropertyValue('--cinza-escuro').trim();
+const vermelho = getComputedStyle(document.documentElement).getPropertyValue('--vermelho-escuro').trim();
+
+// Função para formatar a data
+const formatDateTime = (dateTime) => {
+    const date = new Date(dateTime);
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Janeiro é 0
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `Ação feita em ${day}/${month}/${year} às ${hours}:${minutes}`;
+};
+
+function Auditoria({
+    titulo = "Auditorias",
+    subtitulo = "Veja as modificações no sistema detalhadamente",
+    entidade,
+    tipo
+}) {
+
+    
+/**
+ * @function Auditoria
+ * @since 2024
+ * @version 1
+ * @param {String} titulo - Título da auditoria
+ * @param {String} subtitulo - Descrição da auditoria
+ * @param {String} entidade - ID da entidade
+ * @param {String} tipo - Deve ser 'curso' ou 'colaborador'
+ * @returns {} - A auditoria do tipo específico
+ * @description Auditoria de todas as ações realizadas sobre os cursos, colaboradores e colaboradores dentro de cursos.
+ * @author Vinicius Domingues 
+ * @see [LinkedIn do autor](https://www.linkedin.com/in/vinicius-domingues-fonseca/)
+ * @see [GitHub do autor](https://github.com/vinicius-domingues)
+ * @see
+ */
+ 
+    const [auditoria, setAuditoria] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filterType, setFilterType] = useState('');
+    const [filterEntity, setFilterEntity] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+    const [loading, setLoading] = useState(true);
+    const [removeLoading, setRemoveLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+
+            try {
+                let fetchUrl = 'http://localhost:8080/auditorias';
+                
+                if (entidade &amp;&amp; tipo) {
+                    fetchUrl += `/${tipo}/${entidade}`;
+                }
+
+
+                console.log("URL: ", fetchUrl)
+                
+                const response = await fetch(fetchUrl, { 
+                    method: 'GET', 
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,  
+                    } 
+                });
+                const auditoriaData = await response.json();
+
+                setAuditoria(auditoriaData);
+                setRemoveLoading(true);
+
+            } catch (error) {
+                console.error("Fetch error:", error);
+                setError('Erro ao carregar dados.'); 
+            } finally {
+                setLoading(false); 
+            }
+        };
+
+        fetchData();
+    }, [entidade, tipo]);
+
+    const applyFilters = (items) => {
+        return items.filter(item => {
+            const matchesSearchTerm =
+            (item.course &amp;&amp; String(item.course).toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (item.employee &amp;&amp; String(item.employee).toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (item.user &amp;&amp; item.user.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (item.reason &amp;&amp; item.reason.toLowerCase().includes(searchTerm.toLowerCase()));
+
+            const matchesTypeFilter =
+                filterType === '' ||
+                (filterType === 'inclusao' &amp;&amp; !item.removed &amp;&amp; !item.changedField) ||
+                (filterType === 'alteracao' &amp;&amp; !item.removed &amp;&amp; item.changedField) ||
+                (filterType === 'exclusao' &amp;&amp; item.removed);
+
+            const matchesEntityFilter =
+                filterEntity === '' ||
+                (filterEntity === 'course' &amp;&amp; item.course &amp;&amp; !item.collaborator) ||
+                (filterEntity === 'collaborator' &amp;&amp; item.collaborator &amp;&amp; !item.course) ||
+                (filterEntity === 'both' &amp;&amp; (item.course &amp;&amp; item.collaborator));
+
+            const matchesDateFilter =
+                (!startDate || new Date(item.createdOn) >= new Date(startDate)) &amp;&amp; (!endDate || new Date(item.createdOn) &lt;= new Date(endDate));
+            return matchesSearchTerm &amp;&amp; matchesTypeFilter &amp;&amp; matchesEntityFilter &amp;&amp; matchesDateFilter;
+        });
+    };
+
+    const handlePrint = () => {
+        const originalContent = document.body.innerHTML;
+        const printContent = document.querySelector('.auditorias-content').innerHTML;
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
+        window.location.reload();
+    };
+
+    const agrupar = applyFilters(auditoria);
+
+    return (
+        &lt;>
+            &lt;TituloPagina 
+                titulopagina={titulo} 
+                descricaotitulo={subtitulo}
+            />
+            &lt;div className="auditorias-container">
+                &lt;div className="filtros-container">
+                    &lt;div className='busca-filtros'>
+                        &lt;input
+                            className="principal"
+                            type="text"
+                            placeholder="Busque por ID, gestor(a) ou justificativa"
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
+                        &lt;select 
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                console.log("Filtro de Tipo selecionado:", value);
+                                setFilterType(value);
+                            }}
+                        >
+                            &lt;option value="">Ação&lt;/option>
+                            &lt;option value="inclusao">Inclusão&lt;/option>
+                            &lt;option value="alteracao">Alteração&lt;/option>
+                            {!entidade &amp;&amp; &lt;option value="exclusao">Exclusão&lt;/option>}
+                            
+                        &lt;/select>
+                        &lt;select 
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                console.log("Filtro de Entidade selecionado:", value);
+                                setFilterEntity(value);
+                            }}
+                        >
+                            {tipo === 'course' 
+                                ? &lt;option value="course">Apenas o treinamento&lt;/option>
+                                : tipo === 'collaborator'
+                                ? &lt;option value="collaborator">Apenas o colaborador&lt;/option>
+                                : &lt;option value="">Modo&lt;/option>
+                            }
+                            {!tipo &amp;&amp; &lt;option value="course">Cursos&lt;/option>}
+                            {!tipo &amp;&amp; &lt;option value="collaborator">Colaboradores&lt;/option>}
+                            &lt;option value="both">Colaboradores em treinamentos&lt;/option>
+                        &lt;/select>
+                        &lt;div className="date-range-picker">
+                            &lt;input
+                                className="esquerda"
+                                type="date"
+                                value={startDate}
+                                onChange={(e) => setStartDate(e.target.value)}
+                            />
+                            &lt;input
+                                className="direita"
+                                type="date"
+                                value={endDate}
+                                onChange={(e) => setEndDate(e.target.value)}
+                            />
+                        &lt;/div>
+                        &lt;button className='botao-auditoria' onClick={handlePrint}>
+                            &lt;FontAwesomeIcon className="icon" icon={faPrint} color={branco} />&amp;nbsp;&amp;nbsp;&amp;nbsp;Extrair
+                        &lt;/button>
+                    &lt;/div>
+                &lt;/div>
+                {loading &amp;&amp; (
+                    &lt;div className="sem-conexao-colaborador">
+                        &lt;Carregando className="div-carregar">Carregando&lt;/Carregando>
+                    &lt;/div>
+                )}
+
+                &lt;div className="auditorias-content">
+                    {removeLoading &amp;&amp; auditoria.length > 0 ? (
+                        agrupar.map((auditoriaItem) => (
+                            &lt;div key={auditoriaItem.id} className="auditoria-item">
+                                &lt;p className="gestor">&lt;strong>Gestor(a):&amp;nbsp;&lt;/strong> {auditoriaItem.user}&lt;/p>
+                                &lt;p className="momento">&lt;strong>{formatDateTime(auditoriaItem.createdOn)}&lt;/strong>&lt;/p>
+                                {auditoriaItem.removed &amp;&amp; (
+                                    &lt;p className="desativado">
+                                        &lt;FontAwesomeIcon className="icon" icon={faX} color={vermelho} />
+                                        &amp;nbsp;&amp;nbsp;&lt;strong>Desativado: &lt;span className="reason">{auditoriaItem.reason || 'N/A'}&lt;/span>&lt;/strong>
+                                    &lt;/p>
+                                )}
+                                {auditoriaItem.changedField  &amp;&amp; (
+                                    &lt;>
+                                        &lt;p>
+                                            &lt;FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />
+                                            &amp;nbsp;&amp;nbsp;&lt;strong>Mudanças:&lt;/strong> {auditoriaItem.changedField || 'N/A'}
+                                        &lt;/p>
+                                        &lt;p style={{paddingBottom:'0.25rem'}}>
+                                            &lt;FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />
+                                            &amp;nbsp;&amp;nbsp;&lt;strong>Anteriormente:&lt;/strong> {auditoriaItem.oldValues || 'N/A'}
+                                        &lt;/p>
+                                    &lt;/>
+                                )}
+                                {auditoriaItem.collaborator &amp;&amp; (
+                                    &lt;p style={{paddingBottom:'0.25rem'}}>
+                                        &lt;FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={azul} />
+                                        &amp;nbsp;&amp;nbsp;&lt;strong>Colaborador (ID):&lt;/strong> {auditoriaItem.collaborator}
+                                    &lt;/p>
+                                )}
+                                {auditoriaItem.course &amp;&amp; (
+                                    &lt;>
+                                        &lt;p style={{paddingBottom:'1rem'}}>
+                                            &lt;strong>
+                                                &lt;FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={verde} />
+                                                &amp;nbsp;&amp;nbsp;Treinamento (ID):
+                                            &lt;/strong> {auditoriaItem.course}
+                                        &lt;/p>
+                                        &lt;p style={{paddingBottom:'0.25rem'}}>
+                                            &lt;FontAwesomeIcon className="icon" icon={faCodeCommit} color={cinza} />
+                                            &amp;nbsp;&amp;nbsp;&lt;strong>Versão no momento da ação: &lt;/strong> {auditoriaItem.courseVersion} (atualmente na versão {Number(auditoriaItem.courseVersion) + 1})
+                                        &lt;/p>
+                                    &lt;/>
+                                )}
+                                &lt;hr className="divisao-auditoria"/>
+                            &lt;/div>
+                        ))
+                    ) : (
+                       &lt;>
+                                       {!removeLoading &amp;&amp; (
+                    &lt;div className="sem-conexao-colaborador">
+                        &lt;div className="texto-sem-auditoria">&lt;p className="destaque" style={{textAlign:'center', padding:'2rem 0rem', fontWeight:'bolder', fontSize:'1.5rem'}}>Não há dados disponíveis atualmente.&lt;/p>&lt;/div>
+                        &lt;img src={semAuditoria} className="img-sem-auditoria" alt="Sem auditoria" />
+                    &lt;/div>
+                )}
+                       &lt;/>
+                    )}
+                &lt;/div>
+            &lt;/div>
+        &lt;/>
+    );
+}
+
+export default Auditoria;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

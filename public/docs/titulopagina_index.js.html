@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>titulopagina/index.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Banner">Banner</a></li><li><a href="global.html#Bannerhome">Bannerhome</a></li><li><a href="global.html#BoasVindas">BoasVindas</a></li><li><a href="global.html#Botao">Botao</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#Carregando">Carregando</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#Rodape">Rodape</a></li><li><a href="global.html#TituloPagina">TituloPagina</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">titulopagina/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React from "react";
+import PropTypes from 'prop-types';
+import Botao from "../botao";
+import "./titulopagina.css";
+
+function TituloPagina({
+    titulopagina = 'Título Obrigatório',
+    descricaotitulo = '',
+    divisor1 = false,
+    divisor2 = false,
+    botao1 = '', color1 = 'roxo', destino1 = '', onClick1 = null,
+    botao2 = '', color2 = 'roxo', destino2 = '', onClick2 = null,
+    botao3 = '', color3 = 'roxo', destino3 = '', onClick3 = null
+}) {
+
+      /**
+ * @function TituloPagina
+ * @since 2024
+ * @version 3
+ * @param {String} titulopagina - Título da página
+ * @param {String} descricaotitulo - Descrição da página
+ * @param {Boolean} divisor1 - Se há o divisor da parte superior
+ * @param {Boolean} divisor2 - Se há o divisor da parte inferior
+ * 
+ * @param {String} botao1 - Texto do botão 1
+ * @param {String} color1 - Cor do botão 1
+ * @param {String} destino1 - Destino ao clicar no botão 1
+ * @param {String} onclick1 - Ação ao fazer ao clicar no botão 1
+ * 
+ * @param {String} botao2 - Texto do botão 2
+ * @param {String} color2 - Cor do botão 2
+ * @param {String} destino2 - Destino ao clicar no botão 2
+ * @param {String} onclick2 - Ação ao fazer ao clicar no botão 2
+ * 
+ * @param {String} botao3 - Texto do botão 3
+ * @param {String} color3 - Cor do botão 3
+ * @param {String} destino3 - Destino ao clicar no botão 3
+ * @param {String} onclick3 - Ação ao fazer ao clicar no botão 3
+ * @returns {} O elemento (div) em tela.
+ * @description Título, descrição e botões padrão do topo das páginas.
+ * @author Vinicius Domingues 
+ * @see [LinkedIn do autor](https://www.linkedin.com/in/vinicius-domingues-fonseca/)
+ * @see [GitHub do autor](https://github.com/vinicius-domingues)
+ * @see [Documentação do React](https://legacy.reactjs.org/docs/getting-started.html)
+ */
+
+
+    return (
+        &lt;>
+            &lt;div className="topo-telass">
+                {divisor1 &amp;&amp; (&lt;hr className="divisorcimaa" />)}
+                
+                &lt;div className="titulo-e-descricaoo">
+                    &lt;p className="titulo-paginaa">{titulopagina}&lt;/p>
+                    {descricaotitulo &amp;&amp; (&lt;p className="descricao-tituloo">{descricaotitulo}&lt;/p>)}
+                &lt;/div>
+                
+                &lt;div className="conteiner-botaoo">
+                    {(botao1 || botao2 || botao3) &amp;&amp; (
+                        &lt;div className="botoes-titulo-paginaa">
+                            {botao1 &amp;&amp; (&lt;Botao onClick={onClick1} destino={destino1} color={color1}>{botao1}&lt;/Botao>)}
+                            {botao2 &amp;&amp; (&lt;Botao onClick={onClick2} destino={destino2} color={color2}>{botao2}&lt;/Botao>)}
+                            {botao3 &amp;&amp; (&lt;Botao onClick={onClick3} destino={destino3} color={color3}>{botao3}&lt;/Botao>)}
+                        &lt;/div>
+                    )}
+                &lt;/div>
+                
+                {divisor2 &amp;&amp; (&lt;hr className="divisorbaixoo" />)}
+            &lt;/div>
+        &lt;/>
+    );
+}
+
+TituloPagina.propTypes = {
+    titulopagina: PropTypes.string.isRequired
+};
+
+export default TituloPagina;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

@@ -28,9 +28,7 @@ const statuses = ['Active', 'Inactive', 'Pending'];
 
 
 
-
 export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradores }) {
-    const { regra } = useRole();
 
     useEffect(() => {
         if (Array.isArray(colaboradores)) {
@@ -227,9 +225,10 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
         } : {},
     ];
 
+    const { role } = useRole();
+
     return (
         <>
-            
             {openModal === 'notificar' && (
                 <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
             )}
@@ -253,7 +252,7 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                     >
                         <Grid container spacing={1}>
                             <Grid item xs={12} md={12} lg={12}>
-                                {(regra === '[admin]' || '[manager]') && (
+                                {(role === '[admin]' || '[manager]') && (
                                     <div className='botoes-mui2'>
                                         <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>Adicionar</Botao>
                                         <Botao color='branco' onClick={toggleDeleteIcon}>Editar</Botao>
@@ -301,8 +300,8 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
     
                             </Grid>
                             <Grid item className='grider' xs={0}>
-                                <Grid className='botao-alteracao-dois'>
-                                    {((regra === '[admin]' || '[manager]') && Object.keys(colaboradores).length > 0) && <PdfSender />}
+                                <Grid className='botao-alteracao-dois'>                                    
+                                {((role === '[admin]' || role === '[manager]') && Object.keys(colaboradores).length > 0) && <PdfSender id={curso_id} />}
                                 </Grid>
                                 {showDeleteIcon && (
                                     <Grid className='botao-alteracao'>

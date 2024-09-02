@@ -28,6 +28,10 @@ import NaoEncontrada from "./screens/ramo-e-estruturais/naoencontrada";
 import Modal from "./components/modal";
 import Teste from "./screens/ramo-e-estruturais/teste";
 import Teste2 from './screens/ramo-e-estruturais/teste2';
+import Documentacoes from './screens/ramo-c-meu-perfil/documentacoes/documentacoes';
+import Configuracoes from './screens/ramo-c-meu-perfil/configuracoes';
+import Tutorial from './screens/ramo-c-meu-perfil/tutorial';
+import Duvidas from './screens/ramo-c-meu-perfil/duvidas';
 
 const theme = createTheme({
   palette: { primary: { main: "#6000B6" } },
@@ -63,6 +67,10 @@ function App() {
                 <Route path="/editar-colaborador/:id" element={<PrivateRoute element={EditarColaborador} />} />
 
                 <Route path="/perfil" element={<PrivateRoute element={Perfil} />} />
+                <Route path="/documentacoes" element={<PrivateRoute element={Documentacoes} />} />
+                <Route path="/configuracoes" element={<PrivateRoute element={Configuracoes} />} />
+                <Route path="/tutorial" element={<PrivateRoute element={Tutorial} />} />
+                <Route path="/duvidas" element={<PrivateRoute element={Duvidas} />} />
 
                 <Route path="/auditoria" element={<PrivateRoute element={Auditoria} />} />
 

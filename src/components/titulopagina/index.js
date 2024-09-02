@@ -12,6 +12,39 @@ function TituloPagina({
     botao2 = '', color2 = 'roxo', destino2 = '', onClick2 = null,
     botao3 = '', color3 = 'roxo', destino3 = '', onClick3 = null
 }) {
+
+      /**
+ * @function TituloPagina
+ * @since 2024
+ * @version 3
+ * @param {String} titulopagina - Título da página
+ * @param {String} descricaotitulo - Descrição da página
+ * @param {Boolean} divisor1 - Se há o divisor da parte superior
+ * @param {Boolean} divisor2 - Se há o divisor da parte inferior
+ * 
+ * @param {String} botao1 - Texto do botão 1
+ * @param {String} color1 - Cor do botão 1
+ * @param {String} destino1 - Destino ao clicar no botão 1
+ * @param {String} onclick1 - Ação ao fazer ao clicar no botão 1
+ * 
+ * @param {String} botao2 - Texto do botão 2
+ * @param {String} color2 - Cor do botão 2
+ * @param {String} destino2 - Destino ao clicar no botão 2
+ * @param {String} onclick2 - Ação ao fazer ao clicar no botão 2
+ * 
+ * @param {String} botao3 - Texto do botão 3
+ * @param {String} color3 - Cor do botão 3
+ * @param {String} destino3 - Destino ao clicar no botão 3
+ * @param {String} onclick3 - Ação ao fazer ao clicar no botão 3
+ * @returns {} O elemento (div) em tela.
+ * @description Título, descrição e botões padrão do topo das páginas.
+ * @author Vinicius Domingues 
+ * @see [LinkedIn do autor](https://www.linkedin.com/in/vinicius-domingues-fonseca/)
+ * @see [GitHub do autor](https://github.com/vinicius-domingues)
+ * @see [Documentação do React](https://legacy.reactjs.org/docs/getting-started.html)
+ */
+
+
     return (
         <>
             <div className="topo-telass">
