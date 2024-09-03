@@ -15,7 +15,7 @@
     flex: 1;
     margin: 0.25rem;
     border-radius: 1rem;
-    min-width: calc(33% - 0.5rem);
+    min-width: 1rem;
     box-sizing: border-box;
 }
 
@@ -163,7 +163,7 @@
 
 /* CSS geral */
 .botoes-titulo-pagina .icon {
-    display: none; /* Esconde os ícones por padrão em telas grandes */
+    display: inline; /* Esconde os ícones por padrão em telas grandes */
 }
 
 /* Media Query para telas pequenas */
@@ -176,6 +176,7 @@
         display: none; /* Esconde o texto em telas pequenas */
     }
 }
+
 
 @media (max-width: 1139px) {
     .titulo-pagina { 
@@ -196,10 +197,6 @@
     .metricas {
         width: 80.5%;
         flex-direction: column;
-    }
-
-    .bloco1 {
-        padding-left: 0.5rem;
     }
     
     .bloco1-1 {

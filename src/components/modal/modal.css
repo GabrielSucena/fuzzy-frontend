@@ -1,7 +1,7 @@
 
 .modal-conteiner{
     
-    width: 35rem;
+    width: 70%;
     gap: 3rem;
     justify-content: center;
     text-align: center;
@@ -92,14 +92,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 3; /* Assegure-se de que o modal esteja acima do restante do conteúdo */
+    z-index: 7; /* Assegure-se de que o modal esteja acima do restante do conteúdo */
 }
 
-.modal-conteiner {
-    background: white;
-    padding: 4rem;
-    border-radius: 1rem;
-    width: 80%;
-    max-width: 500px;
-    position: relative;
-}

@@ -30,8 +30,9 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
     const [justificativa, setJustificativa] = useState('');
     const token = localStorage.getItem('authToken');
 
-    const handleConfirm = async () => {
-        console.log('IDs rejeitados:', colaboradores);
+    const handleConfirm = async (justificativa) => {
+        
+        console.log("Pré: ", JSON.stringify({reason: justificativa, collaboratorsId: colaboradores}))
 
         fetch(`http://localhost:8080/cursos/${courseId}/colaboradores`, {
             method: 'DELETE',
@@ -39,7 +40,9 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`, 
             },
-            body: JSON.stringify({ collaboratorsId: colaboradores }),
+            body: JSON.stringify({ collaboratorsId: colaboradores })
+            // Quando estiver preparado para a razão
+            //body: JSON.stringify({ collaboratorsId: colaboradores, reason: justificativa })
         })
             .then((response) => {
                 if (!response.ok) {
@@ -68,7 +71,7 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 'bold' }}>
-                    Excluir Participantes ?
+                    Excluir participantes?
                 </Typography>
                 <TextField
                     required
@@ -83,7 +86,7 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
                     Essa ação irá retirar os colaboradores selecionados desse treinamento.
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', width: '100%' }}>
-                    <Button variant="contained" onClick={handleConfirm}>Confirmar</Button>
+                    <Button variant="contained" onClick={() => handleConfirm(justificativa)}>Confirmar</Button>
                     <Button variant="outlined" onClick={handleClose}>Cancelar</Button>
                 </Box>
 

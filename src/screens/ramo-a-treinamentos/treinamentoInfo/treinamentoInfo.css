@@ -14,3 +14,13 @@
     gap: 3%;
     width: 83%;
 }
+
+@media (max-width: 567px) {
+    .botoes-treinamento-editar .icon {
+        display: inline; /* Mostra os ícones em telas pequenas */
+    }
+    
+    .botoes-treinamento-editar span {
+        display: none; /* Esconde o texto em telas pequenas */
+    }
+}
