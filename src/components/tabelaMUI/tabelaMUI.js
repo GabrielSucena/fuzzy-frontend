@@ -31,8 +31,6 @@ const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['N/A', 'ME', 'MA', 'C'];
 const statuses = ['Active', 'Inactive', 'Pending'];
 
-const token = localStorage.getItem('authToken');
-
 const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
 const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
 
@@ -460,7 +458,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
                             </Grid>
                             <Grid item className='grider' xs={0}>
                                 <Grid className='botao-alteracao-dois'>                                    
-                                {((role === '[admin]' || role === '[manager]') && Object.keys(colaboradores).length > 0) && <PdfSender id={curso_id} />}
+                                {((role === '[admin]' || role === '[manager]') && Object.keys(colaboradores).length > 0) && <PdfSender id={curso_id} refreshColaboradores={refreshColaboradores} />}
                                 </Grid>
                                 {showDeleteIcon && (
                                     <Grid className='botao-alteracao'>
