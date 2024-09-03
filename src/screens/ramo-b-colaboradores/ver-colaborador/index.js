@@ -315,13 +315,12 @@ function VerColaborador() {
                             {
                                 (role === '[admin]' || role === '[manager]') &&
                                 <>
-                                                            <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
-                                <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
-                            </Botao>
+                                    <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
+                                        <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
+                                    </Botao>
                                     <Botao onClick={preExclusao} color={"branco"}>
                                         <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
                                     </Botao>
-                            
                                     <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}`)} color={"branco"}>
                                         <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
                                     </Botao>
@@ -386,10 +385,10 @@ function VerColaborador() {
                                                     <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={verde} /> {`Curso realizado`.toUpperCase()}
                                                 </p>
                                                 <p className="legenda" style={{ color: vermelho }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={vermelho} /> {`em andamento (Quizena 1)`.toUpperCase()}
+                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={vermelho} /> {`em andamento (Quinzena 1)`.toUpperCase()}
                                                 </p>
                                                 <p className="legenda" style={{ color: laranja }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={laranja} /> {`em andamento (Quizena 2)`.toUpperCase()}
+                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={laranja} fontWeight='bolder'/> {`em andamento (Quinzena 2)`.toUpperCase()}
                                                 </p>
                                                 <p className="legenda" style={{ color: vermelhoEscuro }}>
                                                     <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={vermelhoEscuro} /> {`Curso não realizado`.toUpperCase()}

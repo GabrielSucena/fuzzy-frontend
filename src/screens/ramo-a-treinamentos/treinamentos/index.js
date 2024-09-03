@@ -11,6 +11,7 @@ import BasicCard from "../../../components/cardTreinamento";
 import { Link } from "react-router-dom"; // Certifique-se de importar Link
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Certifique-se de importar FontAwesomeIcon
 import { faCopy, faCircleExclamation, faCalendar, faArrowAltCircleRight, faUser, faUserTie, faClock } from "@fortawesome/free-solid-svg-icons"; // Importar ícones necessários
+import semTreinamentos from "../../semTreinamento.svg";
 
 function Treinamentos() {
   const [treinamentos, setTreinamentos] = useState([]);
@@ -126,7 +127,7 @@ function Treinamentos() {
                 <p className="mensagem-sem-treinamento">
                   Ainda <span className="destaque-tres">não há treinamentos</span> ou <span className="destaque-dois">os filtros</span> não trouxeram resultados.
                 </p>
-                <img className='imagem-sem-treinamento' alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API'/>
+                <img className='imagem-sem-treinamento' src={semTreinamentos} alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API'/>
               </div>
             )}
           </div>

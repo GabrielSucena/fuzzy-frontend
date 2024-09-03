@@ -22,11 +22,14 @@ import { arrumaDatas } from '../../../functionsCenter/functionsCenter';
 import Botao from "../../../components/botao";
 import { ExtraiRelatorio } from '../../../functionsCenter/functionsCenter';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye } from '@fortawesome/free-solid-svg-icons';
+import { faBan, faEye, faPencil, faPrint } from '@fortawesome/free-solid-svg-icons';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ModalDescription from '../../../components/modalDescription';
-
+import vazioImg from "../../../../src/empty.svg"; // Importação da imagem
 import { useRole } from '../../../functionsCenter/RoleContext';
+
+const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
+const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
 
 const typographyStyle = {
   text: {
@@ -144,10 +147,18 @@ function TreinamentoInfo() {
       {(role === '[admin]' || role === '[manager]') &&
         <div className='botoes-treinamento-editar-conteiner'>
           <div className="botoes-treinamento-editar">
-            <Botao color='roxo' onClick={handleEditar}>Editar</Botao>
-            <Botao color='branco' onClick={handleOpen('obsoletar')}>Obsoletar</Botao>
-            <Botao color='branco' onClick={handleExtrair('informacao-treinamento')}>Extrair</Botao>
-            <Botao onClick={() => navigate(`/auditar-treinamento/${treinamento.id}`)} color={"branco"}>Auditar</Botao>
+            <Botao color='roxo' onClick={handleEditar}>
+            <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>&nbsp;&nbsp;&nbsp;Editar</span>
+            </Botao>
+            <Botao color='branco' onClick={handleOpen('obsoletar')}>
+            <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>&nbsp;&nbsp;Obsoletar</span>
+            </Botao>
+            <Botao color='branco' onClick={handleExtrair('informacao-treinamento')}>
+              <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Extrair</span>
+            </Botao>
+            <Botao onClick={() => navigate(`/auditar-treinamento/${treinamento.id}`)} color={"branco"}>
+              <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>&nbsp;&nbsp;Auditar</span>
+            </Botao>
   
           </div>
         </div>
@@ -169,7 +180,7 @@ function TreinamentoInfo() {
             <Grid item xs={12} lg={6} >
               <Grid container spacing={1} >
                 <Grid item xs={12} md={12} lg={12} >
-                  <DefaultPaper elevation={2} square={false} variant="elevation">
+                  <DefaultPaper elevation={0} square={false} variant="elevation">
                     <Grid container spacing={1}>
                       <Grid item xs={12} lg={6}>
                         <Stack spacing={{ xs: 2 }} useFlexGap flexWrap="wrap">
@@ -210,7 +221,7 @@ function TreinamentoInfo() {
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={12}>
-                  <PurplePaper elevation={2} square={false} variant="elevation">
+                  <PurplePaper elevation={0} square={false} variant="elevation">
                     <Grid container spacing={1}>
                       <Grid item xs={6}>
                         <Typography sx={{ ...typographyStyle.textWhite }}>
@@ -228,10 +239,10 @@ function TreinamentoInfo() {
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={6}>
-                  <DefaultPaper elevation={2} square={false} variant="elevation">
+                  <DefaultPaper elevation={0} square={false} variant="elevation">
                     <Grid container spacing={1}>
-                      <Grid item xs={9}>
-                        <Typography sx={{ ...typographyStyle.topic, fontWeight: 'bold' }}>
+                      <Grid item xs={8}>
+                        <Typography sx={{ ...typographyStyle.topic, fontWeight: 'bolder' }}>
                           Vigência atual
                         </Typography>
                         <Typography sx={{ ...typographyStyle.text }}>
@@ -239,7 +250,7 @@ function TreinamentoInfo() {
                         </Typography>
                       </Grid>
 
-                      <Grid item xs={3}>
+                      <Grid item xs={1}>
                         <img
                           src="/icones/Icon.png"
                           alt="Ícone de Participantes"
@@ -251,9 +262,9 @@ function TreinamentoInfo() {
                 </Grid>
 
                 <Grid item xs={12} md={12} lg={6}>
-                  <DefaultPaper elevation={2} square={false} variant="elevation">
+                  <DefaultPaper elevation={0} square={false} variant="elevation">
                     <Grid container spacing={1}>
-                      <Grid item xs={9}>
+                      <Grid item xs={8}>
                         <Typography sx={{ ...typographyStyle.topic, fontWeight: 'bold' }}>
                           Participantes
                         </Typography>
@@ -276,41 +287,55 @@ function TreinamentoInfo() {
             </Grid>
 
             <Grid item xs={12} lg={6}>
-              <DefaultPaper elevation={2} square={false} variant="elevation">
-                <Grid container spacing={1}>
-                  <Grid item xs={12} lg={6}>
+              <DefaultPaper elevation={0}>
+                <Grid container elevation={0}>
+                {1 == 0 ?
+                    <>
+                  <Grid item xs={12} lg={6} elevation={0}>
+                    
                     <GraficoMUI
                       v1={treinamento.describeCourse?.critico}
-                      n1={"Crítico"}
+                      n1={"CRÍTICO"}
                       c1={'var(--vermelho-escuro)'}
-                      v2={treinamento.describeCourse?.maior}
-                      n2={"De maior"}
-                      c2={'var(--vermelho)'}
-                      v3={treinamento.describeCourse?.menor}
-                      n3={"De menor"}
-                      c3={'var(--salmao)'}
-                      v4={treinamento.describeCourse?.na}
-                      n4={"Não aplicável"}
-                      c4={'var(--cinza-escuro)'}
+                        v2={treinamento.describeCourse?.maior}
+                        n2={"MAIOR"}
+                        c2={'var(--vermelho)'}
+                          v3={treinamento.describeCourse?.menor}
+                          n3={"MENOR"}
+                          c3={'var(--salmao)'}
+                            v4={treinamento.describeCourse?.na}
+                            n4={"NÃO APLICÁVEL"}
+                            c4={'var(--cinza-escuro)'}
                     />
+                    
+
                   </Grid>
                   <Grid item xs={12} lg={6}>
                     <GraficoMUI
                       v1={treinamento.describeCourse?.green}
-                      n1={"Cursos realizados"}
+                      n1={"CURSOS REALIZADOS"}
                       c1={'var(--verde)'}
-                      v2={treinamento.describeCourse?.yellow}
-                      n2={"Cursos pendentes (0-15 dias)"}
-                      c2={'var(--amarelo)'}
-                      v3={treinamento.describeCourse?.orange}
-                      n3={"Cursos pendentes (16-30 dias)"}
-                      c3={'var(--laranja)'}
-                      v4={treinamento.describeCourse?.red}
-                      n4={"Cursos não realizados"}
-                      c4={'var(--vermelho-escuro)'}
+                        v2={treinamento.describeCourse?.yellow}
+                        n2={"EM ANDAMENTO ( QUINZENA 1)"}
+                        c2={'var(--amarelo)'}
+                          v3={treinamento.describeCourse?.orange}
+                          n3={"EM ANDAMENTO (QUINZENA 2)"}
+                          c3={'var(--laranja)'}
+                            v4={treinamento.describeCourse?.red}
+                            n4={"CURSOS NÃO REALIZADOS"}
+                            c4={'var(--vermelho-escuro)'}
                     />
                   </Grid>
+                  </> :
+                  <>
+                    <div className="info-grafico-vazio" style={{justifyContent:'center', display:"flex", verticalAlign:'center', padding:'1rem'}}>
+                      <img src={vazioImg} alt="Imagem vazia" style={{width:'33.5%'}}/>
+                      <p className="empty-direita-um">Quando este <span className="destaque-dois">treinamento</span> possuir algum <span className="destaque-tres">colaborador,</span> os gráficos aparecerão aqui!</p>
+                    </div>
+                  </>
+                    }
                 </Grid>
+                
               </DefaultPaper>
             </Grid>
           </Grid>

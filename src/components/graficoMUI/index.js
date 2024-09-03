@@ -26,7 +26,7 @@ function GraficoMUI({ v1, v2, v3, v4, n1, n2, n3, n4, c1, c2, c3, c4 }) {
                     series={[
                         {
                             highlightScope: { faded: 'global', highlighted: 'item' },
-                            faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                            faded: { innerRadius: 30, additionalRadius: -30, color: 'grey' },
                             innerRadius: 50,
                             outerRadius: 60,
                             paddingAngle: 2,
@@ -51,9 +51,10 @@ function GraficoMUI({ v1, v2, v3, v4, n1, n2, n3, n4, c1, c2, c3, c4 }) {
                                         height: '16px',
                                         backgroundColor: item.color,
                                         marginRight: '8px',
+                                        color: item.color,
                                     }}
                                 />
-                                <Typography>{item.label}</Typography>
+                                <Typography style={{color: item.color}}>{item.label}</Typography>
                             </Box>
                         </Grid>
                     ))}

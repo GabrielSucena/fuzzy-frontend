@@ -21,12 +21,16 @@ import PdfSender from '../../screens/ramo-a-treinamentos/pdfsender';
 import ModalSelecionarAdd from '../modalSelecionarAdd';
 import { useRole } from '../../functionsCenter/RoleContext';
 import vazioImg from "../../../src/empty.svg";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPaperPlane, faPencil, faPlus, faPrint } from '@fortawesome/free-solid-svg-icons';
+import Modal from '../modal';
 
+const token = localStorage.getItem('authToken');
 const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['A', 'B', 'C', 'D'];
 const statuses = ['Active', 'Inactive', 'Pending'];
-
-
+const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
+const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
 
 export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradores }) {
 
@@ -55,6 +59,28 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
     const handleClose = () => setOpenModal(null);
    
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalOpen2, setModalOpen2] = useState(false);
+    const openModal2 = () => {
+        setModalOpen2(true);
+    };
+    const handleFecha = (e) => {
+        if (e) {
+            e.preventDefault(); // Apenas chama preventDefault se e não for undefined
+        }
+        setModalOpen2(false);
+    };
+    const handleSendEmail = async () => {
+        await fetch(`http://localhost:8080/emailsender/curso/${curso_id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+    
+        // Fecha o modal após a requisição
+        handleFecha();
+    };
 
     const abreModal = () => {
         setIsModalOpen(true);
@@ -229,6 +255,15 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
 
     return (
         <>
+            <Modal 
+                    isOpen={modalOpen2} 
+                    onClose={handleFecha} 
+                    onConfirm={handleSendEmail} 
+                    text="Notificar colaborador(a)?" 
+                    actions={true} 
+                    buttons={true} 
+                    complement={"Este colaborador(a) será notificado(a) sobre seus cursos pendentes via email."} 
+            />
             {openModal === 'notificar' && (
                 <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
             )}
@@ -252,15 +287,25 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                     >
                         <Grid container spacing={1}>
                             <Grid item xs={12} md={12} lg={12}>
+
                                 {(role === '[admin]' || '[manager]') && (
                                     <div className='botoes-mui2'>
-                                        <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>Adicionar</Botao>
-                                        <Botao color='branco' onClick={toggleDeleteIcon}>Editar</Botao>
-                                        <Botao color='branco' onClick={handleExtrair}>Extrair</Botao>
-                                        <Botao color='branco' onClick={handleOpen('notificar')}>Notificar</Botao>
+                                        <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>
+                                            <FontAwesomeIcon className="icon" icon={faPlus} color={branco} /> <span>&nbsp;&nbsp;&nbsp;Adicionar</span>
+                                        </Botao>
+                                        <Botao color='branco' onClick={toggleDeleteIcon}>
+                                            <FontAwesomeIcon className="icon" icon={faPencil} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Editar</span>
+                                        </Botao>
+                                        <Botao color='branco' onClick={handleExtrair}>
+                                            <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Extrair</span>
+                                        </Botao>
+                                        <Botao color='branco' onClick={openModal2}>
+                                            <FontAwesomeIcon className="icon" icon={faPaperPlane} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Notificar</span>
+                                        </Botao>
                                     </div>
                                 )}
-                                            {Object.keys(colaboradores).length === 0 ? (
+                              
+                {Object.keys(colaboradores).length === 0 ? (
                 <>
                 <div className='sem-treinamentos-train-div'>
                     <div className='destaque' style={{backgroundColor:'var(--branco)', color:'var(--roxo)'}}>Oops!</div>

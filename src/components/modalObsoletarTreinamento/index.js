@@ -28,11 +28,11 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
     const [justificativa, setJustificativa] = useState('');
     const token = localStorage.getItem('authToken');
 
-    const handleConfirm = async () => {
-        if (!justificativa) {
-            alert("Por favor, preencha todos os campos obrigatórios.");
-            return;
-        }
+    const handleConfirm = async (justificativa) => {
+        
+        const motivo = { reason: justificativa };
+        console.log("Motivo: ", motivo)
+        
         try {
             const response = await fetch(`http://localhost:8080/cursos/${courseId}`, {
                 method: 'DELETE',
@@ -40,6 +40,7 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`, 
                 },
+                body: JSON.stringify(motivo)
             });
 
             if (response.ok) {
@@ -82,7 +83,12 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
                     Essa ação inativará o treinamento atual e congelará o histórico atual.
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', width: '100%' }}>
-                    <Button variant="contained" onClick={handleConfirm}>Confirmar</Button>
+                <Button 
+                    variant="contained" 
+                    onClick={() => handleConfirm(justificativa)}
+                    >
+                    Confirmar
+                    </Button>
                     <Button variant="outlined" onClick={handleClose}>Cancelar</Button>
                 </Box>
 

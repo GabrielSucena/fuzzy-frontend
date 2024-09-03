@@ -202,6 +202,21 @@
     }
 }
 
+@media (max-width: 454px) {
+
+    .busca-filtros .esquerda {
+        padding: 0.7rem  1px;
+        box-sizing: border-box;
+    
+    }
+    
+    .busca-filtros .direita {
+        padding: 0.7rem  1px;
+        box-sizing: border-box;
+    
+    }
+}
+
 
 .mensagem-auditoria-vazio {
     padding: 1rem 1rem 2rem 1rem;

@@ -15,7 +15,7 @@
     flex: 1;
     margin: 0.25rem;
     border-radius: 1rem;
-    min-width: calc(33% - 0.5rem);
+    min-width: 1rem;
     box-sizing: border-box;
 }
 
@@ -196,10 +196,6 @@
     .metricas {
         width: 80.5%;
         flex-direction: column;
-    }
-
-    .bloco1 {
-        padding-left: 0.5rem;
     }
     
     .bloco1-1 {
