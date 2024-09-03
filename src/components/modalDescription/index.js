@@ -36,10 +36,10 @@ function ModalDescription({ open, handleClose, description }) {
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 'bold' }}>
-                    Descrição:
+                    Descrição do treinamento
                 </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2, mb: 2, color: '#565656', }}>
-                {description}
+                <Typography id="modal-modal-description" sx={{ mt: 2, mb: 2, color: '#565656', fontSize:'1.5rem'}}>
+                    {description}
                 </Typography>
             </Box>
         </Modal>

@@ -2,6 +2,20 @@ import './funcionsCenter.css'
 
 
 export function arrumaDatas({ data }) {
+
+          /**
+ * @function arrumaDatas
+ * @since 2024
+ * @version 1
+ * @param {Date} data - Data no modelo YYYY-MM-DD
+ * @returns {String} - Data no modelo DD/MM/AAAA
+ * @description Converte datas para o modelo brasileiro.
+ * @author Vinicius Domingues 
+ * @see [LinkedIn do autor](https://www.linkedin.com/in/vinicius-domingues-fonseca/)
+ * @see [GitHub do autor](https://github.com/vinicius-domingues)
+ * @see [Documentação do React](https://legacy.reactjs.org/docs/getting-started.html)
+ */
+
     // Verifica se a data está no formato correto
     if (!data || typeof data !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(data)) {
         console.error('Data inválida. Deve estar no formato YYYY-MM-DD.');

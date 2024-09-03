@@ -75,43 +75,7 @@ function CadastroColaborador() {
             return resp.json();
         })
         .then(data => {
-            console.log("Collaborator added:", data);
-    
-            const user = 'fernanda';
-            const auditId = uuidv4();
-            const datetime = new Date().toISOString();
-    
-            const auditEntries = [
-                { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Nome', field_value: collaborator.name, removed: 'N', reason: 'Inclusão' },
-                { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'E-mail', field_value: collaborator.email, removed: 'N', reason: 'Inclusão' },
-                { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Departamento', field_value: collaborator.departmentId, removed: 'N', reason: 'Inclusão' },
-                { uuid: auditId, user, datetime, course_modified: '', employee_modified: collaborator.register, field: 'Cargo', field_value: collaborator.positionId, removed: 'N', reason: 'Inclusão' },
-            ];
-    
-            auditEntries.forEach(audit => {
-                console.log("Enviando registro de auditoria:", audit);
-                fetch('http://localhost:5000/audits', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
 
-                    },
-                    body: JSON.stringify(audit)
-                })
-                .then(auditResp => {
-                    if (!auditResp.ok) {
-                        throw new Error(`Erro ao adicionar auditoria, status: ${auditResp.status}`);
-                    }
-                    return auditResp.json();
-                })
-                .then(auditData => {
-                    console.log("Audit record added:", auditData);
-                })
-                .catch((err) => {
-                    console.error("Audit fetch error:", err);
-                });
-            });
-    
             navigate('/colaboradores', { state: { message: 'Colaborador adicionado com sucesso!' } });
         })
         .catch((err) => {

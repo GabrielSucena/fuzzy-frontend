@@ -13,7 +13,7 @@ const EditarColaborador = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { role } = useRole();
-  const isDisabled = veRegra(role);
+
 
   const [collaborator, setCollaborator] = useState(null);
   const [departments, setDepartments] = useState([]);
@@ -123,13 +123,10 @@ const EditarColaborador = () => {
     });
   };
 
-  function veRegra(role) {
-    return role === '[admin]';  // Ajuste a string conforme necessário
-  }
 
   return (
     <div>
-      {role === '[admin]' ? (
+      {role === '[manager]' || role === '[admin]' ? (
         <>
           <Modal 
             isOpen={modalOpen} 
@@ -146,12 +143,27 @@ const EditarColaborador = () => {
           {collaborator ? (
             <form className="conteiner-cadastro" onSubmit={handleSubmit} onReset={handleCancel}>
               <SimpleGrid className="grid-container-colaborador" spacingX="4rem" spacingY="3rem" autoComplete="on">
-                <TextField
+                {role === '[manager]'
+                ?
+                <>
+                                <TextField
                   className="campo"
                   label="ID de Registro Sanofi"
                   value={collaborator.register}
                   disabled
                 />
+                </>
+                :
+                <>
+                                <TextField
+                  className="campo"
+                  label="ID de Registro Sanofi"
+                  value={collaborator.register}
+                  required
+                />
+                </>
+                }
+
                 <TextField
                   disabled
                   className="campo"
@@ -203,12 +215,26 @@ const EditarColaborador = () => {
                     ))}
                   </Select>
                 </FormControl>
-                <TextField
+                {role === '[manager]'
+                ?
+                <>
+                                <TextField
                   disabled
                   className="campo"
                   label="Email"
                   value={collaborator.email}
                 />
+                </>
+                :
+                <>
+                                <TextField
+                  required
+                  className="campo"
+                  label="Email"
+                  value={collaborator.email}
+                />
+                </>}
+
               </SimpleGrid>
               <div className="botoes">
                 <Botao type='submit' color='roxo'>Salvar</Botao>
@@ -248,7 +274,7 @@ const EditarColaborador = () => {
                   value={collaborator.id}
                 />
                 <TextField
-                  required
+                  disabled
                   className="campo"
                   type='text'
                   name='name'
@@ -261,7 +287,7 @@ const EditarColaborador = () => {
                 <FormControl fullWidth className="campo">
                   <InputLabel id="departmentId">Departamento</InputLabel>
                   <Select
-                    disabled
+                    required
                     onChange={handleChange}
                     value={form.departmentId}
                     labelId="departmentId"
@@ -278,7 +304,7 @@ const EditarColaborador = () => {
                 <FormControl fullWidth className="campo">
                   <InputLabel id="positionId">Cargo</InputLabel>
                   <Select
-                    disabled
+                    disabeld
                     onChange={handleChange}
                     value={form.positionId}
                     labelId="positionId"
@@ -293,10 +319,12 @@ const EditarColaborador = () => {
                   </Select>
                 </FormControl>
                 <TextField
-                  disabled
+                  
                   className="campo"
                   label="Email"
                   value={collaborator.email}
+                  disabled
+                  
                 />
               </SimpleGrid>
               <div className="botoes">

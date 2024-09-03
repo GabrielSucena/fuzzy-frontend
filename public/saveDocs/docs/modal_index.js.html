@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>modal/index.js - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Banner">Banner</a></li><li><a href="global.html#Bannerhome">Bannerhome</a></li><li><a href="global.html#BoasVindas">BoasVindas</a></li><li><a href="global.html#Botao">Botao</a></li><li><a href="global.html#Card">Card</a></li><li><a href="global.html#Carregando">Carregando</a></li><li><a href="global.html#Modal">Modal</a></li><li><a href="global.html#Rodape">Rodape</a></li><li><a href="global.html#TituloPagina">TituloPagina</a></li></ul>
+    
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">modal/index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from "react";
+import "./modal.css";
+
+function Modal({
+    isOpen,
+    text,
+    mode,
+    acaoColaborador,
+    acaoDepartamento,
+    complement,
+    way,
+    buttons,
+    actions,
+    reason,
+    onConfirm,
+    onClose
+}) {
+
+    /**
+ * @function Modal
+ * @since 2024
+ * @version 4
+ * @param {Boolean} isOpen - Se o modal está ativo
+ * @param {String} text - Texto inicial do modal
+ * @param {Function} acaoColaborador - Ação a ser realizada sobre o colaborador
+ * @param {Function} acaoDepartamento - Ação a ser realizada sobre o colaborador
+ * @param {String} complement - Texto final do modal
+ * @param {Boolean} way - Se há os botões de inclusão
+ * @param {Boolean} buttons - Se há os botões de inclusão genéricos
+ * @param {Boolean} actions - Botões de fechamento ou confirmação do modal, não deve ser passado se o modal for informativo
+ * @param {String} reason - Campo para inclusão de justificativa se a ação for exclusão
+ * @param {Function} onConfirm - Ação realizada ao clicar no confirmar do modal
+ * @param {Function} onCancel - Ação realizada ao clicar no cancelar do modal
+ * @returns {} O elemento (div) em tela.
+ * @description Modais do site.
+ * @author Vinicius Domingues 
+ * @see [LinkedIn do autor](https://www.linkedin.com/in/vinicius-domingues-fonseca/)
+ * @see [GitHub do autor](https://github.com/vinicius-domingues)
+ * @see [Documentação do React](https://legacy.reactjs.org/docs/getting-started.html)
+ */
+
+    const [justificativa, setJustificativa] = useState('');
+
+    if (!isOpen) return null; // Renderiza nada se o modal não estiver aberto
+
+    const getModalClassName = () => {
+        if (mode === "success") {
+            return "var(--verde)";
+        } else if (mode === "fail") {
+            return "var(--vermelho)";
+        } else {
+            return "var(--amarelo)";
+        }
+    };
+
+    const handleConfirm = () => {
+        if (reason &amp;&amp; justificativa.trim() === '') {
+            alert("Por favor, insira uma justificativa.");
+            return;
+        }
+        onConfirm(justificativa); // Passa a justificativa para a função onConfirm
+    };
+
+    return (
+        &lt;div className="modal-overlay" onClick={onClose}>
+            &lt;div 
+                className="modal-conteiner" 
+                style={{ borderColor: getModalClassName(mode), borderStyle: 'solid', borderWidth: '3px' }}
+                onClick={(e) => e.stopPropagation()} // Impede o clique no modal de fechar o modal
+            >
+                &lt;div className="titulo-modal">
+                    {text ? &lt;p>{text}&lt;/p> : null}
+                &lt;/div>
+
+                {way ? (
+                    &lt;div className="opcoes">
+                        &lt;div className="botoes-popup">
+                            &lt;button className="botao-popup" onClick={acaoColaborador}>Por colaborador&lt;/button>
+                            &lt;button className="botao-popup" onClick={acaoDepartamento}>Por departamento&lt;/button>
+                        &lt;/div>
+                    &lt;/div>
+                ) : null}
+
+                {reason &amp;&amp; (
+                    &lt;div className="justificativa">
+                        &lt;label htmlFor="reason" className="reason">Justificativa:&lt;/label>
+                        &lt;input
+                            id="reason"
+                            className="campo-justificativa"
+                            type="text"
+                            placeholder="Digite AQUI o motivo"
+                            value={justificativa}
+                            onChange={(e) => setJustificativa(e.target.value)}
+                        />
+                    &lt;/div>
+                )}
+
+                &lt;div className="complemento-do-modal">
+                    {complement ? &lt;p className="complemento-modal">{complement}&lt;/p> : null}
+                &lt;/div>
+
+                {actions ? (
+                    &lt;div className="botoes-modal">
+                        {buttons ? (
+                            &lt;>
+                                &lt;button className="roxo" onClick={handleConfirm}>Confirmar&lt;/button>
+                                &lt;button className="branco" onClick={onClose}>Cancelar&lt;/button>
+                            &lt;/>
+                        ) : (
+                            &lt;button className="branco" onClick={onClose}>Cancelar&lt;/button>
+                        )}
+                    &lt;/div>
+                ) : null}
+            &lt;/div>
+        &lt;/div>
+    );
+}
+
+export default Modal;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+
+</body>
+</html>

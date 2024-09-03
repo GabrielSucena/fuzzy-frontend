@@ -141,7 +141,7 @@ function TreinamentoInfo() {
         }
         descricaotitulo={treinamento.codification}
       />
-      {role === '[admin]' &&
+      {(role === '[admin]' || role === '[manager]') &&
         <div className='botoes-treinamento-editar-conteiner'>
           <div className="botoes-treinamento-editar">
             <Botao color='roxo' onClick={handleEditar}>Editar</Botao>

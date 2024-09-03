@@ -19,6 +19,7 @@
 .topicos{
     margin-left: auto; /* Empurra .topicos para a direita */
     margin-right: 9.5%; /* Cria o espaço desejado à direita do elemento */
+    margin-bottom: 0.5rem;
 }
 
 /* Estilo do botão celular sem tela pequena*/
@@ -38,7 +39,8 @@ nav a {
 }
 
 nav .perfil-bannerhome {
-    padding-right: 4rem;           
+    padding-right: 4rem;
+
 }
 
 
@@ -56,10 +58,13 @@ nav a:hover {
 
 .sair:hover {
     background-color: var(--branco);        
-    padding: 0.5rem; 
+    
     border-radius: 1rem;              
 }
 
+.auditoria-icone-banner{
+    font-size: 2rem;
+}
 
 /* Programação quando a tela estiver na metade */
 @media only screen and (max-width: 1280px) {
@@ -100,7 +105,7 @@ nav a:hover {
         /* Fixa na tela o menu que não desce*/
         /* [IMPORTANTE] */
         
-        top: -92vh;                            
+        top: -100vh;                            
         /* Posição de baixo para cima quando aba descer */
         
         height: 50%;                           
@@ -154,6 +159,34 @@ nav a:hover {
     /* Tamanho dos tópicos dentro da aba que desce */
     nav a {
         font-size: 1.5rem;                  /* Define o tamanho da fonte dos links dentro da navegação responsiva como 1.5 rem */
+    }
+
+    nav .perfil-bannerhome {
+        background-color: var(--branco);
+        color: var(--roxo);  
+        padding: 0.5rem;
+        width: 52%;
+        text-align: center;
+        border-radius: 1rem;
+        border: none;
+    }
+
+    nav .botao-bannerhome {
+        padding: 0.5rem;
+        border-radius: 1rem;
+        margin: 0;
+        width: 52%;
+        border: 1px solid var(--branco);
+        text-align: center;
+    }
+
+    nav .sair {
+        padding: 1rem;
+        border-radius: 1rem;
+        margin: 0;
+        width: 25%;
+        border: 1px solid var(--branco);
+        text-align: center;
     }
 }
 

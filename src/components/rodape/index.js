@@ -2,6 +2,17 @@ import './rodape.css'
 import { Link } from 'react-router-dom'
 
 function Rodape(){
+/**
+ * @function Rodape
+ * @since 2024
+ * @version 1
+ * @returns {} O elemento (div) em tela.
+ * @description Rodapé padrão do site.
+ * @author Vinicius Domingues 
+ * @see [LinkedIn do autor](https://www.linkedin.com/in/vinicius-domingues-fonseca/)
+ * @see [GitHub do autor](https://github.com/vinicius-domingues)
+ * @see [Documentação do React](https://legacy.reactjs.org/docs/getting-started.html)
+ */
   return(
     <>
       <div className="main-content">

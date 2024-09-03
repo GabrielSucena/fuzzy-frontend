@@ -1,4 +1,4 @@
-import { faBan, faCircleExclamation, faEye, faCopy, faPencil, faPrint, faQuestion, faSquare, faStar } from '@fortawesome/free-solid-svg-icons';
+import { faBan, faCircleExclamation, faEye, faCopy, faPencil, faPrint, faQuestion, faSquare, faStar, faCalendar, faCreditCardAlt, faCertificate } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
@@ -28,10 +28,14 @@ function VerColaborador() {
     const [selectedCriticality, setSelectedCriticality] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
 
+
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalOpen2, setModalOpen2] = useState(false);
+    const openModal2 = () => {
+        setModalOpen2(true);
+    };
 
-    const [popupMessage, setPopupMessage] = useState('');
-
+    
     const verde = getComputedStyle(document.documentElement).getPropertyValue('--verde').trim();
     const vermelho = getComputedStyle(document.documentElement).getPropertyValue('--vermelho').trim();
     const laranja = getComputedStyle(document.documentElement).getPropertyValue('--laranja').trim();
@@ -43,6 +47,20 @@ function VerColaborador() {
     const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
     const amarelo = getComputedStyle(document.documentElement).getPropertyValue('--amarelo').trim();
     const token = localStorage.getItem('authToken');
+
+    const handleSendEmail = async () => {
+        await fetch(`http://localhost:8080/emailsender/usuario/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+    
+        // Fecha o modal após a requisição
+        handleClose();
+    };
+    
 
     function formatDate(dateString) {
         const date = new Date(dateString);
@@ -244,40 +262,47 @@ function VerColaborador() {
         navigator.clipboard.writeText(text);
     };
 
-    function normalizeText(text) {
-        // Converte o texto para minúsculas
-        const lowerCaseText = text.toLowerCase();
-
-        // Remove acentos usando uma expressão regular
-        const noAccentsText = lowerCaseText.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-
-        // Remove espaços
-        const normalizedText = noAccentsText.replace(/\s+/g, '');
-
-        return normalizedText;
-    }
-
-    const handleClose = (e) => {
-        e.preventDefault();
-        setModalOpen(false);
-    };
-
-    const handlePrint = (parte) => {
-        const originalContent = document.body.innerHTML;
-
-        let printContent = ''; // Declara a variável printContent fora do bloco condicional
-
-        if (parte === 'cima') {
-            printContent = document.querySelector('.metricas').innerHTML;
-        } else {
-            printContent = document.querySelector('.grid-container').innerHTML;
+        function normalizeText(text) {
+            // Converte o texto para minúsculas
+            const lowerCaseText = text.toLowerCase();
+            
+            // Remove acentos usando uma expressão regular
+            const noAccentsText = lowerCaseText.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            
+            // Remove espaços
+            const normalizedText = noAccentsText.replace(/\s+/g, '');
+            
+            return normalizedText;
         }
 
-        document.body.innerHTML = printContent;
-        window.print();
-        document.body.innerHTML = originalContent;
-        window.location.reload(); // Recarregar a página e restaurar o conteúdo original
-    };
+
+
+        const handleClose = (e) => {
+            if (e) {
+                e.preventDefault(); // Apenas chama preventDefault se e não for undefined
+            }
+            setModalOpen(false);
+            setModalOpen2(false);
+        };
+        
+
+          const handlePrint = (parte) => {
+            const originalContent = document.body.innerHTML;
+        
+            let printContent = ''; // Declara a variável printContent fora do bloco condicional
+        
+            if (parte === 'cima') {
+                printContent = document.querySelector('.metricas').innerHTML;
+            } else {
+                printContent = document.querySelector('.grid-container').innerHTML;
+            }
+        
+            document.body.innerHTML = printContent;
+            window.print();
+            document.body.innerHTML = originalContent;
+            window.location.reload(); // Recarregar a página e restaurar o conteúdo original
+        };
+        
 
 
     return (
@@ -292,33 +317,46 @@ function VerColaborador() {
                 buttons={true}
                 text="Excluir colaborador(a)?"
             />
+            <Modal 
+                    isOpen={modalOpen2} 
+                    onClose={handleClose} 
+                    onConfirm={handleSendEmail} 
+                    text="Notificar colaborador(a)?" 
+                    actions={true} 
+                    buttons={true} 
+                    complement={"Este colaborador(a) será notificado(a) sobre seus cursos pendentes via email."} 
+            />
             {collaboratorMessage && <div className="message">{collaboratorMessage}</div>}
             <div className="topo-telas">
                 <div className="titulo-e-descricao">
                     <p className="titulo-pagina" onClick={() => handleCopy(collaborator.name)}>{collaborator.name || "Nome do Colaborador"}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={'#7B50A6'} /></p>
                     <p className="descricao-titulo" onClick={() => handleCopy(collaborator.register)}>Sanofi ID: {`${collaborator.register || ""}`}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={cinza} /></p>
                 </div>
+                
+                    <div className="conteiner-botao">
+                        <div className="botoes-titulo-pagina">
 
-                <div className="conteiner-botao">
-                    <div className="botoes-titulo-pagina">
-                        <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
-                            <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
-                        </Botao>
-                        {
-                            role === '[admin]' &&
-                            <Botao onClick={preExclusao} color={"branco"}>
-                                <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
+                            {
+                                (role === '[admin]' || role === '[manager]') &&
+                                <>
+                                                            <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
+                                <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
                             </Botao>
-                        }
-                        <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}?register=${collaborator.register}`)} color={"branco"}>
-                            <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
-                        </Botao>
-                        <Botao onClick={() => handlePrint('cima')} color={"branco"}>
-                            <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
-                        </Botao>
+                                    <Botao onClick={preExclusao} color={"branco"}>
+                                        <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
+                                    </Botao>
+                            
+                                    <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}`)} color={"branco"}>
+                                        <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
+                                    </Botao>
+                                </>
+                            }
+                            <Botao onClick={() => handlePrint('cima')} color={"branco"}>
+                                <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
+                            </Botao>
+                        </div>
                     </div>
-                </div>
-
+                
 
                 <hr className="divisorbaixo" />
             </div>
@@ -429,11 +467,11 @@ function VerColaborador() {
                 titulopagina="Treinamentos atrelados"
                 divisor1={true}
             />
-
-            <div className="conteiner-botao-dois">
-                <div className="botoes-titulo-pagina">
-                    {role === '[admin]' &&
-                        <Botao onClick={() => handleEmail(id)} color={"roxo"}>
+            
+                <div className="conteiner-botao-dois">
+                    <div className="botoes-titulo-pagina">
+                    {(role === '[admin]' || role === '[manager]') && 
+                        <Botao onClick={openModal2} color={"roxo"}>
                             <FontAwesomeIcon className="icon" icon={faEye} color={branco} /> <span>Notificar</span>
                         </Botao>
                     }
@@ -445,76 +483,76 @@ function VerColaborador() {
             </div>
 
 
-            <div className="treinamentos">
-                <div className="treinamentos-card">
-                    <div className="busca-filtros-treinamento">
-                        <input
-                            type="text"
-                            className="campo-busca"
-                            placeholder="Pesquise AQUI o treinamento pelo nome"
-                            value={searchTerm}
-                            onChange={e => setSearchTerm(e.target.value)}
-                        />
-                        <select
-                            className="filtro"
-                            onChange={e => setSelectedCriticality(e.target.value)}
-                            value={selectedCriticality}
-                        >
-                            <option value="">Classificação</option>
-                            <option value="ME">De menor</option>
-                            <option value="MA">De maior</option>
-                            <option value="C">Crítico</option>
-                            <option value="N/A">Não aplicável</option>
-                        </select>
-                        <select
-                            className="filtro"
-                            onChange={e => setSelectedStatus(e.target.value)}
-                            value={selectedStatus}
-                        >
-                            <option value="">Conclusão</option>
-                            <option value="Realizado">Realizado</option>
-                            <option value="À realizar">À realizar</option>
-                        </select>
-                    </div>
-                    <div className="grid-container">
-                        {filteredTrainings.length > 0 ? (
-                            filteredTrainings.map((course) => (
-                                <Link className='retirar-estilo' to={`/treinamentos/${course.id}`} key={course.id}>
-                                    <div className='div-card'>
-                                        <div className={"treinamento-item"}>
-                                            <div className="cima-info">
-                                                <p className="nome-card">{course.course_title}</p>
-                                                <p className="course_type">Versão {course.course_version}</p>
-                                                <p className="course_type">
-                                                    {course.codification}
-                                                    &nbsp;&nbsp;
-                                                    <FontAwesomeIcon className="icon-copy" icon={faCopy} color="#6c757d" />
-                                                </p>
-                                            </div>
-                                            <div className="meio-info">
-                                                <p className="meio">
-                                                    <FontAwesomeIcon icon={faCircleExclamation} color={vermelhoEscuro} />
-                                                    &nbsp;{course.classification}
-                                                </p>
-                                                <p className="meio">
-                                                    <FontAwesomeIcon icon={faStar} color={amarelo} />
-                                                    &nbsp;{formatDate(course.start_date)}
-                                                </p>
-                                            </div>
-                                            <div className="baixo-info">
-                                                <p className={normalizeText(course.status)}>{course.status}</p>
-                                            </div>
+        <div className="treinamentos">
+            <div className="treinamentos-card">
+                <div className="busca-filtros-treinamento">
+                    <input
+                        type="text"
+                        className="campo-busca"
+                        placeholder="Pesquise AQUI o treinamento pelo nome"
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                    />
+                    <select
+                        className="filtro"
+                        onChange={e => setSelectedCriticality(e.target.value)}
+                        value={selectedCriticality}
+                    >
+                        <option value="">Classificação</option>
+                        <option value="ME">De menor</option>
+                        <option value="MA">De maior</option>
+                        <option value="C">Crítico</option>
+                        <option value="N/A">Não aplicável</option>
+                    </select>
+                    <select
+                        className="filtro"
+                        onChange={e => setSelectedStatus(e.target.value)}
+                        value={selectedStatus}
+                    >
+                        <option value="">Conclusão</option>
+                        <option value="Realizado">Realizado</option>
+                        <option value="À realizar">À realizar</option>
+                    </select>
+                </div>
+                <div className="grid-container">
+                    {filteredTrainings.length > 0 ? (
+                        filteredTrainings.map((course) => (
+                            <Link className='retirar-estilo' to={`/treinamentos/${course.id}`} key={course.id}>
+                                <div className='div-card'>
+                                    <div className={"treinamento-item"}>
+                                        <div className="cima-info">
+                                            <p className="nome-card">{course.course_title}</p>
+                                            <p className="course_type">Versão {course.course_version}</p>
+                                            <p className="course_type">
+                                                {course.codification}
+                                                &nbsp;&nbsp;
+                                                <FontAwesomeIcon className="icon-copy" icon={faCopy} color="#6c757d" />
+                                            </p>
+                                        </div>
+                                        <div className="meio-info">
+                                            <p className="meio">
+                                                <FontAwesomeIcon icon={faCircleExclamation} color={amarelo}/>
+                                                &nbsp;{course.classification}
+                                            </p>
+                                            <p className="meio">
+                                                <FontAwesomeIcon icon={faCalendar} color={amarelo}/>
+                                                &nbsp;{formatDate(course.start_date)}
+                                            </p>
+                                        </div>
+                                        <div className="baixo-info">
+                                            <p className={normalizeText(course.status)}>{course.status}</p>
                                         </div>
                                     </div>
-                                </Link>
-                            ))
-                        ) : (
-                            <div className='sem-treinamentos' style={{ display: 'flex' }}>
-                                <p className="mensagem-sem-treinamento">
-                                    Ainda <span className="destaque-tres">não há treinamentos</span> para este colaborador ou <span className="destaque-dois">os filtros</span> não trouxeram resultados.
-                                </p>
-                                <img className='imagem-sem-treinamento' src={semTreinamento} alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API' />
-                            </div>
+                                </div>
+                            </Link>
+                        ))
+                    ) : (
+<div className='sem-treinamentos' style={{display: 'flex'}}>
+    <p className="mensagem-sem-treinamento">
+        Ainda <span className="destaque-tres">não há treinamentos</span> para este colaborador ou <span className="destaque-dois">os filtros</span> não trouxeram resultados.
+    </p>
+    <img className='imagem-sem-treinamento' src={semTreinamento} alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API'/>
+</div>
 
 
 

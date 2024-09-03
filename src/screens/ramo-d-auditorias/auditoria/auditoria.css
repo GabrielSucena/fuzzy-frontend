@@ -61,11 +61,16 @@
 .auditorias-content {
     flex-grow: 1;
     overflow-y: auto;
-    padding-top: 20px;
+    padding-top: 1rem;
+    justify-content:center;
+    vertical-align: middle;
     border-radius: 1rem;
     border: 1px solid #ccc;
     padding: 1rem;
+    
 }
+
+.de
 
 .auditoria-item {
     margin-bottom: 20px;
@@ -206,3 +211,19 @@
     overflow: hidden; /* Oculta qualquer conteúdo que ultrapasse os limites */
     text-align: center;
 }
+
+.sem-conexao-colaborador {
+    display: block;
+    justify-content: center;
+    text-align: center;
+    
+    align-self: center;
+}
+
+.sem-conexao-colaborador .img-sem-auditoria {
+    max-width: 60%; 
+    margin: 0;       
+    padding: 3.75rem 0rem;     
+    
+}
+

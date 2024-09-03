@@ -286,7 +286,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
+    height: 25rem;
     max-width: 20rem; /* Adiciona um valor máximo de largura para evitar que fique muito grande */
     text-decoration: none;
     gap: 2.5rem;
@@ -474,6 +474,8 @@
     width: 71%;
     height: 2.5rem;
 }
+
+
 
 .busca-filtros-treinamento .filtro {
     padding: 0.35rem;

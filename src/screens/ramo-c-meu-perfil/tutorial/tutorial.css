@@ -1,0 +1,8 @@
+.tutorial-conteiner{
+    display: flex;
+    justify-content: center;
+}
+
+.tutorial-conteudo{
+    width: 80%;
+}

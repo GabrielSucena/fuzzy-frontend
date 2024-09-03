@@ -1,0 +1,60 @@
+.conteiner-configuracoes {
+    display: flex;
+    justify-content: center;
+}
+
+.conteudo-configuracoes {
+    width: 80%;
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+    margin-bottom: 5rem;
+}
+
+.agrupamento-configuracoes {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid rgba(134, 134, 134, 0.25); /* Uso de rgba para a opacidade */
+    background-color: var(--branco);
+    border-radius: 1rem;
+    cursor: pointer;
+    padding: 1rem;
+    transition: box-shadow 0.3s, transform 0.3s; /* Adiciona transições suaves */
+}
+
+.agrupamento-configuracoes:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Sombra ao passar o mouse */
+    transform: scale(1.03); /* Leve aumento do tamanho ao passar o mouse */
+}
+
+.icone-configuracoes {
+    vertical-align: middle;
+    text-align: center;
+    padding: 1rem;
+    margin: 0;
+    font-size: 2rem;
+    color: var(--roxo);
+}
+
+.escrita-configuracoes {
+    width: 100%;
+    padding: 1rem;
+    gap: 0.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.titulo-configuracoes {
+    font-weight: bolder;
+    font-size: 1.5rem;
+}
+
+.mensagem-configuracoes {
+    color: var(--cinza-escuro);
+    font-weight: bold;
+}
+
+.remover {
+    text-decoration: none; /* Remove o sublinhado dos links */
+    color: inherit; /* Herda a cor do elemento pai (ou você pode definir uma cor específica) */
+}

@@ -8,14 +8,20 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import BasicCard from "../../../components/cardTreinamento";
+import { Link } from "react-router-dom"; // Certifique-se de importar Link
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Certifique-se de importar FontAwesomeIcon
+import { faCopy, faCircleExclamation, faCalendar, faArrowAltCircleRight, faUser, faUserTie, faClock } from "@fortawesome/free-solid-svg-icons"; // Importar ícones necessários
 
 function Treinamentos() {
   const [treinamentos, setTreinamentos] = useState([]);
   const [filteredTreinamentos, setFilteredTreinamentos] = useState([]);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState(""); // Estado para o termo de pesquisa
+  const [selectedCriticality, setSelectedCriticality] = useState(""); // Adicione o estado para criticality
+  const [selectedStatus, setSelectedStatus] = useState(""); // Adicione o estado para status
   const token = localStorage.getItem('authToken');
   const [name_instructor, setName_instructor] = React.useState("");
+  
 
   useEffect(() => {
     fetch('http://localhost:8080/cursos', {
@@ -35,6 +41,7 @@ function Treinamentos() {
         console.log("treinamento fetched:", treinamento);
         setTreinamentos(treinamento); // Garante que Treinamentos seja um array
         setFilteredTreinamentos(treinamento); // Inicializa o estado de treinamentos filtrados
+        
       })
       .catch((err) => {
         console.error("Fetch error:", err);
@@ -56,6 +63,12 @@ function Treinamentos() {
     padding: "50px",
     borderRadius: "20px",
   }));
+  
+  const preto = getComputedStyle(document.documentElement).getPropertyValue('--preto-escuro').trim();
+  const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
+  const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
+
+
   return (
     <>
       <TituloPagina
@@ -64,40 +77,61 @@ function Treinamentos() {
         destino1="/adicionar-treinamentos"
         color1="roxo"
       />
-      <Grid container>
-        <Grid item xs />
-        <Grid item xs={10}>
-          <DemoPaper elevation={5} square={false} variant="elevation">
-            <Grid container spacing={1}>
-              <Grid item xs={12} md={12} lg={12}>
-                <TextField
-                  fullWidth
-                  id="teste"
-                  label="Pesquise aqui o treinamento, codificação ou nome do treinador"
-                  variant="outlined"
-                  value={searchTerm}
-                  onChange={(e) => (setSearchTerm(e.target.value))} // Atualiza o termo de pesquisa com debouncing
-                />
-              </Grid>
-              {filteredTreinamentos.map((treinamento) => (
-                <Grid item xs={12} sm={6} md={4} lg={3} key={treinamento.id}>
-                  <BasicCard
-                    id={treinamento.id}
-                    procedimento={treinamento.title}
-                    cod={treinamento.codification}
-                    nome={treinamento.instructor}
-                    duration={treinamento.workload}
-                    dataInicio={treinamento.startDate}
-                    dataFinal={treinamento.endDate}
-                    versao={treinamento.version}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </DemoPaper>
-        </Grid>
-        <Grid item xs />
-      </Grid>
+      <div className="colaboradores">
+        <div className="colaboradores-card">
+          <div className="busca-filtros">
+            <input
+              type="text"
+              className="campo-busca"
+              placeholder="Pesquise AQUI o treinamento pelo nome, codificação ou instrutor"
+              value={searchTerm}
+              onChange={e => setSearchTerm(e.target.value)}
+            />
+            BUSCAR
+            
+          </div>
+          <div className="grid-container">
+            {filteredTreinamentos.length > 0 ? (
+              filteredTreinamentos.map((treinamento) => (
+                <Link className='retirar-estilo' to={`/treinamentos/${treinamento.id}`} key={treinamento.id}>
+                  <div className='div-card'>
+                    <div className={"treinamento-item"}>
+
+                      <div className="topo-treinamento-card">
+                        <div className="treinamento-part">
+                          <div className="title-card">{treinamento.title}</div>
+                          <div className="version">v{treinamento.version}</div>
+                        </div>
+                        
+                        <div className="codification">{treinamento.codification}</div>
+                        
+                      </div>
+
+                      <div className="info-treinamento-card">
+                        <div className="instructor"><FontAwesomeIcon icon={faUserTie} color={roxo}/>&nbsp;&nbsp;&nbsp;Prof. {treinamento.instructor}</div>
+                        <div className="wokrload"><FontAwesomeIcon icon={faClock} color={roxo}/>&nbsp;&nbsp;{treinamento.workload} minutos</div>
+
+                      </div>
+                      <div className="fundo-card-treinamento">
+                        <div className="date1">{treinamento.startDate}</div>
+                          <FontAwesomeIcon icon={faArrowAltCircleRight} color={roxo}/> 
+                        <div className="date2">{treinamento.endDate}</div>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))
+            ) : (
+              <div className='sem-treinamentos' style={{ display: 'flex' }}>
+                <p className="mensagem-sem-treinamento">
+                  Ainda <span className="destaque-tres">não há treinamentos</span> ou <span className="destaque-dois">os filtros</span> não trouxeram resultados.
+                </p>
+                <img className='imagem-sem-treinamento' alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API'/>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 }

@@ -25,10 +25,12 @@
     "axios": "^1.7.4",
     "canvasjs-react-charts": "^1.0.5",
     "dayjs": "^1.11.13",
+    "docdash": "^2.0.2",
     "font-awesome": "^4.7.0",
     "fortawesome": "^0.0.1-security",
     "framer-motion": "^11.3.30",
     "fuzzy-front-end": "file:",
+    "jsdoc": "^4.0.3",
     "json-server": "^1.0.0-beta.2",
     "mui": "^0.0.1",
     "piechart": "^1.0.0",
@@ -50,7 +52,8 @@
     "backend": "json-server --watch db.json --port 5000",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "docs": "jsdoc -d public/docs --configure jsdoc.json"
   },
   "eslintConfig": {
     "extends": [
