@@ -289,7 +289,7 @@ function TreinamentoInfo() {
             <Grid item xs={12} lg={6}>
               <DefaultPaper elevation={0}>
                 <Grid container elevation={0}>
-                {1 == 0 ?
+                {(treinamento.describeCourse?.critico + treinamento.describeCourse?.maior + treinamento.describeCourse?.menor + treinamento.describeCourse?.na) > 0 ?
                     <>
                   <Grid item xs={12} lg={6} elevation={0}>
                     

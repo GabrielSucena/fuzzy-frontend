@@ -163,7 +163,7 @@
 
 /* CSS geral */
 .botoes-titulo-pagina .icon {
-    display: none; /* Esconde os ícones por padrão em telas grandes */
+    display: inline; /* Esconde os ícones por padrão em telas grandes */
 }
 
 /* Media Query para telas pequenas */
@@ -176,6 +176,7 @@
         display: none; /* Esconde o texto em telas pequenas */
     }
 }
+
 
 @media (max-width: 1139px) {
     .titulo-pagina { 

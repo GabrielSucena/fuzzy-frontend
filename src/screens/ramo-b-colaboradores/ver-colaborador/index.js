@@ -1,4 +1,4 @@
-import { faBan, faCircleExclamation, faEye, faCopy, faPencil, faPrint, faQuestion, faSquare, faStar, faCalendar, faCreditCardAlt, faCertificate } from '@fortawesome/free-solid-svg-icons';
+import { faBan, faCircleExclamation, faEye, faCopy, faPencil, faPrint, faQuestion, faSquare, faStar, faCalendar, faCreditCardAlt, faCertificate, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
@@ -316,18 +316,18 @@ function VerColaborador() {
                                 (role === '[admin]' || role === '[manager]') &&
                                 <>
                                     <Botao destino={`/editar-colaborador/${id}`} color={"roxo"}>
-                                        <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>Editar</span>
+                                        <FontAwesomeIcon className="icon" icon={faPencil} color={branco} /> <span>&nbsp;&nbsp;&nbsp;Editar</span>
                                     </Botao>
                                     <Botao onClick={preExclusao} color={"branco"}>
-                                        <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>Obsoletar</span>
+                                        <FontAwesomeIcon className="icon" icon={faBan} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Obsoletar</span>
                                     </Botao>
                                     <Botao onClick={() => navigate(`/auditar-colaborador/${collaborator.id}`)} color={"branco"}>
-                                        <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>Auditar</span>
+                                        <FontAwesomeIcon className="icon" icon={faEye} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Auditar</span>
                                     </Botao>
                                 </>
                             }
                             <Botao onClick={() => handlePrint('cima')} color={"branco"}>
-                                <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
+                                <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Extrair</span>
                             </Botao>
                         </div>
                     </div>
@@ -461,11 +461,11 @@ function VerColaborador() {
                     <div className="botoes-titulo-pagina">
                     {(role === '[admin]' || role === '[manager]') && 
                         <Botao onClick={openModal2} color={"roxo"}>
-                            <FontAwesomeIcon className="icon" icon={faEye} color={branco} /> <span>Notificar</span>
+                            <FontAwesomeIcon className="icon" icon={faPaperPlane} color={branco} /> <span>&nbsp;&nbsp;&nbsp;Notificar</span>
                         </Botao>
                     }
                         <Botao onClick={() => handlePrint('baixo')} color={"branco"}>
-                            <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>Extrair</span>
+                            <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Extrair</span>
                         </Botao>
 
                     </div>
