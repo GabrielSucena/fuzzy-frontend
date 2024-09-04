@@ -404,7 +404,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
                                     <div className='botoes-mui2'>
                                         <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>
                                             <FontAwesomeIcon className="icon" icon={faPlus} color={branco} /> <span>&nbsp;&nbsp;&nbsp;Adicionar</span>
-                                        </Botao>
+                                        </Botao> 
                                         <Botao color='branco' onClick={toggleDeleteIcon}>
                                             <FontAwesomeIcon className="icon" icon={faPencil} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Editar</span>
                                         </Botao>

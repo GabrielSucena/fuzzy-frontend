@@ -74,3 +74,8 @@
       display: none; /* Esconde o texto em telas pequenas */
   }
 }
+
+
+.lista-colaboradores-dentro .botoes-mui2 .icon::hover{
+  background-color: var(--cinza);
+}

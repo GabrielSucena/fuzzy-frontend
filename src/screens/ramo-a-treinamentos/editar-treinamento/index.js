@@ -150,7 +150,7 @@ function EditarTreinamento() {
 
       <Grid container>
         <Grid item xs></Grid>
-        <Grid item xs={12} lg={10}>
+        <Grid item xs={11} lg={10}>
           <DefaultPaper elevation={5} square={false} variant="elevation">
             <Grid container spacing={5}>
               <Grid item xs={12} lg={6}>
