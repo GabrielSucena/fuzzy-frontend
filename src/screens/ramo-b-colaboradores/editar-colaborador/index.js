@@ -88,8 +88,11 @@ const EditarColaborador = () => {
       name: form.name,
       departmentId: Number(form.departmentId),
       positionId: Number(form.positionId),
+      reason: justificativa,
     };
     
+    
+
     fetch(`http://localhost:8080/colaboradores/${id}`, {
       method: 'PUT',
       headers: {
@@ -99,6 +102,7 @@ const EditarColaborador = () => {
       body: JSON.stringify(TratamentoEnvio),
     })
       .then(() => {
+        console.log("Edição de colaborador: ", TratamentoEnvio)
         setMessage('Colaborador atualizado com sucesso!');
         setModalOpen(false);
         setTimeout(() => navigate(-1), 2000);
