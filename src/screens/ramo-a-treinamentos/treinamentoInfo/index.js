@@ -107,7 +107,9 @@ function TreinamentoInfo() {
         }
       });
       const data = await response.json();  // Corrigido aqui
+      setTreinamento(data);
       setColaboradores(data.collaborators); // Atualize diretamente
+      console.log("atualizou");
     } catch (error) {
       console.error("Fetch error:", error);
     }

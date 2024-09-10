@@ -169,15 +169,15 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
         'C': { classificationId: 4 },
     };
     // Função para enviar as atualizações de classificações
-    const PatchAttClassification = () => {
-
+    const PatchAttClassification = async () => {
         if (updatedClassifications.length === 0) {
             return; // Não faz a requisição se não houver classificações para atualizar
         }
         try {
             setIsSaving(true);  // Define o estado de carregamento como verdadeiro
-
-            const response = fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
+    
+            // Aguarda a conclusão da requisição
+            const response = await fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -185,14 +185,21 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
                 },
                 body: JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }),
             });
-            console.log('Requisição:', JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }))
-            refreshColaboradores(); // Atualiza a lista de colaboradores após a requisição
+    
+            if (!response.ok) {
+                throw new Error('Failed to update classifications');
+            }
+    
+            console.log('Requisição:', JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }));
             setUpdatedClassifications([]); // Limpa a lista após o envio
-
+            await refreshColaboradores(); // Atualiza a lista de colaboradores após a requisição
+        } catch (error) {
+            console.error("Error updating classifications:", error);
         } finally {
             setIsSaving(false);  // Define o estado de carregamento como falso
         }
     };
+    
 
 
     // useEffect para executar a requisição quando updatedClassifications mudar
