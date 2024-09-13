@@ -9,6 +9,7 @@ import vazioImg from "../../../../src/vazio.svg"; // Importação da imagem
 import { faCopy, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Padding } from "@mui/icons-material";
+import url from '../../../functionsCenter/urlController'
 
 function Colaboradores() {
     const token = localStorage.getItem('authToken');
@@ -32,7 +33,7 @@ function Colaboradores() {
             setMessage(location.state.message);
         }
 
-        fetch('http://localhost:8080/colaboradores', {
+        fetch(`${url}/colaboradores`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

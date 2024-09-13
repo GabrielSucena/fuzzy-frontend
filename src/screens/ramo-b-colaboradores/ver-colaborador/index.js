@@ -14,6 +14,7 @@ import Modal from '../../../components/modal';
 import { useRole } from '../../../functionsCenter/RoleContext';
 import GraficoMUI from '../../../components/graficoMUI';
 import { Grid } from '@mui/material';
+import url from '../../../functionsCenter/urlController'
 
 function VerColaborador() {
     const { id } = useParams();
@@ -49,7 +50,7 @@ function VerColaborador() {
     const token = localStorage.getItem('authToken');
 
     const handleSendEmail = async () => {
-        await fetch(`http://localhost:8080/emailsender/usuario/${id}`, {
+        await fetch(`${url}/emailsender/usuario/${id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -73,7 +74,7 @@ function VerColaborador() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:8080/colaboradores/${id}`, {
+        fetch(`${url}/colaboradores/${id}`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -123,7 +124,7 @@ function VerColaborador() {
     function handleEmail(id){
         //Abre modal
 
-        fetch(`http://localhost:8080/emailsender/usuario/${id}`, {
+        fetch(`${url}/emailsender/usuario/${id}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -134,7 +135,7 @@ function VerColaborador() {
                 if (!resp.ok) {
                     throw new Error(`Erro enviando email: ${resp.status}`);
                 } else {
-                    setTimeout(() => {navigate(`http://localhost:8080/colaboradores/${id}`)}, 2000);
+                    setTimeout(() => {navigate(`${url}/colaboradores/${id}`)}, 2000);
                     //FechaModal
                 }
             })
@@ -143,12 +144,12 @@ function VerColaborador() {
             })}
 
     function handleRemove(justificativa) {
-        // Defina a URL correta, usando a variável id que você tem disponível
-        const url = `http://localhost:8080/colaboradores/${id}`;
+        // Defina a link correta, usando a variável id que você tem disponível
+        const link = `${url}/colaboradores/${id}`;
         const motivo = { reason: justificativa };
-        console.log("Exclusão sendo enviada: ", motivo, "para: ", url);
+        console.log("Exclusão sendo enviada: ", motivo, "para: ", link);
 
-        fetch(url, {
+        fetch(link, {
             method: 'DELETE',
             headers: {
                 'Authorization': `Bearer ${token}`,

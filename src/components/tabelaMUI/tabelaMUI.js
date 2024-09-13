@@ -25,6 +25,7 @@ import vazioImg from "../../../src/empty.svg";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faPencil, faPlus, faPrint } from '@fortawesome/free-solid-svg-icons';
 import Modal from '../modal';
+import url from '../../functionsCenter/urlController'
 
 const token = localStorage.getItem('authToken');
 const roles = ['Market', 'Finance', 'Development'];
@@ -77,7 +78,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
         setModalOpen2(false);
     };
     const handleSendEmail = async () => {
-        await fetch(`http://localhost:8080/emailsender/curso/${curso_id}`, {
+        await fetch(`${url}/emailsender/curso/${curso_id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -177,7 +178,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
         try {
             setIsSaving(true);  // Define o estado de carregamento como verdadeiro
 
-            const response = fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
+            const response = fetch(`${url}/cursos/${curso_id}/colaboradores`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -252,7 +253,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
             try {
                 setIsSaving(true);  // Define o estado de carregamento como verdadeiro
     
-                fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
+                fetch(`${url}/cursos/${curso_id}/colaboradores`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json',

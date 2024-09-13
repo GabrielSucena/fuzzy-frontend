@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight, faPrint, faCodeCommit, faTrash, faX } from '@fortawesome/free-solid-svg-icons';
 import Carregando from "../../../components/carregando";
 import semAuditoria from "../../../../src/semAuditoria.svg"; // Importação da imagem
+import url from '../../../functionsCenter/urlController'
 
 const token = localStorage.getItem('authToken');
 const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
@@ -63,7 +64,7 @@ function Auditoria({
             setLoading(true);
 
             try {
-                let fetchUrl = 'http://localhost:8080/auditorias';
+                let fetchUrl = `${url}/auditorias`;
                 
                 if (entidade && tipo) {
                     fetchUrl += `/${tipo}/${entidade}`;

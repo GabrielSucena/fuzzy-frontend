@@ -1,5 +1,6 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import url from '../../functionsCenter/urlController'
 
 const style = {
     position: 'absolute',
@@ -22,7 +23,7 @@ function ModalNotificarTreinamento({ open, handleClose, id }) {
     const [justificativa, setJustificativa] = useState('');
 
     const handleConfirm = (id) => {
-        fetch(`http://localhost:8080/emailsender/curso/${id}`, {
+        fetch(`${url}/emailsender/curso/${id}`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

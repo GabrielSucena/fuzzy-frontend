@@ -27,6 +27,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import ModalDescription from '../../../components/modalDescription';
 import vazioImg from "../../../../src/empty.svg"; // Importação da imagem
 import { useRole } from '../../../functionsCenter/RoleContext';
+import url from '../../../functionsCenter/urlController'
 
 const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
 const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
@@ -67,7 +68,7 @@ function TreinamentoInfo() {
   const { role } = useRole();
 
   useEffect(() => {
-    fetch(`http://localhost:8080/cursos/${id}`, {
+    fetch(`${url}/cursos/${id}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -99,7 +100,7 @@ function TreinamentoInfo() {
 
   const refreshColaboradores = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/cursos/${id}`, {
+      const response = await fetch(`${url}/cursos/${id}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

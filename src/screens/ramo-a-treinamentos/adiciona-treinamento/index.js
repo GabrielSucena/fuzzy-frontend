@@ -22,6 +22,7 @@ import dayjs from "dayjs";
 import DefaultPaper from "../../../components/defaultPaper";
 import { Navigate, useNavigate } from "react-router-dom";
 import { DateField, DesktopDatePicker } from "@mui/x-date-pickers";
+import url from '../../../functionsCenter/urlController'
 
 function AdicionaTreinamento() {
   const [name_instructor, setName_instructor] = React.useState("");
@@ -86,7 +87,7 @@ function AdicionaTreinamento() {
     console.log("FormSubmetido =>", JSON.stringify(infoCursos));
 
     try {
-      const response = await fetch('http://localhost:8080/cursos', {
+      const response = await fetch(`${url}/cursos`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`, // Adiciona o token nos headers

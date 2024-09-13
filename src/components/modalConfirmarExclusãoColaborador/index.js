@@ -1,7 +1,7 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import url from '../../functionsCenter/urlController'
 
 const style = {
     position: 'absolute',
@@ -34,7 +34,7 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
         
         console.log("Pré: ", JSON.stringify({reason: justificativa, collaboratorsId: colaboradores}))
 
-        fetch(`http://localhost:8080/cursos/${courseId}/colaboradores`, {
+        fetch(`${url}/cursos/${courseId}/colaboradores`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',

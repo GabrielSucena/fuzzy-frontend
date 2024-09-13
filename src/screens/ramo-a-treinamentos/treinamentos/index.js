@@ -12,6 +12,7 @@ import { Link } from "react-router-dom"; // Certifique-se de importar Link
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Certifique-se de importar FontAwesomeIcon
 import { faCopy, faCircleExclamation, faCalendar, faArrowAltCircleRight, faUser, faUserTie, faClock } from "@fortawesome/free-solid-svg-icons"; // Importar ícones necessários
 import semTreinamentos from "../../semTreinamento.svg";
+import url from '../../../functionsCenter/urlController'
 
 function Treinamentos() {
   const [treinamentos, setTreinamentos] = useState([]);
@@ -25,7 +26,7 @@ function Treinamentos() {
   
 
   useEffect(() => {
-    fetch('http://localhost:8080/cursos', {
+    fetch(`${url}/cursos`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
