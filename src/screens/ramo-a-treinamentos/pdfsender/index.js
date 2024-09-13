@@ -5,6 +5,7 @@ import Botao from '../../../components/botao/index';
 import { faCircleExclamation, faCircleChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
+import url from '../../../functionsCenter/urlController'
 
 function PdfSender( {id, refreshColaboradores} ) {
     const [isOpen, setIsOpen] = useState(false);
@@ -47,7 +48,7 @@ function PdfSender( {id, refreshColaboradores} ) {
 
             try {
                 console.log('Enviando arquivo...');
-                const response = await axios.post(`http://localhost:8080/extracaopdf/${id}`, formData, {
+                const response = await axios.post(`${url}/extracaopdf/${id}`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',
                         'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Assumindo que o token está no localStorage
@@ -72,7 +73,7 @@ function PdfSender( {id, refreshColaboradores} ) {
             try {
                 console.log('Enviando dados para o servidor...');
                 await axios.patch(
-                    `http://localhost:8080/extracaopdf/${id}`,
+                    `${url}/extracaopdf/${id}`,
                     {
                         records: uploadResponse.records // Corrigido: deve ser um objeto com a chave `records`
                     },

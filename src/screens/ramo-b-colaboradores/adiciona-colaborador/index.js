@@ -6,6 +6,7 @@ import Botao from "../../../components/botao";
 import { InputLabel, TextField, MenuItem, Select, FormControl } from "@mui/material";
 import { SimpleGrid } from "@chakra-ui/react";
 import { v4 as uuidv4 } from 'uuid';
+import url from '../../../functionsCenter/urlController'
 
 function CadastroColaborador() {
     const navigate = useNavigate();
@@ -20,7 +21,7 @@ function CadastroColaborador() {
     });
     const token = localStorage.getItem('authToken');
     useEffect(() => {
-        fetch('http://localhost:8080/departamentos', {
+        fetch(`${url}/departamentos`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ function CadastroColaborador() {
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:8080/posicoes', {
+        fetch(`${url}/posicoes`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,7 +57,7 @@ function CadastroColaborador() {
     function createPost(collaborator) {
         console.log("Dados do colaborador enviados:", collaborator);
         
-        fetch('http://localhost:8080/colaboradores', {
+        fetch(`${url}/colaboradores`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -4,6 +4,7 @@ import Card from '../../../components/card';
 import BoasVindas from '../../../components/boasvindas';
 import { Link } from 'react-router-dom';
 import { useRole } from '../../../functionsCenter/RoleContext';
+import url from '../../../functionsCenter/urlController'
 
 export function Home() {
   const token = localStorage.getItem('authToken');
@@ -12,7 +13,7 @@ export function Home() {
   const [idUser, setIdUser] = useState('')
 
   useEffect(() => {
-    fetch('http://localhost:8080/usuario', {
+    fetch(`${url}/usuario`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -43,7 +44,7 @@ export function Home() {
             </div>
           </Link>
         }
-        {role === '[admin]' ?
+        {role === '[admin]' || role === '[manager]' ?
           <Link to='/colaboradores' className='link-card'>
             <div>
               <Card

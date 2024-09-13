@@ -16,6 +16,7 @@ import dayjs from "dayjs";
 import DefaultPaper from "../../../components/defaultPaper";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DateField } from "@mui/x-date-pickers";
+import url from '../../../functionsCenter/urlController'
 
 function EditarTreinamento() {
   const location = useLocation();
@@ -25,7 +26,7 @@ function EditarTreinamento() {
 
   const token = localStorage.getItem('authToken');
   useEffect(() => {
-    fetch(`http://localhost:8080/cursos/${id}`, {
+    fetch(`${url}/cursos/${id}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -125,7 +126,7 @@ function EditarTreinamento() {
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/cursos/${id}`, {
+      const response = await fetch(`${url}/cursos/${id}`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

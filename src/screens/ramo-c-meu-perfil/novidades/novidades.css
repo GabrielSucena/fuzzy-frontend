@@ -1,0 +1,158 @@
+.novidades-conteiner-max{
+    
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+    
+}
+
+
+.novidades-conteiner{
+   
+    width: 75%;
+    border-radius: 1rem;
+    padding: 3rem;
+    background-color: var(--branco);
+}
+
+.quadrado {
+    width: 100px;
+    height: 100px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 200px; /* Limita a largura máxima dos quadrados */
+  }
+  
+  .quadrado:hover {
+    transform: scale(1.1);  
+    font-weight: bold;
+}
+  
+
+/* Estilo para a seção superior, com espaçamento e alinhamento dos quadrados */
+.novidades-superior {
+    margin-bottom: 5rem;
+    display: flex;
+    flex-wrap: wrap-reverse; /* Permite que os itens se movam para a linha seguinte em telas menores */
+    justify-content: space-between;
+    gap: 1rem; /* Espaço entre os quadrados */
+}
+
+
+
+/* Responsividade para telas pequenas */
+@media (max-width: 1200px) {
+    .quadrado {
+        width: calc(50% - 0.5rem); /* Ajusta a largura para duas colunas com espaçamento */
+        font-weight: bold;
+        padding-bottom: 1rem;
+    }
+
+    .novidades-inferior .destaque{
+        font-size: 1px;
+    }
+
+    
+    .novidades-conteiner{
+    
+        width: 70%;
+    }
+
+    .novidades-superior {
+        margin-bottom: 7.5rem;
+        
+
+    }
+
+}
+
+.quadrado{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.emoji{
+    margin-bottom: 1rem;
+    font-size: 4rem;
+}
+
+
+
+.novidades-inferior .destaque{
+    margin-bottom: 1.5rem;
+    padding-top: 1rem;
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.novidades-ul {
+    list-style-type: none; /* Remove bullets from list items */
+    padding: 0; /* Remove default padding */
+    margin: 0; /* Remove default margin */
+}
+
+.novidades-lista {
+    background-color: #f9f9f9; /* Light gray background for list items */
+    border: 1px solid #ddd; /* Gray border */
+    padding: 10px; /* Padding inside each list item */
+    margin: 5px 0; /* Margin between list items */
+    border-radius: 1rem; /* Rounded corners for list items */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for 3D effect */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth transition for hover effect */
+}
+
+.novidades-lista:hover {
+    background-color: #e0e0e0; /* Slightly darker gray on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
+    font-weight: bold;
+}
+
+
+.lista-ordenada {
+    counter-reset: list-counter; /* Reseta o contador de lista */
+    padding: 0; /* Remove padding padrão */
+    margin: 0; /* Remove margin padrão */
+    list-style: none; /* Remove bullets/numbers padrão */
+}
+
+.lista-ordenada .lista-item {
+    position: relative; /* Para posicionar o número destacado */
+    padding-left: 1rem; /* Espaço para o número destacado */
+    margin-bottom: 1.5rem; /* Espaço entre os itens da lista */
+    background-color: #f9f9f9; /* Cor de fundo leve */
+    border: 1px solid #ddd; /* Borda leve */
+    border-radius: 100rem; /* Bordas arredondadas */
+    padding: 10px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    line-height: 1.5; /* Altura da linha */
+    transition: background-color 0.3s ease; /* Transição suave para a cor de fundo */
+}
+
+.lista-ordenada .lista-item:hover {
+    background-color: #e0e0e0; /* Cor de fundo mais escura ao passar o mouse */
+    color: var(--roxo);
+}
+
+.lista-ordenada .lista-item::before {
+    content: counter(list-counter) ". "; /* Adiciona o número antes do item */
+    counter-increment: list-counter; /* Incrementa o contador */
+    position: absolute; /* Posiciona o número */
+    left: 0; /* Alinha à esquerda */
+    width: 30px; /* Largura do número */
+    height: 30px; /* Altura do número */
+    background-color: #6000B6; /* Cor de fundo para o número */
+    color: white; /* Cor do texto do número */
+    border-radius: 50%; /* Faz o número ser circular */
+    display: flex; /* Flexbox para centralizar o texto */
+    align-items: center; /* Alinha verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    font-weight: bold; /* Destaque para o número */
+    font-size: 18px; /* Tamanho da fonte do número */
+}

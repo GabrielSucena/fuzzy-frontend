@@ -1,7 +1,7 @@
 import './configuracoes.css'
 import TituloPagina from "../../../components/titulopagina";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faBrain, faList, faPaintRoller, faQuestion, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faBrain, faList, faNewspaper, faPaintRoller, faQuestion, faSignOut, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useRole } from '../../../functionsCenter/RoleContext';
 
@@ -59,6 +59,17 @@ function Configuracoes(){
                             <div className='escrita-configuracoes'>
                                 <p className='titulo-configuracoes'>&nbsp;Dúvidas frequentes</p>
                                 <p className='mensagem-configuracoes'>&nbsp;Tire eventuais perguntas na nossa F.A.Q.</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <Link to='/novidades' className='remover'>
+                        <div className='agrupamento-configuracoes'>
+                            <div className='icone-configuracoes'>
+                                &nbsp;<FontAwesomeIcon icon={faNewspaper} className='icone-configuracoes'/>
+                            </div>
+                            <div className='escrita-configuracoes'>
+                                <p className='titulo-configuracoes'>&nbsp;Novidades</p>
+                                <p className='mensagem-configuracoes'>&nbsp;Versão Fuzzy 2.0 disponível!</p>
                             </div>
                         </div>
                     </Link>

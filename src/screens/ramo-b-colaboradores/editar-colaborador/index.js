@@ -7,6 +7,7 @@ import Botao from '../../../components/botao';
 import TituloPagina from '../../../components/titulopagina';
 import Modal from '../../../components/modal'; // Certifique-se de que o caminho esteja correto
 import { useRole } from '../../../functionsCenter/RoleContext';
+import url from '../../../functionsCenter/urlController'
 
 const EditarColaborador = () => {
   const token = localStorage.getItem('authToken');
@@ -30,12 +31,12 @@ const EditarColaborador = () => {
     const fetchData = async () => {
       try {
         const [departmentsResponse, positionsResponse] = await Promise.all([
-          fetch('http://localhost:8080/departamentos', {
+          fetch(`${url}/departamentos`, {
             headers: {
               'Authorization': `Bearer ${token}`, // Inclui o token
             }
           }),
-          fetch('http://localhost:8080/posicoes', {
+          fetch(`${url}/posicoes`, {
             headers: {
               'Authorization': `Bearer ${token}`, // Inclui o token
             }
@@ -45,7 +46,7 @@ const EditarColaborador = () => {
         const departmentsData = await departmentsResponse.json();
         const positionsData = await positionsResponse.json();
 
-        const collaboratorResponse = await fetch(`http://localhost:8080/colaboradores/${id}`, {
+        const collaboratorResponse = await fetch(`${url}/colaboradores/${id}`, {
           headers: {
             'Authorization': `Bearer ${token}`, // Inclui o token
           }
@@ -88,9 +89,12 @@ const EditarColaborador = () => {
       name: form.name,
       departmentId: Number(form.departmentId),
       positionId: Number(form.positionId),
+      reason: justificativa,
     };
     
-    fetch(`http://localhost:8080/colaboradores/${id}`, {
+    
+
+    fetch(`${url}/colaboradores/${id}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`, // Inclui o token
@@ -99,9 +103,10 @@ const EditarColaborador = () => {
       body: JSON.stringify(TratamentoEnvio),
     })
       .then(() => {
+        console.log("Edição de colaborador: ", TratamentoEnvio)
         setMessage('Colaborador atualizado com sucesso!');
         setModalOpen(false);
-        setTimeout(() => navigate(-1), 2000);
+        setTimeout(() => navigate(-1), 1);
       })
       .catch(error => {
         console.error('Error updating collaborator:', error);

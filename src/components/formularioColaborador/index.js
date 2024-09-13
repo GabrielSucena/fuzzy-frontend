@@ -3,6 +3,7 @@ import './formularioColaborador.css';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import Botao from '../botao';
 import { useEffect, useState } from 'react';
+import url from '../../functionsCenter/urlController'
 
 function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, textoBotao2 }) {
     const [departments, setDepartments] = useState([]);
@@ -11,7 +12,7 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
     const token = localStorage.getItem('authToken');
 
     useEffect(() => {
-        fetch('http://localhost:5000/departments', {
+        fetch(`${url}/departments`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`, 
@@ -26,7 +27,7 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:5000/positions', {
+        fetch(`${url}/positions`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -75,6 +76,7 @@ function FormularioColaborador({ handleSubmit, collaboratorData, textoBotao, tex
     }
 
     return (
+        
         <form className="conteiner-cadastro" onSubmit={submit}>
             <SimpleGrid className="grid-container-colaborador" spacingX="4rem" spacingY="3rem" autoComplete="on">
                 <TextField 

@@ -1,7 +1,7 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import url from '../../functionsCenter/urlController'
 
 const style = {
     position: 'absolute',
@@ -34,7 +34,7 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
         console.log("Motivo: ", motivo)
         
         try {
-            const response = await fetch(`http://localhost:8080/cursos/${courseId}`, {
+            const response = await fetch(`${url}/cursos/${courseId}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

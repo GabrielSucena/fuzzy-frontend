@@ -6,6 +6,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import url from '../../../functionsCenter/urlController'
 
 function Perfil() {
     const token = localStorage.getItem('authToken');
@@ -21,7 +22,7 @@ function Perfil() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('http://localhost:8080/usuario', {
+        fetch(`${url}/usuario`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -48,7 +49,7 @@ function Perfil() {
     };
 
     const handleConfirmPasswordChange = () => {
-        fetch('http://localhost:8080/usuario', {
+        fetch(`${url}/usuario`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',

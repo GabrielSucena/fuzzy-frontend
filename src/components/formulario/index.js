@@ -6,6 +6,7 @@ import CampoSenha from '../camposenha';
 import CampoTexto from '../campotexto';
 import './formulario.css';
 import { useRole } from '../../functionsCenter/RoleContext';
+import url from '../../functionsCenter/urlController'
 
 const Formulario = (props) => {
     const [register, setRegister] = useState('');
@@ -20,7 +21,7 @@ const Formulario = (props) => {
         console.log("Dados enviados ao login:", login);
         localStorage.removeItem('authToken');
         
-        fetch('http://localhost:8080/login', {
+        fetch(`${url}/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -74,6 +75,7 @@ const Formulario = (props) => {
 
     return (
         <>
+        
             <section className='formulario-container'>
                 <form className='formulario-login' onSubmit={handleSubmit}>
                     <CampoTexto

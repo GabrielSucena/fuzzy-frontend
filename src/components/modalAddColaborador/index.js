@@ -2,6 +2,7 @@ import { Box, Button, Checkbox, Grid, Modal } from '@mui/material';
 import { DataGrid, GridActionsCellItem, GridRowEditStopReasons, GridRowModes } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import url from '../../functionsCenter/urlController'
 
 const style = {
     position: 'absolute',
@@ -28,7 +29,7 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
     const token = localStorage.getItem('authToken');
 
     useEffect(() => {
-        fetch(`http://localhost:8080/colaboradores`, {
+        fetch(`${url}/colaboradores`, {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`, 
@@ -85,7 +86,7 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
             .map((row) => row.id);
 
 
-        fetch(`http://localhost:8080/cursos/${id_curso}/colaboradores`, {
+        fetch(`${url}/cursos/${id_curso}/colaboradores`, {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`, 
