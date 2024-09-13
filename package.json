@@ -48,6 +48,7 @@
     "web-vitals": "^4.2.3"
   },
   "scripts": {
+    "cloud": "cross-env HOST=152.67.52.210 PORT=8080 react-scripts start",
     "start": "react-scripts start",
     "backend": "json-server --watch db.json --port 5000",
     "build": "react-scripts build",
