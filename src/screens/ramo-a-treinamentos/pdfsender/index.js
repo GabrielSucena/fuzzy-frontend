@@ -6,7 +6,7 @@ import { faCircleExclamation, faCircleChevronRight } from '@fortawesome/free-sol
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 
-function PdfSender( {id} ) {
+function PdfSender( {id, refreshColaboradores} ) {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [uploadResponse, setUploadResponse] = useState(null);
@@ -47,11 +47,13 @@ function PdfSender( {id} ) {
 
             try {
                 console.log('Enviando arquivo...');
-                const response = await axios.post('http://localhost:5000/upload', formData, {
+                const response = await axios.post(`http://localhost:8080/extracaopdf/${id}`, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Assumindo que o token está no localStorage
                     }
                 });
+                console.log('Aqui');
                 console.log('Resposta recebida:', response.data);
                 setUploadResponse(response.data);
                 setIsConfirmed(false); // Reseta a confirmação
@@ -99,6 +101,7 @@ function PdfSender( {id} ) {
                 }, 500); // Tempo de atraso (0.5 segundos)
                 resetState(); // Reseta o estado do modal ao fechar
                 setIsOpen(false); // Fecha o modal após o envio bem-sucedido
+                refreshColaboradores();
             } catch (error) {
                 console.error('Erro ao enviar dados:', error);
             }

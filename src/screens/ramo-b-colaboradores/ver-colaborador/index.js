@@ -12,6 +12,8 @@ import "./ver-colaborador.css";
 import semTreinamento from '../../semTreinamento.svg';
 import Modal from '../../../components/modal';
 import { useRole } from '../../../functionsCenter/RoleContext';
+import GraficoMUI from '../../../components/graficoMUI';
+import { Grid } from '@mui/material';
 
 function VerColaborador() {
     const { id } = useParams();
@@ -63,7 +65,7 @@ function VerColaborador() {
     function formatDate(dateString) {
         const date = new Date(dateString);
         const day = String(date.getDate()).padStart(2, '0');
-        const month = String(date.getMonth() + 1).padStart(2, '0'); 
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const year = date.getFullYear();
 
         return `${day}/${month}/${year}`;
@@ -74,7 +76,7 @@ function VerColaborador() {
         fetch(`http://localhost:8080/colaboradores/${id}`, {
             method: 'GET',
             headers: {
-                'Authorization': `Bearer ${token}`, 
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
         })
@@ -114,16 +116,38 @@ function VerColaborador() {
         return <Carregando />;
     }
 
-    function preExclusao(){
+    function preExclusao() {
         setModalOpen(true);
     }
-    
+
+    function handleEmail(id){
+        //Abre modal
+
+        fetch(`http://localhost:8080/emailsender/usuario/${id}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(resp => {
+                if (!resp.ok) {
+                    throw new Error(`Erro enviando email: ${resp.status}`);
+                } else {
+                    setTimeout(() => {navigate(`http://localhost:8080/colaboradores/${id}`)}, 2000);
+                    //FechaModal
+                }
+            })
+            .then(data => {
+                console.log('Email enviado com sucesso:', data);
+            })}
+
     function handleRemove(justificativa) {
         // Defina a URL correta, usando a variável id que você tem disponível
         const url = `http://localhost:8080/colaboradores/${id}`;
         const motivo = { reason: justificativa };
         console.log("Exclusão sendo enviada: ", motivo, "para: ", url);
-    
+
         fetch(url, {
             method: 'DELETE',
             headers: {
@@ -132,38 +156,38 @@ function VerColaborador() {
             },
             body: JSON.stringify(motivo) // Adicione o corpo apenas se a API suportar
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }else{
-                setTimeout(() => {
-                    navigate('/colaboradores');
-                }, 2000);
-            }
-            
-        })
-        .then(data => {
-            
-            console.log('Colaborador removido com sucesso:', data);
+            .then(resp => {
+                if (!resp.ok) {
+                    throw new Error(`HTTP error! status: ${resp.status}`);
+                } else {
+                    setTimeout(() => {
+                        navigate('/colaboradores');
+                    }, 2000);
+                }
 
-        })
-        .catch(err => {
-            
-            const errorMessage = err.message.includes('500')
-                ? 'Para que o(a) colaborador(a) ser excluido(a), por integridade, este não pode estar em nenhum curso.'
-                : `Erro ao remover colaborador: ${err.message}`;
-    
-            setCollaboratorMessage(errorMessage);
-    
-            // Limpa a mensagem de erro após 2 segundos
-            setTimeout(() => {
-                setCollaboratorMessage('');
-            }, 2000);
-        });
+            })
+            .then(data => {
+
+                console.log('Colaborador removido com sucesso:', data);
+
+            })
+            .catch(err => {
+
+                const errorMessage = err.message.includes('500')
+                    ? 'Para que o(a) colaborador(a) ser excluido(a), por integridade, este não pode estar em nenhum curso.'
+                    : `Erro ao remover colaborador: ${err.message}`;
+
+                setCollaboratorMessage(errorMessage);
+
+                // Limpa a mensagem de erro após 2 segundos
+                setTimeout(() => {
+                    setCollaboratorMessage('');
+                }, 2000);
+            });
     }
-    
-    
-    
+
+
+
 
 
 
@@ -234,9 +258,9 @@ function VerColaborador() {
         (collaborator?.describeCollaborator?.sop || 0) +
         (collaborator?.describeCollaborator?.gop || 0));
 
-        const handleCopy = (text) => {
-            navigator.clipboard.writeText(text);
-        };
+    const handleCopy = (text) => {
+        navigator.clipboard.writeText(text);
+    };
 
         function normalizeText(text) {
             // Converte o texto para minúsculas
@@ -283,15 +307,15 @@ function VerColaborador() {
 
     return (
         <>
-              <Modal 
-                    isOpen={modalOpen} 
-                    onClose={handleClose} 
-                    onConfirm={handleRemove} 
-                    reason={true} 
-                    complement={"Este colaborador(a) será excluído(a) da lista de colaboradores."} 
-                    actions={true} 
-                    buttons={true} 
-                    text="Excluir colaborador(a)?" 
+            <Modal
+                isOpen={modalOpen}
+                onClose={handleClose}
+                onConfirm={handleRemove}
+                reason={true}
+                complement={"Este colaborador(a) será excluído(a) da lista de colaboradores."}
+                actions={true}
+                buttons={true}
+                text="Excluir colaborador(a)?"
             />
             <Modal 
                     isOpen={modalOpen2} 
@@ -340,7 +364,7 @@ function VerColaborador() {
                 <div className="bloco bloco1">
                     <div className="bloco1-1">
                         <p><b>Cargo:</b> {collaborator.position}</p>
-                        <p className='email-colaborador'  onClick={() => handleCopy(collaborator.email)}><b>Email:</b> {collaborator.email}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={cinza}/></p>
+                        <p className='email-colaborador' onClick={() => handleCopy(collaborator.email)}><b>Email:</b> {collaborator.email}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={cinza} /></p>
                         <p><b>Setor:</b> {collaborator.department}</p>
                     </div>
                 </div>
@@ -373,28 +397,20 @@ function VerColaborador() {
                             <div className="grafico1">
                                 {totalStatus > 0 ? (
                                     <>
-                                        <ReactApexChart
-                                            options={statusGrafico}
-                                            series={statusGrafico.series}
-                                            type="donut"
-                                            height={200}
+                                        <GraficoMUI
+                                            v1={collaborator?.describeCollaborator?.green}
+                                            n1={"CURSO REALIZADO"}
+                                            c1={'var(--verde)'}
+                                            v2={collaborator.describeCollaborator?.yellow}
+                                            n2={"EM ANDAMENTO (QUINZENA 1)"}
+                                            c2={'var(--amarelo)'}
+                                            v3={collaborator.describeCollaborator?.orange}
+                                            n3={"EM ANDAMENTO (QUINZENA 2)"}
+                                            c3={'var(--laranja)'}
+                                            v4={collaborator.describeCollaborator?.red}
+                                            n4={"CURSO NÃO REALIZADO"}
+                                            c4={'var(--vermelho-escuro)'}
                                         />
-                                        <div className="legendas-conteiner">
-                                            <div className="legendas">
-                                                <p className="legenda" style={{ color: verde }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={verde} /> {`Curso realizado`.toUpperCase()}
-                                                </p>
-                                                <p className="legenda" style={{ color: vermelho }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={vermelho} /> {`em andamento (Quinzena 1)`.toUpperCase()}
-                                                </p>
-                                                <p className="legenda" style={{ color: laranja }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={laranja} fontWeight='bolder'/> {`em andamento (Quinzena 2)`.toUpperCase()}
-                                                </p>
-                                                <p className="legenda" style={{ color: vermelhoEscuro }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={vermelhoEscuro} /> {`Curso não realizado`.toUpperCase()}
-                                                </p>
-                                            </div>
-                                        </div>
                                     </>
                                 ) : (
                                     <>
@@ -414,25 +430,19 @@ function VerColaborador() {
                                     </>
                                 )}
                             </div>
+
                             <div className="grafico2">
                                 {totalTypes > 0 ? (
                                     <>
-                                        <ReactApexChart
-                                            options={codificacoesGrafico}
-                                            series={codificacoesGrafico.series}
-                                            type="donut"
-                                            height={200}
+
+                                        <GraficoMUI
+                                            v1={collaborator?.describeCollaborator?.sop}
+                                            n1={"CODIFICAÇÃO SOP"}
+                                            c1={'var(--azul)'}
+                                            v2={collaborator?.describeCollaborator?.gop}
+                                            n2={"CODIFICAÇÃO GOP"}
+                                            c2={'var(--rosa)'}
                                         />
-                                        <div className="legendas-conteiner">
-                                            <div className="legendas">
-                                                <p className="legenda" style={{ color: azul }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={azul} /> {`Codificação SOP`.toUpperCase()}
-                                                </p>
-                                                <p className="legenda" style={{ color: rosa }}>
-                                                    <FontAwesomeIcon className="quadrado-legenda" icon={faSquare} color={rosa} /> {`Codificação GOP`.toUpperCase()}
-                                                </p>
-                                            </div>
-                                        </div>
                                     </>
                                 ) : (
                                     <div className="grafico2">
@@ -468,9 +478,9 @@ function VerColaborador() {
                             <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Extrair</span>
                         </Botao>
 
-                    </div>
-                </div>    
-            
+                </div>
+            </div>
+
 
         <div className="treinamentos">
             <div className="treinamentos-card">
@@ -544,11 +554,11 @@ function VerColaborador() {
 </div>
 
 
-                        
-                    )}
+
+                        )}
+                    </div>
                 </div>
             </div>
-        </div>
         </>
     );
 }

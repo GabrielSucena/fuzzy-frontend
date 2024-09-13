@@ -4,6 +4,7 @@ import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { DataGrid, GridActionsCellItem, GridRowEditStopReasons, GridRowModes } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import DefaultPaper from '../defaultPaper';
@@ -27,12 +28,16 @@ import Modal from '../modal';
 
 const token = localStorage.getItem('authToken');
 const roles = ['Market', 'Finance', 'Development'];
-const classifications = ['A', 'B', 'C', 'D'];
+const classifications = ['N/A', 'ME', 'MA', 'C'];
 const statuses = ['Active', 'Inactive', 'Pending'];
+
 const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
 const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
 
-export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradores }) {
+
+export default function TabelaMUI2({ curso_id, colaboradores, refreshColaboradores }) {
+    const { regra } = useRole();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (Array.isArray(colaboradores)) {
@@ -41,7 +46,7 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                 name: colaborador.name,
                 department: colaborador.department,
                 role: colaborador.position,
-                classification: colaborador.status,
+                classification: colaborador.classification,
                 status: colaborador.status,
             }));
             setRows(initialRows);
@@ -53,11 +58,13 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
     const [rows, setRows] = React.useState();
     const [rowModesModel, setRowModesModel] = useState({});
     const [confirmedNames, setConfirmedNames] = useState([]);
+    const [updatedClassifications, setUpdatedClassifications] = useState([]); // Lista de classificações atualizadas
     const [rejectedNames, setRejectedNames] = useState([]);
     const [openModal, setOpenModal] = useState(null);
     const handleOpen = (modalType) => () => setOpenModal(modalType);
     const handleClose = () => setOpenModal(null);
-   
+    const [isSaving, setIsSaving] = useState(false);  // Estado para controlar o carregamento
+
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalOpen2, setModalOpen2] = useState(false);
     const openModal2 = () => {
@@ -119,12 +126,13 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
         setRows((prevRows) =>
             prevRows.map((row) => {
                 if (row.id === id) {
-                    const newRow = { ...row, confirmed: !row.confirmed };
+                    const newRow = { ...row, confirmed: !row.confirmed, rejected: false };  // Desmarca o checkbox 'rejected'
                     if (newRow.confirmed) {
-                        setConfirmedNames((prevNames) => [...prevNames, newRow.name]);
+                        setConfirmedNames((prevNames) => [...prevNames, newRow.id]);
+                        setRejectedNames((prevIds) => prevIds.filter((rowId) => rowId !== newRow.id));  // Remove o id da lista de rejeitados
                     } else {
                         setConfirmedNames((prevNames) =>
-                            prevNames.filter((name) => name !== newRow.name)
+                            prevNames.filter((name) => name !== newRow.id)
                         );
                     }
                     return newRow;
@@ -133,13 +141,15 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
             })
         );
     };
+    
     const handleRejectClick = (id) => () => {
         setRows((prevRows) =>
             prevRows.map((row) => {
                 if (row.id === id) {
-                    const newRow = { ...row, rejected: !row.rejected };
+                    const newRow = { ...row, rejected: !row.rejected, confirmed: false };  // Desmarca o checkbox 'confirmed'
                     if (newRow.rejected) {
                         setRejectedNames((prevIds) => [...prevIds, newRow.id]);
+                        setConfirmedNames((prevNames) => prevNames.filter((rowId) => rowId !== newRow.id));  // Remove o id da lista de confirmados
                     } else {
                         setRejectedNames((prevIds) =>
                             prevIds.filter((rowId) => rowId !== newRow.id)
@@ -152,13 +162,67 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
         );
     };
 
+    const classificationMapping = {
+        'N/A': { classificationId: 1 },
+        'ME': { classificationId: 2 },
+        'MA': { classificationId: 3 },
+        'C': { classificationId: 4 },
+    };
+    // Função para enviar as atualizações de classificações
+    const PatchAttClassification = () => {
+
+        if (updatedClassifications.length === 0) {
+            return; // Não faz a requisição se não houver classificações para atualizar
+        }
+        try {
+            setIsSaving(true);  // Define o estado de carregamento como verdadeiro
+
+            const response = fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Assumindo que o token está no localStorage
+                },
+                body: JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }),
+            });
+            console.log('Requisição:', JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }))
+            refreshColaboradores(); // Atualiza a lista de colaboradores após a requisição
+            setUpdatedClassifications([]); // Limpa a lista após o envio
+
+        } finally {
+            setIsSaving(false);  // Define o estado de carregamento como falso
+        }
+    };
+
+
+    // useEffect para executar a requisição quando updatedClassifications mudar
+    useEffect(() => {
+        if (updatedClassifications.length > 0) {
+            PatchAttClassification();
+        }
+    }, [updatedClassifications]);
+
+
+    // Função para atualizar a lista de classificações
     const processRowUpdate = (newRow) => {
         const updatedRow = { ...newRow, isNew: false };
+        const originalRow = rows.find(row => row.id === newRow.id);
+        if (originalRow.classification !== newRow.classification) {
+            const { classificationId } = classificationMapping[newRow.classification];
+
+            // Adiciona ou atualiza a lista de classificações atualizadas
+            setUpdatedClassifications(prev => [
+                ...prev,
+                { collaboratorId: newRow.id, classificationId }
+            ]);
+        }
+
         setRows((prevRows) =>
             prevRows.map((row) => (row.id === newRow.id ? updatedRow : row))
         );
         return updatedRow;
     };
+
 
     const handleRowModesModelChange = (newRowModesModel) => {
         setRowModesModel(newRowModesModel);
@@ -175,11 +239,52 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
             });
             return newModel;
         });
-        console.log(rejectedNames);
+        console.log('Nomes Confirmados:',confirmedNames);        
+        console.log('Nomes Rejeitados:',rejectedNames);
+        console.log('Classificações Atualizadas:',updatedClassifications);
+
+        if (confirmedNames.length > 0) {
+            const updateClassificationAndStatusDtoList = confirmedNames.map((id) => ({
+                collaboratorId: id,
+                statusId: 1, // Supondo que statusId 2 é o desejado para atualizar o status
+            }));
+    
+            try {
+                setIsSaving(true);  // Define o estado de carregamento como verdadeiro
+    
+                fetch(`http://localhost:8080/cursos/${curso_id}/colaboradores`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Assumindo que o token está no localStorage
+                    },
+                    body: JSON.stringify({ updateClassificationAndStatusDtoList }),
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error('Erro na requisição de atualização');
+                        }
+                        console.log('Requisição:', JSON.stringify({ updateClassificationAndStatusDtoList }));
+                        refreshColaboradores(); // Atualiza a lista de colaboradores após a requisição
+                        setConfirmedNames([]); // Limpa a lista após o envio
+                    })
+                    .catch((error) => {
+                        console.error('Erro ao atualizar colaboradores:', error);
+                    })
+                    .finally(() => {
+                        setIsSaving(false);  // Define o estado de carregamento como falso
+                    });
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                setIsSaving(false);  // Define o estado de carregamento como falso
+            }
+        }
+
         if (rejectedNames.length > 0) {
             const openModalFunction = handleOpen('retirar-colaborador');
             openModalFunction();
         }
+        //PatchAttClassification(); // Chama a função para enviar as atualizações de classificações
 
         // Resetar os checkboxes
         setRows((prevRows) =>
@@ -213,7 +318,14 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
         { field: 'name', headerName: 'Nome', width: 180, editable: false },
         { field: 'department', headerName: 'Departamento', width: 180, editable: false },
         { field: 'role', headerName: 'Cargo', width: 180, editable: false, type: 'singleSelect', valueOptions: roles },
-        { field: 'classification', headerName: 'Classificação', width: 180, editable: true, type: 'singleSelect', valueOptions: classifications },
+        {
+            field: 'classification',
+            headerName: 'Classificação',
+            width: 180,
+            editable: showDeleteIcon, // Torna editável apenas se o botão de editar foi pressionado
+            type: 'singleSelect',
+            valueOptions: classifications
+        },
         { field: 'status', headerName: 'Status', width: 180, editable: false, type: 'singleSelect', valueOptions: statuses },
         showDeleteIcon ? {
             field: 'actions',
@@ -265,11 +377,11 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                     complement={"Este colaborador(a) será notificado(a) sobre seus cursos pendentes via email."} 
             />
             {openModal === 'notificar' && (
-                <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro,João"} />
+                <ModalNotificarTreinamento open={true} handleClose={handleClose} curso_id={curso_id}/>
             )}
             {openModal === 'adicionar-colaborador' && (
                 // <ModalAddColaborador id_curso={curso_id} open={true} handleClose={handleClose}  refreshColaboradores={refreshColaboradores} />
-                <ModalSelecionarAdd open={true} handleClose={handleClose} curso_id={curso_id}  refreshColaboradores={refreshColaboradores} />
+                <ModalSelecionarAdd open={true} handleClose={handleClose} curso_id={curso_id} refreshColaboradores={refreshColaboradores} />
             )}
             {openModal === 'retirar-colaborador' && (
                 <ModalConfirmarExclusãoColaborador setRejectedNames={setRejectedNames} setResetRows={setResetRows}
@@ -292,7 +404,7 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                                     <div className='botoes-mui2'>
                                         <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>
                                             <FontAwesomeIcon className="icon" icon={faPlus} color={branco} /> <span>&nbsp;&nbsp;&nbsp;Adicionar</span>
-                                        </Botao>
+                                        </Botao> 
                                         <Botao color='branco' onClick={toggleDeleteIcon}>
                                             <FontAwesomeIcon className="icon" icon={faPencil} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Editar</span>
                                         </Botao>
@@ -346,7 +458,7 @@ export default function TabelaMUI2({ curso_id, colaboradores,refreshColaboradore
                             </Grid>
                             <Grid item className='grider' xs={0}>
                                 <Grid className='botao-alteracao-dois'>                                    
-                                {((role === '[admin]' || role === '[manager]') && Object.keys(colaboradores).length > 0) && <PdfSender id={curso_id} />}
+                                {((role === '[admin]' || role === '[manager]') && Object.keys(colaboradores).length > 0) && <PdfSender id={curso_id} refreshColaboradores={refreshColaboradores} />}
                                 </Grid>
                                 {showDeleteIcon && (
                                     <Grid className='botao-alteracao'>
