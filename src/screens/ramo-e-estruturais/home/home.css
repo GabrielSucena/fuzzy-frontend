@@ -5,7 +5,7 @@
     justify-content: center;;
     gap: 5rem;
     text-decoration: none;
-    padding: 2rem; /* Adicionei padding para garantir espaço ao redor do conteúdo */
+    padding-top: 2rem; /* Adicionei padding para garantir espaço ao redor do conteúdo */
     overflow: auto; /* Permite rolagem se necessário */
     box-sizing: border-box; /* Inclui padding e borda no tamanho total do elemento */
 }

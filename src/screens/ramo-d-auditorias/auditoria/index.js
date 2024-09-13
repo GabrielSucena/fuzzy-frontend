@@ -32,7 +32,6 @@ function Auditoria({
     tipo
 }) {
 
-    
 /**
  * @function Auditoria
  * @since 2024
@@ -70,7 +69,6 @@ function Auditoria({
                     fetchUrl += `/${tipo}/${entidade}`;
                 }
 
-
                 console.log("URL: ", fetchUrl)
                 
                 const response = await fetch(fetchUrl, { 
@@ -81,6 +79,9 @@ function Auditoria({
                     } 
                 });
                 const auditoriaData = await response.json();
+
+                // Ordenar os dados por createdOn em ordem decrescente
+                auditoriaData.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
 
                 setAuditoria(auditoriaData);
                 setRemoveLoading(true);
@@ -200,7 +201,7 @@ function Auditoria({
                 </div>
                 {loading && (
                     <div className="sem-conexao-colaborador">
-                        <Carregando className="div-carregar">Carregando</Carregando>
+                                                <Carregando className="div-carregar">Carregando</Carregando>
                     </div>
                 )}
 
@@ -252,14 +253,16 @@ function Auditoria({
                             </div>
                         ))
                     ) : (
-                       <>
-                                       {!removeLoading && (
-                    <div className="sem-conexao-colaborador">
-                        <div className="texto-sem-auditoria"><p className="destaque" style={{textAlign:'center', padding:'2rem 0rem', fontWeight:'bolder', fontSize:'1.5rem'}}>Não há dados disponíveis atualmente.</p></div>
-                        <img src={semAuditoria} className="img-sem-auditoria" alt="Sem auditoria" />
-                    </div>
-                )}
-                       </>
+                        <>
+                            {!removeLoading && (
+                                <div className="sem-conexao-colaborador">
+                                    <div className="texto-sem-auditoria">
+                                        <p className="destaque" style={{textAlign:'center', padding:'2rem 0rem', fontWeight:'bolder', fontSize:'1.5rem'}}>Não há dados disponíveis atualmente.</p>
+                                    </div>
+                                    <img src={semAuditoria} className="img-sem-auditoria" alt="Sem auditoria" />
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
             </div>
@@ -268,3 +271,4 @@ function Auditoria({
 }
 
 export default Auditoria;
+

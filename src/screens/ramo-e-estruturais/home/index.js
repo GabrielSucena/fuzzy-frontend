@@ -43,7 +43,7 @@ export function Home() {
             </div>
           </Link>
         }
-        {role === '[admin]' ?
+        {role === '[admin]' || role === '[manager]' ?
           <Link to='/colaboradores' className='link-card'>
             <div>
               <Card

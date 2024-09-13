@@ -105,7 +105,7 @@ const EditarColaborador = () => {
         console.log("Edição de colaborador: ", TratamentoEnvio)
         setMessage('Colaborador atualizado com sucesso!');
         setModalOpen(false);
-        setTimeout(() => navigate(-1), 2000);
+        setTimeout(() => navigate(-1), 200000);
       })
       .catch(error => {
         console.error('Error updating collaborator:', error);
