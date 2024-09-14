@@ -48,20 +48,22 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route element={<Layout />}>
+                <Route path='/login' element={<Login />} />
                 <Route path='/*' element={<NaoEncontrada />} />
                 <Route path='/digite-o-email' element={<DigiteSeuEmail />} />
                 <Route path='/esqueci-a-senha' element={<Esqueciasenha />} />
                 <Route path='/digite-o-codigo' element={<DigiteCodigo />} />
-                <Route path='/login' element={<Login />} />
+                
               </Route>
               <Route element={<Layout />}>
-                <Route path="/" element={<PrivateRoute element={Home} />} />
-                <Route path="/treinamentos" element={<PrivateRoute element={Treinamentos} />} />
+                <Route path="/treinamentos" element={<PrivateRoute element={Treinamentos} />} /> 
                 <Route path="/adicionar-treinamentos" element={<PrivateRoute element={AdicionaTreinamento} />} />
                 <Route path="/editar-treinamentos" element={<PrivateRoute element={EditarTreinamento} />} />
                 <Route path="/treinamentos/:id" element={<PrivateRoute element={TreinamentoInfo} />} />
                 <Route path="/pdfsender" element={<PrivateRoute element={PdfSender} />} />
                 <Route path="/auditar-treinamento/:id" element={<PrivateRoute element={AuditarTreinamento} />} />
+
+                <Route path="/" element={<PrivateRoute element={Home} />} />
 
                 <Route path="/colaboradores" element={<PrivateRoute element={Colaboradores} />} />
                 <Route path="/adiciona-colaborador" element={<PrivateRoute element={CadastroColaborador} />} />
