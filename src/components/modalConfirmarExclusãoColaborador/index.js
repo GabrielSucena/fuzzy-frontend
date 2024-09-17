@@ -40,7 +40,7 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`, 
             },
-            body: JSON.stringify({ collaboratorsId: colaboradores })
+            body: JSON.stringify({reason: justificativa, collaboratorsId: colaboradores})
             // Quando estiver preparado para a razão
             //body: JSON.stringify({ collaboratorsId: colaboradores, reason: justificativa })
         })
