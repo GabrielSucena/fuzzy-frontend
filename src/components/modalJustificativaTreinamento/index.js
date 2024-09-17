@@ -10,21 +10,19 @@ const style = {
     transform: 'translate(-50%, -50%)',
     width: '70%', // Largura responsiva
     maxWidth: 600, // Largura máxima
-    overflow: 'auto', // Adicione rolagem se necessário
     bgcolor: 'background.paper',
     border: '4px solid #6000B6',
     boxShadow: 24,
     p: 4,
     borderRadius: '16px', // Adicione bordas arredondadas
-
+    overflow: 'auto', // Adicione rolagem se necessário
 };
 
 
 
 
-function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, open, handleClose, courseId, refreshColaboradores,setResetRows
-}) {
-
+function ModalJustificativaTreinamento({ open, handleClose, courseId, cursoInfo }) {
+   
     const navigate = useNavigate();
 
     const [justificativa, setJustificativa] = useState('');
@@ -32,34 +30,35 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
 
     const handleConfirm = async (justificativa) => {
         
-        console.log("Pré: ", JSON.stringify({reason: justificativa, collaboratorsId: colaboradores}))
+        // Inclui o motivo no cursoInfo
+        const updatedCursoInfo = {
+            ...cursoInfo,
+            reason: justificativa
+        };
+        console.log("Curso Info Atualizado:", updatedCursoInfo);
+        console.log("Motivo: ", cursoInfo)
+        console.log("Motivo: ", courseId)
 
-        fetch(`${url}/cursos/${courseId}/colaboradores`, {
-            method: 'DELETE',
-            headers: {
+
+        try {
+            const response = await fetch(`${url}/cursos/${courseId}`, {
+              method: 'PUT',
+              headers: {
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`, 
-            },
-            body: JSON.stringify({reason: justificativa, collaboratorsId: colaboradores})
-            // Quando estiver preparado para a razão
-            //body: JSON.stringify({ collaboratorsId: colaboradores, reason: justificativa })
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Erro na requisição');
-                }
-                return response.text(); // ou response.json(), caso a API retorne JSON
-            })
-            .then((data) => {
-                console.log('Requisição bem-sucedida:', data);
-                refreshColaboradores(); 
-            })
-            .catch((error) => {
-                console.error('Erro ao fazer a requisição:', error);
+              },
+              body: JSON.stringify(updatedCursoInfo),
             });
+            if (response.ok) {
+              navigate(`/treinamentos/${courseId}`);
+            } else {
+              console.error("Erro ao enviar os dados:", response.statusText);
+            }
+          } catch (error) {
+            console.error("Erro ao enviar os dados:", error);
+          }
 
-        setRejectedNames([]);
-        handleClose()
+
     };
     return (
         <Modal
@@ -71,7 +70,7 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 'bold' }}>
-                    Excluir participantes?
+                    Editar treinamento ?
                 </Typography>
                 <TextField
                     required
@@ -83,10 +82,15 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
                     onChange={(e) => setJustificativa(e.target.value)}
                 />
                 <Typography id="modal-modal-description" sx={{ mt: 2, mb: 2, color: '#565656', }}>
-                    Essa ação irá retirar os colaboradores selecionados desse treinamento.
+                    Essa ação irá editar o treinamento atual e incrementar a versão.
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', width: '100%' }}>
-                    <Button variant="contained" onClick={() => handleConfirm(justificativa)}>Confirmar</Button>
+                <Button 
+                    variant="contained" 
+                    onClick={() => handleConfirm(justificativa)}
+                    >
+                    Confirmar
+                    </Button>
                     <Button variant="outlined" onClick={handleClose}>Cancelar</Button>
                 </Box>
 
@@ -95,4 +99,4 @@ function ModalConfirmarExclusãoColaborador({setRejectedNames, colaboradores, op
     )
 }
 
-export default ModalConfirmarExclusãoColaborador
+export default ModalJustificativaTreinamento
