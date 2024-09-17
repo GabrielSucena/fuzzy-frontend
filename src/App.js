@@ -1,4 +1,5 @@
 // src/App.js
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { ThemeProvider, createTheme } from "@mui/material";
 import PrivateRoute from "./screens/ramo-e-estruturais/protetor/privateRoute";
@@ -38,7 +39,40 @@ const theme = createTheme({
   palette: { primary: { main: "#6000B6" } },
 });
 
-localStorage.clear();
+function Timer() {
+  const [startTime, setStartTime] = useState(null);
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  useEffect(() => {
+    const hasDataInLocalStorage = localStorage.length > 0;
+
+    if (hasDataInLocalStorage) {
+      const now = Date.now();
+      setStartTime(now);
+
+      const interval = setInterval(() => {
+        const timeElapsed = (Date.now() - now) / 1000;
+        setElapsedTime(timeElapsed);
+
+        if (timeElapsed > 900) {
+          // Limpar localStorage e recarregar a página
+          localStorage.clear();
+          window.location.reload();
+        }
+      }, 1000);
+
+      return () => clearInterval(interval);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (startTime) {
+      console.log(`Tempo de execução: ${elapsedTime}s`);
+    }
+  }, [elapsedTime, startTime]);
+
+  return null;
+}
 
 function App() {
   return (
@@ -46,6 +80,7 @@ function App() {
       <ThemeProvider theme={theme}>
         <div className="App">
           <BrowserRouter>
+            <Timer /> {/* Adicione o componente Timer aqui */}
             <Routes>
               <Route element={<Layout />}>
                 <Route path='/login' element={<Login />} />
@@ -53,7 +88,6 @@ function App() {
                 <Route path='/digite-o-email' element={<DigiteSeuEmail />} />
                 <Route path='/esqueci-a-senha' element={<Esqueciasenha />} />
                 <Route path='/digite-o-codigo' element={<DigiteCodigo />} />
-                
               </Route>
               <Route element={<Layout />}>
                 <Route path="/treinamentos" element={<PrivateRoute element={Treinamentos} />} /> 
