@@ -44,11 +44,13 @@
     "react-modal": "^3.16.1",
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
+    "serve": "^14.2.3",
     "uuid": "^10.0.0",
     "web-vitals": "^4.2.3"
   },
   "scripts": {
     "cloud": "cross-env HOST=146.235.62.84 PORT=3000 react-scripts start",
+    "start:login": "node ./scripts/start-login.js",
     "start": "react-scripts start",
     "backend": "json-server --watch db.json --port 5000",
     "build": "react-scripts build",
