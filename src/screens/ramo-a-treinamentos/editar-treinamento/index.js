@@ -17,6 +17,7 @@ import DefaultPaper from "../../../components/defaultPaper";
 import { useLocation, useNavigate } from "react-router-dom";
 import { DateField } from "@mui/x-date-pickers";
 import url from '../../../functionsCenter/urlController'
+import ModalJustificativaTreinamento from "../../../components/modalJustificativaTreinamento";
 
 function EditarTreinamento() {
   const location = useLocation();
@@ -42,6 +43,10 @@ function EditarTreinamento() {
 
 
 
+  const [openModal, setOpenModal] = useState(null);
+  const handleOpen = (modalType) => () => setOpenModal(modalType);
+  const handleClose = () => setOpenModal(null);
+
   const [instructor, setInstructor] = useState('');
   const [version, setVersion] = useState('');
   const [title, setTitle] = useState('');
@@ -51,6 +56,7 @@ function EditarTreinamento() {
   const [description, setDescription] = useState('');
   const [validityDate, setValidityYears] = useState('');
   const [startDate, setStartDate] = useState(dayjs());
+  const [infoCursos, setInfoCursos] = useState(null); // Adiciona o estado para infoCursos
 
   useEffect(() => {
     if (treinamento) {
@@ -88,7 +94,7 @@ function EditarTreinamento() {
   }, [treinamento]);
 
   const navigate = useNavigate();
-    
+
   const handleCancelClick = () => {
     navigate(`/treinamentos/${id}`, {
       state: {
@@ -96,9 +102,10 @@ function EditarTreinamento() {
       },
     });
   };
+
   const aoSalvar = async (e) => {
     e.preventDefault();
-
+  
     if (
       !instructor ||
       !version ||
@@ -112,8 +119,7 @@ function EditarTreinamento() {
       alert("Por favor, preencha todos os campos obrigatórios.");
       return;
     }
-
-
+  
     const infoCursos = {
       instructor,
       version,
@@ -124,26 +130,35 @@ function EditarTreinamento() {
       validityYears: parseInt(validityDate),
       startDate: startDate.format('DD/MM/YYYY'),
     };
+    setInfoCursos(infoCursos); // Armazena as informações no estado
 
-    try {
-      const response = await fetch(`${url}/cursos/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(infoCursos),
-      });
-      console.log(infoCursos)
-      if (response.ok) {
-        navigate("/treinamentos");
-      } else {
-        console.error("Erro ao enviar os dados:", response.statusText);
-      }
-    } catch (error) {
-      console.error("Erro ao enviar os dados:", error);
-    }
+    // Abrir o modal e passar as informações do curso
+    setOpenModal({
+      type: 'justificar',
+      cursoInfo: infoCursos,
+    });
   };
+
+    //   try {
+    //     const response = await fetch(`${url}/cursos/${id}`, {
+    //       method: 'PUT',
+    //       headers: {
+    //         'Authorization': `Bearer ${token}`,
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(infoCursos),
+    //     });
+    //     console.log(infoCursos)
+    //     if (response.ok) {
+    //       navigate("/treinamentos");
+    //     } else {
+    //       console.error("Erro ao enviar os dados:", response.statusText);
+    //     }
+    //   } catch (error) {
+    //     console.error("Erro ao enviar os dados:", error);
+    //   }
+    // 
+  
 
   return (
     <>
@@ -283,8 +298,17 @@ function EditarTreinamento() {
         </Grid>
         <Grid item xs></Grid>
       </Grid>
-    </>
-  );
+      {openModal?.type === 'justificar' && (
+      <ModalJustificativaTreinamento
+        open={Boolean(openModal)}
+        onClose={handleClose}
+        cursoInfo={openModal.cursoInfo}
+        courseId={id}
+      />
+    )}
+  </>
+);
+
 }
 
 export default EditarTreinamento;
