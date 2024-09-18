@@ -26,9 +26,9 @@ function VerColaborador() {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredTrainings, setFilteredTrainings] = useState([]);
     const [collaboratorMessage, setCollaboratorMessage] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
     const [selectedCriticality, setSelectedCriticality] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
-
 
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpen2, setModalOpen2] = useState(false);
@@ -143,49 +143,53 @@ function VerColaborador() {
                 console.log('Email enviado com sucesso:', data);
             })}
 
-    function handleRemove(justificativa) {
-        // Defina a link correta, usando a variável id que você tem disponível
-        const link = `${url}/colaboradores/${id}`;
-        const motivo = { reason: justificativa };
-        console.log("Exclusão sendo enviada: ", motivo, "para: ", link);
+            
 
-        fetch(link, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(motivo) // Adicione o corpo apenas se a API suportar
-        })
-            .then(resp => {
-                if (!resp.ok) {
-                    throw new Error(`HTTP error! status: ${resp.status}`);
-                } else {
-                    setTimeout(() => {
-                        navigate('/colaboradores');
-                    }, 2000);
-                }
-
-            })
-            .then(data => {
-
-                console.log('Colaborador removido com sucesso:', data);
-
-            })
-            .catch(err => {
-
-                const errorMessage = err.message.includes('500')
-                    ? 'Para que o(a) colaborador(a) ser excluido(a), por integridade, este não pode estar em nenhum curso.'
-                    : `Erro ao remover colaborador: ${err.message}`;
-
-                setCollaboratorMessage(errorMessage);
-
-                // Limpa a mensagem de erro após 2 segundos
-                setTimeout(() => {
-                    setCollaboratorMessage('');
-                }, 2000);
-            });
-    }
+            function handleRemove(justificativa) {
+                const link = `${url}/colaboradores/${id}`;
+                const motivo = { reason: justificativa };
+                console.log("Exclusão sendo enviada: ", motivo, "para: ", link);
+            
+                fetch(link, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(motivo)
+                })
+                    .then(resp => {
+                        if (!resp.ok) {
+                            throw new Error(`HTTP error! status: ${resp.status}`);
+                        } else {
+                            setTimeout(() => {
+                                navigate('/colaboradores');
+                            }, 2000);
+                        }
+                    })
+                    .then(data => {
+                        console.log('Colaborador removido com sucesso:', data);
+                        setShowMessage(true); // Mostra a mensagem
+                        setCollaboratorMessage('Colaborador removido com sucesso!');
+            
+                        setTimeout(() => {
+                            setShowMessage(false); // Esconde a mensagem após 5 segundos
+                            setCollaboratorMessage('');
+                        }, 5000);
+                    })
+                    .catch(err => {
+                        const errorMessage = err.message.includes('400', '401') && 'Para que o(a) colaborador(a) seja excluido(a), por integridade, este não pode estar em nenhum curso.'
+                            
+                        setCollaboratorMessage(errorMessage);
+                        setShowMessage(true); // Mostra a mensagem
+            
+                        setTimeout(() => {
+                            setShowMessage(false); // Esconde a mensagem após 5 segundos
+                            setCollaboratorMessage('');
+                        }, 5000);
+                    });
+            }
+            
 
 
 
@@ -327,7 +331,12 @@ function VerColaborador() {
                     buttons={true} 
                     complement={"Este colaborador(a) será notificado(a) sobre seus cursos pendentes via email."} 
             />
-            {collaboratorMessage && <div className="message">{collaboratorMessage}</div>}
+            {collaboratorMessage && (
+                <div className={`popup-message ${showMessage ? 'show' : ''}`}>
+                    {collaboratorMessage}
+                </div>
+            )}
+
             <div className="topo-telas">
                 <div className="titulo-e-descricao">
                     <p className="titulo-pagina" onClick={() => handleCopy(collaborator.name)}>{collaborator.name || "Nome do Colaborador"}&nbsp;&nbsp;<FontAwesomeIcon className="icon-copy" icon={faCopy} color={'#7B50A6'} /></p>

@@ -20,6 +20,10 @@ function CadastroColaborador() {
         departmentId: '',
     });
     const token = localStorage.getItem('authToken');
+
+    const [collaboratorMessage, setCollaboratorMessage] = useState('');
+    const [showMessage, setShowMessage] = useState(false);
+
     useEffect(() => {
         fetch(`${url}/departamentos`, {
             method: 'GET',
@@ -62,7 +66,6 @@ function CadastroColaborador() {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`, 
-
             },
             body: JSON.stringify(collaborator),
         })
@@ -70,19 +73,28 @@ function CadastroColaborador() {
             if (!resp.ok) {
                 return resp.json().then((error) => {
                     console.error("Erro ao adicionar colaborador:", error);
+                    // Verifica se o erro é 422
+                    if (resp.status === 422) {
+                        setCollaboratorMessage('Já existe colaboradores com o mesmo ID Sanofi cadastrado!');
+                        setShowMessage(true); // Mostra a mensagem
+                        setTimeout(() => {
+                            setShowMessage(false);
+                            setCollaboratorMessage('');
+                        }, 5000);
+                    }
                     throw new Error("Erro na resposta da API");
                 });
             }
             return resp.json();
         })
         .then(data => {
-
             navigate('/colaboradores', { state: { message: 'Colaborador adicionado com sucesso!' } });
         })
-        .catch((err) => {
-            console.error("Erro na requisição de adição de colaborador:", err);
+        .catch(err => {
+            console.error("Erro na requisição:", err);
         });
     }
+    
 
     function handleChange(e) {
         setCollaborator({ ...collaborator, [e.target.name]: e.target.value });
@@ -109,6 +121,12 @@ function CadastroColaborador() {
 
     return (
         <>
+            {collaboratorMessage && (
+                <div className={`popup-message ${showMessage ? 'show' : ''}`}>
+                    {collaboratorMessage}
+                </div>
+            )}
+
             <TituloPagina titulopagina="Adicionar colaborador" />
             <form className="conteiner-cadastro" onSubmit={(e) => {
                 e.preventDefault();

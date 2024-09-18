@@ -148,14 +148,14 @@ const EditarColaborador = () => {
           {collaborator ? (
             <form className="conteiner-cadastro" onSubmit={handleSubmit} onReset={handleCancel}>
               <SimpleGrid className="grid-container-colaborador" spacingX="4rem" spacingY="3rem" autoComplete="on">
-                {role === '[manager]'
+                {role === '[admin]'
                 ?
                 <>
                                 <TextField
                   className="campo"
                   label="ID de Registro Sanofi"
                   value={collaborator.register}
-                  disabled
+                  required
                 />
                 </>
                 :
@@ -164,7 +164,7 @@ const EditarColaborador = () => {
                   className="campo"
                   label="ID de Registro Sanofi"
                   value={collaborator.register}
-                  required
+                  disabled
                 />
                 </>
                 }
