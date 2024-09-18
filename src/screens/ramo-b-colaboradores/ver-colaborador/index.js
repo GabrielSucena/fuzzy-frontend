@@ -514,7 +514,11 @@ function VerColaborador() {
                         <option value="À realizar">À realizar</option>
                     </select>
                 </div>
-                <div className="grid-container">
+
+                {
+                    (role === '[admin]' || role === '[manager]') ?
+                        <>
+                                               <div className="grid-container">
                     {filteredTrainings.length > 0 ? (
                         filteredTrainings.map((course) => (
                             <Link className='retirar-estilo' to={`/treinamentos/${course.id}`} key={course.id}>
@@ -547,17 +551,62 @@ function VerColaborador() {
                             </Link>
                         ))
                     ) : (
-<div className='sem-treinamentos' style={{display: 'flex'}}>
-    <p className="mensagem-sem-treinamento">
-        Ainda <span className="destaque-tres">não há treinamentos</span> para este colaborador ou <span className="destaque-dois">os filtros</span> não trouxeram resultados.
-    </p>
-    <img className='imagem-sem-treinamento' src={semTreinamento} alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API'/>
-</div>
-
-
-
+                    <div className='sem-treinamentos' style={{display: 'flex'}}>
+                        <p className="mensagem-sem-treinamento">
+                            Ainda <span className="destaque-tres">não há treinamentos</span> para este colaborador ou <span className="destaque-dois">os filtros</span> não trouxeram resultados.
+                        </p>
+                        <img className='imagem-sem-treinamento' src={semTreinamento} alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API'/>
+                    </div>
+                        )}
+                    </div> 
+                        </>
+                        :
+                        <>
+                                        <div className="grid-container">
+                    {filteredTrainings.length > 0 ? (
+                        filteredTrainings.map((course) => (
+                        
+                                <div className='div-card'>
+                                    <div className={"treinamento-item"}>
+                                        <div className="cima-info">
+                                            <p className="nome-card">{course.course_title}</p>
+                                            <p className="course_type">Versão {course.course_version}</p>
+                                            <p className="course_type">
+                                                {course.codification}
+                                                &nbsp;&nbsp;
+                                                <FontAwesomeIcon className="icon-copy" icon={faCopy} color="#6c757d" />
+                                            </p>
+                                        </div>
+                                        <div className="meio-info">
+                                            <p className="meio">
+                                                <FontAwesomeIcon icon={faCircleExclamation} color={amarelo}/>
+                                                &nbsp;{course.classification}
+                                            </p>
+                                            <p className="meio">
+                                                <FontAwesomeIcon icon={faCalendar} color={amarelo}/>
+                                                &nbsp;{formatDate(course.start_date)}
+                                            </p>
+                                        </div>
+                                        <div className="baixo-info">
+                                            <p className={normalizeText(course.status)}>{course.status}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                        ))
+                    ) : (
+                    <div className='sem-treinamentos' style={{display: 'flex'}}>
+                        <p className="mensagem-sem-treinamento">
+                            Ainda <span className="destaque-tres">não há treinamentos</span> para este colaborador ou <span className="destaque-dois">os filtros</span> não trouxeram resultados.
+                        </p>
+                        <img className='imagem-sem-treinamento' src={semTreinamento} alt='Imagem simbolizando a ausência de resultados de treinamentos pela busca ou conexão com a API'/>
+                    </div>
                         )}
                     </div>
+                        </>
+                                
+                }
+
                 </div>
             </div>
         </>
