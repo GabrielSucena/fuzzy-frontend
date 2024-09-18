@@ -19,7 +19,7 @@ function Rodape(){
         {/* Conteúdo principal da página */}
       </div>
       <footer>
-        <Link to="/home" className="footer-logo">
+        <Link to="/" className="footer-logo">
           <img className="footer-logo-image" src={`${process.env.PUBLIC_URL}/imagens/logohome.svg`} alt="Logo da Fuzzy"/>
         </Link>
         <h6>2024 - 2024 &copy; Todos os direitos reservados.</h6>

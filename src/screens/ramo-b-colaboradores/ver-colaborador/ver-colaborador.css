@@ -472,8 +472,6 @@
     height: 2.5rem;
 }
 
-
-
 .busca-filtros-treinamento .filtro {
     padding: 0.35rem;
     border: 3px solid var(--roxo);
@@ -482,6 +480,10 @@
     border-radius: 10rem;
     box-sizing: border-box;
     width: 14%;
+}
+
+.busca-filtros-treinamento .filtro:hover {
+    color: var(--branco);
 }
 
 @media (max-width: 1000px) {
