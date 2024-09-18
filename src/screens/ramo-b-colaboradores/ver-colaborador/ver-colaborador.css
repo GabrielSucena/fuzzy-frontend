@@ -29,8 +29,20 @@
     opacity: 0;
 }
 
+.popup-message.verde {
+    background-color: green; 
+    color: white;
+}
+
+.popup-message.vermelho {
+    background-color: red; 
+    color: white;
+}
+
+
+
 .popup-message.show {
-    opacity: 1; /* Torna visível quando necessário */
+    opacity: 1; 
 }
 
 

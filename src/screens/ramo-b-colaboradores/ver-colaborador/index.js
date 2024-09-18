@@ -29,6 +29,7 @@ function VerColaborador() {
     const [showMessage, setShowMessage] = useState(false);
     const [selectedCriticality, setSelectedCriticality] = useState('');
     const [selectedStatus, setSelectedStatus] = useState('');
+    const [color, setColor] = useState('');
 
     const [modalOpen, setModalOpen] = useState(false);
     const [modalOpen2, setModalOpen2] = useState(false);
@@ -170,6 +171,7 @@ function VerColaborador() {
                     .then(data => {
                         console.log('Colaborador removido com sucesso:', data);
                         setShowMessage(true); // Mostra a mensagem
+                        setColor('verde')
                         setCollaboratorMessage('Colaborador removido com sucesso!');
             
                         setTimeout(() => {
@@ -332,7 +334,8 @@ function VerColaborador() {
                     complement={"Este colaborador(a) será notificado(a) sobre seus cursos pendentes via email."} 
             />
             {collaboratorMessage && (
-                <div className={`popup-message ${showMessage ? 'show' : ''}`}>
+                <div className={`popup-message ${showMessage ? 'show' : ''} ${color}`}>
+
                     {collaboratorMessage}
                 </div>
             )}
