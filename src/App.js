@@ -67,7 +67,6 @@ function Timer() {
 
   useEffect(() => {
     if (startTime) {
-      console.log(`Tempo de execução: ${elapsedTime}s`);
     }
   }, [elapsedTime, startTime]);
 

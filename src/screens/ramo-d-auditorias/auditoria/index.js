@@ -177,7 +177,7 @@ function Auditoria({
                                 ? <option value="collaborator">Apenas o colaborador</option>
                                 : <option value="">Modo</option>
                             }
-                            {!tipo && <option value="course">Cursos</option>}
+                            {!tipo && <option value="course">Treinamentos</option>}
                             {!tipo && <option value="collaborator">Colaboradores</option>}
                             <option value="both">Colaboradores em treinamentos</option>
                         </select>
@@ -205,24 +205,36 @@ function Auditoria({
                                                 <Carregando className="div-carregar">Carregando</Carregando>
                     </div>
                 )}
-
+                
                 <div className="auditorias-content">
                     {removeLoading && auditoria.length > 0 ? (
                         agrupar.map((auditoriaItem) => (
                             <div key={auditoriaItem.id} className="auditoria-item">
                                 <p className="gestor"><strong>Gestor(a):&nbsp;</strong> {auditoriaItem.user}</p>
                                 <p className="momento"><strong>{formatDateTime(auditoriaItem.createdOn)}</strong></p>
-                                {auditoriaItem.removed && (
-                                    <p className="desativado">
-                                        <FontAwesomeIcon className="icon" icon={faX} color={vermelho} />
-                                        &nbsp;&nbsp;<strong>Desativado: <span className="reason">{auditoriaItem.reason || 'N/A'}</span></strong>
-                                    </p>
-                                )}
+                                {auditoriaItem.reason && (
+                                        <>
+                                            {auditoriaItem.removed ? (
+                                                <p className="desativado" style={{paddingBottom:'0.5rem'}}>
+                                                    <FontAwesomeIcon className="icon" icon={faX} color={vermelho} />
+                                                    &nbsp;&nbsp;<strong >Desativado: <span className="reason">{auditoriaItem.reason || 'N/A'}</span></strong>
+                                                </p>
+                                            ) : (
+                                                <>
+                                                    <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={vermelho} />
+                                                    &nbsp;&nbsp;<strong>Justificativa: </strong> {auditoriaItem.reason}<br />&nbsp;
+                                                </>
+                                            )}
+                                        </>
+                                    )}
+
+
                                 {auditoriaItem.changedField  && (
                                     <>
                                         <p>
                                             <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />
                                             &nbsp;&nbsp;<strong>Mudanças:</strong> {auditoriaItem.changedField || 'N/A'}
+                                            
                                         </p>
                                         <p style={{paddingBottom:'0.25rem'}}>
                                             <FontAwesomeIcon className="icon" icon={faCircleChevronRight} color={roxo} />
@@ -250,6 +262,8 @@ function Auditoria({
                                         </p>
                                     </>
                                 )}
+
+
                                 <hr className="divisao-auditoria"/>
                             </div>
                         ))
