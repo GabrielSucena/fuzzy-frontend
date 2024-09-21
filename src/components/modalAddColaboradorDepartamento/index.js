@@ -136,7 +136,6 @@ const handleSaveAllClick = () => {
     };
 
     const columns = [
-        { field: 'department', headerName: 'Departamento', width: 180, editable: false },
         {
             field: 'actions',
             type: 'actions',
@@ -159,6 +158,7 @@ const handleSaveAllClick = () => {
                 ];
             },
         },
+        { field: 'department', headerName: 'Departamento', width: 180, editable: false },
     ];
 
     return (

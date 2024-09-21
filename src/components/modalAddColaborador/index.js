@@ -137,10 +137,7 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
     };
 
     const columns = [
-        { field: 'name', headerName: 'Nome', width: 180, editable: false },
-        { field: 'department', headerName: 'Departamento', width: 180, editable: false },
-        { field: 'position', headerName: 'Cargo', width: 180, editable: false },
-        {
+      {
             field: 'actions',
             type: 'actions',
             headerName: 'Adicionar',
@@ -162,6 +159,10 @@ function ModalAddColaborador({ id_curso, open, handleClose, refreshColaboradores
                 ];
             },
         },
+        { field: 'name', headerName: 'Nome', width: 180, editable: false },
+        { field: 'department', headerName: 'Departamento', width: 180, editable: false },
+        { field: 'position', headerName: 'Cargo', width: 180, editable: false },
+        
     ];
 
     return (

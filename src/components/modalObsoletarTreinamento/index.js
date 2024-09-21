@@ -1,5 +1,5 @@
 import { Box, Button, Modal, TextField, Typography } from '@mui/material';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import url from '../../functionsCenter/urlController'
 
@@ -21,12 +21,22 @@ const style = {
 
 
 
-function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
+function ModalObsoletarTreinamento({ open, handleClose, courseId, colaboradores}) {
    
     const navigate = useNavigate();
 
     const [justificativa, setJustificativa] = useState('');
     const token = localStorage.getItem('authToken');
+    const [temColaboradores, setTemColaboradores] = useState(false);
+
+    useEffect(() => {
+        // Verifica se há colaboradores associados ao curso
+        if (colaboradores && colaboradores.length > 0) {
+            setTemColaboradores(true);
+        } else {
+            setTemColaboradores(false);
+        }
+    }, [colaboradores]);
 
     const handleConfirm = async (justificativa) => {
         
@@ -50,7 +60,9 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
                 navigate("/treinamentos");
 
             } else {
-                console.error('Erro ao remover curso');
+                const errorData = await response.json();
+                console.error('Erro ao remover curso:', errorData.message || 'Erro desconhecido');
+           
             }
         } catch (error) {
             console.error('Erro de rede:', error);
@@ -64,12 +76,18 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
-
         >
             <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h5" component="h2" sx={{ textAlign: 'center', mb: 2, fontWeight: 'bold' }}>
-                    Obsoletar treinamento ?
+                    Obsoletar treinamento?
                 </Typography>
+
+                {temColaboradores && (
+                    <Typography id="modal-modal-warning" sx={{ color: 'red', mb: 2 }}>
+                        Não é possível obsoletar o treinamento, pois há colaboradores associados.
+                    </Typography>
+                )}
+
                 <TextField
                     required
                     fullWidth
@@ -83,18 +101,18 @@ function ModalObsoletarTreinamento({ open, handleClose, courseId }) {
                     Essa ação inativará o treinamento atual e congelará o histórico atual.
                 </Typography>
                 <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', width: '100%' }}>
-                <Button 
-                    variant="contained" 
-                    onClick={() => handleConfirm(justificativa)}
+                    <Button 
+                        variant="contained" 
+                        onClick={() => handleConfirm(justificativa)}
+                        disabled={temColaboradores} // Desabilita o botão se houver colaboradores
                     >
-                    Confirmar
+                        Confirmar
                     </Button>
                     <Button variant="outlined" onClick={handleClose}>Cancelar</Button>
                 </Box>
-
             </Box>
         </Modal>
-    )
+    );
 }
 
 export default ModalObsoletarTreinamento

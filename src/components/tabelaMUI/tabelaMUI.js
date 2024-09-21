@@ -26,11 +26,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faPencil, faPlus, faPrint } from '@fortawesome/free-solid-svg-icons';
 import Modal from '../modal';
 import url from '../../functionsCenter/urlController'
-
+import BotaoEditar from '../botaoEditar/botaoEditar';
 const token = localStorage.getItem('authToken');
-const roles = ['Market', 'Finance', 'Development'];
 const classifications = ['N/A', 'ME', 'MA', 'C'];
-const statuses = ['Active', 'Inactive', 'Pending'];
+const statuses = ['Realizado', 'À realizar'];
 
 const branco = getComputedStyle(document.documentElement).getPropertyValue('--branco').trim();
 const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
@@ -39,6 +38,7 @@ const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo
 export default function TabelaMUI2({ curso_id, colaboradores, refreshColaboradores }) {
     const { regra } = useRole();
     const navigate = useNavigate();
+    const [roles, setRoles] = useState([]);
 
     useEffect(() => {
         if (Array.isArray(colaboradores)) {
@@ -51,6 +51,9 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
                 status: colaborador.status,
             }));
             setRows(initialRows);
+
+            const uniqueRoles = [...new Set(colaboradores.map(colaborador => colaborador.position))];
+            setRoles(uniqueRoles);
         }
     }, [colaboradores]);
 
@@ -65,6 +68,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
     const handleOpen = (modalType) => () => setOpenModal(modalType);
     const handleClose = () => setOpenModal(null);
     const [isSaving, setIsSaving] = useState(false);  // Estado para controlar o carregamento
+    const [isEditing, setIsEditing] = useState(false); // Estado para controlar o botão
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalOpen2, setModalOpen2] = useState(false);
@@ -85,7 +89,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
                 'Authorization': `Bearer ${token}`,
             },
         });
-    
+
         // Fecha o modal após a requisição
         handleFecha();
     };
@@ -115,6 +119,8 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
 
     const toggleDeleteIcon = () => {
         setShowDeleteIcon(prev => !prev);
+        setIsEditing(!isEditing); // Alterna entre "Editar" e "Editando"
+
     };
 
     const handleRowEditStop = (params, event) => {
@@ -142,7 +148,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
             })
         );
     };
-    
+
     const handleRejectClick = (id) => () => {
         setRows((prevRows) =>
             prevRows.map((row) => {
@@ -185,11 +191,11 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
                 },
                 body: JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }),
             });
-    
+
             if (!response.ok) {
                 throw new Error('Failed to update classifications');
             }
-    
+
             console.log('Requisição:', JSON.stringify({ updateClassificationAndStatusDtoList: updatedClassifications }));
             setUpdatedClassifications([]); // Limpa a lista após o envio
             await refreshColaboradores(); // Atualiza a lista de colaboradores após a requisição
@@ -199,7 +205,7 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
             setIsSaving(false);  // Define o estado de carregamento como falso
         }
     };
-    
+
 
 
     // useEffect para executar a requisição quando updatedClassifications mudar
@@ -246,19 +252,19 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
             });
             return newModel;
         });
-        console.log('Nomes Confirmados:',confirmedNames);        
-        console.log('Nomes Rejeitados:',rejectedNames);
-        console.log('Classificações Atualizadas:',updatedClassifications);
+        console.log('Nomes Confirmados:', confirmedNames);
+        console.log('Nomes Rejeitados:', rejectedNames);
+        console.log('Classificações Atualizadas:', updatedClassifications);
 
         if (confirmedNames.length > 0) {
             const updateClassificationAndStatusDtoList = confirmedNames.map((id) => ({
                 collaboratorId: id,
                 statusId: 1, // Supondo que statusId 2 é o desejado para atualizar o status
             }));
-    
+
             try {
                 setIsSaving(true);  // Define o estado de carregamento como verdadeiro
-    
+
                 fetch(`${url}/cursos/${curso_id}/colaboradores`, {
                     method: 'PATCH',
                     headers: {
@@ -374,17 +380,17 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
 
     return (
         <>
-            <Modal 
-                    isOpen={modalOpen2} 
-                    onClose={handleFecha} 
-                    onConfirm={handleSendEmail} 
-                    text="Notificar colaborador(a)?" 
-                    actions={true} 
-                    buttons={true} 
-                    complement={"Este colaborador(a) será notificado(a) sobre seus cursos pendentes via email."} 
+            <Modal
+                isOpen={modalOpen2}
+                onClose={handleFecha}
+                onConfirm={handleSendEmail}
+                text="Notificar colaborador(a)?"
+                actions={true}
+                buttons={true}
+                complement={"Este colaborador(a) será notificado(a) sobre seus cursos pendentes via email."}
             />
             {openModal === 'notificar' && (
-                <ModalNotificarTreinamento open={true} handleClose={handleClose} curso_id={curso_id}/>
+                <ModalNotificarTreinamento open={true} handleClose={handleClose} curso_id={curso_id} />
             )}
             {openModal === 'adicionar-colaborador' && (
                 // <ModalAddColaborador id_curso={curso_id} open={true} handleClose={handleClose}  refreshColaboradores={refreshColaboradores} />
@@ -398,48 +404,60 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
             <p className='titulo-mui2'>Colaboradores envolvidos</p>
 
 
-                    <DefaultPaper 
-                        elevation={2} 
-                        square={false} 
-                        variant="elevation" 
-                        className='lista-colaboradores-dentro'
-                    >
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={12} lg={12}>
+            <DefaultPaper
+                elevation={2}
+                square={false}
+                variant="elevation"
+                className='lista-colaboradores-dentro'
+            >
+                <Grid container spacing={1}>
+                    <Grid item xs={12} md={12} lg={12}>
 
-                                {(role === '[admin]' || '[manager]') && (
-                                    <div className='botoes-mui2'>
-                                        <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>
-                                            <FontAwesomeIcon className="icon" icon={faPlus} color={branco} /> <span>&nbsp;&nbsp;&nbsp;Adicionar</span>
-                                        </Botao> 
-                                        <Botao color='branco' onClick={toggleDeleteIcon}>
-                                            <FontAwesomeIcon className="icon" icon={faPencil} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Editar</span>
-                                        </Botao>
-                                        <Botao color='branco' onClick={handleExtrair}>
-                                            <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Extrair</span>
-                                        </Botao>
-                                        <Botao color='branco' onClick={openModal2}>
-                                            <FontAwesomeIcon className="icon" icon={faPaperPlane} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Notificar</span>
-                                        </Botao>
-                                    </div>
-                                )}
-                              
-                {Object.keys(colaboradores).length === 0 ? (
-                <>
-                <div className='sem-treinamentos-train-div'>
-                    <div className='destaque' style={{backgroundColor:'var(--branco)', color:'var(--roxo)'}}>Oops!</div>
-                    <div className='destaque'>Parece que ainda não há colaboradores nesse treinamento.</div>
-                    <img
-                        src={vazioImg}
-                        className='sem-treinamentos-train'
-                        alt='Imagem simbolizando que não há treinamentos'
-                    />
-                </div>
+                        {(role === '[admin]' || '[manager]') && (
+                            <div className='botoes-mui2'>
+                                <Botao color='roxo' onClick={handleOpen('adicionar-colaborador')}>
+                                    <FontAwesomeIcon className="icon" icon={faPlus} color={branco} /> <span>&nbsp;&nbsp;&nbsp;Adicionar</span>
+                                </Botao>
 
-                </>
-            ) : (
-                <>
-                            <Box
+                                <>
+                                    {isEditing ? (
+                                        <Botao color="roxo" onClick={toggleDeleteIcon}>
+                                            <FontAwesomeIcon className="icon" icon={faPencil} color="var(--branco)" />
+                                            <span>&nbsp;&nbsp;&nbsp;Editando</span>
+                                        </Botao>
+                                    ) : (
+                                        <Botao color="branco" onClick={toggleDeleteIcon}>
+                                            <FontAwesomeIcon className="icon" icon={faPencil} color="var(--roxo)" />
+                                            <span>&nbsp;&nbsp;&nbsp;Editar</span>
+                                        </Botao>
+                                    )}
+                                </>
+
+                                <Botao color='branco' onClick={handleExtrair}>
+                                    <FontAwesomeIcon className="icon" icon={faPrint} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Extrair</span>
+                                </Botao>
+                                <Botao color='branco' onClick={openModal2}>
+                                    <FontAwesomeIcon className="icon" icon={faPaperPlane} color={roxo} /> <span>&nbsp;&nbsp;&nbsp;Notificar</span>
+                                </Botao>
+                            </div>
+                        )}
+
+                        {Object.keys(colaboradores).length === 0 ? (
+                            <>
+                                <div className='sem-treinamentos-train-div'>
+                                    <div className='destaque' style={{ backgroundColor: 'var(--branco)', color: 'var(--roxo)' }}>Oops!</div>
+                                    <div className='destaque'>Parece que ainda não há colaboradores nesse treinamento.</div>
+                                    <img
+                                        src={vazioImg}
+                                        className='sem-treinamentos-train'
+                                        alt='Imagem simbolizando que não há treinamentos'
+                                    />
+                                </div>
+
+                            </>
+                        ) : (
+                            <>
+                                <Box
                                     className='box'
                                     sx={{
                                         height: 500,
@@ -460,28 +478,28 @@ export default function TabelaMUI2({ curso_id, colaboradores, refreshColaborador
                                         processRowUpdate={processRowUpdate}
                                     />
                                 </Box>
-                </>)}
-    
-                            </Grid>
-                            <Grid item className='grider' xs={0}>
-                                <Grid className='botao-alteracao-dois'>                                    
-                                {((role === '[admin]' || role === '[manager]') && Object.keys(colaboradores).length > 0) && <PdfSender id={curso_id} refreshColaboradores={refreshColaboradores} />}
-                                </Grid>
-                                {showDeleteIcon && (
-                                    <Grid className='botao-alteracao'>
-                                        <Button onClick={handleSaveAllClick} variant="contained">
-                                            Confirmar
-                                        </Button>
-                                        <Button onClick={handleCancelAllClick} variant="outlined">
-                                            Cancelar
-                                        </Button>
-                                    </Grid>
-                                )}
-                            </Grid>
+                            </>)}
+
+                    </Grid>
+                    <Grid item className='grider' xs={0}>
+                        <Grid className='botao-alteracao-dois'>
+                            {((role === '[admin]' || role === '[manager]') && Object.keys(colaboradores).length > 0) && <PdfSender id={curso_id} refreshColaboradores={refreshColaboradores} />}
                         </Grid>
-                    </DefaultPaper>
-                
-            
+                        {showDeleteIcon && (
+                            <Grid className='botao-alteracao'>
+                                <Button onClick={handleSaveAllClick} variant="contained">
+                                    Confirmar
+                                </Button>
+                                <Button onClick={handleCancelAllClick} variant="outlined">
+                                    Cancelar
+                                </Button>
+                            </Grid>
+                        )}
+                    </Grid>
+                </Grid>
+            </DefaultPaper>
+
+
         </>
 
     );

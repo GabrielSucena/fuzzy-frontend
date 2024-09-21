@@ -44,6 +44,9 @@ function Treinamentos() {
         setTreinamentos(treinamento); // Garante que Treinamentos seja um array
         setFilteredTreinamentos(treinamento); // Inicializa o estado de treinamentos filtrados
         
+        console.log("Data comeco:", treinamento.startDate)
+        console.log("Data fim:", treinamento.endDate)
+
       })
       .catch((err) => {
         console.error("Fetch error:", err);
@@ -61,10 +64,10 @@ function Treinamentos() {
     setFilteredTreinamentos(filtered);
   }, [searchTerm, treinamentos]);
 
-  const DemoPaper = styled(Paper)(({ theme }) => ({
-    padding: "50px",
-    borderRadius: "20px",
-  }));
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split("-");
+    return `${day}/${month}/${year}`;
+  };
   
   const preto = getComputedStyle(document.documentElement).getPropertyValue('--preto-escuro').trim();
   const roxo = getComputedStyle(document.documentElement).getPropertyValue('--roxo').trim();
@@ -115,9 +118,9 @@ function Treinamentos() {
 
                       </div>
                       <div className="fundo-card-treinamento">
-                        <div className="date1">{treinamento.startDate}</div>
+                        <div className="date1">{formatDate(treinamento.startDate)}</div>
                           <FontAwesomeIcon icon={faArrowAltCircleRight} color={roxo}/> 
-                        <div className="date2">{treinamento.endDate}</div>
+                        <div className="date2">{formatDate(treinamento.endDate)}</div>
                       </div>
                     </div>
                   </div>

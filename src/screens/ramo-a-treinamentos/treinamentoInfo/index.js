@@ -168,7 +168,7 @@ function TreinamentoInfo() {
       }
 
       {openModal === 'obsoletar' && (
-        <ModalObsoletarTreinamento open={true} handleClose={handleClose} courseId={id} />
+        <ModalObsoletarTreinamento open={true} handleClose={handleClose} courseId={id} colaboradores={colaboradores} />
       )}
       {openModal === 'notificar' && (
         <ModalNotificarTreinamento open={true} handleClose={handleClose} colaboradores={"Pedro, João"} />
