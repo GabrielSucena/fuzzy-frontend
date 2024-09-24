@@ -301,7 +301,7 @@ function EditarTreinamento() {
       {openModal?.type === 'justificar' && (
       <ModalJustificativaTreinamento
         open={Boolean(openModal)}
-        onClose={handleClose}
+        handleClose={handleClose}
         cursoInfo={openModal.cursoInfo}
         courseId={id}
       />
