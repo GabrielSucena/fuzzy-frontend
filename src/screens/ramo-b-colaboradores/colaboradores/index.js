@@ -56,39 +56,41 @@ function Colaboradores() {
 
     const filterCollaborators = () => {
         let filtered = collaborators;
-
+    
         if (searchTerm) {
             filtered = filtered.filter(collaborator =>
-                collaborator.name.toLowerCase().includes(searchTerm.toLowerCase())
+                collaborator.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                collaborator.register.toLowerCase().includes(searchTerm.toLowerCase()) // Adiciona a busca por registro
             );
         }
-
+    
         if (selectedCriticality) {
             filtered = filtered.filter(collaborator =>
                 collaborator.criticality === selectedCriticality
             );
         }
-
+    
         if (selectedStatus) {
             filtered = filtered.filter(collaborator =>
                 collaborator.status === selectedStatus
             );
         }
-
+    
         if (selectedPosition) {
             filtered = filtered.filter(collaborator =>
                 collaborator.position.toLowerCase().includes(selectedPosition.toLowerCase())
             );
         }
-
+    
         if (selectedDepartment) {
             filtered = filtered.filter(collaborator =>
                 collaborator.department.toLowerCase().includes(selectedDepartment.toLowerCase())
             );
         }
-
+    
         setFilteredCollaborators(filtered);
     };
+    
 
     const handleCopy = (text) => {
         navigator.clipboard.writeText(text).then(() => {
