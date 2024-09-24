@@ -7,7 +7,7 @@ function Funcoes(){
     return(
     <>
     
-        <TituloPagina titulopagina='Documentação das Funções' descricaotitulo='Componentes primordiais das páginas (Feito para desenvolvedores)' divisor2={true}/>
+        <TituloPagina titulopagina='Documentação' descricaotitulo='Componentes primordiais das páginas (Feito para desenvolvedores)' divisor2={true}/>
         <div className='content-auditoria'>
             <div className='funcoes-auditoria'>
             <Funcao

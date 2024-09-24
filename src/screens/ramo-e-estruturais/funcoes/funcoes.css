@@ -10,3 +10,9 @@
     width: 80%;
 }
 
+@media (max-width: 600px) {
+    .funcoes-auditoria {
+        width: 80%; /* Ocupa toda a largura em telas pequenas */
+        padding: 10px; /* Reduz o padding */
+    }
+}
