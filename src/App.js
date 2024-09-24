@@ -34,6 +34,7 @@ import Configuracoes from './screens/ramo-c-meu-perfil/configuracoes';
 import Tutorial from './screens/ramo-c-meu-perfil/tutorial';
 import Duvidas from './screens/ramo-c-meu-perfil/duvidas';
 import Novidades from './screens/ramo-c-meu-perfil/novidades';
+import Funcoes from './screens/ramo-e-estruturais/funcoes';
 
 const theme = createTheme({
   palette: { primary: { main: "#6000B6" } },
@@ -106,6 +107,7 @@ function App() {
 
                 <Route path="/perfil" element={<PrivateRoute element={Perfil} />} />
                 <Route path="/documentacoes" element={<PrivateRoute element={Documentacoes} />} />
+                <Route path="/funcoes" element={<PrivateRoute element={Funcoes} />} />
                 <Route path="/configuracoes" element={<PrivateRoute element={Configuracoes} />} />
                 <Route path="/tutorial" element={<PrivateRoute element={Tutorial} />} />
                 <Route path="/duvidas" element={<PrivateRoute element={Duvidas} />} />

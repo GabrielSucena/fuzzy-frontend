@@ -1,0 +1,72 @@
+.funcao-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    background-color: white;
+    max-width: 100%;
+    margin: 20px auto;
+    margin-bottom: 3.5rem;
+  }
+  
+  .funcao-title {
+    background-color: var(--roxo);
+    color: var(--branco);
+    padding: 1rem;
+    font-weight: bold;
+    text-align: left;
+    border-radius: 4px 4px 0 0;
+    font-size: 2rem;
+  }
+  
+  .funcao-description {
+    margin: 15px 0;
+    
+  }
+
+  .descricao-funcoes{
+    color: var(--roxo);
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  
+  .funcao-description ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .funcao-table-container {
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+  }
+  
+  .funcao-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+.funcoes-titulo{
+  font-size: 1.5rem;}
+
+  .autor-funcoes{
+    font-size: 1.5rem;}
+
+
+  .funcao-table th,
+  .funcao-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  .funcao-return {
+    margin: 15px 0;
+    font-size: 1.5rem;
+  }
+  
+  .divider-audit{
+    color: red;
+    margin: 1rem 0rem 1rem 0rem;
+    border-width: 0.25rem;
+
+}

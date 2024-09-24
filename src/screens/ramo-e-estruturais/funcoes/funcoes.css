@@ -1,0 +1,12 @@
+.content-auditoria{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+
+}
+
+.funcoes-auditoria{
+    width: 80%;
+}
+
