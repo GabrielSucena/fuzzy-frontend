@@ -102,7 +102,7 @@ function Auditoria({
         return items.filter(item => {
             const matchesSearchTerm =
             (item.course && String(item.course).toLowerCase().includes(searchTerm.toLowerCase())) ||
-            (item.employee && String(item.employee).toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (item.collaborator && String(item.collaborator).toLowerCase().includes(searchTerm.toLowerCase())) ||
             (item.user && item.user.toLowerCase().includes(searchTerm.toLowerCase())) ||
             (item.reason && item.reason.toLowerCase().includes(searchTerm.toLowerCase()));
 
@@ -256,10 +256,12 @@ function Auditoria({
                                                 &nbsp;&nbsp;Treinamento (ID):
                                             </strong> {auditoriaItem.course}
                                         </p>
-                                        <p style={{paddingBottom:'0.25rem'}}>
-                                            <FontAwesomeIcon className="icon" icon={faCodeCommit} color={cinza} />
-                                            &nbsp;&nbsp;<strong>Versão no momento da ação: </strong> {auditoriaItem.courseVersion} (atualmente na versão {Number(auditoriaItem.courseVersion) + 1})
-                                        </p>
+                                        {!auditoriaItem.collaborator && (
+                                            <p style={{paddingBottom:'0.25rem'}}>
+                                                <FontAwesomeIcon className="icon" icon={faCodeCommit} color={cinza} />
+                                                &nbsp;&nbsp;<strong>Versão no momento da ação: </strong> {auditoriaItem.courseVersion} (atualmente na versão {Number(auditoriaItem.courseVersion) + 1})
+                                            </p>
+                                        )}
                                     </>
                                 )}
 

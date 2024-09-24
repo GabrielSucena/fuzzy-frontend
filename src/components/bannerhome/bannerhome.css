@@ -167,7 +167,7 @@ nav a:hover {
         background-color: var(--branco);
         color: var(--roxo);  
         padding: 0.5rem;
-        width: 52%;
+        width: 55%;
         text-align: center;
         border-radius: 1rem;
         border: none;
@@ -177,7 +177,7 @@ nav a:hover {
         padding: 0.5rem;
         border-radius: 1rem;
         margin: 0;
-        width: 52%;
+        width: 55%;
         border: 1px solid var(--branco);
         text-align: center;
     }
