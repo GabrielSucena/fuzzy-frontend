@@ -27,7 +27,7 @@ function Configuracoes(){
                     </Link>
 
                     {role !== '[basic]' &&
-                        <Link to='/documentacoes' className='remover'>
+                        <Link to='/funcoes' className='remover'>
                             <div className='agrupamento-configuracoes'>
                                 <div className='icone-configuracoes'>
                                     <FontAwesomeIcon icon={faBook} className='icone-configuracoes'/>
