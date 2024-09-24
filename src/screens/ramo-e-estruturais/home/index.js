@@ -36,7 +36,7 @@ export function Home() {
       <div className='home-content'>
         {role !== '[basic]' &&
           <Link to='/treinamentos' className='link-card'>
-            <div>
+            <div className='card-homer'>
               <Card
                 tipo="Matriz de treinamentos"
                 descricao="Verifique também as vigências, aproveitamento e classificações"
@@ -46,7 +46,7 @@ export function Home() {
         }
         {role === '[admin]' || role === '[manager]' ?
           <Link to='/colaboradores' className='link-card'>
-            <div>
+            <div className='card-homer'>
               <Card
                   tipo="Lista de colaboradores"
                   descricao="Veja os nomes, cargos e a participação em treinamentos"

@@ -69,7 +69,7 @@
 @media (max-width: 768px) {
     .roxo, .branco {
         text-align: center;
-        max-width: 6rem; /* Remove limite de largura */
+        max-width: 3.9rem; /* Remove limite de largura */
         padding: 1rem 1.75rem;  /* Ajuste o padding conforme necessário */
     }
 }

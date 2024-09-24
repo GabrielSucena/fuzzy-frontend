@@ -105,10 +105,10 @@ nav a:hover {
         /* Fixa na tela o menu que não desce*/
         /* [IMPORTANTE] */
         
-        top: -100vh;                            
+        top: -110vh;                            
         /* Posição de baixo para cima quando aba descer */
         
-        height: 50%;                           
+        height: 75%;                           
         /* Altura da aba que desce */
         
         width: 100%;                            
@@ -143,7 +143,7 @@ nav a:hover {
 
     /* Mostrando a aba que desce */
     .header-home .responsivo {
-        transform: translateY(100vh);           
+        transform: translateY(120vh);           
 
 
     }
