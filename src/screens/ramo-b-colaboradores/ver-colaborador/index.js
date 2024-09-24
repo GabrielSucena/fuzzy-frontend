@@ -180,7 +180,7 @@ function VerColaborador() {
                         }, 5000);
                     })
                     .catch(err => {
-                        const errorMessage = err.message.includes('400', '401') && 'Para que o(a) colaborador(a) seja excluido(a), por integridade, este não pode estar em nenhum curso.'
+                        const errorMessage = 'Para que o(a) colaborador(a) seja excluido(a), por integridade, este não pode estar em nenhum curso.'
                             
                         setCollaboratorMessage(errorMessage);
                         setShowMessage(true); // Mostra a mensagem
