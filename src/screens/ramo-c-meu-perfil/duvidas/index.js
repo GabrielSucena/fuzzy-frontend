@@ -12,7 +12,7 @@ function Duvidas(){
           divisor2={true}
         />
         <div className='tutorial-conteiner'>
-          <div className='tutorial-conteudo'>
+          <div className='tutorial-conteudo' style={{ marginBottom:'20rem'}}>
                 <ToggleContent title="A adição / remoção / edição de treinamentos / colaboradores não funciona, como resolver?">
                     <ToggleContent title="Para colaboradores">
                     <ul>
